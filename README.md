@@ -108,7 +108,7 @@
          @"电竞",
          @"明星"]
          
-###  悬浮
+###  悬浮 (需实现WMZPageProtocol协议返回可滚动的视图)
        param.wTitleArrSet(data)
        .wControllersSet(vcArr)
         //悬浮开启
