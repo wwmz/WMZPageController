@@ -2,7 +2,7 @@
 
 演示
 ==============
-![WMZPage.gif](https://upload-images.jianshu.io/upload_images/9163368-ef576469dcb2beb4.gif?imageMogr2/auto-orient/strip)
+![WMZPage.gif](https://upload-images.jianshu.io/upload_images/9163368-49520ebd358c1ea8.gif?imageMogr2/auto-orient/strip)
 
 特性
 ==============
