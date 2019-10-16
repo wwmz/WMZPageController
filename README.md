@@ -4,6 +4,9 @@
 ==============
 ![WMZPage.gif](https://upload-images.jianshu.io/upload_images/9163368-49520ebd358c1ea8.gif?imageMogr2/auto-orient/strip)
 
+![image.gif](https://upload-images.jianshu.io/upload_images/9163368-dd7536ee29f241c5.gif?imageMogr2/auto-orient/strip)
+
+
 特性
 ==============
 - 链式语法 结构优雅
