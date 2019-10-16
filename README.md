@@ -83,7 +83,7 @@
 
       
     
-##### 京东
+### 京东
 
        param.wTitleArrSet(data)
        .wControllersSet(vcArr)
@@ -109,7 +109,7 @@
          @"电竞",
          @"明星"]
          
-##### 悬浮
+###  悬浮
        param.wTitleArrSet(data)
        .wControllersSet(vcArr)
         //悬浮开启
@@ -136,12 +136,12 @@
        });
        
     
-##### 暗黑模式 传入的color用宏 PageDarkColor(PageColor(0x333333), PageColor(0xffffff))#####   第一个是正常的颜色 第二个是暗黑模式下的颜色
+###  暗黑模式 传入的color用宏 PageDarkColor(PageColor(0x333333), PageColor(0xffffff))#####   第一个是正常的颜色 第二个是暗黑模式下的颜色
 
      
     
 
-##### 可配置的全部参数说明
+### 可配置的全部参数说明
       //标题数组 必传
       wTitleArr
       
@@ -253,7 +253,7 @@
       //子控制器滚动(做滚动时候自己的操作)  =>开启悬浮有效
       wEventChildVCDidSroll
       
-##### 传入菜单数据说明
+### 传入菜单数据说明
 
       普通
       @[@"推荐",@"LOOK直播",@"画",@"现场",@"翻唱",@"MV",@"广场",@"游戏"];
