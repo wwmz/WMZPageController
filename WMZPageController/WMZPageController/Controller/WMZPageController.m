@@ -54,6 +54,16 @@
     [self setParam];
 }
 
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    if (self.navigationController&&self.param.wNaviAlpha) {
+        if (self.navigationController.navigationBar.alpha != 1) {
+            self.navigationController.navigationBar.alpha = 1;
+        }
+    }
+}
+
 - (void)setParam{
     self.view.backgroundColor = [UIColor whiteColor];
     if (self.param.wMenuAnimal == PageTitleMenuAiQY) {
@@ -497,7 +507,6 @@
             headRect.origin.y = CGRectGetMinY(upRect)-headRect.size.height;
             self.headView.frame = headRect;
         }
-        NSLog(@"偏移量%f",offset);
         CGFloat delta = fabs(offset/PageVCNavBarHeight);
         if (delta>1) {
             delta = 1;
@@ -512,7 +521,7 @@
          if (self.param.wNaviAlpha) {
              if (self.navigationController) {
                  self.navigationController.navigationBar.alpha = delta;
-                }
+             }
              if (self.headView) {
                  //只改变headView的子view透明度 tag设为999
                  UIView *view = [self.headView viewWithTag:999];
