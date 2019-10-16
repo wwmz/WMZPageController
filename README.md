@@ -373,4 +373,4 @@ LEETheme 使用 MIT 许可证，详情见 [LICENSE](LICENSE) 文件。
 个人主页
 ==============
 使用过程中如果有什么bug欢迎给我提issue 我看到就会解决
-[我的简书](https://www.jianshu.com/u/17b9dd398782)
+[我的简书](https://www.jianshu.com/p/32e997b74d74)
