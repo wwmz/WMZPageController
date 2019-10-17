@@ -25,8 +25,8 @@
             filePath = "WMZPageController/WMZPageController/Controller/WMZPageController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "489"
-            endingLineNumber = "489"
+            startingLineNumber = "510"
+            endingLineNumber = "510"
             landmarkName = "-observeValueForKeyPath:ofObject:change:context:"
             landmarkType = "7">
          </BreakpointContent>

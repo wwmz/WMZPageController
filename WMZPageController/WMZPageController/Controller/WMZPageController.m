@@ -48,6 +48,31 @@
 @end
 @implementation WMZPageController
 
+- (void)updatePageController{
+    [self setParam];
+    
+    [self.cache removeAllObjects];
+    [self.upSc removeFromSuperview];
+    [self.downSc removeFromSuperview];
+    [self.sonChildScrollerViewDic removeAllObjects];
+    [self.rectArr removeAllObjects];
+    self.hasEndAppearance = NO;
+    self.hasDealAppearance = NO;
+    self.currentVC = nil;
+    self.headView = nil;
+    self.currentScroll = nil;
+    self.hasDifferenrDirection = NO;
+    self.currentPageIndex = 0;
+    self.lastPageIndex = 0;
+    self.nextPageIndex = 0;
+    for (UIViewController *VC in self.childViewControllers) {
+        [VC willMoveToParentViewController:nil];
+        [VC.view removeFromSuperview];
+        [VC removeFromParentViewController];
+    }
+    
+    [self UI];
+}
 
 - (void)viewDidLoad{
     [super viewDidLoad];

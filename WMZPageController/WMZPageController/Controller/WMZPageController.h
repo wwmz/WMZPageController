@@ -14,6 +14,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)WMZPageParam *param;
 
+/*
+ *更新
+ */
+- (void)updatePageController;
+
 @end
 
 NS_ASSUME_NONNULL_END

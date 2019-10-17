@@ -209,6 +209,9 @@
         .wMenuIndicatorColorSet(PageDarkColor(PageColor(0xE5193E), [UIColor orangeColor]))
         //菜单背景颜色
         .wMenuBgColorSet(PageDarkColor(PageColor(0xffffff), PageColor(0x666666)));
+          
+          
+        
       }
      break;
       default:
@@ -220,6 +223,25 @@
     }
     VC.param = param;
     [vc.navigationController pushViewController:VC animated:YES];
+    
+    if (index == 8) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            NSMutableArray *updateArr = [NSMutableArray new];
+            [[self weiboData] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                TestVC *vc = [TestVC new];
+                vc.page = idx;
+                [updateArr addObject:vc];
+            }];
+            
+            param.wTitleArrSet([self weiboData])
+            .wControllersSet(updateArr);
+            
+            //更新
+            [VC updatePageController];
+        });
+    }
+    
+
 }
 
 
