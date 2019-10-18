@@ -147,6 +147,9 @@
       //VC数组 必传
       wControllers
       
+      //能否滑动切换 default YES
+      wScrollCanTransfer
+      
       //特殊属性 菜单滑动到顶部悬浮 default NO
       wTopSuspension
       
@@ -336,7 +339,12 @@
      @{@"name":@"游戏",@"backgroundColor":PageColor(0x1c2c3b)},
     ];
 ### 详情看demo    
- 
+
+###  更新 改变wTitleArr和wControllers后直接调用实例方法即可
+     /*
+     *更新
+     */
+     - (void)updatePageController;
 
 ### 依赖
 无任何依赖 
