@@ -250,6 +250,7 @@
                                   [self canTopSuspension]?(self.downSc.frame.size.height - tabbarHeight):sonChildVCHeight);
         [self.rectArr addObject:[NSValue valueWithCGRect:frame]];
     }
+    self.downSc.scrollEnabled = self.param.wScrollCanTransfer;
     self.downSc.contentSize = CGSizeMake(self.param.wTitleArr.count*PageVCWidth, PageVCHeight);
     
 

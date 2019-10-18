@@ -44,6 +44,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuTitl
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wTopSuspension)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wFromNavi)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wNaviAlpha)
+WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wScrollCanTransfer)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageClickBlock,         wEventFixedClick)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageClickBlock,         wEventClick)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageVCChangeBlock,      wEventBeganTransferController)
@@ -68,6 +69,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, PageChildVCScroll,      wEventChi
         _wMenuFixWidth = 45.0f;
         _wMenuFixShadow = YES;
         _wFromNavi = YES;
+        _wScrollCanTransfer = YES;
     }
     return self;
 }

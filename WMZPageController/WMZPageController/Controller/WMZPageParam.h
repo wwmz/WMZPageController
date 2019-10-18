@@ -24,6 +24,8 @@ WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, NSArray*,     
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wTopSuspension)
 //导航栏透明度变化 default NO
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wNaviAlpha)
+//滑动切换 default YES
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wScrollCanTransfer)
 //头部视图frame从导航栏下方开始 default YES
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wFromNavi)
 //菜单最右边固定内容是否开启左边阴影 defaulf YES
