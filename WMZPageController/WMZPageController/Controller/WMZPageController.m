@@ -152,7 +152,9 @@
     CGFloat tabbarHeight = 0;
     CGFloat statusBarHeight = 0;
     if (self.presentingViewController) {
-        statusBarHeight = PageVCStatusBarHeight;
+        if (!self.navigationController) {
+            statusBarHeight = PageVCStatusBarHeight;
+        }
     } else if (self.tabBarController) {
         tabbarHeight = PageVCTabBarHeight;
     } else if (self.navigationController){
@@ -252,8 +254,6 @@
     }
     self.downSc.scrollEnabled = self.param.wScrollCanTransfer;
     self.downSc.contentSize = CGSizeMake(self.param.wTitleArr.count*PageVCWidth, PageVCHeight);
-    
-
 }
 
 - (void)selectWithBtn:(UIButton *)btn first:(BOOL)first{
