@@ -1,7 +1,8 @@
 Pod::Spec.new do |s|
 
   s.name         = "WMZPageController"
-  s.version      = "1.0.0"
+  s.version      = "1.0.1"
+  s.ios.deployment_target = "9.0" 
   s.license      = "Copyright (c) 2019年 WMZ. All rights reserved."
   s.summary      = "高性能分页控制器,支持ios13暗黑模式"
   s.description  = <<-DESC 
