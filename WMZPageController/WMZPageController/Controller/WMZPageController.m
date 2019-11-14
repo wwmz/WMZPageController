@@ -253,7 +253,7 @@
         [self.rectArr addObject:[NSValue valueWithCGRect:frame]];
     }
     self.downSc.scrollEnabled = self.param.wScrollCanTransfer;
-    self.downSc.contentSize = CGSizeMake(self.param.wTitleArr.count*PageVCWidth, PageVCHeight);
+    self.downSc.contentSize = CGSizeMake(self.param.wTitleArr.count*PageVCWidth, 0);
 }
 
 - (void)selectWithBtn:(UIButton *)btn first:(BOOL)first{

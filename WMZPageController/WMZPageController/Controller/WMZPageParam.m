@@ -19,6 +19,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, PageTitleMenu,          wMenuAnim
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wMenuAnimalTitleBig)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wMenuAnimalTitleGradient)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wMenuFixShadow)
+WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuTitleSelectFont)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuWidth)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageMenuPosition,       wMenuPosition)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuTitleOffset)
@@ -70,6 +71,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, PageChildVCScroll,      wEventChi
         _wMenuFixShadow = YES;
         _wFromNavi = YES;
         _wScrollCanTransfer = YES;
+        _wMenuTitleSelectFont = 18.5;
     }
     return self;
 }

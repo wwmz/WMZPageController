@@ -320,7 +320,7 @@
             self.fixBtn.backgroundColor = fixBackgroundColor;
             [self.fixBtn setTitleColor:titleColor?:self.param.wMenuTitleColor forState:UIControlStateNormal];
             if (self.param.wMenuAnimalTitleBig) {
-                temp.titleLabel.font = [UIFont systemFontOfSize:self.param.wMenuTitleFont+1.5 weight:self.param.wMenuTitleWeight];
+                temp.titleLabel.font = [UIFont systemFontOfSize:self.param.wMenuTitleSelectFont weight:self.param.wMenuTitleWeight];
             }
         }else{
             [temp setTitleColor:titleColor?:self.param.wMenuTitleColor forState:UIControlStateNormal];

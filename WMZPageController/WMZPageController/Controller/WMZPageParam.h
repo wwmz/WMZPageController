@@ -61,6 +61,8 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, PageMenuPositi
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuTitleOffset)
 //菜单标题字体 default 15.0f
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuTitleFont)
+//菜单选中标题字体大小 default wMenuTitleFont+1.5
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuTitleSelectFont)
 //菜单标题固定宽度 default 文本内容宽度+wMenuCellMargin
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuTitleWidth)
 //菜单标题字体粗体 default 0
