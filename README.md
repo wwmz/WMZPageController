@@ -2,7 +2,7 @@
 
 演示
 ==============
-![WMZPageController222.gif](https://upload-images.jianshu.io/upload_images/9163368-7ab44e87aa8e5059.gif?imageMogr2/auto-orient/strip)
+![page.gif](https://upload-images.jianshu.io/upload_images/9163368-fe78d1b86737ebf1.gif?imageMogr2/auto-orient/strip)
 
 特性
 ==============
@@ -386,3 +386,4 @@ LEETheme 使用 MIT 许可证，详情见 [LICENSE](LICENSE) 文件。
 更新日记
 ==============
 20191104 更新cocopod到1.0.1版本 修复一些问题
+20191207 更新cocopod到1.0.2版本 修复悬浮问题
