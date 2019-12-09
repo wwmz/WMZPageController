@@ -46,8 +46,6 @@
 @property(nonatomic,strong)UIView *headView;
 //当前子控制器中的滚动视图
 @property(nonatomic,strong)UIScrollView *currentScroll;
-//返回按钮
-@property(nonatomic,strong)UIButton *backBtn;
 @end
 @implementation WMZPageController
 
@@ -80,6 +78,10 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     [self setParam];
+}
+
+- (void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
     [self UI];
 }
 
@@ -87,12 +89,11 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     if (self.navigationController&&self.param.wNaviAlpha) {
-        if (self.navigationController.navigationBar.alpha != 1) {
-            self.navigationController.navigationBar.alpha = 1;
+        for (UIView *view in [self.navigationController.navigationBar subviews]) {
+            if ([NSStringFromClass([view class]) isEqualToString:@"_UIBarBackground"]) {
+                view.alpha = 1;
+            }
         }
-    }
-    if (self.backBtn) {
-        [self.backBtn removeFromSuperview];
     }
 }
 
@@ -208,14 +209,6 @@
         self.headView.frame = CGRectMake(self.headView.frame.origin.x,  self.headView.frame.origin.y + (self.param.wFromNavi?headY:0), self.headView.frame.size.width, self.headView.frame.size.height);
         headY += CGRectGetMaxY(rect);
         [self.view addSubview:self.headView];
-        if (self.param.wNaviAlpha&&!self.param.wFromNavi) {
-            self.backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            self.backBtn.frame = CGRectMake(15, 52, 20, 20);
-            [self.backBtn addTarget:self action:@selector(backction) forControlEvents:UIControlEventTouchUpInside];
-            [self.backBtn setImage:[UIImage pageBundleImage:@"page_back"] forState:UIControlStateNormal];
-            [PageWindow addSubview:self.backBtn];
-            self.navigationItem.hidesBackButton = YES;
-        }
     }
     
     //标题菜单
@@ -564,7 +557,11 @@
         }
          if (self.param.wNaviAlpha) {
              if (self.navigationController) {
-                 self.navigationController.navigationBar.alpha = delta;
+                 for (UIView *view in [self.navigationController.navigationBar subviews]) {
+                     if ([NSStringFromClass([view class]) isEqualToString:@"_UIBarBackground"]) {
+                         view.alpha = delta;
+                     }
+                 }
              }
              if (self.headView) {
                  if (delta == 1) {
