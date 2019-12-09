@@ -16,7 +16,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:[HomeVC new]];
+    UITabBarController *ta = [UITabBarController new];
+    ta.viewControllers = @[[[UINavigationController alloc]initWithRootViewController:[HomeVC new]],[[UINavigationController alloc]initWithRootViewController:[HomeVC new]],[[UINavigationController alloc]initWithRootViewController:[HomeVC new]]];
+    self.window.rootViewController = ta;
     // Override point for customization after application launch.
     return YES;
 }

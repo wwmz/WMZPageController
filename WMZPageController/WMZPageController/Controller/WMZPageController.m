@@ -77,14 +77,11 @@
 
 - (void)viewDidLoad{
     [super viewDidLoad];
-    [self setParam];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self setParam];
+        [self UI];
+    });
 }
-
-- (void)viewDidLayoutSubviews{
-    [super viewDidLayoutSubviews];
-    [self UI];
-}
-
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -95,17 +92,6 @@
             }
         }
     }
-}
-
-- (void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
-    if (self.navigationController&&self.navigationItem.hidesBackButton) {
-         self.navigationItem.hidesBackButton = NO;
-    }
-}
-
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
 }
 
 - (void)setParam{
@@ -197,6 +183,8 @@
             }
         }else if ([self.parentViewController isKindOfClass:[WMZPageController class]]) {
             headY = 0;
+            tabbarHeight = 0;
+            statusBarHeight = 0;
         }
     }
     
@@ -217,7 +205,7 @@
         @(PageMenuPositionRight):[NSValue valueWithCGRect:CGRectMake(PageVCWidth-self.param.wMenuWidth, self.headView?CGRectGetMaxY(self.headView.frame):headY  , self.param.wMenuWidth,0)],
         @(PageMenuPositionCenter):[NSValue valueWithCGRect:CGRectMake((PageVCWidth-self.param.wMenuWidth)/2, self.headView?CGRectGetMaxY(self.headView.frame):headY  , self.param.wMenuWidth,0)],
         @(PageMenuPositionNavi):[NSValue valueWithCGRect:CGRectMake((PageVCWidth-self.param.wMenuWidth)/2, 0 , self.param.wMenuWidth,0)],
-        @(PageMenuPositionBottom):[NSValue valueWithCGRect:CGRectMake(0, PageVCHeight, self.param.wMenuWidth,0)],
+        @(PageMenuPositionBottom):[NSValue valueWithCGRect:CGRectMake(0, PageVCHeight-tabbarHeight, self.param.wMenuWidth,0)],
     };
     
     self.upSc = [[WMZPageLoopView alloc]initWithFrame:[dic[@(self.param.wMenuPosition)] CGRectValue] param:self.param];
@@ -273,9 +261,6 @@
     self.param.titleHeight = self.upSc.frame.size.height;
 }
 
-- (void)backction{
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 - (void)selectWithBtn:(UIButton *)btn first:(BOOL)first{
     NSInteger index = btn.tag;

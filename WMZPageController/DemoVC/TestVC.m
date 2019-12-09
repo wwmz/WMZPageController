@@ -31,7 +31,7 @@
     NSLog(@"viewWillAppear %ld",self.page);
 }
 
-#pragma mark 注意 重新适配tableview的frame
+#pragma mark 注意 重新适配tableview的frame 因为self.view的frame改变了 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     NSLog(@"viewDidAppear %ld",self.page);
