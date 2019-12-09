@@ -73,7 +73,6 @@ WMZPagePropSetFuncImplementation(WMZPageParam, PageChildVCScroll,      wEventChi
         _wFromNavi = YES;
         _wScrollCanTransfer = YES;
         _wMenuTitleSelectFont = 18.5;
-        _wMenuShowBottomLine = YES;
     }
     return self;
 }
