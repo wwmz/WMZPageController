@@ -382,3 +382,7 @@ LEETheme 使用 MIT 许可证，详情见 [LICENSE](LICENSE) 文件。
 ==============
 使用过程中如果有什么bug欢迎给我提issue 我看到就会解决
 [我的简书](https://www.jianshu.com/p/32e997b74d74)
+
+更新日记
+==============
+20191104 更新cocopod到1.0.1版本 修复一些问题
