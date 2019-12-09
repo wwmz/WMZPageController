@@ -71,6 +71,8 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,      
 WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, UIColor*,              wMenuTitleColor)
 //菜单字体选中颜色 default E5193E
 WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, UIColor*,              wMenuTitleSelectColor)
+//菜单最底部下划线 default NO
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,              wMenuShowBottomLine)
 //菜单图文位置 default PageBtnPositionTop
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, PageBtnPosition,       wMenuImagePosition)
 //菜单图文位置间距 default 5

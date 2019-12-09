@@ -46,6 +46,8 @@
 @property(nonatomic,strong)UIView *headView;
 //当前子控制器中的滚动视图
 @property(nonatomic,strong)UIScrollView *currentScroll;
+//最底部下划线
+@property(nonatomic,strong)UIView *lineView;
 @end
 @implementation WMZPageController
 
@@ -259,6 +261,12 @@
     self.downSc.contentSize = CGSizeMake(self.param.wTitleArr.count*PageVCWidth, 0);
     
     self.param.titleHeight = self.upSc.frame.size.height;
+    if (self.param.wMenuShowBottomLine) {
+        self.lineView = [UIView new];
+        self.lineView.backgroundColor = PageColor(0x999999);
+        self.lineView.frame = CGRectMake(0, self.upSc.frame.size.height-PageK1px, self.upSc.frame.size.width, PageK1px);
+        [self.upSc addSubview:self.lineView];
+    }
 }
 
 

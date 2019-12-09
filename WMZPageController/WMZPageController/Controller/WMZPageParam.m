@@ -46,6 +46,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wTopSuspe
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wFromNavi)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wNaviAlpha)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wScrollCanTransfer)
+WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wMenuShowBottomLine)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageClickBlock,         wEventFixedClick)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageClickBlock,         wEventClick)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageVCChangeBlock,      wEventBeganTransferController)
@@ -72,6 +73,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, PageChildVCScroll,      wEventChi
         _wFromNavi = YES;
         _wScrollCanTransfer = YES;
         _wMenuTitleSelectFont = 18.5;
+        _wMenuShowBottomLine = YES;
     }
     return self;
 }
