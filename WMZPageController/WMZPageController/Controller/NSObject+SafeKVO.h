@@ -6,8 +6,7 @@
 //  Copyright © 2019 wmz. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
+#import <UIKit/UIKit.h>
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSObject (SafeKVO)
@@ -28,5 +27,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)paegRemoveObserver:(nonnull NSObject *)observer forKeyPath:(nonnull NSString *)keyPath context:(nullable void *)context;
 
 @end
+
 
 NS_ASSUME_NONNULL_END

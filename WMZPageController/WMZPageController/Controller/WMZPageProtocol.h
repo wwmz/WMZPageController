@@ -13,6 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol WMZPageProtocol <NSObject>
 
+@required
+/*
+ *悬浮 可滑动的滚动视图
+ */
 - (UITableView*)getMyTableView;
 
 @end

@@ -45,6 +45,7 @@
 //底部标签栏高度
 #define PageVCTabBarHeight (PageVCIS_iPhoneX ? (49.f+34.f) : 49.f)
 
+#define PageWindow   [UIApplication sharedApplication].keyWindow
 
 #define pageIsIphoneX ({\
 BOOL isPhoneX = NO;\
@@ -129,7 +130,7 @@ typedef void (^PageVCChangeBlock)(UIViewController* oldVC,UIViewController *newV
 /*
  * 子控制器滚动
  */
-typedef void (^PageChildVCScroll)(UIViewController* pageVC,CGPoint oldPoint,CGPoint newPonit,UIScrollView *currentScrollView,CGFloat offset);
+typedef void (^PageChildVCScroll)(UIViewController* pageVC,CGPoint oldPoint,CGPoint newPonit,UIScrollView *currentScrollView);
 
 /*
  * 头视图

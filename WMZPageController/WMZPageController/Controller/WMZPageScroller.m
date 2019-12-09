@@ -36,3 +36,18 @@
 
 
 @end
+
+
+@implementation UIImage(PageImageName)
+
++ (UIImage*)pageBundleImage:(NSString*)name{
+    NSBundle *bundle =  [NSBundle bundleWithPath:[[NSBundle bundleForClass:[WMZPageScroller class]] pathForResource:@"PageController" ofType:@"bundle"]];
+    NSString *path = [bundle pathForResource:name ofType:@"png"];
+    if (!path) {
+        return [UIImage imageNamed:name];
+    }else{
+        return [UIImage imageWithContentsOfFile:path];
+    }
+}
+
+@end

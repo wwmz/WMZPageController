@@ -1,8 +1,9 @@
 Pod::Spec.new do |s|
 
   s.name         = "WMZPageController"
-  s.version      = "1.0.1"
-  s.ios.deployment_target = "9.0" 
+  s.version      = "1.0.2"
+  s.platform     = :ios, "8.0"
+  s.requires_arc = true
   s.license      = "Copyright (c) 2019年 WMZ. All rights reserved."
   s.summary      = "高性能分页控制器,支持ios13暗黑模式"
   s.description  = <<-DESC 
@@ -14,5 +15,5 @@ Pod::Spec.new do |s|
   s.platform     = :ios
   s.source       = { :git => "https://github.com/wwmz/WMZPageController.git",:tag => s.version.to_s}
   s.source_files = "WMZPageController/WMZPageController/**/*.{h,m}"
-  s.requires_arc = true  
+  s.resources     = "WMZPageController/WMZPageController/PageController.bundle"
 end

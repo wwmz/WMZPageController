@@ -102,6 +102,10 @@ WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageChildVCScr
 /* =========================================Events==================================================*/
 
 
+/* =========================================开放的属性==================================================*/
+//标题高度
+@property(nonatomic,assign)CGFloat titleHeight;
+
 
 @end
 

@@ -28,6 +28,7 @@
 		F31983122355AE02002D305B /* MJRefreshBackFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = F31982FA2355AE02002D305B /* MJRefreshBackFooter.m */; };
 		F31983132355AE02002D305B /* MJRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = F31982FB2355AE02002D305B /* MJRefreshAutoFooter.m */; };
 		F31983142355AE02002D305B /* MJRefreshComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = F31982FD2355AE02002D305B /* MJRefreshComponent.m */; };
+		F31C8619239E1DCE00B06C93 /* PageController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F31C8618239E1DCE00B06C93 /* PageController.bundle */; };
 		F32E009423308C2A004920BD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F32E009323308C2A004920BD /* AppDelegate.m */; };
 		F32E009723308C2A004920BD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F32E009623308C2A004920BD /* ViewController.m */; };
 		F32E009A23308C2A004920BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F32E009823308C2A004920BD /* Main.storyboard */; };
@@ -171,6 +172,7 @@
 		F31982FD2355AE02002D305B /* MJRefreshComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshComponent.m; sourceTree = "<group>"; };
 		F31982FE2355AE02002D305B /* MJRefreshFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshFooter.h; sourceTree = "<group>"; };
 		F31982FF2355AE02002D305B /* MJRefreshBackFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBackFooter.h; sourceTree = "<group>"; };
+		F31C8618239E1DCE00B06C93 /* PageController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = PageController.bundle; sourceTree = "<group>"; };
 		F32E008F23308C2A004920BD /* WMZPageController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WMZPageController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F32E009223308C2A004920BD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F32E009323308C2A004920BD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -527,6 +529,7 @@
 		F32E00C423308C42004920BD /* WMZPageController */ = {
 			isa = PBXGroup;
 			children = (
+				F31C8618239E1DCE00B06C93 /* PageController.bundle */,
 				F3E74DBC2354075800A0F785 /* Controller */,
 				F3E74DB52354075800A0F785 /* Navi */,
 			);
@@ -858,6 +861,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F32E009F23308C2C004920BD /* LaunchScreen.storyboard in Resources */,
+				F31C8619239E1DCE00B06C93 /* PageController.bundle in Resources */,
 				F32E009C23308C2C004920BD /* Assets.xcassets in Resources */,
 				F31983032355AE02002D305B /* MJRefresh.bundle in Resources */,
 				F32E009A23308C2A004920BD /* Main.storyboard in Resources */,

@@ -16,6 +16,7 @@
     WMZPageNaviBtn *_btnLeft ;
     WMZPageNaviBtn *_btnRight;
     CGRect normalUpScRect;
+    
 }
 //frame数组
 @property(nonatomic,strong)NSMutableArray *rectArr;
@@ -45,6 +46,8 @@
 @property(nonatomic,strong)UIView *headView;
 //当前子控制器中的滚动视图
 @property(nonatomic,strong)UIScrollView *currentScroll;
+//返回按钮
+@property(nonatomic,strong)UIButton *backBtn;
 @end
 @implementation WMZPageController
 
@@ -77,6 +80,7 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     [self setParam];
+    [self UI];
 }
 
 
@@ -87,6 +91,20 @@
             self.navigationController.navigationBar.alpha = 1;
         }
     }
+    if (self.backBtn) {
+        [self.backBtn removeFromSuperview];
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    if (self.navigationController&&self.navigationItem.hidesBackButton) {
+         self.navigationItem.hidesBackButton = NO;
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
 }
 
 - (void)setParam{
@@ -128,10 +146,6 @@
     
 }
 
-- (void)viewDidLayoutSubviews{
-   [super viewDidLayoutSubviews];
-   [self UI];
-}
 
 - (void)UI{
     self.cache = [NSCache new];
@@ -162,7 +176,6 @@
                   self.param.wMenuPosition != PageMenuPositionNavi&&
                   self.param.wMenuPosition != PageMenuPositionBottom)?0:PageVCNavBarHeight;
     }
-       
     if (self.parentViewController) {
         
         if ([self.parentViewController isKindOfClass:[UINavigationController class]]) {
@@ -193,8 +206,16 @@
         self.headView = self.param.wMenuHeadView();
         CGRect rect = self.headView.frame;
         self.headView.frame = CGRectMake(self.headView.frame.origin.x,  self.headView.frame.origin.y + (self.param.wFromNavi?headY:0), self.headView.frame.size.width, self.headView.frame.size.height);
-        headY += (CGRectGetMaxY(rect));
+        headY += CGRectGetMaxY(rect);
         [self.view addSubview:self.headView];
+        if (self.param.wNaviAlpha&&!self.param.wFromNavi) {
+            self.backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            self.backBtn.frame = CGRectMake(15, 52, 20, 20);
+            [self.backBtn addTarget:self action:@selector(backction) forControlEvents:UIControlEventTouchUpInside];
+            [self.backBtn setImage:[UIImage pageBundleImage:@"page_back"] forState:UIControlStateNormal];
+            [PageWindow addSubview:self.backBtn];
+            self.navigationItem.hidesBackButton = YES;
+        }
     }
     
     //标题菜单
@@ -244,6 +265,7 @@
     }else{
         sonChildVCY = headY + self.upSc.frame.size.height;
         sonChildVCHeight = self.downSc.frame.size.height-sonChildVCY - tabbarHeight;
+        
     }
     for (int i = 0; i<self.param.wTitleArr.count; i++) {
         CGRect frame = CGRectMake(i * self.downSc.frame.size.width,
@@ -254,6 +276,12 @@
     }
     self.downSc.scrollEnabled = self.param.wScrollCanTransfer;
     self.downSc.contentSize = CGSizeMake(self.param.wTitleArr.count*PageVCWidth, 0);
+    
+    self.param.titleHeight = self.upSc.frame.size.height;
+}
+
+- (void)backction{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)selectWithBtn:(UIButton *)btn first:(BOOL)first{
@@ -473,16 +501,15 @@
            UIScrollView *view = [newVC performSelector:@selector(getMyTableView)];
            if (view&&[view isKindOfClass:[UIScrollView class]]) {
                self.currentScroll = view;
-               if (![self.sonChildScrollerViewDic objectForKey:@(index)]) {
-                   [self.sonChildScrollerViewDic setObject:view forKey:@(index)];
-                   CGFloat height = CGRectGetMaxY(self.upSc.frame);
-                   view.contentInset = UIEdgeInsetsMake(height, 0, 0, 0);
-                   [view pageAddObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
-
-               }else{
-                   CGFloat height = CGRectGetMaxY(self.upSc.frame);
-                   view.contentInset = UIEdgeInsetsMake(height, 0, 0, 0);
+               [self.sonChildScrollerViewDic setObject:view forKey:@(index)];
+               CGFloat nowTitleY = CGRectGetMaxY(self.upSc.frame);
+               view.contentInset = UIEdgeInsetsMake(CGRectGetMaxY(normalUpScRect), 0, 0, 0);
+               if (self.currentScroll.contentOffset.y<-nowTitleY) {
+                    view.contentOffset = CGPointMake(view.contentOffset.x,-nowTitleY);
+               }else if ((int)nowTitleY == (int)CGRectGetMaxY(normalUpScRect)){
+                    view.contentOffset = CGPointMake(view.contentOffset.x,-nowTitleY);
                }
+               [view pageAddObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
            }
        }
    }
@@ -490,41 +517,26 @@
 
 //监听子控制器中的滚动视图
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
- 
     if ([keyPath isEqualToString:@"contentOffset"]) {
         if (![self canTopSuspension]) return;
+        if (self.currentScroll!=object) return;
         CGPoint newH = [[change objectForKey:@"new"] CGPointValue];
-        CGPoint newOld = [[change objectForKey:@"old"] CGPointValue];
-        CGFloat offset = self.currentScroll.contentOffset.y + CGRectGetMaxY(normalUpScRect);
-        CGFloat num = newH.y - newOld.y;
+        CGPoint newOld = [[change objectForKey:@"new"] CGPointValue];
+        CGFloat navigationHeight = self.navigationController?PageVCNavBarHeight:PageVCStatusBarHeight;
+        CGFloat upScHeight = self.upSc.frame.size.height;
+        CGFloat allHeight = navigationHeight + upScHeight;
         CGRect upRect = self.upSc.frame;
-        int  numInt = num;
-        if (offset>0) {
-            if (numInt == 54 ) return;
-            upRect.origin.y -= fabs(num);
-        }else{
-            if (upRect.origin.y< CGRectGetMinY(normalUpScRect)) {
-                
-                CGFloat top = self.currentScroll.contentInset.top;
-                if (top<CGRectGetMaxY(normalUpScRect)) {
-                    self.currentScroll.contentInset = UIEdgeInsetsMake(top + fabs(num), 0, 0, 0);
-                }
-                if (self.currentScroll.contentInset.top>CGRectGetMaxY(normalUpScRect)) {
-                    self.currentScroll.contentInset = UIEdgeInsetsMake(CGRectGetMaxY(normalUpScRect), 0, 0, 0);
-                }
-                upRect.origin.y += fabs(num);
-                
+        if (newH.y >-CGRectGetMaxY(normalUpScRect) ) {
+            if (newH.y > -allHeight) {
+                upRect.origin.y = navigationHeight;
+            }else{
+                upRect.origin.y = fabs(newH.y) - upScHeight;
             }
         }
-
-        if(self.navigationController&&self.param.wFromNavi&&upRect.origin.y<= PageVCNavBarHeight){
-            upRect.origin.y = PageVCNavBarHeight;
-        }else if(self.navigationController&&!self.param.wFromNavi&&upRect.origin.y<= PageVCNavBarHeight){
-            upRect.origin.y = PageVCNavBarHeight;
-        }else if(upRect.origin.y<= PageVCStatusBarHeight){
-            upRect.origin.y = PageVCStatusBarHeight;
-        }else if (upRect.origin.y>CGRectGetMinY(normalUpScRect)) {
-            upRect.origin.y = CGRectGetMinY(normalUpScRect);
+        if (upRect.origin.y>normalUpScRect.origin.y) {
+            upRect.origin.y = normalUpScRect.origin.y;
+        }else if (upRect.origin.y  < navigationHeight){
+            upRect.origin.y  = navigationHeight;
         }
         self.upSc.frame = upRect;
         
@@ -533,34 +545,38 @@
             headRect.origin.y = CGRectGetMinY(upRect)-headRect.size.height;
             self.headView.frame = headRect;
         }
-        CGFloat delta = fabs(offset/PageVCNavBarHeight);
+       
+        CGFloat delta = navigationHeight/CGRectGetMinY(self.upSc.frame);
         if (delta>1) {
             delta = 1;
         }else if (delta < 0){
             delta = 0;
         }
-        if (upRect.origin.y >= CGRectGetMinY(normalUpScRect)) {
+        
+        if (ceil(upRect.origin.y) >= CGRectGetMinY(normalUpScRect)) {
+            self.currentScroll.bounces = YES;
             delta = 0;
         }else if (upRect.origin.y<= PageVCNavBarHeight){
+            self.currentScroll.bounces = YES;
             delta = 1;
+        }else{
+            self.currentScroll.bounces = NO;
         }
          if (self.param.wNaviAlpha) {
              if (self.navigationController) {
                  self.navigationController.navigationBar.alpha = delta;
              }
              if (self.headView) {
-                 //只改变headView的子view透明度 tag设为999
-                 UIView *view = [self.headView viewWithTag:999];
-                 if (view) {
-                     view.alpha = 1-delta;
+                 if (delta == 1) {
+                    self.headView.alpha = 0;
                  }else{
-                     self.headView.alpha = 1-delta;
+                    self.headView.alpha = 1;
                  }
              }
          }
-    
+
         if (self.param.wEventChildVCDidSroll) {
-            self.param.wEventChildVCDidSroll(self,newOld, newH, self.currentScroll,offset);
+            self.param.wEventChildVCDidSroll(self,newOld, newH, self.currentScroll);
         }
         
     }

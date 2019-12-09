@@ -181,17 +181,12 @@
         //头部
        .wMenuHeadViewSet(^UIView *{
             UIView *back = [UIView new];
-            back.backgroundColor = [UIColor whiteColor];
-            back.frame = CGRectMake(0, 0, PageVCWidth, 70+PageVCStatusBarHeight);
-            UISearchBar *bar = [UISearchBar new];
-            bar.tag = 999;
-            bar.barTintColor = [UIColor whiteColor];
-            bar.backgroundColor = [UIColor whiteColor];
-            bar.searchBarStyle = UISearchBarStyleMinimal;
-            bar.searchTextField.textAlignment = NSTextAlignmentCenter;
-            bar.placeholder = @"请搜索";
-            bar.frame = CGRectMake(10, PageVCStatusBarHeight, PageVCWidth-20, 70);
-            [back addSubview:bar];
+            back.backgroundColor = [UIColor redColor];
+            back.frame = CGRectMake(0, 0, PageVCWidth, 270+PageVCStatusBarHeight);
+            UIImageView *image = [UIImageView new];
+            [image sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1575879847862&di=a4e903d3e04952e8a55398e6b88faf64&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201612%2F01%2F20161201194827_5jahw.png"]];
+            image.frame = back.bounds;
+            [back addSubview:image];
             return back;
        });
       }

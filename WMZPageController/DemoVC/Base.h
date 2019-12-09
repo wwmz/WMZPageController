@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "WMZPageController.h"
 #import "TestVC.h"
+#import "UIImageView+WebCache.h"
 #define SuppressPerformSelectorLeakWarning(Stuff) \
 do { \
 _Pragma("clang diagnostic push") \

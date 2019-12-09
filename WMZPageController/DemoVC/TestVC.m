@@ -31,10 +31,11 @@
     NSLog(@"viewWillAppear %ld",self.page);
 }
 
+#pragma mark 注意 重新适配tableview的frame
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-      NSLog(@"viewDidAppear %ld",self.page);
-    
+    NSLog(@"viewDidAppear %ld",self.page);
+     self.ta.frame = self.view.bounds;
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -95,16 +96,8 @@
     }];
     // 设置自动切换透明度(在导航栏下面自动隐藏)
     self.ta.mj_header.automaticallyChangeAlpha = YES;
-        
-}
-
-- (void)viewDidLayoutSubviews{
-    [super viewDidLayoutSubviews];
-    self.ta.frame = self.view.bounds;
     
 }
-
-
 
 - (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     return nil;
@@ -152,9 +145,6 @@
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-   
-}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 70;
@@ -172,11 +162,5 @@
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
     return @"删除";
 }
-
-
-- (NSString *)description{
-    return [NSString stringWithFormat:@"%ld",self.page];
-}
-
 
 @end
