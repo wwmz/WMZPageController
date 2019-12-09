@@ -17,7 +17,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     UITabBarController *ta = [UITabBarController new];
-    ta.viewControllers = @[[[UINavigationController alloc]initWithRootViewController:[HomeVC new]],[[UINavigationController alloc]initWithRootViewController:[HomeVC new]],[[UINavigationController alloc]initWithRootViewController:[HomeVC new]]];
+    
+    UINavigationController *na1 = [[UINavigationController alloc]initWithRootViewController:[HomeVC new]];
+    na1.tabBarItem.title = @"页面";
+    UINavigationController *na2 = [[UINavigationController alloc]initWithRootViewController:[HomeVC new]];
+    na2.tabBarItem.title = @"页面";
+    UINavigationController *na3 = [[UINavigationController alloc]initWithRootViewController:[HomeVC new]];
+    na3.tabBarItem.title = @"页面";
+    ta.viewControllers = @[na1,na2,na3];
     self.window.rootViewController = ta;
     // Override point for customization after application launch.
     return YES;
