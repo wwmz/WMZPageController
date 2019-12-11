@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WMZPageController : UIViewController
 
+//导航栏背景色  //特殊情况自行处理
+@property(nonatomic,strong)UIView *naviBarBackGround;
+
 @property(nonatomic,strong)WMZPageParam *param;
 
 /*

@@ -85,12 +85,31 @@
     });
 }
 
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
     if (self.navigationController&&self.param.wNaviAlpha) {
-        for (UIView *view in [self.navigationController.navigationBar subviews]) {
-            if ([NSStringFromClass([view class]) isEqualToString:@"_UIBarBackground"]) {
-                view.alpha = 1;
+        if (self.naviBarBackGround) {
+            self.naviBarBackGround.alpha = 1;
+        }
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    if (self.navigationController&&self.param.wNaviAlpha) {
+        if (self.naviBarBackGround) return;
+        NSMutableArray *loop= [NSMutableArray new];
+        [loop addObject:[self.navigationController.navigationBar subviews]];
+        while (loop.count) {
+            NSArray *arr = loop.lastObject;
+            [loop removeLastObject];
+            for (NSInteger i = arr.count - 1; i >= 0; i--) {
+                UIView *view = arr[i];
+                [loop addObject:view.subviews];
+                if ([NSStringFromClass([view class]) isEqualToString:@"_UIBarBackground"]) {
+                    view.alpha = 0;
+                    self.naviBarBackGround = view;
+                }
             }
         }
     }
@@ -550,11 +569,7 @@
         }
          if (self.param.wNaviAlpha) {
              if (self.navigationController) {
-                 for (UIView *view in [self.navigationController.navigationBar subviews]) {
-                     if ([NSStringFromClass([view class]) isEqualToString:@"_UIBarBackground"]) {
-                         view.alpha = delta;
-                     }
-                 }
+                 self.naviBarBackGround.alpha =  delta;
              }
              if (self.headView) {
                  if (delta == 1) {
