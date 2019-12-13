@@ -28,6 +28,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)NSMutableArray *btnArr;
 
+//默认选中
+@property(nonatomic,assign)BOOL first;
+
 @property(nonatomic,weak)id <WMZPageLoopDelegate> loopDelegate;
 
 - (instancetype)initWithFrame:(CGRect)frame param:(WMZPageParam*)param;

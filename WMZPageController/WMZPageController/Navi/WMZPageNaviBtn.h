@@ -32,7 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)TagSetImagePosition:(PageBtnPosition)postion spacing:(CGFloat)spacing;
 //设置单边阴影
 - (void)viewShadowPathWithColor:(UIColor *)shadowColor shadowOpacity:(CGFloat)shadowOpacity shadowRadius:(CGFloat)shadowRadius shadowPathType:(PageShadowPathType)shadowPathType shadowPathWidth:(CGFloat)shadowPathWidth;
-
+//设置圆角
+-(void)setRadii:(CGSize)size RoundingCorners:(UIRectCorner)rectCorner;
 
 @end
 
@@ -56,6 +57,11 @@ NS_ASSUME_NONNULL_BEGIN
                 direction:(PageGradientChangeDirection)direction
                 startColor:(UIColor*)startcolor
                 endColor:(UIColor*)endColor;
+@end
+
+@interface UIView (PageBorder)
+//设置单边框
+- (void)viewPathWithColor:(UIColor *)shadowColor  PathType:(PageShadowPathType)shadowPathType PathWidth:(CGFloat)shadowPathWidth heightScale:(CGFloat)sacle;
 @end
 
 NS_ASSUME_NONNULL_END

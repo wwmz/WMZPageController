@@ -137,4 +137,22 @@ typedef void (^PageChildVCScroll)(UIViewController* pageVC,CGPoint oldPoint,CGPo
  */
 typedef UIView* (^PageHeadViewBlock)(void);
 
+/*
+ * 头视图和菜单栏的背景层
+ */
+typedef void (^PageHeadAndMenuBgView)(UIView *bgView);
+
+
+/*
+ * 自定义菜单栏
+ */
+typedef void (^PageCustomMenuTitle)(NSArray *titleArr);
+
+
+/*
+ * 滚动 后改变标题
+ */
+typedef void (^PageCustomMenuSelectTitle)(NSArray *titleArr);
+
+
 #endif /* WMZPageConfig_h */

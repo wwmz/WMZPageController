@@ -22,6 +22,8 @@ WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, NSArray*,     
 /* =========================================special==============================================*/
 //特殊属性 菜单滑动到顶部悬浮 default NO
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wTopSuspension)
+//特殊属性 有悬浮和headview的时候 headview是否可以滑动 default YES
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wHeadViewScroll)
 //导航栏透明度变化 default NO
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wNaviAlpha)
 //滑动切换 default YES
@@ -37,6 +39,14 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,         
 /* =========================================special==============================================*/
 
 /* =========================================Menu==================================================*/
+//给菜单栏和headView加个背景层 default -
+WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageHeadAndMenuBgView,                  wInsertHeadAndMenuBg)
+//给菜单栏加个下划线 default -
+WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageHeadAndMenuBgView,                  wInsertMenuLine)
+//自定义菜单栏上的标题
+WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageCustomMenuTitle,                  wCustomMenuTitle)
+//自定义选中后菜单栏上的标题
+WMZPagePropStatementAndPropSetFuncStatement(copy,  WMZPageParam, PageCustomMenuSelectTitle,wCustomMenuSelectTitle)
 //默认选中 default 0
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, NSInteger,             wMenuDefaultIndex)
 //菜单最右边固定内容 default nil
@@ -55,6 +65,8 @@ WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, UIColor*,     
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuCellMargin)
 //菜单按钮的上下间距 default 20 (可根据此属性改变导航栏的高度)
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuCellPadding)
+//菜单按钮距离顶部的y值 default 0
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuCellMarginY)
 //菜单的位置 default PageMenuPositionLeft
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, PageMenuPosition,      wMenuPosition)
 //菜单标题左右间距 default 0
@@ -71,8 +83,6 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,      
 WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, UIColor*,              wMenuTitleColor)
 //菜单字体选中颜色 default E5193E
 WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, UIColor*,              wMenuTitleSelectColor)
-//菜单最底部下划线 default NO
-WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,              wMenuShowBottomLine)
 //菜单图文位置 default PageBtnPositionTop
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, PageBtnPosition,       wMenuImagePosition)
 //菜单图文位置间距 default 5

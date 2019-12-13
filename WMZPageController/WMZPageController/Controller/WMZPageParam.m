@@ -40,13 +40,18 @@ WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuImag
 WMZPagePropSetFuncImplementation(WMZPageParam, id,                     wMenuFixRightData)
 WMZPagePropSetFuncImplementation(WMZPageParam, UIColor*,               wMenuBgColor)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuFixWidth)
+WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuCellMarginY)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageHeadViewBlock,      wMenuHeadView)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuTitleWeight)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wTopSuspension)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wFromNavi)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wNaviAlpha)
+WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wHeadViewScroll)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wScrollCanTransfer)
-WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wMenuShowBottomLine)
+WMZPagePropSetFuncImplementation(WMZPageParam, PageHeadAndMenuBgView,  wInsertHeadAndMenuBg)
+WMZPagePropSetFuncImplementation(WMZPageParam, PageHeadAndMenuBgView,  wInsertMenuLine)
+WMZPagePropSetFuncImplementation(WMZPageParam, PageCustomMenuTitle,    wCustomMenuTitle)
+WMZPagePropSetFuncImplementation(WMZPageParam, PageCustomMenuSelectTitle,wCustomMenuSelectTitle)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageClickBlock,         wEventFixedClick)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageClickBlock,         wEventClick)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageVCChangeBlock,      wEventBeganTransferController)
@@ -72,6 +77,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, PageChildVCScroll,      wEventChi
         _wMenuFixShadow = YES;
         _wFromNavi = YES;
         _wScrollCanTransfer = YES;
+        _wHeadViewScroll = YES;
         _wMenuTitleSelectFont = 18.5;
     }
     return self;

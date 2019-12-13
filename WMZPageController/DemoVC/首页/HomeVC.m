@@ -77,8 +77,13 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    Base *obj = (Base*)[NSClassFromString(self.VCData[indexPath.section]) new];
-    [obj pushWithVC:self withIndex:indexPath.row];
+    if (indexPath.section  == 4) {
+        NSArray *arr = @[@"WMZCustomOnePage",@"WMZCustomTwoPage",@"WMZCustomThreePage"];
+        [self.navigationController pushViewController:[NSClassFromString(arr[indexPath.row]) new] animated:YES];
+    }else{
+        Base *obj = (Base*)[NSClassFromString(self.VCData[indexPath.section]) new];
+        [obj pushWithVC:self withIndex:indexPath.row];
+    }
 }
 
 - (NSArray *)taData{
@@ -86,9 +91,10 @@
         _taData = @[
         @[@"链式语法展示所有属性"],
         @[@"普通标题",@"换行标题",@"带红点普通标题",@"富文本标题",@"图文标题(图上文下)",@"图文标题(图左文右),标题在底部",
-          @"导航栏标题",@"居中标题",@"固定最右边标题",@"固定最右边图片+标题",@"固定宽度标题"],
+          @"导航栏标题",@"居中标题",@"固定最右边标题",@"固定最右边图片+标题",@"固定宽度标题",@"自定义标题内容"],
         @[@"无样式",@"下划线不跟随移动",@"下划线跟随移动",@"字体变大",@"圆点+跟随滑动+颜色渐变",@"背景框"],
-        @[@"爱奇艺",@"优酷",@"拼多多",@"今日头条",@"微博",@"京东",@"简书",@"悬浮效果",@"悬浮效果(导航栏不隐藏)",@"适配暗黑模式"],
+        @[@"爱奇艺",@"优酷",@"拼多多",@"今日头条",@"微博",@"京东",@"简书",@"适配暗黑模式"],
+        @[@"悬浮效果(导航栏不隐藏)",@"悬浮效果(添加全局背景色)",@"悬浮效果(导航栏透明度变化)"]
         ];
     }
     return _taData;
@@ -96,14 +102,14 @@
 
 - (NSArray *)titleData{
     if (!_titleData) {
-        _titleData = @[@"完整手动管理控制器生命周期",@"标题样式",@"指示器样式",@"实际使用"];
+        _titleData = @[@"完整手动管理控制器生命周期",@"标题样式",@"指示器样式",@"实际使用",@"悬浮使用(+继承使用示范)"];
     }
     return _titleData;
 }
 
 - (NSArray *)VCData{
     if (!_VCData) {
-        _VCData = @[@"AllPropertiesVC",@"TitleVC",@"IndicatorVC",@"UseVC"];
+        _VCData = @[@"AllPropertiesVC",@"TitleVC",@"IndicatorVC",@"UseVC",];
     }
     return _VCData;
 }

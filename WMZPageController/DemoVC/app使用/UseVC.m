@@ -9,7 +9,6 @@
 //
 
 #import "UseVC.h"
-
 @interface UseVC ()
 
 @end
@@ -34,8 +33,6 @@
     }else if(index == 6){
         data = [self JSData];
     }else if(index == 7){
-        data = [self PDDData];
-    }else if(index == 8){
         data = [self PDDData];
     }
     //控制器数组
@@ -157,75 +154,7 @@
         .wMenuAnimalSet(PageTitleMenuPDD);
         }
         break;
-       //悬浮效果
-        case 7:{
-       param.wTitleArrSet(data)
-       .wControllersSet(vcArr)
-       .wMenuIndicatorColorSet(PageColor(0xfe6e5d))
-       .wMenuTitleSelectColorSet(PageColor(0x333333))
-       .wMenuTitleColorSet(PageColor(0x666666))
-       .wMenuAnimalTitleGradientSet(NO)
-       .wMenuFixRightDataSet(@{@"image":@"G"})
-       .wMenuFixWidthSet(70)
-       .wMenuFixShadowSet(NO)
-       .wMenuIndicatorHeightSet(3)
-       .wMenuTitleWeightSet(100)
-       .wMenuIndicatorWidthSet(15)
-       .wMenuAnimalSet(PageTitleMenuPDD)
-        //悬浮开启
-       .wTopSuspensionSet(YES)
-        //导航栏透明度变化
-       .wNaviAlphaSet(YES)
-        //头视图y坐标从0开始
-       .wFromNaviSet(NO)
-        //头部
-       .wMenuHeadViewSet(^UIView *{
-            UIView *back = [UIView new];
-            back.backgroundColor = [UIColor redColor];
-            back.frame = CGRectMake(0, 0, PageVCWidth, 270+PageVCStatusBarHeight);
-            UIImageView *image = [UIImageView new];
-            [image sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1575879847862&di=a4e903d3e04952e8a55398e6b88faf64&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201612%2F01%2F20161201194827_5jahw.png"]];
-            image.frame = back.bounds;
-            [back addSubview:image];
-            return back;
-       });
-      }
-      break;
-    //悬浮效果
-       case 8:{
-      param.wTitleArrSet(data)
-      .wControllersSet(vcArr)
-      .wMenuIndicatorColorSet(PageColor(0xfe6e5d))
-      .wMenuTitleSelectColorSet(PageColor(0x333333))
-      .wMenuTitleColorSet(PageColor(0x666666))
-      .wMenuAnimalTitleGradientSet(NO)
-      .wMenuFixRightDataSet(@{@"image":@"G"})
-      .wMenuFixWidthSet(70)
-      .wMenuFixShadowSet(NO)
-      .wMenuIndicatorHeightSet(3)
-      .wMenuTitleWeightSet(100)
-      .wMenuIndicatorWidthSet(15)
-      .wMenuAnimalSet(PageTitleMenuPDD)
-       //悬浮开启
-      .wTopSuspensionSet(YES)
-       //导航栏透明度变化
-      .wNaviAlphaSet(NO)
-       //头视图y坐标从0开始
-      .wFromNaviSet(YES)
-       //头部
-      .wMenuHeadViewSet(^UIView *{
-           UIView *back = [UIView new];
-           back.backgroundColor = [UIColor redColor];
-           back.frame = CGRectMake(0, 0, PageVCWidth, 270+PageVCStatusBarHeight);
-           UIImageView *image = [UIImageView new];
-           [image sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1575879847862&di=a4e903d3e04952e8a55398e6b88faf64&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201612%2F01%2F20161201194827_5jahw.png"]];
-           image.frame = back.bounds;
-           [back addSubview:image];
-           return back;
-      });
-     }
-     break;
-      case 9:{
+      case 7:{
           
         param.wTitleArrSet(data)
         .wControllersSet(vcArr)
@@ -254,7 +183,7 @@
     [vc.navigationController pushViewController:VC animated:YES];
     
     //更新
-    if (index == 9) {
+    if (index == 7) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             NSMutableArray *updateArr = [NSMutableArray new];
             [[self weiboData] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {

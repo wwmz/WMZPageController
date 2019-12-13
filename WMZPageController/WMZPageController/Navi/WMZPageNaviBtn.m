@@ -14,6 +14,14 @@
 @implementation WMZPageNaviBtn
 
 
+-(void)setRadii:(CGSize)size RoundingCorners:(UIRectCorner)rectCorner {
+    //设置只有一半圆角
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds byRoundingCorners:rectCorner cornerRadii:size];
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    maskLayer.frame = self.bounds;
+    maskLayer.path = maskPath.CGPath;
+    self.layer.mask = maskLayer;
+}
 
 - (CGSize)maxSize{
     if (!_maxSize.width||!_maxSize.height) {
@@ -236,6 +244,40 @@ static NSInteger const pointWidth = 7; //小红点的宽高
        UIImage*image = UIGraphicsGetImageFromCurrentImageContext();
        UIGraphicsEndImageContext();
        return [UIColor colorWithPatternImage:image];
+}
+
+@end
+
+@implementation UIView(PageBorder)
+
+
+- (void)viewPathWithColor:(UIColor *)shadowColor  PathType:(PageShadowPathType)shadowPathType PathWidth:(CGFloat)shadowPathWidth heightScale:(CGFloat)sacle{
+    
+    CGRect shadowRect = CGRectZero;
+    CGFloat originX,originY,sizeWith,sizeHeight;
+    originX = 0;
+    originY = self.bounds.size.height*(1-sacle)/2;
+    sizeWith = self.bounds.size.width;
+    sizeHeight = self.bounds.size.height*sacle;
+    
+    if (shadowPathType == PageShadowPathTop) {
+        shadowRect = CGRectMake(originX, originY-shadowPathWidth/2, sizeWith, shadowPathWidth);
+    }else if (shadowPathType == PageShadowPathBottom){
+        shadowRect = CGRectMake(originY, sizeHeight-shadowPathWidth/2, sizeWith, shadowPathWidth);
+    }else if (shadowPathType == PageShadowPathLeft){
+        shadowRect = CGRectMake(originX-shadowPathWidth/2, originY+sizeHeight/4, shadowPathWidth, sizeHeight/2);
+    }else if (shadowPathType == PageShadowPathRight){
+        shadowRect = CGRectMake(sizeWith-shadowPathWidth/2, originY, shadowPathWidth, sizeHeight);
+    }else if (shadowPathType == PageShadowPathCommon){
+        shadowRect = CGRectMake(originX-shadowPathWidth/2, 2, sizeWith+shadowPathWidth, sizeHeight+shadowPathWidth/2);
+    }else if (shadowPathType == PageShadowPathAround){
+        shadowRect = CGRectMake(originX-shadowPathWidth/2, originY-shadowPathWidth/2, sizeWith+shadowPathWidth, sizeHeight+shadowPathWidth);
+    }
+    UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRect:shadowRect];
+    CAShapeLayer *layer = [CAShapeLayer layer];
+    layer.path = bezierPath.CGPath;
+    layer.fillColor = shadowColor.CGColor;
+    [self.layer addSublayer:layer];
 }
 
 @end

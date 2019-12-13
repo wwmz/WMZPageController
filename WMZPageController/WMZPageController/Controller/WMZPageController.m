@@ -7,23 +7,17 @@
 //
 
 #import "WMZPageController.h"
-#import "WMZPageScroller.h"
-#import "WMZPageLoopView.h"
-
+//惯性滑动距离
+#define pageSliderHeight 70
 @interface WMZPageController()<UIScrollViewDelegate,WMZPageLoopDelegate,UITraitEnvironment>
 {
     CGFloat lastContentOffset;
     WMZPageNaviBtn *_btnLeft ;
     WMZPageNaviBtn *_btnRight;
     CGRect normalUpScRect;
-    
+    BOOL hadWillDisappeal;
+    BOOL hadEnd;
 }
-//frame数组
-@property(nonatomic,strong)NSMutableArray *rectArr;
-//头部标题滚动视图
-@property(nonatomic,strong)WMZPageLoopView *upSc;
-//底部全屏滚动视图
-@property(nonatomic,strong)WMZPageScroller *downSc;
 //当前视图
 @property(nonatomic,assign)NSInteger currentPageIndex;
 //可能的下一个视图
@@ -42,23 +36,37 @@
 @property(nonatomic,strong)UIViewController *currentVC;
 //缓存
 @property(nonatomic,strong)NSCache *cache;
-//头部视图
-@property(nonatomic,strong)UIView *headView;
 //当前子控制器中的滚动视图
 @property(nonatomic,strong)UIScrollView *currentScroll;
+//头部视图
+@property(nonatomic,strong)UIView *headView;
+//头部视图菜单栏底部的占位视图(如有需要)
+@property(nonatomic,strong)UIView *head_MenuView;
 //最底部下划线
 @property(nonatomic,strong)UIView *lineView;
+//视图消失时候的透明度 有透明度变化的时候
+@property(nonatomic,assign)CGFloat lastAlpah;
 @end
 @implementation WMZPageController
 
 - (void)updatePageController{
-    [self setParam];
-    
     [self.cache removeAllObjects];
     [self.upSc removeFromSuperview];
     [self.downSc removeFromSuperview];
     [self.sonChildScrollerViewDic removeAllObjects];
     [self.rectArr removeAllObjects];
+    if (self.headView) {
+        [self.headView removeFromSuperview];
+        self.headView = nil;
+    }
+    if (self.lineView) {
+        [self.lineView removeFromSuperview];
+         self.lineView = nil;
+    }
+    if (self.head_MenuView) {
+        [self.head_MenuView removeFromSuperview];
+        self.head_MenuView = nil;
+    }
     self.hasEndAppearance = NO;
     self.hasDealAppearance = NO;
     self.currentVC = nil;
@@ -73,7 +81,7 @@
         [VC.view removeFromSuperview];
         [VC removeFromParentViewController];
     }
-    
+    [self setParam];
     [self UI];
 }
 
@@ -85,19 +93,23 @@
     });
 }
 
-- (void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
-    if (self.navigationController&&self.param.wNaviAlpha) {
-        if (self.naviBarBackGround) {
-            self.naviBarBackGround.alpha = 1;
-        }
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    if (self.naviBarBackGround&&self.param.wNaviAlpha) {
+        self.lastAlpah = self.naviBarBackGround.alpha;
+        self.naviBarBackGround.alpha = 1;
     }
+    hadWillDisappeal = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    hadWillDisappeal = NO;
     if (self.navigationController&&self.param.wNaviAlpha) {
-        if (self.naviBarBackGround) return;
+        if (self.naviBarBackGround){
+             self.naviBarBackGround.alpha = self.lastAlpah;
+            return;
+        }
         NSMutableArray *loop= [NSMutableArray new];
         [loop addObject:[self.navigationController.navigationBar subviews]];
         while (loop.count) {
@@ -106,9 +118,10 @@
             for (NSInteger i = arr.count - 1; i >= 0; i--) {
                 UIView *view = arr[i];
                 [loop addObject:view.subviews];
-                if ([NSStringFromClass([view class]) isEqualToString:@"_UIBarBackground"]) {
-                    view.alpha = 0;
+                if ([NSStringFromClass([view class]) isEqualToString:@"_UIBarBackground"]||[NSStringFromClass([view class]) isEqualToString:@"_UINavigationBarBackground"]) {
                     self.naviBarBackGround = view;
+                    [self.naviBarBackGround setAlpha:0];
+                    break;
                 }
             }
         }
@@ -116,6 +129,16 @@
 }
 
 - (void)setParam{
+    if (self.param.wInsertHeadAndMenuBg) {
+        self.head_MenuView = [UIView new];
+        self.param.wInsertHeadAndMenuBg(self.head_MenuView);
+    }
+    if (self.param.wInsertMenuLine) {
+        self.lineView = [UIView new];
+        self.lineView.backgroundColor = PageColor(0x999999);
+        self.lineView.frame = CGRectMake(0, self.upSc.frame.size.height-PageK1px, self.upSc.frame.size.width, PageK1px);
+        self.param.wInsertMenuLine(self.lineView);
+    }
     self.view.backgroundColor = [UIColor whiteColor];
     if (self.param.wMenuAnimal == PageTitleMenuAiQY) {
         if (!self.param.wMenuIndicatorWidth) {
@@ -157,7 +180,7 @@
 
 - (void)UI{
     self.cache = [NSCache new];
-    self.cache.countLimit = 15;
+    self.cache.countLimit = 30;
 
     //全屏
     self.downSc = [[WMZPageScroller alloc]initWithFrame:self.view.bounds];
@@ -247,7 +270,6 @@
         }
     }
     
-    
     if (self.param.wMenuPosition == PageMenuPositionNavi && self.navigationController) {
         self.navigationItem.titleView = self.upSc;
     }else{
@@ -277,17 +299,43 @@
         [self.rectArr addObject:[NSValue valueWithCGRect:frame]];
     }
     self.downSc.scrollEnabled = self.param.wScrollCanTransfer;
-    self.downSc.contentSize = CGSizeMake(self.param.wTitleArr.count*PageVCWidth, 0);
+    self.downSc.contentSize = CGSizeMake(self.param.wTitleArr.count*PageVCWidth,0);
     
     self.param.titleHeight = self.upSc.frame.size.height;
-    if (self.param.wMenuShowBottomLine) {
-        self.lineView = [UIView new];
-        self.lineView.backgroundColor = PageColor(0x999999);
-        self.lineView.frame = CGRectMake(0, self.upSc.frame.size.height-PageK1px, self.upSc.frame.size.width, PageK1px);
+    if (self.lineView) {
+        CGRect lineRect = self.lineView.frame;
+        lineRect.origin.y = self.upSc.frame.size.height- lineRect.size.height;
+        if (!lineRect.size.width) {
+            lineRect.size.width = self.upSc.frame.size.width;
+        }
+        self.lineView.frame = lineRect;
         [self.upSc addSubview:self.lineView];
     }
+    if (self.head_MenuView) {
+        self.head_MenuView.frame = CGRectMake(0, self.headView?CGRectGetMinX(self.headView.frame):CGRectGetMinX(self.upSc.frame), self.upSc.frame.size.width, CGRectGetMaxY(self.upSc.frame));
+        [self.view insertSubview:self.head_MenuView belowSubview:self.headView?self.headView:self.upSc];
+        self.upSc.mainView.backgroundColor = [UIColor clearColor];
+        for (WMZPageNaviBtn *btn in self.upSc.btnArr) {
+            btn.backgroundColor = [UIColor clearColor];
+        }
+        if (self.headView) {
+            self.headView.backgroundColor = [UIColor clearColor];
+        }
+    }
+    if (self.param.wCustomMenuTitle) {
+        self.param.wCustomMenuTitle(self.upSc.btnArr);
+    }
+    
+    [self.upSc.btnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (idx == self.param.wMenuDefaultIndex) {
+            self.upSc.first = YES;
+            [obj sendActionsForControlEvents:UIControlEventTouchUpInside];
+            *stop = YES;
+        }
+    }];
+    
+    
 }
-
 
 - (void)selectWithBtn:(UIButton *)btn first:(BOOL)first{
     NSInteger index = btn.tag;
@@ -298,16 +346,21 @@
          UIViewController *newVC = [self getVCWithIndex:index];
          [newVC beginAppearanceTransition:YES animated:YES];
          [self addChildVC:index VC:newVC];
-         [self.downSc setContentOffset:CGPointMake(index*PageVCWidth, 0) animated:YES];
+         self.downSc.contentOffset = CGPointMake(index*PageVCWidth, 0);
          [newVC endAppearanceTransition];
          [self setUpSuspension:newVC index:index];
+
     }else{
+
         [self beginAppearanceTransitionWithIndex:index withOldIndex:self.currentPageIndex];
-        [self.downSc setContentOffset:CGPointMake(index*PageVCWidth, 0) animated:YES];
-        self.nextPageIndex = index;
-        self.currentPageIndex = index;
-        self.lastPageIndex = self.currentPageIndex;
-        [self endAppearanceTransitionWithIndex:self.nextPageIndex withOldIndex:self.lastPageIndex isFlag:NO];
+        [UIView animateWithDuration:0.2 animations:^{
+             self.downSc.contentOffset = CGPointMake(index*PageVCWidth, 0);
+        } completion:^(BOOL finished) {
+            self.nextPageIndex = index;
+            self.currentPageIndex = index;
+            self.lastPageIndex = self.currentPageIndex;
+            [self endAppearanceTransitionWithIndex:self.nextPageIndex withOldIndex:self.lastPageIndex isFlag:NO];
+        }];
     }
 }
 
@@ -486,7 +539,7 @@
     }
     self.hasDealAppearance = NO;
     self.nextPageIndex = -999;
-    
+    [self setUpSuspension:newVC index:index];
 }
 
 - (BOOL)canTopSuspension{
@@ -508,7 +561,7 @@
                self.currentScroll = view;
                [self.sonChildScrollerViewDic setObject:view forKey:@(index)];
                CGFloat nowTitleY = CGRectGetMaxY(self.upSc.frame);
-               view.contentInset = UIEdgeInsetsMake(CGRectGetMaxY(normalUpScRect), 0, 0, 0);
+               view.contentInset = UIEdgeInsetsMake(CGRectGetMaxY(normalUpScRect), view.contentInset.left, view.contentInset.bottom, view.contentInset.right);
                if (self.currentScroll.contentOffset.y<-nowTitleY) {
                     view.contentOffset = CGPointMake(view.contentOffset.x,-nowTitleY);
                }else if ((int)nowTitleY == (int)CGRectGetMaxY(normalUpScRect)){
@@ -525,6 +578,7 @@
     if ([keyPath isEqualToString:@"contentOffset"]) {
         if (![self canTopSuspension]) return;
         if (self.currentScroll!=object) return;
+        if (hadWillDisappeal) return;
         CGPoint newH = [[change objectForKey:@"new"] CGPointValue];
         CGPoint newOld = [[change objectForKey:@"new"] CGPointValue];
         CGFloat navigationHeight = self.navigationController?PageVCNavBarHeight:PageVCStatusBarHeight;
@@ -543,12 +597,24 @@
         }else if (upRect.origin.y  < navigationHeight){
             upRect.origin.y  = navigationHeight;
         }
+        
+        
+        if (-(int)CGRectGetMaxY(normalUpScRect) == (int)self.currentScroll.contentOffset.y) {
+             upRect.origin.y = normalUpScRect.origin.y;
+        }
+
         self.upSc.frame = upRect;
         
         if (self.headView) {
             CGRect headRect = self.headView.frame;
             headRect.origin.y = CGRectGetMinY(upRect)-headRect.size.height;
             self.headView.frame = headRect;
+        }
+        if (self.head_MenuView) {
+            CGRect headRect = self.head_MenuView.frame;
+            headRect.origin.y = self.headView?
+            CGRectGetMinY(self.headView.frame):CGRectGetMinY(self.upSc.frame);
+            self.head_MenuView.frame = headRect;
         }
        
         CGFloat delta = navigationHeight/CGRectGetMinY(self.upSc.frame);
@@ -557,8 +623,8 @@
         }else if (delta < 0){
             delta = 0;
         }
-        
-        if (ceil(upRect.origin.y) >= CGRectGetMinY(normalUpScRect)) {
+
+        if ((int)upRect.origin.y >= (int)CGRectGetMinY(normalUpScRect)) {
             self.currentScroll.bounces = YES;
             delta = 0;
         }else if (upRect.origin.y<= PageVCNavBarHeight){
@@ -567,7 +633,8 @@
         }else{
             self.currentScroll.bounces = NO;
         }
-         if (self.param.wNaviAlpha) {
+         
+         if (self.param.wNaviAlpha&&self.headView.superview == self.view) {
              if (self.navigationController) {
                  self.naviBarBackGround.alpha =  delta;
              }
@@ -683,6 +750,44 @@
     return _sonChildScrollerViewDic;
 }
 
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+     [super touchesBegan:touches withEvent:event];
+    if (!self.headView||![self canTopSuspension]||!self.param.wHeadViewScroll) return;
+}
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [super touchesMoved:touches withEvent:event];
+    if (!self.headView||![self canTopSuspension]||!self.param.wHeadViewScroll) return;
+    UITouch *touch = [touches anyObject];
+    CGPoint currentPoint = [touch locationInView:self.headView];
+    CGPoint previousPoint = [touch previousLocationInView:self.headView];
+    CGFloat offset = currentPoint.y - previousPoint.y;
+    CGPoint point = CGPointMake(self.currentScroll.contentOffset.x, self.currentScroll.contentOffset.y-offset);
+    if (point.y <=- CGRectGetMaxY(normalUpScRect)) {
+        point.y = - CGRectGetMaxY(normalUpScRect);
+    }
+    self.currentScroll.contentOffset = point;
+}
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+     [super touchesEnded:touches withEvent:event];
+     if (!self.headView||![self canTopSuspension]||!self.param.wHeadViewScroll) return;
+     UITouch *touch = [touches anyObject];// 某一个手指
+     CGPoint currentPoint = [touch locationInView:self.headView.superview];
+     CGPoint previousPoint = [touch previousLocationInView:self.headView.superview];
+     if (CGPointEqualToPoint(currentPoint, previousPoint)) return;
+     CGFloat offset = currentPoint.y - previousPoint.y;
+     CGPoint point = CGPointMake(self.currentScroll.contentOffset.x, self.currentScroll.contentOffset.y-offset);
+     CGFloat sliderHeight = CGRectGetMaxY(normalUpScRect)/10;
+     if (point.y > - CGRectGetMaxY(normalUpScRect)) {
+        point.y-=(offset>0?sliderHeight:-sliderHeight);
+     }
+     if (point.y <=- CGRectGetMaxY(normalUpScRect)) {
+         point.y = - CGRectGetMaxY(normalUpScRect);
+     }
+     [UIView animateWithDuration:0.5 delay:0.01 options:UIViewAnimationOptionCurveEaseOut animations:^{
+         self.currentScroll.contentOffset = point;
+     } completion:nil];
+}
 - (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     [self.cache removeAllObjects];
@@ -694,5 +799,4 @@
         [obj removeAllObserverdKeyPath:self withKey:@"contentOffset"];
     }];
 }
-
 @end

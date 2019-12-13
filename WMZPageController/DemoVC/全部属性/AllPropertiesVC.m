@@ -83,6 +83,35 @@
         .wFromNaviSet(YES)
         //开启悬浮
         .wTopSuspensionSet(YES)
+        //headView开启滑动 defaulr YES
+        .wHeadViewScrollSet(YES)
+          //自定义静态标题
+        .wCustomMenuTitleSet(^(NSArray *titleArr) {
+            [titleArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {}];
+          })
+        //自定义滑动后标题的变化
+        .wCustomMenuSelectTitleSet(^(NSArray *titleArr) {
+            [titleArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if (obj.isSelected) {
+                     
+                }else{
+                      
+                }
+            }];
+          })
+          //背景层
+//          .wInsertHeadAndMenuBgSet(^(UIView *bgView) {
+//              //全局背景示例
+//              bgView.layer.contents = (id)[UIImage imageNamed:@"11111"].CGImage;
+//          })
+         //底部线
+          .wInsertMenuLineSet(^(UIView *bgView) {
+              //修改内置线
+//              CGRect rect = bgView.frame;
+//              rect.size.height = PageK1px;
+//              bgView.frame = rect;
+//              bgView.backgroundColor = PageColor(0x999999);
+          })
        //控制器开始切换
        .wEventBeganTransferControllerSet(^(UIViewController *oldVC, UIViewController *newVC, NSInteger oldIndex, NSInteger newIndex) {
            NSLog(@"开始切换 %ld %ld",oldIndex,newIndex);

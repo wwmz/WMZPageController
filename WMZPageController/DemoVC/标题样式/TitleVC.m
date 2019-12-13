@@ -26,6 +26,7 @@
           @(8):@"textData",
           @(9):@"textData",
           @(10):@"fixData",
+          @(11):@"textData",
       };
     //位置
     NSDictionary *position = @{
@@ -40,6 +41,7 @@
           @(8):@(PageMenuPositionLeft),
           @(9):@(PageMenuPositionLeft),
           @(10):@(PageMenuPositionLeft),
+          @(11):@(PageMenuPositionLeft),
       };
     //菜单宽度
     NSDictionary *widthDic = @{
@@ -54,6 +56,7 @@
          @(8):@(PageVCWidth),
          @(9):@(PageVCWidth),
          @(10):@(PageVCWidth),
+         @(11):@(PageVCWidth),
     };
     NSArray *data = @[];
     SuppressPerformSelectorLeakWarning(data = [self performSelector:NSSelectorFromString(dic[@(index)])]);
@@ -77,10 +80,38 @@
     if (index == 9) {
         param.wMenuImagePositionSet(PageBtnPositionLeft)
              .wMenuFixRightDataSet(@{@"name":@"金币",@"image":@"B"});
-    } if (index == 10) {
+    }
+    if (index == 10) {
         param.wMenuTitleWidthSet(PageVCWidth/data.count);
     }
-    
+    //自定义标题
+    if (index == 11) {
+        param.wMenuBgColorSet(PageColor(0xf8f6f8))
+        .wMenuCellMarginYSet(10)
+        .wMenuTitleWidthSet(100)
+        .wMenuAnimalSet(PageTitleMenuPDD)
+        //自定义静态标题
+        .wCustomMenuTitleSet(^(NSArray *titleArr) {
+            [titleArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if (idx!=titleArr.count-1) {
+                [obj viewPathWithColor:PageColor(0x666666) PathType:PageShadowPathRight PathWidth:PageK1px heightScale:0.4];
+                }
+            }];
+        })
+        //自定义滑动后标题的变化
+        .wCustomMenuSelectTitleSet(^(NSArray *titleArr) {
+            [titleArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                       if (obj.isSelected) {
+                            obj.layer.masksToBounds = YES;
+                           [obj setRadii:CGSizeMake(10, 10) RoundingCorners:UIRectCornerTopLeft|UIRectCornerTopRight];
+                            obj.backgroundColor = [UIColor whiteColor];
+                       }else{
+                          [obj setRadii:CGSizeMake(0, 0) RoundingCorners:UIRectCornerTopLeft|UIRectCornerTopRight];
+                           obj.backgroundColor = PageColor(0xf8f6f8);
+                       }
+                   }];
+        });
+    }
     WMZPageController *VC =  [WMZPageController new];
     VC.param = param;
     [vc.navigationController pushViewController:VC animated:YES];

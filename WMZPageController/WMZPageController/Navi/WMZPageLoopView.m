@@ -11,8 +11,6 @@
 @interface WMZPageLoopView()
 @property(nonatomic,strong)WMZPageParam  *param;
 @property(nonatomic,assign)NSInteger currentTitleIndex;
-//默认选中
-@property(nonatomic,assign)BOOL first;
 //图文
 @property(nonatomic,assign)BOOL hasImage;
 //固定按钮
@@ -29,8 +27,6 @@
 }
 
 - (void)setUp{
-
-    
     self.mainView = [UIScrollView new];
     self.mainView.frame = CGRectMake(0, 0,self.bounds.size.width, self.bounds.size.height) ;
     self.mainView.showsVerticalScrollIndicator = NO;
@@ -65,18 +61,6 @@
     [self setUpIndicator];
     //右边固定标题
     [self setUpFixRightBtn:temp];
-//    //默认选中
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        for (int i = 0; i<self.btnArr.count; i++) {
-//            if (i == self.param.wMenuDefaultIndex) {
-//                UIButton *btn = self.btnArr[i];
-//                self.first = YES;
-//                [btn sendActionsForControlEvents:UIControlEventTouchUpInside];
-//                break;
-//            }
-//        }
-//    });
-    
 }
 
 //初始化指示器
@@ -136,6 +120,7 @@
         [fixBtn addTarget:self action:@selector(fixTap:) forControlEvents:UIControlEventTouchUpInside];
         self.fixBtn = fixBtn;
         self.mainView.contentSize = CGSizeMake(self.mainView.contentSize.width+self.param.wMenuFixWidth, 0);
+        [self.btnArr addObject:fixBtn];
     }
 }
 
@@ -192,8 +177,8 @@
      [btn setTitleColor:selectColor?:self.param.wMenuTitleSelectColor forState:UIControlStateSelected];
      [btn setTitleColor:self.param.wMenuTitleColor forState:UIControlStateNormal];
      btn.tag = i;
-     btn.frame = CGRectMake(temp?(CGRectGetMaxX(temp.frame)+self.param.wMenuTitleOffset):0, 0, self.param.wMenuTitleWidth?:size.width + margin, size.height + padding);
-     [heightArr addObject:@(btn.frame.size.height)];
+     btn.frame = CGRectMake(temp?(CGRectGetMaxX(temp.frame)+self.param.wMenuTitleOffset):0, self.param.wMenuCellMarginY, self.param.wMenuTitleWidth?:size.width + margin, size.height + padding);
+     [heightArr addObject:@(btn.frame.size.height+self.param.wMenuCellMarginY)];
      [self.mainView addSubview:btn];
      [self.btnArr addObject:btn];
      //设置右上角红点
@@ -237,12 +222,6 @@
           rect.size.height = self.mainView.frame.size.height;
           self.frame = rect;
       }
-     if (i == self.param.wMenuDefaultIndex) {
-         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-             self.first = YES;
-             [btn sendActionsForControlEvents:UIControlEventTouchUpInside];
-         });
-     }
 }
 
 //解析字典
@@ -384,7 +363,15 @@
     } completion:^(BOOL finished) {
         
     }];
+    
     self.currentTitleIndex = newIndex;
+    if (self.param.wInsertHeadAndMenuBg) {
+        self.backgroundColor = [UIColor clearColor];
+    }
+    
+    if (self.param.wCustomMenuSelectTitle) {
+        self.param.wCustomMenuSelectTitle(self.btnArr);
+    }
 }
 
 
