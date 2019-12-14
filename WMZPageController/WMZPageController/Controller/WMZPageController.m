@@ -768,26 +768,24 @@
     }
     self.currentScroll.contentOffset = point;
 }
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-     [super touchesEnded:touches withEvent:event];
-     if (!self.headView||![self canTopSuspension]||!self.param.wHeadViewScroll) return;
-     UITouch *touch = [touches anyObject];// 某一个手指
-     CGPoint currentPoint = [touch locationInView:self.headView.superview];
-     CGPoint previousPoint = [touch previousLocationInView:self.headView.superview];
-     if (CGPointEqualToPoint(currentPoint, previousPoint)) return;
-     CGFloat offset = currentPoint.y - previousPoint.y;
-     CGPoint point = CGPointMake(self.currentScroll.contentOffset.x, self.currentScroll.contentOffset.y-offset);
-     CGFloat sliderHeight = CGRectGetMaxY(normalUpScRect)/10;
-     if (point.y > - CGRectGetMaxY(normalUpScRect)) {
-        point.y-=(offset>0?sliderHeight:-sliderHeight);
-     }
-     if (point.y <=- CGRectGetMaxY(normalUpScRect)) {
-         point.y = - CGRectGetMaxY(normalUpScRect);
-     }
-     [UIView animateWithDuration:0.5 delay:0.01 options:UIViewAnimationOptionCurveEaseOut animations:^{
-         self.currentScroll.contentOffset = point;
-     } completion:nil];
-}
+//- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+//     [super touchesEnded:touches withEvent:event];
+//     if (!self.headView||![self canTopSuspension]||!self.param.wHeadViewScroll) return;
+//     UITouch *touch = [touches anyObject];// 某一个手指
+//     CGPoint currentPoint = [touch locationInView:self.headView.superview];
+//     CGPoint previousPoint = [touch previousLocationInView:self.headView.superview];
+//     if (CGPointEqualToPoint(currentPoint, previousPoint)) return;
+//     CGFloat offset = currentPoint.y - previousPoint.y;
+//     CGPoint point = CGPointMake(self.currentScroll.contentOffset.x, self.currentScroll.contentOffset.y-offset);
+//     CGFloat sliderHeight = CGRectGetMaxY(normalUpScRect)/10;
+//     if (point.y > - CGRectGetMaxY(normalUpScRect)) {
+//        point.y-=(offset>0?sliderHeight:-sliderHeight);
+//     }
+//     if (point.y <=- CGRectGetMaxY(normalUpScRect)) {
+//         point.y = - CGRectGetMaxY(normalUpScRect);
+//     }
+//     self.currentScroll.contentOffset = point;
+//}
 - (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     [self.cache removeAllObjects];

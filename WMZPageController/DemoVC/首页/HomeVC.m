@@ -29,8 +29,6 @@
     UITableView *ta = [[UITableView alloc]initWithFrame:CGRectMake(0, PageVCNavBarHeight, self.view.frame.size.width,self.view.frame.size.height-PageVCNavBarHeight) style:UITableViewStyleGrouped];
     [self.view addSubview:ta];
     ta.estimatedRowHeight = 0.01;
-    ta.estimatedSectionFooterHeight = 0.01;
-    ta.estimatedSectionHeaderHeight = 0.01;
     ta.dataSource = self;
     ta.delegate = self;
     self.ta = ta;
