@@ -1,8 +1,34 @@
-# WMZPageController - 分页控制器,替换UIPageController方案,具备完整的生命周期,多种指示器样式,多种标题样式,可悬浮,支持ios13暗黑模式(仿优酷,爱奇艺,今日头条,简书,京东等多种标题菜单)
+# WMZPageController - 分页控制器,替换UIPageController方案,具备完整的生命周期,多种指示器样式,多种标题样式,可悬浮,支持ios13暗黑模式(仿优酷,爱奇艺,今日头条,简书,京东等多种标题菜单)（建议更新cocopod至1.1.0）
 
 演示
 ==============
-![page.gif](https://upload-images.jianshu.io/upload_images/9163368-fe78d1b86737ebf1.gif?imageMogr2/auto-orient/strip)
+### 动画样式 
+| 动画样式                | 作用   (默认值)                                 |
+|-----------------------|-----------------------------------------------------|
+| 爱奇艺样式               | ![AQY.gif](https://upload-images.jianshu.io/upload_images/9163368-2aeb8a149df8c985.gif?imageMogr2/auto-orient/strip)|
+| 优酷样式               | ![YouKu.gif](https://upload-images.jianshu.io/upload_images/9163368-4444482198f9a013.gif?imageMogr2/auto-orient/strip)|
+| 头条样式              | ![Toutiao.gif](https://upload-images.jianshu.io/upload_images/9163368-07204254c59bb15c.gif?imageMogr2/auto-orient/strip)|
+| 京东样式              | ![Jingdong.gif](https://upload-images.jianshu.io/upload_images/9163368-cc1f472eabfe9fcf.gif?imageMogr2/auto-orient/strip)|
+|QQ样式              | ![QQ.gif](https://upload-images.jianshu.io/upload_images/9163368-f700c66170ba6f16.gif?imageMogr2/auto-orient/strip)|
+
+
+### 标题样式 
+| 标题样式                | 作用   (默认值)                                 |
+|-----------------------|-----------------------------------------------------|
+| 换行               |  ![换行.gif](https://upload-images.jianshu.io/upload_images/9163368-0ccff6215a919dc2.gif?imageMogr2/auto-orient/strip) |
+| 富文本               |![富文本.gif](https://upload-images.jianshu.io/upload_images/9163368-5c5d1cd20b6c8509.gif?imageMogr2/auto-orient/strip) |
+| 固定宽度             |![固定宽度.gif](https://upload-images.jianshu.io/upload_images/9163368-7d730925c56b7200.gif?imageMogr2/auto-orient/strip)  |
+| 图文              |![带图片.gif](https://upload-images.jianshu.io/upload_images/9163368-383d923b19d3e1c4.gif?imageMogr2/auto-orient/strip) |
+|固定右边              |![](https://upload-images.jianshu.io/upload_images/9163368-7daf3d6d8092d256.gif?imageMogr2/auto-orient/strip)|
+|嵌套              |![嵌套.gif](https://upload-images.jianshu.io/upload_images/9163368-e6981080bae7c68c.gif?imageMogr2/auto-orient/strip)|
+|自定义标题样式              |![自定义标题样式.gif](https://upload-images.jianshu.io/upload_images/9163368-246160d93223dfe4.gif?imageMogr2/auto-orient/strip)|
+
+### 悬浮样式
+| 悬浮样式                | 作用   (默认值)                                 |
+|-----------------------|-----------------------------------------------------|
+| 悬浮导航栏透明度不变化+刷新在中间              |  ![悬浮导航栏透明度不变化.gif](https://upload-images.jianshu.io/upload_images/9163368-c816c09bfe3919c9.gif?imageMogr2/auto-orient/strip) |
+| 悬浮导航栏透明度变化+刷新在顶部               |![悬浮导航栏透明度变化+刷新在顶部.gif](https://upload-images.jianshu.io/upload_images/9163368-13ae25b5672ab495.gif?imageMogr2/auto-orient/strip)|
+| 自定义复杂嵌套悬浮UI            |![自定义复杂嵌套悬浮UI.gif](https://upload-images.jianshu.io/upload_images/9163368-face20117ca38861.gif?imageMogr2/auto-orient/strip) |
 
 特性
 ==============
@@ -390,5 +416,6 @@ LEETheme 使用 MIT 许可证，详情见 [LICENSE](LICENSE) 文件。
 - 20191207 更新cocopod到1.0.3版本 修复悬浮问题
 - 20191209 更新cocopod到1.0.4版本 修复bug
 - 20191213 更新cocopod到1.0.5版本 增加demo说明 新增自定义菜单接口
+- 20191213 更新cocopod到1.1.0版本 建议更新 新增可添加tableviewCell功能
 
 ### 手动安装
