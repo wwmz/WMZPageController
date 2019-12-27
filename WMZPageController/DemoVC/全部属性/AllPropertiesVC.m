@@ -105,13 +105,13 @@
 //              bgView.layer.contents = (id)[UIImage imageNamed:@"11111"].CGImage;
 //          })
          //底部线
-          .wInsertMenuLineSet(^(UIView *bgView) {
-              //修改内置线
+//          .wInsertMenuLineSet(^(UIView *bgView) {
+//              //修改内置线
 //              CGRect rect = bgView.frame;
 //              rect.size.height = PageK1px;
 //              bgView.frame = rect;
 //              bgView.backgroundColor = PageColor(0x999999);
-          })
+//          })
        //控制器开始切换
        .wEventBeganTransferControllerSet(^(UIViewController *oldVC, UIViewController *newVC, NSInteger oldIndex, NSInteger newIndex) {
            NSLog(@"开始切换 %ld %ld",oldIndex,newIndex);

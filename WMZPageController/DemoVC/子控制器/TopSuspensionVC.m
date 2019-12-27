@@ -19,33 +19,33 @@
 @end
 
 @implementation TopSuspensionVC
-
-
-//实现协议 悬浮
+//实现协议 悬浮 必须实现
 - (UITableView *)getMyTableView{
     return self.ta;
 }
 
-#pragma mark 注意 悬浮的话在这个方法里重新适配tableview的frame 如果你已经适配好了tableview的frame就不用
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-     self.ta.frame = self.view.bounds;
+#pragma mark 注意 可以重新适配tableview的frame 如果你已经适配好了tableview的frame就不用
+- (void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
+    self.ta.frame = self.view.bounds;
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    UITableView *ta = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+    UITableView *ta = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     [self.view addSubview:ta];
-    ta.estimatedRowHeight = 0.01;
+    
+    if (@available(iOS 11.0, *)) {
+       ta.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+       ta.estimatedRowHeight = 0.01;
+    }else{
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
     ta.dataSource = self;
     ta.delegate = self;
     ta.tag = self.page;
-    if (@available(iOS 11.0, *)) {
-        ta.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    }else {
-        self.automaticallyAdjustsScrollViewInsets = NO;
-    }
     _bannerData = @[@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576232578984&di=7170b5a1e3350fc3060db6929bc49a10&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn10109%2F217%2Fw641h376%2F20191211%2Fa46d-iknhexi8336167.jpg",
                                       @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576232579069&di=d0ff7d27c7d65928aaa2a472094552a9&imgtype=0&src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farticle%2F5b13843d414928b145f37cf958c1dfdac6759cd3.jpg",
                                       @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576232579067&di=c3ecf1fc284f48dd91464085a95db96d&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn12%2F328%2Fw640h488%2F20180612%2F0052-hcufqih6006139.jpg",
@@ -77,7 +77,6 @@
     // 设置自动切换透明度(在导航栏下面自动隐藏)
     self.ta.mj_header.automaticallyChangeAlpha = YES;
 }
-
 
 - (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     return nil;
@@ -120,8 +119,9 @@
     return 70;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    TopSuspensionVC *VC = [TopSuspensionVC new];
-    [self.navigationController pushViewController:VC animated:YES];
+//    UIViewController *vc = [NSClassFromString(@"WMZCustomOnePage") new];
+//    vc.modalPresentationStyle = UIModalPresentationFullScreen;
+//    [self presentViewController:vc animated:YES completion:nil];
 }
 
 

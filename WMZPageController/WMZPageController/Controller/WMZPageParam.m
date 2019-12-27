@@ -34,6 +34,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, UIColor*,               wMenuIndi
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuIndicatorWidth)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuIndicatorHeight)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuIndicatorRadio)
+//WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuHeight)
 WMZPagePropSetFuncImplementation(WMZPageParam, NSString*,              wMenuIndicatorImage)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageBtnPosition,        wMenuImagePosition)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuImageMargin)
@@ -48,6 +49,8 @@ WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wFromNavi
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wNaviAlpha)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wHeadViewScroll)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wScrollCanTransfer)
+WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wBounces)
+WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wNaviAlphaAll)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageHeadAndMenuBgView,  wInsertHeadAndMenuBg)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageHeadAndMenuBgView,  wInsertMenuLine)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageCustomMenuTitle,    wCustomMenuTitle)
@@ -57,6 +60,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, PageClickBlock,         wEventCli
 WMZPagePropSetFuncImplementation(WMZPageParam, PageVCChangeBlock,      wEventBeganTransferController)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageVCChangeBlock,      wEventEndTransferController)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageChildVCScroll,      wEventChildVCDidSroll)
+WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuIndicatorY)
 - (instancetype)init{
     if (self = [super init]) {
         _wMenuAnimal = PageTitleMenuNone;

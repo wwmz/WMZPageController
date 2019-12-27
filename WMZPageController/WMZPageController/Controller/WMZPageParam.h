@@ -36,6 +36,11 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,         
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wMenuAnimalTitleBig)
 //开启渐变色 default yes
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wMenuAnimalTitleGradient)
+//顶部可下拉 default NO
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wBounces)
+//导航栏整个透明 default NO
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wNaviAlphaAll)
+
 /* =========================================special==============================================*/
 
 /* =========================================Menu==================================================*/
@@ -65,6 +70,8 @@ WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, UIColor*,     
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuCellMargin)
 //菜单按钮的上下间距 default 20 (可根据此属性改变导航栏的高度)
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuCellPadding)
+//菜单按钮的高度 不设置此属性则高度为文字字体大小+wMenuCellPadding
+//WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuHeight)
 //菜单按钮距离顶部的y值 default 0
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuCellMarginY)
 //菜单的位置 default PageMenuPositionLeft
@@ -97,6 +104,8 @@ WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, NSString*,    
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuIndicatorHeight)
 //指示器圆角 default 0
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuIndicatorRadio)
+//指示器距离按钮的y值(AQY) default 菜单视图的高度-指示器高度-4/wMenuCellPadding
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuIndicatorY)
 /* =========================================Menu===============================================*/
 
 /* =========================================Events==================================================*/

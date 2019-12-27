@@ -6,12 +6,11 @@
 //  Copyright © 2019 wmz. All rights reserved.
 //
 
-#import "WMZPageParam.h"
-#import "WMZPageScroller.h"
+
 #import "WMZPageLoopView.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface WMZPageController : UIViewController
+@interface WMZPageController : UIViewController<UIScrollViewDelegate,WMZPageLoopDelegate,UITableViewDelegate>
 
 //导航栏背景色  //特殊情况自行处理
 @property(nonatomic,strong)UIView *naviBarBackGround;
@@ -23,7 +22,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)WMZPageLoopView *upSc;
 //底部全屏滚动视图
 @property(nonatomic,strong)WMZPageScroller *downSc;
-
+//缓存
+@property(nonatomic,strong)NSCache *cache;
+//子控制器中可以滚动的视图
+@property(nonatomic,strong)NSMutableDictionary *sonChildScrollerViewDic;
 /*
  *更新
  */

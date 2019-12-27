@@ -9,6 +9,7 @@
 #import "WMZPageConfig.h"
 #import "WMZPageNaviBtn.h"
 #import "WMZPageParam.h"
+#import "WMZPageScroller.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol WMZPageLoopDelegate <NSObject>
@@ -18,15 +19,33 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)selectWithBtn:(UIButton*)btn first:(BOOL)first;
 
+//获取子tableview
+- (void)setUpSuspension:(UIViewController*)newVC index:(NSInteger)index;
 @end
 
 @interface WMZPageLoopView : UIView
-
+//菜单视图
 @property(nonatomic,strong)UIScrollView *mainView;
+//底部视图
+@property(nonatomic,strong)UIScrollView *dataView;
 
 @property(nonatomic,strong)UIButton *lineView;
 
 @property(nonatomic,strong)NSMutableArray *btnArr;
+
+@property(nonatomic,assign)NSInteger currentTitleIndex;
+//可能的下一个视图
+@property(nonatomic,assign)NSInteger nextPageIndex;
+//上一个视图
+@property(nonatomic,assign)NSInteger lastPageIndex;
+//是否已经处理了生命周期
+@property(nonatomic,assign)BOOL hasDealAppearance;
+//是否已经运行了完整的生命周期
+@property(nonatomic,assign)BOOL hasEndAppearance;
+//是否往相反方向滑动
+@property(nonatomic,assign)BOOL hasDifferenrDirection;
+//当前显示VC
+@property(nonatomic,strong)UIViewController *currentVC;
 
 //默认选中
 @property(nonatomic,assign)BOOL first;
@@ -37,6 +56,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)scrollToIndex:(NSInteger)newIndex;
 
+//标题动画和scrollview联动
+- (void)animalAction:(UIScrollView*)scrollView lastContrnOffset:(CGFloat)lastContentOffset;
+
+//结束动画处理
+- (void)endAninamal;
 @end
 
 NS_ASSUME_NONNULL_END

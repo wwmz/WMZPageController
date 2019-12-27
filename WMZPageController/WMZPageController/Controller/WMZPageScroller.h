@@ -10,8 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface WMZPageScroller : UIScrollView <UIGestureRecognizerDelegate>
-
+@interface WMZPageScroller : UITableView <UIGestureRecognizerDelegate>
+@property(nonatomic,assign)CGFloat menuTitleHeight;
 @end
 
 @interface UIImage (PageImageName)

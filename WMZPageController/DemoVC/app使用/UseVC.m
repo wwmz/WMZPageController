@@ -50,6 +50,7 @@
         {
           param.wTitleArrSet(data)
           .wControllersSet(vcArr)
+          .wMenuIndicatorYSet(5)
           .wMenuTitleFontSet(17)
           .wMenuTitleWeightSet(50)
           .wMenuTitleColorSet(PageColor(0xeeeeee))
@@ -58,7 +59,6 @@
           .wMenuIndicatorWidthSet(10.0f)
           .wMenuFixRightDataSet(@"≡")
           .wMenuAnimalTitleGradientSet(NO)
-           .wTopSuspensionSet(YES)
           .wMenuAnimalSet(PageTitleMenuAiQY);
         }
        break;
@@ -111,8 +111,7 @@
             .wTitleArrSet([self weiboTitleData])
             .wControllersSet(@[[TestVC new],sonVC])
             .wMenuPositionSet(PageMenuPositionNavi)
-            .wMenuWidthSet(150)
-            .wMenuAnimalSet(PageTitleMenuAiQY);
+            .wMenuWidthSet(150);
            
            WMZPageController *VC =  [WMZPageController new];
            VC.param = headParam;

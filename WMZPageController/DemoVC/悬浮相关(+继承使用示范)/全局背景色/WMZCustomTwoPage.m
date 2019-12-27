@@ -19,7 +19,7 @@
     [super viewDidLoad];
         self.view.backgroundColor = [UIColor whiteColor];
     
-    
+    __weak WMZCustomTwoPage *weak = self;
      //标题数组
         NSArray *data = @[@"热门",@"男装",@"美妆",@"手机",@"食品",@"电器",@"鞋包",@"百货",@"女装",@"汽车",@"电脑"];
         //控制器数组
@@ -47,7 +47,7 @@
         //头部
         .wMenuHeadViewSet(^UIView *{
             UIView *back = [UIView new];
-            back.frame = CGRectMake(0, 0, PageVCWidth, 470+PageVCStatusBarHeight);
+            back.frame = CGRectMake(0, 0, PageVCWidth, 270+PageVCStatusBarHeight);
             UIImageView *image = [UIImageView new];
             [image sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576232579081&di=29b77f2a5119755d3c1c3c7ce2595527&imgtype=0&src=http%3A%2F%2Fi2.bangqu.com%2Fr2%2Fnews%2F20180810%2F304a6c35725753744e48.jpg"]];
             image.frame = CGRectMake(100, 100, 100, 100);
@@ -57,6 +57,4 @@
         
         self.param = param;
 }
-
-
 @end

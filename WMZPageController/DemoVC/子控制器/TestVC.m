@@ -11,7 +11,7 @@
 #import "WMZBannerView.h"
 #import "WMZPageProtocol.h"
 #import "MJRefresh.h"
-@interface TestVC ()<UITableViewDelegate,UITableViewDataSource>
+@interface TestVC ()<UITableViewDelegate,UITableViewDataSource,WMZPageProtocol>
 @property(nonatomic,strong)UITableView *ta;
 @property(nonatomic,strong)NSArray *bannerData;
 @property(nonatomic,strong)WMZBannerView *headView;
@@ -20,12 +20,16 @@
 
 @implementation TestVC
 
+- (UIScrollView *)getMyScrollView{
+    return self.ta;
+}
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     NSLog(@"viewWillAppear %ld",self.page);
 }
 
-#pragma mark 注意 非悬浮在这个方法里重新适配tableview的frame 如果你已经适配好了tableview的frame就不用
+#pragma mark 注意 可以重新适配tableview的frame 如果你已经适配好了tableview的frame就不用
 - (void)viewDidLayoutSubviews{
     [super viewDidLayoutSubviews];
     self.ta.frame = self.view.bounds;
@@ -48,15 +52,15 @@
     self.view.backgroundColor = [UIColor whiteColor];
     UITableView *ta = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     [self.view addSubview:ta];
-    ta.estimatedRowHeight = 0.01;
+    if (@available(iOS 11.0, *)) {
+       ta.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+       ta.estimatedRowHeight = 0.01;
+    }else{
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
     ta.dataSource = self;
     ta.delegate = self;
     ta.tag = self.page;
-    if (@available(iOS 11.0, *)) {
-        ta.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    }else {
-        self.automaticallyAdjustsScrollViewInsets = NO;
-    }
     _bannerData = @[@"http://www.51pptmoban.com/d/file/2014/01/20/e382d9ad5fe92e73a5defa7b47981e07.jpg",
                                       @"http://hbimg.b0.upaiyun.com/9fd1b3a78826fc29b997e5bc39180c3b1f8ed3d76b4b-LxIY28_fw658",
                                       @"http://img.sccnn.com/bimg/337/23662.jpg",
@@ -139,7 +143,7 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 70;
+    return 100;
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{

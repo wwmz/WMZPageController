@@ -8,25 +8,29 @@
 //
 
 #import "WMZPageScroller.h"
-
+#import "WMZPageConfig.h"
 @implementation WMZPageScroller
 
-- (instancetype)initWithFrame:(CGRect)frame{
-    if (self = [super initWithFrame:frame]) {
-        self.showsVerticalScrollIndicator = NO;
+- (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style{
+    if (self = [super initWithFrame:frame style:style]) {
         self.showsHorizontalScrollIndicator = NO;
-        self.pagingEnabled = YES;
-        self.bounces = NO;
         self.scrollsToTop = NO;
-        if (@available(iOS 11.0, *)) {
-            self.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-        }
     }
     return self;
 }
 
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    CGFloat segmentViewContentScrollViewHeight = PageVCHeight - PageVCNavBarHeight - self.menuTitleHeight;
+    CGPoint currentPoint = [gestureRecognizer locationInView:self];
+    CGRect containRect = CGRectMake(0, self.contentSize.height - segmentViewContentScrollViewHeight, PageVCWidth, segmentViewContentScrollViewHeight);
+    if (CGRectContainsPoint(containRect, currentPoint) ) {
+        return YES;
+    }
+    return NO;
+}
+
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    
     if ([NSStringFromClass(otherGestureRecognizer.view.class) isEqualToString:@"UITableViewWrapperView"] && [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
         return YES;
     }

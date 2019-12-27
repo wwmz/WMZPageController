@@ -13,10 +13,11 @@
 #import <objc/runtime.h>
 #import "WMZPageProtocol.h"
 #import "NSObject+SafeKVO.h"
-
+#import "UIView+PageRect.h"
 #define   PageVCWidth   [UIScreen mainScreen].bounds.size.width
 #define   PageVCHeight  [UIScreen mainScreen].bounds.size.height
 
+#define myHeight 100
 
 #define PageDarkColor(light,dark)    \
 ({\

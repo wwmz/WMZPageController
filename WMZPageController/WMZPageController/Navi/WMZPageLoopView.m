@@ -6,11 +6,19 @@
 //  Copyright © 2019 wmz. All rights reserved.
 //
 
-
 #import "WMZPageLoopView.h"
-@interface WMZPageLoopView()
+#import "WMZPageController.h"
+@interface WMZPageLoopView()<UIScrollViewDelegate>
+{
+    WMZPageNaviBtn *_btnLeft ;
+    WMZPageNaviBtn *_btnRight;
+    CGFloat lastContentOffset;
+    WMZPageController *page;
+}
+//最底部下划线
+@property(nonatomic,strong)UIView *bottomView;
+
 @property(nonatomic,strong)WMZPageParam  *param;
-@property(nonatomic,assign)NSInteger currentTitleIndex;
 //图文
 @property(nonatomic,assign)BOOL hasImage;
 //固定按钮
@@ -27,17 +35,26 @@
 }
 
 - (void)setUp{
-    self.mainView = [UIScrollView new];
-    self.mainView.frame = CGRectMake(0, 0,self.bounds.size.width, self.bounds.size.height) ;
-    self.mainView.showsVerticalScrollIndicator = NO;
-    self.mainView.showsHorizontalScrollIndicator = NO;
-    self.mainView.decelerationRate = UIScrollViewDecelerationRateFast;
-    self.mainView.bouncesZoom = NO;
-    if (@available(iOS 11.0, *)) {
-        self.mainView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    }
-    [self addSubview:self.mainView];
+
+    //标题菜单
+    NSDictionary *dic = @{
+        @(PageMenuPositionLeft):[NSValue valueWithCGRect:CGRectMake(0, 0 , self.param.wMenuWidth,0)],
+        @(PageMenuPositionRight):[NSValue valueWithCGRect:CGRectMake(PageVCWidth-self.param.wMenuWidth, 0  , self.param.wMenuWidth,0)],
+        @(PageMenuPositionCenter):[NSValue valueWithCGRect:CGRectMake((PageVCWidth-self.param.wMenuWidth)/2, 0 , self.param.wMenuWidth,0)],
+        @(PageMenuPositionNavi):[NSValue valueWithCGRect:CGRectMake((PageVCWidth-self.param.wMenuWidth)/2, 0 , self.param.wMenuWidth,0)],
+        @(PageMenuPositionBottom):[NSValue valueWithCGRect:CGRectMake(0, PageVCHeight, self.param.wMenuWidth,0)],
+    };
     
+    
+    
+    [self addSubview:self.mainView];
+    self.mainView.frame = [dic[@(self.param.wMenuPosition)] CGRectValue] ;
+    
+    [self addSubview:self.dataView];
+    self.dataView.scrollEnabled = self.param.wScrollCanTransfer;
+    self.dataView.contentSize = CGSizeMake(self.param.wTitleArr.count*PageVCWidth,0);
+    self.dataView.delegate = self;
+
     self.currentTitleIndex = -1;
     NSMutableArray *heightArr = [NSMutableArray new];
     WMZPageNaviBtn *temp = nil;
@@ -61,6 +78,26 @@
     [self setUpIndicator];
     //右边固定标题
     [self setUpFixRightBtn:temp];
+    //最底部固定线
+    if (self.param.wInsertMenuLine) {
+        self.bottomView = [UIView new];
+        self.bottomView.backgroundColor = PageColor(0x999999);
+        self.bottomView.frame = CGRectMake(0, self.mainView.frame.size.height-PageK1px, self.mainView.frame.size.width, PageK1px);
+        self.param.wInsertMenuLine(self.bottomView);
+    }
+    if (self.bottomView) {
+        CGRect lineRect = self.bottomView.frame;
+        lineRect.origin.y = self.mainView.frame.size.height- lineRect.size.height;
+        if (!lineRect.size.width) {
+            lineRect.size.width = self.mainView.frame.size.width;
+        }
+        self.bottomView.frame = lineRect;
+        [self addSubview:self.bottomView];
+    }
+    
+    if (!self.param.wMenuIndicatorY) {
+        self.param.wMenuIndicatorY = self.param.wMenuCellPadding/4;
+    }
 }
 
 //初始化指示器
@@ -216,11 +253,9 @@
             self.mainView.scrollEnabled = YES;
           }
           float max =[[heightArr valueForKeyPath:@"@max.floatValue"] floatValue];
-          self.mainView.frame = CGRectMake(0, 0, self.frame.size.width, max) ;
+          
+          [self.mainView page_height:max];
           self.mainView.contentSize = CGSizeMake(CGRectGetMaxX(btn.frame), 0);
-          CGRect rect = self.frame;
-          rect.size.height = self.mainView.frame.size.height;
-          self.frame = rect;
       }
 }
 
@@ -240,12 +275,40 @@
         self.param.wEventClick(btn, btn.tag);
     }
     if (self.currentTitleIndex == btn.tag) return;
-    
     if (self.loopDelegate && [self.loopDelegate respondsToSelector:@selector(selectWithBtn:first:)]) {
         [self.loopDelegate selectWithBtn:btn first:self.first];
-        self.first = NO;
     }
-    [self scrollToIndex:btn.tag];
+    
+    NSInteger index = btn.tag;
+    if (self.first) {
+         self.lastPageIndex = self.currentTitleIndex;
+         self.nextPageIndex = index;
+         self.currentTitleIndex = index;
+         UIViewController *newVC = [self getVCWithIndex:index];
+         [newVC beginAppearanceTransition:YES animated:YES];
+         [self addChildVC:index VC:newVC];
+         self.dataView.contentOffset = CGPointMake(index*PageVCWidth, 0);
+         [newVC endAppearanceTransition];
+         if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:)]) {
+             [self.loopDelegate setUpSuspension:newVC index:index];
+         }
+        self.first = NO;
+
+    }else{
+
+        [self beginAppearanceTransitionWithIndex:index withOldIndex:self.currentTitleIndex];
+        [UIView animateWithDuration:0.2 animations:^{
+             self.dataView.contentOffset = CGPointMake(index*PageVCWidth, 0);
+        } completion:^(BOOL finished) {
+            self.nextPageIndex = index;
+            self.currentTitleIndex = index;
+            self.lastPageIndex = self.currentTitleIndex;
+            [self endAppearanceTransitionWithIndex:self.nextPageIndex withOldIndex:self.lastPageIndex isFlag:NO];
+        }];
+    }
+        
+    
+    [self scrollToIndex:index];
 }
 
 //固定标题点击
@@ -258,8 +321,6 @@
 
 //滚动到中间
 - (void)scrollToIndex:(NSInteger)newIndex{
-    if (self.currentTitleIndex == newIndex) return;
-
     WMZPageNaviBtn *btn = self.btnArr[newIndex] ;
     //隐藏右上角红点
     [btn hidenBadge];
@@ -332,7 +393,7 @@
     //改变指示器frame
     CGRect lineRect = indexFrame;
     lineRect.size.height = self.param.wMenuIndicatorHeight?:PageK1px;
-    lineRect.origin.y = self.mainView.frame.size.height - lineRect.size.height/2 - self.param.wMenuCellPadding/4;
+    lineRect.origin.y = self.mainView.frame.size.height - lineRect.size.height/2 - self.param.wMenuIndicatorY;
     lineRect.size.width =  self.param.wMenuIndicatorWidth?:(dataWidth+10);
     lineRect.origin.x =  (indexFrame.size.width - lineRect.size.width)/2 + indexFrame.origin.x;
     
@@ -375,6 +436,319 @@
 }
 
 
+#pragma -mark- scrollerDeleagte
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    if (scrollView != self.dataView) return;
+    lastContentOffset = scrollView.contentOffset.x;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if (scrollView != self.dataView) return;
+    if (![scrollView isDecelerating]&&![scrollView isDragging]) return;
+    
+    if (scrollView.contentOffset.x>0 &&scrollView.contentOffset.x<=self.btnArr.count*PageVCWidth ) {
+         [self lifeCycleManage:scrollView];
+         [self animalAction:scrollView lastContrnOffset:lastContentOffset];
+    }
+    
+    if (scrollView.contentOffset.y == 0) return;
+    CGPoint contentOffset = scrollView.contentOffset;
+    contentOffset.y = 0.0;
+    scrollView.contentOffset = contentOffset;
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    if (scrollView != self.dataView) return;
+    if (!decelerate) {
+        [self endAninamal];
+        NSInteger newIndex = scrollView.contentOffset.x/PageVCWidth;
+        self.currentTitleIndex = newIndex;
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    if (scrollView != self.dataView) return;
+    [self endAninamal];
+    NSInteger newIndex = scrollView.contentOffset.x/PageVCWidth;
+    self.currentTitleIndex = newIndex;
+    if (!self.hasEndAppearance) {
+        [self endAppearanceTransitionWithIndex:self.nextPageIndex withOldIndex:self.lastPageIndex isFlag:NO];
+    }
+    self.hasEndAppearance = NO;
+    [self scrollToIndex:newIndex];
+}
+
+//管理生命周期
+- (void)lifeCycleManage:(UIScrollView*)scrollView{
+    CGFloat diffX = scrollView.contentOffset.x - lastContentOffset;
+    if (diffX < 0) {
+        self.currentTitleIndex = ceil(scrollView.contentOffset.x/PageVCWidth);
+    }else{
+        self.currentTitleIndex = (scrollView.contentOffset.x/PageVCWidth);
+    }
+    if (diffX > 0) {
+        if (self.hasDealAppearance&&self.nextPageIndex == self.currentTitleIndex) {
+            self.hasEndAppearance = YES;
+            [self endAppearanceTransitionWithIndex:self.nextPageIndex withOldIndex:self.currentTitleIndex-1 isFlag:YES];
+            [self endAninamal];
+            return;
+        }
+        
+        if (!self.hasDealAppearance || self.nextPageIndex != self.currentTitleIndex + 1) {
+            self.hasDealAppearance = YES;
+            if (self.nextPageIndex == self.currentTitleIndex - 1) {
+               [self endAppearanceTransitionWithIndex:self.nextPageIndex withOldIndex:self.currentTitleIndex isFlag:NO];
+                self.hasDifferenrDirection = YES;
+            }
+            self.nextPageIndex = self.currentTitleIndex + 1;
+            self.lastPageIndex = self.currentTitleIndex ;
+            [self beginAppearanceTransitionWithIndex:self.nextPageIndex withOldIndex:self.currentTitleIndex];
+        }
+        
+    }else if(diffX < 0){
+        if (self.hasDealAppearance&&self.nextPageIndex == self.currentTitleIndex) {
+            self.hasEndAppearance = YES;
+            [self endAppearanceTransitionWithIndex:self.nextPageIndex withOldIndex:self.currentTitleIndex+1 isFlag:YES];
+            [self endAninamal];
+            return;
+        }
+        
+        if (!self.hasDealAppearance || self.nextPageIndex != self.currentTitleIndex - 1) {
+            self.hasDealAppearance = YES;
+            if (self.nextPageIndex == self.currentTitleIndex + 1) {
+                [self endAppearanceTransitionWithIndex:self.nextPageIndex withOldIndex:self.currentTitleIndex isFlag:NO];
+                self.hasDifferenrDirection = YES;
+            }
+            self.nextPageIndex = self.currentTitleIndex - 1;
+            self.lastPageIndex = self.currentTitleIndex ;
+            [self beginAppearanceTransitionWithIndex:self.nextPageIndex withOldIndex:self.currentTitleIndex];
+        }
+    }
+    
+    
+}
+
+- (UIViewController*)getVCWithIndex:(NSInteger)index{
+    if (index < 0|| index >= self.param.wControllers.count) {
+        return nil;
+    }
+    
+    if ([[self findBelongViewControllerForView:self].cache objectForKey:@(index)]) {
+        return [[self findBelongViewControllerForView:self].cache objectForKey:@(index)];
+    }
+    
+    return self.param.wControllers[index];
+}
+
+
+- (void)beginAppearanceTransitionWithIndex:(NSInteger)index withOldIndex:(NSInteger)old{
+    UIViewController *newVC = [self getVCWithIndex:index];
+    UIViewController *oldVC = [self getVCWithIndex:old];
+    if (!newVC||!oldVC||(index==old)) return;
+    [newVC beginAppearanceTransition:YES animated:YES];
+    [self addChildVC:index VC:newVC];
+    [oldVC beginAppearanceTransition:NO  animated:YES];
+    self.currentVC = newVC;
+    
+    if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:)]) {
+        [self.loopDelegate setUpSuspension:newVC index:index];
+    }
+
+    if (self.param.wEventBeganTransferController) {
+        self.param.wEventBeganTransferController(oldVC, newVC, old, index);
+    }
+}
+
+- (void)addChildVC:(NSInteger)index VC:(UIViewController*)newVC{
+    if (![[self findBelongViewControllerForView:self].childViewControllers containsObject:newVC]) {
+        [[self findBelongViewControllerForView:self] addChildViewController:newVC];
+        newVC.view.frame = [[self findBelongViewControllerForView:self].rectArr[index] CGRectValue];
+        [self.dataView addSubview:newVC.view];
+        [newVC didMoveToParentViewController:[self findBelongViewControllerForView:self]];
+        [[self findBelongViewControllerForView:self].cache setObject:newVC forKey:@(index)];
+    }
+}
+
+- (void)endAppearanceTransitionWithIndex:(NSInteger)index withOldIndex:(NSInteger)old  isFlag:(BOOL)flag{
+    UIViewController *newVC = [self getVCWithIndex:index];
+    UIViewController *oldVC = [self getVCWithIndex:old];
+    if (!newVC||!oldVC||(index==old))   return;
+    if (self.currentTitleIndex == self.nextPageIndex) {
+
+        [oldVC willMoveToParentViewController:nil];
+        [oldVC.view removeFromSuperview];
+        [oldVC removeFromParentViewController];
+        
+        [newVC endAppearanceTransition];
+        [oldVC endAppearanceTransition];
+        
+        if (flag&&self.hasDifferenrDirection) {
+            [newVC endAppearanceTransition];
+            [oldVC endAppearanceTransition];
+            self.hasDifferenrDirection = NO;
+        }
+        
+        if (self.param.wEventEndTransferController) {
+            self.param.wEventEndTransferController(oldVC, newVC, old, index);
+        }
+        
+        self.currentVC = newVC;
+        self.currentTitleIndex = index;
+
+    }else{
+        [newVC willMoveToParentViewController:nil];
+        [newVC.view removeFromSuperview];
+        [newVC removeFromParentViewController];
+        
+        [oldVC beginAppearanceTransition:YES animated:YES];
+        [oldVC endAppearanceTransition];
+        [newVC beginAppearanceTransition:NO animated:YES];
+        [newVC endAppearanceTransition];
+        
+        if (self.param.wEventEndTransferController) {
+            self.param.wEventEndTransferController(newVC, oldVC, index, old);
+        }
+        
+        self.currentVC = oldVC;
+        self.currentTitleIndex = old;
+    }
+    self.hasDealAppearance = NO;
+    self.nextPageIndex = -999;
+
+    if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:)]) {
+        [self.loopDelegate setUpSuspension:newVC index:index];
+    }
+}
+
+- (BOOL)canTopSuspension{
+    if (!self.param.wTopSuspension
+       ||self.param.wMenuPosition == PageMenuPositionBottom
+       ||self.param.wMenuPosition == PageMenuPositionNavi){
+          return NO;
+    }
+    return YES;
+}
+
+//动画管理
+- (void)animalAction:(UIScrollView*)scrollView lastContrnOffset:(CGFloat)lastContentOffset{
+    CGFloat contentOffsetX = scrollView.contentOffset.x;
+    CGFloat sWidth =  PageVCWidth;
+    CGFloat content_X = (contentOffsetX / sWidth);
+    NSArray *arr = [[NSString stringWithFormat:@"%f",content_X] componentsSeparatedByString:@"."];
+    int num = [arr[0] intValue];
+    CGFloat scale = content_X - num;
+    int selectIndex = contentOffsetX/sWidth;
+    
+    // 拖拽
+    if (contentOffsetX <= lastContentOffset ){
+        selectIndex = selectIndex+1;
+        _btnRight = [self safeObjectAtIndex:selectIndex data:self.btnArr];
+        _btnLeft = [self safeObjectAtIndex:selectIndex-1 data:self.btnArr];
+    } else if (contentOffsetX > lastContentOffset ){
+        _btnRight = [self safeObjectAtIndex:selectIndex+1 data:self.btnArr];
+        _btnLeft = [self safeObjectAtIndex:selectIndex data:self.btnArr];
+                
+    }
+    
+    //跟随滑动
+    if (self.param.wMenuAnimal == PageTitleMenuAiQY || self.param.wMenuAnimal == PageTitleMenuYouKu) {
+        CGRect rect = self.lineView.frame;
+        if (scale < 0.5 ) {
+            rect.size.width = self.param.wMenuIndicatorWidth + ( _btnRight.center.x-_btnLeft.center.x) * scale*2;
+            rect.origin.x = _btnLeft.center.x -self.param.wMenuIndicatorWidth/2;
+        }else if(scale >= 0.5 ){
+            rect.size.width =  self.param.wMenuIndicatorWidth+(_btnRight.center.x-_btnLeft.center.x) * (1-scale)*2;
+            rect.origin.x = _btnLeft.center.x +  2*(scale-0.5)*(_btnRight.center.x - _btnLeft.center.x)-self.param.wMenuIndicatorWidth/2;
+        }
+        if (rect.size.height!= (self.param.wMenuIndicatorHeight?:PageK1px)) {
+            rect.size.height = self.param.wMenuIndicatorHeight?:PageK1px;
+        }
+        if (rect.origin.y != (self.mainView.frame.size.height-self.param.wMenuIndicatorY-rect.size.height/2)) {
+            rect.origin.y = self.mainView.frame.size.height-self.param.wMenuIndicatorY-rect.size.height/2;
+        }
+        self.lineView.frame = rect;
+    }
+    
+    //变大
+    if (self.param.wMenuAnimalTitleBig) {
+        _btnLeft.transform = CGAffineTransformMakeScale(0.9+(1-0.9)*(1-scale), 0.9+(1-0.9)*(1-scale));
+        _btnRight.transform = CGAffineTransformMakeScale(0.9+(1-0.9)*scale, 0.9+(1-0.9)*scale);
+    }
+    
+    //渐变
+    if (self.param.wMenuAnimalTitleGradient) {
+        WMZPageNaviBtn *tempBtn = _btnLeft?:_btnRight;
+        CGFloat difR = tempBtn.selectedColorR - tempBtn.unSelectedColorR;
+        CGFloat difG = tempBtn.selectedColorG - tempBtn.unSelectedColorG;
+        CGFloat difB = tempBtn.selectedColorB - tempBtn.unSelectedColorB;
+        UIColor *leftItemColor  = [UIColor colorWithRed:tempBtn.unSelectedColorR+scale*difR green:tempBtn.unSelectedColorG+scale*difG blue:tempBtn.unSelectedColorB+scale*difB alpha:1];
+        UIColor *rightItemColor = [UIColor colorWithRed:tempBtn.unSelectedColorR+(1-scale)*difR green:tempBtn.unSelectedColorG+(1-scale)*difG blue:tempBtn.unSelectedColorB+(1-scale)*difB alpha:1];
+        
+        _btnLeft.titleLabel.textColor = rightItemColor;
+        _btnRight.titleLabel.textColor = leftItemColor;
+    }
+}
+
+//结束动画处理
+- (void)endAninamal{
+    if (self.param.wMenuAnimal == PageTitleMenuYouKu) {
+        CGRect rect = self.lineView.frame;
+        rect.size.height = rect.size.width;
+        rect.origin.y = self.mainView.frame.size.height-rect.size.height/2-self.param.wMenuCellPadding/4;
+        self.lineView.frame = rect;
+        self.lineView.layer.cornerRadius = rect.size.height/2;
+    }
+}
+
+- (id)safeObjectAtIndex:(NSUInteger)index data:(NSArray*)data
+{
+    if (index < data.count) {
+        return [data objectAtIndex:index];
+    } else {
+        return nil;
+    }
+}
+
+
+- (nullable WMZPageController *)findBelongViewControllerForView:(UIView *)view {
+    UIResponder *responder = view;
+    while ((responder = [responder nextResponder]))
+        if ([responder isKindOfClass:[WMZPageController class]]) {
+            return (WMZPageController *)responder;
+        }
+    return nil;
+}
+
+- (UIScrollView *)mainView{
+    if (!_mainView) {
+        _mainView = [UIScrollView new];
+        _mainView.showsVerticalScrollIndicator = NO;
+        _mainView.showsHorizontalScrollIndicator = NO;
+        _mainView.decelerationRate = UIScrollViewDecelerationRateFast;
+        _mainView.bouncesZoom = NO;
+        if (@available(iOS 11.0, *)) {
+            _mainView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        }
+    }
+    return _mainView;
+}
+
+- (UIScrollView *)dataView{
+    if (!_dataView) {
+        _dataView = [UIScrollView new];
+        _dataView.showsVerticalScrollIndicator = NO;
+        _dataView.showsHorizontalScrollIndicator = NO;
+        _dataView.pagingEnabled = YES;
+        _dataView.bounces = NO;
+        _dataView.scrollsToTop = NO;
+        if (@available(iOS 11.0, *)) {
+            _dataView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        }
+        _dataView.frame = CGRectMake(0, CGRectGetMaxY(self.mainView.frame),self.bounds.size.width, 0) ;
+    }
+    return _dataView;
+}
+
 - (NSMutableArray *)btnArr{
     if (!_btnArr) {
         _btnArr = [NSMutableArray new];
@@ -382,6 +756,8 @@
     return _btnArr;
 }
 
-
+- (void)dealloc{
+    
+}
 
 @end

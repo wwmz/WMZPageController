@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F3052CF123B5DC1E0016CE17 /* WMZCustomThreePage.m in Sources */ = {isa = PBXBuildFile; fileRef = F3052CED23B5DC1D0016CE17 /* WMZCustomThreePage.m */; };
+		F3052CF223B5DC1E0016CE17 /* WMZCustomOnePage.m in Sources */ = {isa = PBXBuildFile; fileRef = F3052CF023B5DC1E0016CE17 /* WMZCustomOnePage.m */; };
+		F3052CF523B5DDEF0016CE17 /* CollectionViewPopDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = F3052CF423B5DDEF0016CE17 /* CollectionViewPopDemo.m */; };
+		F3052CFB23B5EB430016CE17 /* WMZUsePageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F3052CFA23B5EB430016CE17 /* WMZUsePageVC.m */; };
+		F31163A523A72667008171B5 /* UIView+PageRect.m in Sources */ = {isa = PBXBuildFile; fileRef = F31163A423A72667008171B5 /* UIView+PageRect.m */; };
 		F31983002355AE02002D305B /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = F31982D02355AE02002D305B /* UIScrollView+MJRefresh.m */; };
 		F31983012355AE02002D305B /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = F31982D12355AE02002D305B /* MJRefreshConst.m */; };
 		F31983022355AE02002D305B /* MJRefreshConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = F31982D22355AE02002D305B /* MJRefreshConfig.m */; };
@@ -46,9 +51,7 @@
 		F392D47E23A36BC600B00FBF /* TitleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F392D47423A36BC600B00FBF /* TitleVC.m */; };
 		F392D47F23A36BC600B00FBF /* IndicatorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F392D47723A36BC600B00FBF /* IndicatorVC.m */; };
 		F392D48223A3757000B00FBF /* TopSuspensionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F392D48123A3757000B00FBF /* TopSuspensionVC.m */; };
-		F392D49023A3781600B00FBF /* WMZCustomOnePage.m in Sources */ = {isa = PBXBuildFile; fileRef = F392D48F23A3781600B00FBF /* WMZCustomOnePage.m */; };
 		F392D49323A3782600B00FBF /* WMZCustomTwoPage.m in Sources */ = {isa = PBXBuildFile; fileRef = F392D49223A3782600B00FBF /* WMZCustomTwoPage.m */; };
-		F392D49623A3782F00B00FBF /* WMZCustomThreePage.m in Sources */ = {isa = PBXBuildFile; fileRef = F392D49523A3782F00B00FBF /* WMZCustomThreePage.m */; };
 		F3A1FEF32334D5ED004B12F6 /* WMZBannerFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F3A1FEEA2334D5ED004B12F6 /* WMZBannerFlowLayout.m */; };
 		F3A1FEF42334D5ED004B12F6 /* WMZBannerParam.m in Sources */ = {isa = PBXBuildFile; fileRef = F3A1FEEC2334D5ED004B12F6 /* WMZBannerParam.m */; };
 		F3A1FEF52334D5ED004B12F6 /* WMZBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F3A1FEED2334D5ED004B12F6 /* WMZBannerView.m */; };
@@ -134,6 +137,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F3052CEC23B5DC1D0016CE17 /* WMZCustomThreePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMZCustomThreePage.h; sourceTree = "<group>"; };
+		F3052CED23B5DC1D0016CE17 /* WMZCustomThreePage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMZCustomThreePage.m; sourceTree = "<group>"; };
+		F3052CEF23B5DC1E0016CE17 /* WMZCustomOnePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMZCustomOnePage.h; sourceTree = "<group>"; };
+		F3052CF023B5DC1E0016CE17 /* WMZCustomOnePage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMZCustomOnePage.m; sourceTree = "<group>"; };
+		F3052CF323B5DDEF0016CE17 /* CollectionViewPopDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewPopDemo.h; sourceTree = "<group>"; };
+		F3052CF423B5DDEF0016CE17 /* CollectionViewPopDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewPopDemo.m; sourceTree = "<group>"; };
+		F3052CF923B5EB430016CE17 /* WMZUsePageVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMZUsePageVC.h; sourceTree = "<group>"; };
+		F3052CFA23B5EB430016CE17 /* WMZUsePageVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMZUsePageVC.m; sourceTree = "<group>"; };
+		F31163A323A72667008171B5 /* UIView+PageRect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+PageRect.h"; sourceTree = "<group>"; };
+		F31163A423A72667008171B5 /* UIView+PageRect.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+PageRect.m"; sourceTree = "<group>"; };
 		F31982D02355AE02002D305B /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
 		F31982D12355AE02002D305B /* MJRefreshConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshConst.m; sourceTree = "<group>"; };
 		F31982D22355AE02002D305B /* MJRefreshConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshConfig.m; sourceTree = "<group>"; };
@@ -211,12 +224,8 @@
 		F392D47823A36BC600B00FBF /* IndicatorVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndicatorVC.h; sourceTree = "<group>"; };
 		F392D48023A3757000B00FBF /* TopSuspensionVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TopSuspensionVC.h; sourceTree = "<group>"; };
 		F392D48123A3757000B00FBF /* TopSuspensionVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TopSuspensionVC.m; sourceTree = "<group>"; };
-		F392D48E23A3781600B00FBF /* WMZCustomOnePage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMZCustomOnePage.h; sourceTree = "<group>"; };
-		F392D48F23A3781600B00FBF /* WMZCustomOnePage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMZCustomOnePage.m; sourceTree = "<group>"; };
 		F392D49123A3782600B00FBF /* WMZCustomTwoPage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMZCustomTwoPage.h; sourceTree = "<group>"; };
 		F392D49223A3782600B00FBF /* WMZCustomTwoPage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMZCustomTwoPage.m; sourceTree = "<group>"; };
-		F392D49423A3782F00B00FBF /* WMZCustomThreePage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMZCustomThreePage.h; sourceTree = "<group>"; };
-		F392D49523A3782F00B00FBF /* WMZCustomThreePage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMZCustomThreePage.m; sourceTree = "<group>"; };
 		F3A1FEEA2334D5ED004B12F6 /* WMZBannerFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMZBannerFlowLayout.m; sourceTree = "<group>"; };
 		F3A1FEEB2334D5ED004B12F6 /* WMZBannerControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMZBannerControl.h; sourceTree = "<group>"; };
 		F3A1FEEC2334D5ED004B12F6 /* WMZBannerParam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMZBannerParam.m; sourceTree = "<group>"; };
@@ -382,6 +391,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F3052CEB23B5DC1D0016CE17 /* 导航栏透明度变化+头部刷新 */ = {
+			isa = PBXGroup;
+			children = (
+				F3052CEC23B5DC1D0016CE17 /* WMZCustomThreePage.h */,
+				F3052CED23B5DC1D0016CE17 /* WMZCustomThreePage.m */,
+			);
+			path = "导航栏透明度变化+头部刷新";
+			sourceTree = "<group>";
+		};
+		F3052CEE23B5DC1E0016CE17 /* 显示导航栏+中间刷新 */ = {
+			isa = PBXGroup;
+			children = (
+				F3052CEF23B5DC1E0016CE17 /* WMZCustomOnePage.h */,
+				F3052CF023B5DC1E0016CE17 /* WMZCustomOnePage.m */,
+			);
+			path = "显示导航栏+中间刷新";
+			sourceTree = "<group>";
+		};
+		F3052CF823B5EB210016CE17 /* 配合内容使用 */ = {
+			isa = PBXGroup;
+			children = (
+				F3052CF923B5EB430016CE17 /* WMZUsePageVC.h */,
+				F3052CFA23B5EB430016CE17 /* WMZUsePageVC.m */,
+			);
+			path = "配合内容使用";
+			sourceTree = "<group>";
+		};
 		F31982CF2355AE02002D305B /* MJRefresh */ = {
 			isa = PBXGroup;
 			children = (
@@ -562,6 +598,8 @@
 		F392D46A23A36BC600B00FBF /* 子控制器 */ = {
 			isa = PBXGroup;
 			children = (
+				F3052CF323B5DDEF0016CE17 /* CollectionViewPopDemo.h */,
+				F3052CF423B5DDEF0016CE17 /* CollectionViewPopDemo.m */,
 				F392D46B23A36BC600B00FBF /* TestVC.h */,
 				F392D46C23A36BC600B00FBF /* TestVC.m */,
 				F392D48023A3757000B00FBF /* TopSuspensionVC.h */,
@@ -609,20 +647,11 @@
 		F392D48723A377E100B00FBF /* 悬浮相关(+继承使用示范) */ = {
 			isa = PBXGroup;
 			children = (
-				F392D48823A377E100B00FBF /* 显示导航栏 */,
+				F3052CEB23B5DC1D0016CE17 /* 导航栏透明度变化+头部刷新 */,
+				F3052CEE23B5DC1E0016CE17 /* 显示导航栏+中间刷新 */,
 				F392D48923A377E100B00FBF /* 全局背景色 */,
-				F392D48A23A377E100B00FBF /* 导航栏透明度变化 */,
 			);
 			path = "悬浮相关(+继承使用示范)";
-			sourceTree = "<group>";
-		};
-		F392D48823A377E100B00FBF /* 显示导航栏 */ = {
-			isa = PBXGroup;
-			children = (
-				F392D48E23A3781600B00FBF /* WMZCustomOnePage.h */,
-				F392D48F23A3781600B00FBF /* WMZCustomOnePage.m */,
-			);
-			path = "显示导航栏";
 			sourceTree = "<group>";
 		};
 		F392D48923A377E100B00FBF /* 全局背景色 */ = {
@@ -632,15 +661,6 @@
 				F392D49223A3782600B00FBF /* WMZCustomTwoPage.m */,
 			);
 			path = "全局背景色";
-			sourceTree = "<group>";
-		};
-		F392D48A23A377E100B00FBF /* 导航栏透明度变化 */ = {
-			isa = PBXGroup;
-			children = (
-				F392D49423A3782F00B00FBF /* WMZCustomThreePage.h */,
-				F392D49523A3782F00B00FBF /* WMZCustomThreePage.m */,
-			);
-			path = "导航栏透明度变化";
 			sourceTree = "<group>";
 		};
 		F3A1FEE92334D5ED004B12F6 /* WMZBanner */ = {
@@ -818,6 +838,7 @@
 		F3C85DAB234F12670087C629 /* DemoVC */ = {
 			isa = PBXGroup;
 			children = (
+				F3052CF823B5EB210016CE17 /* 配合内容使用 */,
 				F392D48723A377E100B00FBF /* 悬浮相关(+继承使用示范) */,
 				F392D47323A36BC600B00FBF /* 标题样式 */,
 				F392D46D23A36BC600B00FBF /* 全部属性 */,
@@ -853,6 +874,8 @@
 				F3E74DC22354075800A0F785 /* WMZPageParam.m */,
 				F33ECBE2235701C400A84E3E /* NSObject+SafeKVO.h */,
 				F33ECBE3235701C400A84E3E /* NSObject+SafeKVO.m */,
+				F31163A323A72667008171B5 /* UIView+PageRect.h */,
+				F31163A423A72667008171B5 /* UIView+PageRect.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -999,6 +1022,7 @@
 				F31983072355AE02002D305B /* MJRefreshBackGifFooter.m in Sources */,
 				F3A1FF792334D6AF004B12F6 /* UIImage+Transform.m in Sources */,
 				F3A1FF7F2334D6AF004B12F6 /* SDImageCodersManager.m in Sources */,
+				F3052CF223B5DC1E0016CE17 /* WMZCustomOnePage.m in Sources */,
 				F31983002355AE02002D305B /* UIScrollView+MJRefresh.m in Sources */,
 				F3A1FF912334D6AF004B12F6 /* SDImageCachesManager.m in Sources */,
 				F3A1FF952334D6AF004B12F6 /* UIImageView+WebCache.m in Sources */,
@@ -1027,6 +1051,7 @@
 				F31983122355AE02002D305B /* MJRefreshBackFooter.m in Sources */,
 				F3A1FF942334D6AF004B12F6 /* NSData+ImageContentType.m in Sources */,
 				F392D47D23A36BC600B00FBF /* UseVC.m in Sources */,
+				F3052CF523B5DDEF0016CE17 /* CollectionViewPopDemo.m in Sources */,
 				F3A1FF8E2334D6AF004B12F6 /* SDImageFrame.m in Sources */,
 				F3A1FF902334D6AF004B12F6 /* SDImageLoadersManager.m in Sources */,
 				F319830D2355AE02002D305B /* MJRefreshNormalHeader.m in Sources */,
@@ -1034,9 +1059,10 @@
 				F31983012355AE02002D305B /* MJRefreshConst.m in Sources */,
 				F3A1FEF62334D5ED004B12F6 /* WMZBannerControl.m in Sources */,
 				F3A1FF772334D6AF004B12F6 /* SDAnimatedImageView.m in Sources */,
-				F392D49623A3782F00B00FBF /* WMZCustomThreePage.m in Sources */,
+				F3052CF123B5DC1E0016CE17 /* WMZCustomThreePage.m in Sources */,
 				F392D47923A36BC600B00FBF /* Base.m in Sources */,
 				F3E74DCB2354075800A0F785 /* WMZPageNaviBtn.m in Sources */,
+				F3052CFB23B5EB430016CE17 /* WMZUsePageVC.m in Sources */,
 				F319830C2355AE02002D305B /* MJRefreshAutoNormalFooter.m in Sources */,
 				F3A1FFA72334D6AF004B12F6 /* NSBezierPath+RoundedCorners.m in Sources */,
 				F31983022355AE02002D305B /* MJRefreshConfig.m in Sources */,
@@ -1072,6 +1098,7 @@
 				F31983062355AE02002D305B /* UIView+MJExtension.m in Sources */,
 				F3A1FFA52334D6AF004B12F6 /* SDInternalMacros.m in Sources */,
 				F31983082355AE02002D305B /* MJRefreshBackStateFooter.m in Sources */,
+				F31163A523A72667008171B5 /* UIView+PageRect.m in Sources */,
 				F3A1FFA32334D6AF004B12F6 /* SDImageAssetManager.m in Sources */,
 				F3E74DCF2354075800A0F785 /* WMZPageScroller.m in Sources */,
 				F3A1FFA22334D6AF004B12F6 /* SDImageCachesManagerOperation.m in Sources */,
@@ -1080,7 +1107,6 @@
 				F319830A2355AE02002D305B /* MJRefreshAutoStateFooter.m in Sources */,
 				F31983052355AE02002D305B /* NSBundle+MJRefresh.m in Sources */,
 				F3A1FF8C2334D6AF004B12F6 /* SDImageCache.m in Sources */,
-				F392D49023A3781600B00FBF /* WMZCustomOnePage.m in Sources */,
 				F3A1FF9A2334D6AF004B12F6 /* SDWebImageCacheKeyFilter.m in Sources */,
 				F3A1FFA42334D6AF004B12F6 /* SDWeakProxy.m in Sources */,
 				F32E009423308C2A004920BD /* AppDelegate.m in Sources */,
