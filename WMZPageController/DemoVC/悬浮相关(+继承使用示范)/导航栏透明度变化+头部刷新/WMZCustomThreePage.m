@@ -21,16 +21,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
         self.view.backgroundColor = [UIColor whiteColor];
-    
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-      btn.tag = 111;
-      [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-      [btn setTitle:@"导航弹窗" forState:UIControlStateNormal];
-      [btn addTarget:self action:@selector(onBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-      [btn sizeToFit];
-      UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
-      self.navigationItem.rightBarButtonItem = barItem;
-    
      //标题数组
         NSArray *data = @[@"热门",@"男装",@"美妆",@"手机",@"食品",@"电器",@"鞋包",@"百货",@"女装",@"汽车",@"电脑"];
         //控制器数组
