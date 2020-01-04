@@ -594,7 +594,10 @@
         
         self.currentVC = newVC;
         self.currentTitleIndex = index;
-
+        
+        if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:)]) {
+            [self.loopDelegate setUpSuspension:newVC index:index];
+        }
     }else{
         [newVC willMoveToParentViewController:nil];
         [newVC.view removeFromSuperview];
@@ -611,13 +614,13 @@
         
         self.currentVC = oldVC;
         self.currentTitleIndex = old;
+        
+        if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:)]) {
+            [self.loopDelegate setUpSuspension:oldVC index:old];
+        }
     }
     self.hasDealAppearance = NO;
     self.nextPageIndex = -999;
-
-    if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:)]) {
-        [self.loopDelegate setUpSuspension:newVC index:index];
-    }
 }
 
 - (BOOL)canTopSuspension{

@@ -276,7 +276,7 @@
         [self.upSc page_height:CGRectGetMaxY(self.upSc.dataView.frame)];
     }
     for (int i = 0; i<self.param.wTitleArr.count; i++) {
-        CGFloat height = [self canTopSuspension]?self.upSc.dataView.frame.size.height :sonChildVCHeight;
+        CGFloat height = [self canTopSuspension]?self.upSc.dataView.frame.size.height :(sonChildVCHeight-self.headView.frame.size.height);
         if ([self canTopSuspension]) {
             if (!self.parentViewController) {
                 height -=PageVCStatusBarHeight;
@@ -294,6 +294,8 @@
     }
     self.param.titleHeight = self.upSc.mainView.frame.size.height;
     self.downSc.menuTitleHeight = self.param.titleHeight;
+    self.downSc.canScroll = [self canTopSuspension];
+    self.downSc.scrollEnabled = [self canTopSuspension];
     //全景
     if (self.head_MenuView) {
         self.head_MenuView.frame = CGRectMake(0, self.headView?CGRectGetMinX(self.headView.frame):CGRectGetMinX(self.upSc.frame), self.upSc.frame.size.width, CGRectGetMaxY(self.upSc.frame)-self.upSc.dataView.frame.size.height);

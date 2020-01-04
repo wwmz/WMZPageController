@@ -47,7 +47,6 @@ WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuTitl
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wTopSuspension)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wFromNavi)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wNaviAlpha)
-WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wHeadViewScroll)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wScrollCanTransfer)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wBounces)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wNaviAlphaAll)
@@ -81,7 +80,6 @@ WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuIndi
         _wMenuFixShadow = YES;
         _wFromNavi = YES;
         _wScrollCanTransfer = YES;
-        _wHeadViewScroll = YES;
         _wMenuTitleSelectFont = 18.5;
     }
     return self;

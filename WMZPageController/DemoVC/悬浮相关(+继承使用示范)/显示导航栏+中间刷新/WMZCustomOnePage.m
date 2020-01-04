@@ -41,8 +41,6 @@
     .wTopSuspensionSet(YES)
     //头视图y坐标从0开始
     .wFromNaviSet(YES)
-    //关闭头部滑动
-    .wHeadViewScrollSet(NO)
     //头部
     .wMenuHeadViewSet(^UIView *{
         UIView *back = [UIView new];

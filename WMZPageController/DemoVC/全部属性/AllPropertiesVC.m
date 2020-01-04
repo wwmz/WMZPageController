@@ -83,8 +83,6 @@
         .wFromNaviSet(YES)
         //开启悬浮
         .wTopSuspensionSet(YES)
-        //headView开启滑动 defaulr YES
-        .wHeadViewScrollSet(YES)
           //自定义静态标题
         .wCustomMenuTitleSet(^(NSArray *titleArr) {
             [titleArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {}];

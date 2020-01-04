@@ -22,8 +22,6 @@ WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, NSArray*,     
 /* =========================================special==============================================*/
 //特殊属性 菜单滑动到顶部悬浮 default NO
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wTopSuspension)
-//特殊属性 有悬浮和headview的时候 headview是否可以滑动 default YES
-WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wHeadViewScroll)
 //导航栏透明度变化 default NO
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wNaviAlpha)
 //滑动切换 default YES

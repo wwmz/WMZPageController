@@ -24,6 +24,7 @@
     CGFloat segmentViewContentScrollViewHeight = PageVCHeight - PageVCNavBarHeight - self.menuTitleHeight;
     CGPoint currentPoint = [gestureRecognizer locationInView:self];
     CGRect containRect = CGRectMake(0, self.contentSize.height - segmentViewContentScrollViewHeight, PageVCWidth, segmentViewContentScrollViewHeight);
+    if (!self.canScroll) return NO;
     if (CGRectContainsPoint(containRect, currentPoint) ) {
         return YES;
     }
