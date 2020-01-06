@@ -12,7 +12,6 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/wwmz/WMZPageController"
   s.license      = {:type => "MIT", :file => "LICENSE" }
   s.author       = { "wmz" => "925457662@qq.com" }
-  s.platform     = :ios
   s.source       = { :git => "https://github.com/wwmz/WMZPageController.git",:tag => s.version.to_s}
   s.source_files = "WMZPageController/WMZPageController/**/*.{h,m}"
   s.resources     = "WMZPageController/WMZPageController/PageController.bundle"
