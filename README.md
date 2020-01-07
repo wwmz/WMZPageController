@@ -1,4 +1,4 @@
-# WMZPageController - 分页控制器,替换UIPageController方案,具备完整的生命周期,多种指示器样式,多种标题样式,可悬浮,支持ios13暗黑模式(仿优酷,爱奇艺,今日头条,简书,京东等多种标题菜单)（建议更新cocopod至1.1.1）
+# WMZPageController - 分页控制器,替换UIPageController方案,具备完整的生命周期,多种指示器样式,多种标题样式,可悬浮,支持ios13暗黑模式(仿优酷,爱奇艺,今日头条,简书,京东等多种标题菜单)（建议更新cocopod至1.1.2）
 
 演示
 ==============
@@ -418,4 +418,5 @@ LEETheme 使用 MIT 许可证，详情见 [LICENSE](LICENSE) 文件。
 - 20191213 更新cocopod到1.0.5版本 增加demo说明 新增自定义菜单接口
 - 20191213 更新cocopod到1.1.0版本 建议更新 新增可添加tableviewCell功能
 - 20200104 更新cocopod到1.1.1版本 修复bug
+- 20200107 更新cocopod到1.1.2版本 修复bug 新增可固定底部
 ### 手动安装
