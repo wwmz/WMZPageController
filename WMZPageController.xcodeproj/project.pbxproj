@@ -11,6 +11,8 @@
 		F3052CF223B5DC1E0016CE17 /* WMZCustomOnePage.m in Sources */ = {isa = PBXBuildFile; fileRef = F3052CF023B5DC1E0016CE17 /* WMZCustomOnePage.m */; };
 		F3052CF523B5DDEF0016CE17 /* CollectionViewPopDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = F3052CF423B5DDEF0016CE17 /* CollectionViewPopDemo.m */; };
 		F3052CFB23B5EB430016CE17 /* WMZUsePageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F3052CFA23B5EB430016CE17 /* WMZUsePageVC.m */; };
+		F30C9D0F23C383E6001BE9C7 /* WMZFixVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F30C9D0E23C383E6001BE9C7 /* WMZFixVC.m */; };
+		F30C9D1223C3844D001BE9C7 /* FixSonVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F30C9D1123C3844D001BE9C7 /* FixSonVC.m */; };
 		F31163A523A72667008171B5 /* UIView+PageRect.m in Sources */ = {isa = PBXBuildFile; fileRef = F31163A423A72667008171B5 /* UIView+PageRect.m */; };
 		F31983002355AE02002D305B /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = F31982D02355AE02002D305B /* UIScrollView+MJRefresh.m */; };
 		F31983012355AE02002D305B /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = F31982D12355AE02002D305B /* MJRefreshConst.m */; };
@@ -145,6 +147,10 @@
 		F3052CF423B5DDEF0016CE17 /* CollectionViewPopDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewPopDemo.m; sourceTree = "<group>"; };
 		F3052CF923B5EB430016CE17 /* WMZUsePageVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMZUsePageVC.h; sourceTree = "<group>"; };
 		F3052CFA23B5EB430016CE17 /* WMZUsePageVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMZUsePageVC.m; sourceTree = "<group>"; };
+		F30C9D0D23C383E6001BE9C7 /* WMZFixVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMZFixVC.h; sourceTree = "<group>"; };
+		F30C9D0E23C383E6001BE9C7 /* WMZFixVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMZFixVC.m; sourceTree = "<group>"; };
+		F30C9D1023C3844D001BE9C7 /* FixSonVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FixSonVC.h; sourceTree = "<group>"; };
+		F30C9D1123C3844D001BE9C7 /* FixSonVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FixSonVC.m; sourceTree = "<group>"; };
 		F31163A323A72667008171B5 /* UIView+PageRect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+PageRect.h"; sourceTree = "<group>"; };
 		F31163A423A72667008171B5 /* UIView+PageRect.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+PageRect.m"; sourceTree = "<group>"; };
 		F31982D02355AE02002D305B /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
@@ -418,6 +424,15 @@
 			path = "配合内容使用";
 			sourceTree = "<group>";
 		};
+		F30C9D0C23C383C7001BE9C7 /* 某个子控制器固定底部 */ = {
+			isa = PBXGroup;
+			children = (
+				F30C9D0D23C383E6001BE9C7 /* WMZFixVC.h */,
+				F30C9D0E23C383E6001BE9C7 /* WMZFixVC.m */,
+			);
+			path = "某个子控制器固定底部";
+			sourceTree = "<group>";
+		};
 		F31982CF2355AE02002D305B /* MJRefresh */ = {
 			isa = PBXGroup;
 			children = (
@@ -604,6 +619,8 @@
 				F392D46C23A36BC600B00FBF /* TestVC.m */,
 				F392D48023A3757000B00FBF /* TopSuspensionVC.h */,
 				F392D48123A3757000B00FBF /* TopSuspensionVC.m */,
+				F30C9D1023C3844D001BE9C7 /* FixSonVC.h */,
+				F30C9D1123C3844D001BE9C7 /* FixSonVC.m */,
 			);
 			path = "子控制器";
 			sourceTree = "<group>";
@@ -647,6 +664,7 @@
 		F392D48723A377E100B00FBF /* 悬浮相关(+继承使用示范) */ = {
 			isa = PBXGroup;
 			children = (
+				F30C9D0C23C383C7001BE9C7 /* 某个子控制器固定底部 */,
 				F3052CEB23B5DC1D0016CE17 /* 导航栏透明度变化+头部刷新 */,
 				F3052CEE23B5DC1E0016CE17 /* 显示导航栏+中间刷新 */,
 				F392D48923A377E100B00FBF /* 全局背景色 */,
@@ -1047,6 +1065,7 @@
 				F392D47E23A36BC600B00FBF /* TitleVC.m in Sources */,
 				F3A1FF982334D6AF004B12F6 /* UIImage+MemoryCacheCost.m in Sources */,
 				F392D49323A3782600B00FBF /* WMZCustomTwoPage.m in Sources */,
+				F30C9D0F23C383E6001BE9C7 /* WMZFixVC.m in Sources */,
 				F319830E2355AE02002D305B /* MJRefreshStateHeader.m in Sources */,
 				F31983122355AE02002D305B /* MJRefreshBackFooter.m in Sources */,
 				F3A1FF942334D6AF004B12F6 /* NSData+ImageContentType.m in Sources */,
@@ -1071,6 +1090,7 @@
 				F3A1FFA82334D6AF004B12F6 /* UIColor+HexString.m in Sources */,
 				F32E00A223308C2C004920BD /* main.m in Sources */,
 				F3A1FF8B2334D6AF004B12F6 /* SDWebImageDownloaderConfig.m in Sources */,
+				F30C9D1223C3844D001BE9C7 /* FixSonVC.m in Sources */,
 				F392D47C23A36BC600B00FBF /* AllPropertiesVC.m in Sources */,
 				F392D48223A3757000B00FBF /* TopSuspensionVC.m in Sources */,
 				F3A1FF832334D6AF004B12F6 /* SDImageAPNGCoder.m in Sources */,
@@ -1294,7 +1314,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.WMZPageController;
+				PRODUCT_BUNDLE_IDENTIFIER = com.WMZPageController1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1313,7 +1333,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.WMZPageController;
+				PRODUCT_BUNDLE_IDENTIFIER = com.WMZPageController1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

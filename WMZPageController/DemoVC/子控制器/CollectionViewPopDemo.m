@@ -26,6 +26,7 @@ static NSString *const CollectionViewCell = @"CollectionViewCell";
     self.collectionView.frame = self.view.bounds;
 }
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

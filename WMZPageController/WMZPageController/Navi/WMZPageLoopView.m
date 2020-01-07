@@ -275,11 +275,10 @@
         self.param.wEventClick(btn, btn.tag);
     }
     if (self.currentTitleIndex == btn.tag) return;
-    if (self.loopDelegate && [self.loopDelegate respondsToSelector:@selector(selectWithBtn:first:)]) {
-        [self.loopDelegate selectWithBtn:btn first:self.first];
-    }
-    
     NSInteger index = btn.tag;
+    if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(selectBtnWithIndex:)]) {
+        [self.loopDelegate selectBtnWithIndex:index];
+    }
     if (self.first) {
          self.lastPageIndex = self.currentTitleIndex;
          self.nextPageIndex = index;
@@ -289,22 +288,19 @@
          [self addChildVC:index VC:newVC];
          self.dataView.contentOffset = CGPointMake(index*PageVCWidth, 0);
          [newVC endAppearanceTransition];
-         if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:)]) {
-             [self.loopDelegate setUpSuspension:newVC index:index];
+         if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:end:)]) {
+             [self.loopDelegate setUpSuspension:newVC index:index end:YES];
          }
         self.first = NO;
 
     }else{
 
         [self beginAppearanceTransitionWithIndex:index withOldIndex:self.currentTitleIndex];
-        [UIView animateWithDuration:0.2 animations:^{
-             self.dataView.contentOffset = CGPointMake(index*PageVCWidth, 0);
-        } completion:^(BOOL finished) {
-            self.nextPageIndex = index;
-            self.currentTitleIndex = index;
-            self.lastPageIndex = self.currentTitleIndex;
-            [self endAppearanceTransitionWithIndex:self.nextPageIndex withOldIndex:self.lastPageIndex isFlag:NO];
-        }];
+        self.lastPageIndex = self.currentTitleIndex;
+        self.nextPageIndex = index;
+        self.currentTitleIndex = index;
+        [self endAppearanceTransitionWithIndex:self.nextPageIndex withOldIndex:self.lastPageIndex isFlag:NO];
+        self.dataView.contentOffset = CGPointMake(index*PageVCWidth, 0);
     }
         
     
@@ -445,7 +441,6 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (scrollView != self.dataView) return;
     if (![scrollView isDecelerating]&&![scrollView isDragging]) return;
-    
     if (scrollView.contentOffset.x>0 &&scrollView.contentOffset.x<=self.btnArr.count*PageVCWidth ) {
          [self lifeCycleManage:scrollView];
          [self animalAction:scrollView lastContrnOffset:lastContentOffset];
@@ -463,6 +458,9 @@
         [self endAninamal];
         NSInteger newIndex = scrollView.contentOffset.x/PageVCWidth;
         self.currentTitleIndex = newIndex;
+        if (self.loopDelegate && [self.loopDelegate respondsToSelector:@selector(pageScrollEndWithScrollView:)]) {
+            [self.loopDelegate pageScrollEndWithScrollView:scrollView];
+        }
     }
 }
 
@@ -476,6 +474,10 @@
     }
     self.hasEndAppearance = NO;
     [self scrollToIndex:newIndex];
+    
+    if (self.loopDelegate && [self.loopDelegate respondsToSelector:@selector(pageScrollEndWithScrollView:)]) {
+        [self.loopDelegate pageScrollEndWithScrollView:scrollView];
+    }
 }
 
 //管理生命周期
@@ -485,6 +487,9 @@
         self.currentTitleIndex = ceil(scrollView.contentOffset.x/PageVCWidth);
     }else{
         self.currentTitleIndex = (scrollView.contentOffset.x/PageVCWidth);
+    }
+    if (self.loopDelegate && [self.loopDelegate respondsToSelector:@selector(pageWithScrollView:left:)]) {
+        [self.loopDelegate pageWithScrollView:scrollView left:(diffX < 0)];
     }
     if (diffX > 0) {
         if (self.hasDealAppearance&&self.nextPageIndex == self.currentTitleIndex) {
@@ -550,8 +555,8 @@
     [oldVC beginAppearanceTransition:NO  animated:YES];
     self.currentVC = newVC;
     
-    if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:)]) {
-        [self.loopDelegate setUpSuspension:newVC index:index];
+    if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:end:)]) {
+        [self.loopDelegate setUpSuspension:newVC index:index end:NO];
     }
 
     if (self.param.wEventBeganTransferController) {
@@ -572,6 +577,7 @@
 - (void)endAppearanceTransitionWithIndex:(NSInteger)index withOldIndex:(NSInteger)old  isFlag:(BOOL)flag{
     UIViewController *newVC = [self getVCWithIndex:index];
     UIViewController *oldVC = [self getVCWithIndex:old];
+    
     if (!newVC||!oldVC||(index==old))   return;
     if (self.currentTitleIndex == self.nextPageIndex) {
 
@@ -595,8 +601,8 @@
         self.currentVC = newVC;
         self.currentTitleIndex = index;
         
-        if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:)]) {
-            [self.loopDelegate setUpSuspension:newVC index:index];
+        if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:end:)]) {
+            [self.loopDelegate setUpSuspension:newVC index:index end:YES];
         }
     }else{
         [newVC willMoveToParentViewController:nil];
@@ -615,8 +621,8 @@
         self.currentVC = oldVC;
         self.currentTitleIndex = old;
         
-        if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:)]) {
-            [self.loopDelegate setUpSuspension:oldVC index:old];
+        if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:end:)]) {
+            [self.loopDelegate setUpSuspension:oldVC index:old end:YES];
         }
     }
     self.hasDealAppearance = NO;

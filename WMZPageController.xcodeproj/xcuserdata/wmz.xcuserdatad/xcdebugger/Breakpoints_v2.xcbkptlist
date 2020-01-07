@@ -25,8 +25,8 @@
             filePath = "WMZPageController/WMZPageController/Controller/WMZPageController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "367"
-            endingLineNumber = "367"
+            startingLineNumber = "376"
+            endingLineNumber = "376"
             landmarkName = "-scrollViewDidScroll:"
             landmarkType = "7">
          </BreakpointContent>
@@ -41,8 +41,8 @@
             filePath = "WMZPageController/WMZPageController/Controller/WMZPageController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "344"
-            endingLineNumber = "344"
+            startingLineNumber = "353"
+            endingLineNumber = "353"
             landmarkName = "-scrollViewDidScroll:"
             landmarkType = "7">
          </BreakpointContent>

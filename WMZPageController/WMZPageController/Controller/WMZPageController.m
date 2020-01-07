@@ -10,9 +10,12 @@
 @interface WMZPageController()
 {
     BOOL hadWillDisappeal;
+    NSInteger footerViewIndex; 
 }
 //当前子控制器中的滚动视图
 @property(nonatomic,strong)UIScrollView *currentScroll;
+//当前子控制器中需要固定的底部视图
+@property(nonatomic,strong)UIView *currentFootView;
 //头部视图
 @property(nonatomic,strong)UIView *headView;
 //头部视图菜单栏底部的占位视图(如有需要)
@@ -34,7 +37,9 @@
     [self.upSc removeFromSuperview];
     [self.downSc removeFromSuperview];
     [self.sonChildScrollerViewDic removeAllObjects];
+    [self.sonChildFooterViewDic removeAllObjects];
     [self.rectArr removeAllObjects];
+    footerViewIndex = -1;
     if (self.headView) {
         [self.headView removeFromSuperview];
         self.headView = nil;
@@ -89,26 +94,30 @@
             self.naviBarBackGround = self.navigationController.navigationBar;
             [self.naviBarBackGround setAlpha:0];
         }else{
-            if ([[UIDevice currentDevice].systemVersion intValue]>=12&&[[UIDevice currentDevice].systemVersion intValue]<13) {
-                self.naviBarBackGround = self.navigationController.navigationBar;
-                [self.naviBarBackGround setAlpha:0];
-            }else{
-                NSMutableArray *loop= [NSMutableArray new];
-                [loop addObject:[self.navigationController.navigationBar subviews]];
-                while (loop.count) {
-                    NSArray *arr = loop.lastObject;
-                    [loop removeLastObject];
-                    for (NSInteger i = arr.count - 1; i >= 0; i--) {
-                        UIView *view = arr[i];
-                        [loop addObject:view.subviews];
-                        if ([NSStringFromClass([view class]) isEqualToString:@"_UIBarBackground"]||[NSStringFromClass([view class]) isEqualToString:@"_UINavigationBarBackground"]) {
-                            self.naviBarBackGround = view;
-                            [self.naviBarBackGround setAlpha:0];
-                            break;
-                        }
-                    }
-                }
-            }
+           NSMutableArray *loop= [NSMutableArray new];
+           [loop addObject:[self.navigationController.navigationBar subviews]];
+           while (loop.count) {
+               NSArray *arr = loop.lastObject;
+               [loop removeLastObject];
+               for (NSInteger i = arr.count - 1; i >= 0; i--) {
+                   UIView *view = arr[i];
+                   [loop addObject:view.subviews];
+                   if ([[UIDevice currentDevice].systemVersion intValue]>=12&&[[UIDevice currentDevice].systemVersion intValue]<13){
+                       if ([NSStringFromClass([view class]) isEqualToString:@"UIVisualEffectView"]) {
+                           self.naviBarBackGround = view;
+                           [self.naviBarBackGround setAlpha:0];
+                       }
+                   }else{
+                       if ([NSStringFromClass([view class]) isEqualToString:@"_UIBarBackground"]||[NSStringFromClass([view class]) isEqualToString:@"_UINavigationBarBackground"]) {
+                           self.naviBarBackGround = view;
+                           [self.naviBarBackGround setAlpha:0];
+                       }
+                   }
+                   if ([NSStringFromClass([view class]) isEqualToString:@"UIImageView"]) {
+                       view.hidden = YES;
+                   }
+               }
+           }
         }
     }
 }
@@ -158,7 +167,7 @@
 
     self.cache = [NSCache new];
     self.cache.countLimit = 30;
-
+    footerViewIndex = -1;
     CGFloat headY = 0;
     CGFloat tabbarHeight = 0;
     CGFloat statusBarHeight = 0;
@@ -296,6 +305,7 @@
     self.downSc.menuTitleHeight = self.param.titleHeight;
     self.downSc.canScroll = [self canTopSuspension];
     self.downSc.scrollEnabled = [self canTopSuspension];
+    self.downSc.wFromNavi = self.param.wFromNavi;
     //全景
     if (self.head_MenuView) {
         self.head_MenuView.frame = CGRectMake(0, self.headView?CGRectGetMinX(self.headView.frame):CGRectGetMinX(self.upSc.frame), self.upSc.frame.size.width, CGRectGetMaxY(self.upSc.frame)-self.upSc.dataView.frame.size.height);
@@ -385,10 +395,16 @@
     if (self.param.wEventChildVCDidSroll) {
         self.param.wEventChildVCDidSroll(self,self.downSc.contentOffset, self.downSc.contentOffset, self.downSc);
     }
+    //防止第一次加载不成功
+    if (self.currentFootView&&
+        self.currentFootView.frame.origin.y!=
+        CGRectGetMaxY(self.downSc.frame)-self.currentFootView.frame.size.height) {
+        [self.currentFootView page_y:CGRectGetMaxY(self.downSc.frame)-self.currentFootView.frame.size.height];
+    }
 }
 
 //设置悬浮
-- (void)setUpSuspension:(UIViewController*)newVC index:(NSInteger)index{
+- (void)setUpSuspension:(UIViewController*)newVC index:(NSInteger)index end:(BOOL)end{
     if (![self canTopSuspension]) return;
     if ([newVC conformsToProtocol:@protocol(WMZPageProtocol)]) {
         UIScrollView *view = nil;
@@ -411,7 +427,63 @@
             }
             [self.currentScroll pageAddObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
         }
-   }
+        
+        if ([newVC respondsToSelector:@selector(fixFooterView)]) {
+            UIView *tmpView = [newVC performSelector:@selector(fixFooterView)];
+            [self.sonChildFooterViewDic setObject:view forKey:@(index)];
+            self.currentFootView = tmpView;
+            [self.view addSubview:self.currentFootView];
+            self.currentFootView.hidden = NO;
+            footerViewIndex = index;
+            [self.currentFootView page_y:CGRectGetMaxY(self.downSc.frame)-self.currentFootView.frame.size.height];
+        }else{
+            if (self.currentFootView&&
+                end) {
+                self.currentFootView.hidden = YES;
+            }
+        }
+    }else{
+        self.currentScroll = nil;
+        self.currentFootView  = nil;
+    }
+}
+
+//底部左滑滚动
+- (void)pageWithScrollView:(UIScrollView*)scrollView left:(BOOL)left{
+    int offset = (int)scrollView.contentOffset.x%(int)self.upSc.frame.size.width;
+    NSInteger index = floor(scrollView.contentOffset.x/self.upSc.frame.size.width);
+    if (self.currentFootView) {
+        int x = 0;
+        CGFloat width = self.footViewSizeWidth;
+        if (left) {
+            if (scrollView.contentOffset.x>(self.upSc.frame.size.width*footerViewIndex)) {
+                x = 0;
+                width -= offset;
+            }else{
+                x = (int)self.upSc.frame.size.width - offset;
+            }
+        }else{
+            if (scrollView.contentOffset.x>(self.upSc.frame.size.width*footerViewIndex)) {
+               x = 0;
+               width -= offset;
+            }else{
+               x = (int)self.upSc.frame.size.width - offset;
+            }
+        }
+        if (offset == 0 && [self.sonChildFooterViewDic objectForKey:@(index)]) {
+            x = self.footViewOrginX;
+        }
+        [self.currentFootView page_x: x];
+        [self.currentFootView page_width:width];
+    }
+}
+
+
+//选中按钮
+- (void)selectBtnWithIndex:(NSInteger)index{
+    if (self.currentFootView) {
+        [self.currentFootView page_x:self.footViewOrginX];
+    }
 }
 
 //监听子控制器中的滚动视图
@@ -460,11 +532,26 @@
     return _sonChildScrollerViewDic;
 }
 
+- (NSMutableDictionary *)sonChildFooterViewDic{
+    if (!_sonChildFooterViewDic) {
+        _sonChildFooterViewDic = [NSMutableDictionary new];
+    }
+    return _sonChildFooterViewDic;
+}
+
 - (WMZPageScroller *)downSc{
     if (!_downSc) {
         _downSc = [[WMZPageScroller alloc]initWithFrame:CGRectMake(0, 0, PageVCWidth, PageVCHeight) style:UITableViewStyleGrouped];
     }
     return _downSc;
+}
+
+
+- (CGFloat)footViewSizeWidth{
+    if (!_footViewSizeWidth) {
+        _footViewSizeWidth = self.upSc.frame.size.width;
+    }
+    return _footViewSizeWidth;
 }
 
 - (void)didReceiveMemoryWarning{

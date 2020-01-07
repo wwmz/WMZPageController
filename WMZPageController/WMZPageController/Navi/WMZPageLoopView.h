@@ -17,10 +17,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @optional
 
-- (void)selectWithBtn:(UIButton*)btn first:(BOOL)first;
+//选中按钮
+- (void)selectBtnWithIndex:(NSInteger)index;
+
+//底部左滑的代理
+- (void)pageWithScrollView:(UIScrollView*)scrollView left:(BOOL)left;
+
+//底部左滑结束的代理
+- (void)pageScrollEndWithScrollView:(UIScrollView*)scrollView;
 
 //获取子tableview
-- (void)setUpSuspension:(UIViewController*)newVC index:(NSInteger)index;
+- (void)setUpSuspension:(UIViewController*)newVC index:(NSInteger)index end:(BOOL)end;
 @end
 
 @interface WMZPageLoopView : UIView

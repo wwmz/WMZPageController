@@ -139,6 +139,11 @@ typedef void (^PageChildVCScroll)(UIViewController* pageVC,CGPoint oldPoint,CGPo
 typedef UIView* (^PageHeadViewBlock)(void);
 
 /*
+ * 固定尾视图
+ */
+typedef UIView* (^PageFootViewBlock)(void);
+
+/*
  * 头视图和菜单栏的背景层
  */
 typedef void (^PageHeadAndMenuBgView)(UIView *bgView);

@@ -22,6 +22,12 @@ NS_ASSUME_NONNULL_BEGIN
  *悬浮 两者一样 下面的只是为了减少非tableview的警告
  */
 - (UIScrollView*)getMyScrollView;
+
+
+/*
+ *子控制器需要固定的尾部视图
+ */
+- (UIView*)fixFooterView;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -1,37 +1,54 @@
+
+
+
 //
-//  TopSuspensionVC.m
+//  FixSonVC.m
 //  WMZPageController
 //
-//  Created by wmz on 2019/12/13.
-//  Copyright © 2019 wmz. All rights reserved.
+//  Created by wmz on 2020/1/6.
+//  Copyright © 2020 wmz. All rights reserved.
 //
 
-#import "TopSuspensionVC.h"
-#import "WMZBannerView.h"
+#import "FixSonVC.h"
 #import "WMZPageProtocol.h"
 #import "WMZPageConfig.h"
+#import "WMZBannerView.h"
 #import "MJRefresh.h"
-@interface TopSuspensionVC ()<UITableViewDelegate,UITableViewDataSource,WMZPageProtocol>
+@interface FixSonVC ()<UITableViewDelegate,UITableViewDataSource,WMZPageProtocol>
+@property(nonatomic,strong)UIView *bottomView;
 @property(nonatomic,strong)UITableView *ta;
 @property(nonatomic,strong)NSArray *bannerData;
 @property(nonatomic,strong)WMZBannerView *headView;
 @property(nonatomic,strong)WMZBannerParam *param;
 @end
 
-@implementation TopSuspensionVC
+@implementation FixSonVC
 
-#pragma mark 注意 可以重新适配tableview的frame 如果你已经适配好了tableview的frame就不用
-- (void)viewDidLayoutSubviews{
-    [super viewDidLayoutSubviews];
-    self.ta.frame = self.view.bounds;
+//固定底部 首先要把高度赋值上
+- (UIView *)bottomView{
+    if (!_bottomView) {
+        _bottomView = [UIView new];
+        _bottomView.backgroundColor = [UIColor redColor];
+        _bottomView.frame = CGRectMake(0, CGRectGetMaxY(self.ta.frame), self.view.bounds.size.width, 50);
+    }
+    return _bottomView;
 }
 
+
+- (void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
+    self.ta.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height-50);
+}
+
+//实现固定底部协议
+- (UIView *)fixFooterView{
+    return self.bottomView;
+}
 
 //实现协议 悬浮 必须实现
 - (UITableView *)getMyTableView{
     return self.ta;
 }
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,7 +64,6 @@
     }
     ta.dataSource = self;
     ta.delegate = self;
-    ta.tag = self.page;
     _bannerData = @[@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576232578984&di=7170b5a1e3350fc3060db6929bc49a10&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn10109%2F217%2Fw641h376%2F20191211%2Fa46d-iknhexi8336167.jpg",
                                       @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576232579069&di=d0ff7d27c7d65928aaa2a472094552a9&imgtype=0&src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farticle%2F5b13843d414928b145f37cf958c1dfdac6759cd3.jpg",
                                       @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576232579067&di=c3ecf1fc284f48dd91464085a95db96d&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn12%2F328%2Fw640h488%2F20180612%2F0052-hcufqih6006139.jpg",
@@ -59,25 +75,6 @@
     .wRepeatSet(YES);
     self.headView = [[WMZBannerView alloc]initConfigureWithModel:self.param];
     ta.tableHeaderView = self.headView;
-
-    // 下拉刷新
-    __weak TopSuspensionVC *weakSelf = self;
-    self.ta.mj_header= [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [weakSelf.ta.mj_header endRefreshing];
-        });
-    }];
-      
-      
-      // 上拉刷新
-    self.ta.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            // 结束刷新
-            [weakSelf.ta.mj_footer endRefreshing];
-        });
-    }];
-    // 设置自动切换透明度(在导航栏下面自动隐藏)
-    self.ta.mj_header.automaticallyChangeAlpha = YES;
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
@@ -113,19 +110,13 @@
     [cell.imageView sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576232579066&di=f0c28d04cd4bfafcec7a23275a933836&imgtype=0&src=http%3A%2F%2Fk.zol-img.com.cn%2Fsjbbs%2F5870%2Fa5869130_s.jpg"]];
     UIGraphicsEndImageContext();//*3
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%ld-路飞",self.page];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld-红发",self.page];
+    cell.textLabel.text = @"路飞";
+    cell.detailTextLabel.text = @"路飞";
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 70;
 }
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    UIViewController *vc = [NSClassFromString(@"WMZCustomOnePage") new];
-//    vc.modalPresentationStyle = UIModalPresentationFullScreen;
-//    [self presentViewController:vc animated:YES completion:nil];
-}
-
 
 
 @end

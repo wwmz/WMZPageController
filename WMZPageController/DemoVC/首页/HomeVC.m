@@ -83,7 +83,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section  == 4) {
-        NSArray *arr = @[@"WMZCustomOnePage",@"WMZCustomTwoPage",@"WMZCustomThreePage"];
+        NSArray *arr = @[@"WMZCustomOnePage",@"WMZCustomTwoPage",@"WMZCustomThreePage",@"WMZFixVC"];
         [self.navigationController pushViewController:[NSClassFromString(arr[indexPath.row]) new] animated:YES];
     }else if (indexPath.section  == 5) {
         NSArray *arr = @[@"WMZUsePageVC"];
@@ -102,7 +102,7 @@
           @"导航栏标题",@"居中标题",@"固定最右边标题",@"固定最右边图片+标题",@"固定宽度标题",@"自定义标题内容"],
         @[@"无样式",@"下划线不跟随移动",@"下划线跟随移动",@"字体变大",@"圆点+跟随滑动+颜色渐变",@"背景框"],
         @[@"爱奇艺",@"优酷",@"拼多多",@"今日头条",@"微博",@"京东",@"简书",@"适配暗黑模式"],
-        @[@"悬浮效果(导航栏不隐藏+刷新在中间)",@"悬浮效果(添加全局背景色)",@"悬浮效果(导航栏透明度变化+刷新在顶部)"],
+        @[@"悬浮效果(导航栏不隐藏+刷新在中间)",@"悬浮效果(添加全局背景色)",@"悬浮效果(导航栏透明度变化+刷新在顶部)",@"子控制器有子视图固定底部"],
         @[@"实现tableviewDataSource协议写复杂UI"]
         ];
     }
