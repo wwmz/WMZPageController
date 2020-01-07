@@ -106,15 +106,14 @@
                        if ([NSStringFromClass([view class]) isEqualToString:@"UIVisualEffectView"]) {
                            self.naviBarBackGround = view;
                            [self.naviBarBackGround setAlpha:0];
+                            break;
                        }
                    }else{
                        if ([NSStringFromClass([view class]) isEqualToString:@"_UIBarBackground"]||[NSStringFromClass([view class]) isEqualToString:@"_UINavigationBarBackground"]) {
                            self.naviBarBackGround = view;
                            [self.naviBarBackGround setAlpha:0];
+                           break;
                        }
-                   }
-                   if ([NSStringFromClass([view class]) isEqualToString:@"UIImageView"]) {
-                       view.hidden = YES;
                    }
                }
            }
@@ -339,6 +338,7 @@
     }
 }
 
+//底部滚动
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (scrollView!=self.downSc) return;
     if (![self canTopSuspension]) return;
@@ -366,7 +366,11 @@
     }
     if (self.scrolTotop) {
         self.sonCanScroll = YES;
-        self.canScroll = NO;
+        if (self.currentScroll.contentSize.height<=self.currentScroll.frame.size.height) {
+            self.canScroll = YES;
+        }else{
+            self.canScroll = NO;
+        }
     }else {
         if (!self.canScroll) {
             scrollView.contentOffset = CGPointMake(0, topOffset);
@@ -374,6 +378,7 @@
              self.sonCanScroll = NO;
         }
     }
+    
     CGFloat delta = scrollView.contentOffset.y/topOffset;
     if (delta>1) {
         delta = 1;

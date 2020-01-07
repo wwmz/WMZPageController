@@ -121,9 +121,7 @@
     return 70;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    UIViewController *vc = [NSClassFromString(@"WMZCustomOnePage") new];
-//    vc.modalPresentationStyle = UIModalPresentationFullScreen;
-//    [self presentViewController:vc animated:YES completion:nil];
+//    [self.navigationController pushViewController:[TopSuspensionVC new] animated:YES];
 }
 
 
