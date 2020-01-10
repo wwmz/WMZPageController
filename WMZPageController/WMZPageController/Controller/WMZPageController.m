@@ -32,7 +32,7 @@
 @property (nonatomic, assign) BOOL scrolToBottom;
 @end
 @implementation WMZPageController
-
+//更新
 - (void)updatePageController{
     [self.upSc removeFromSuperview];
     [self.downSc removeFromSuperview];
@@ -56,6 +56,26 @@
     [self setParam];
     [self UI];
 }
+
+/*
+*底部手动滚动  传入CGPointZero则为吸顶临界点
+*/
+- (void)downScrollViewSetOffset:(CGPoint)point animated:(BOOL)animat;{
+    if (CGPointEqualToPoint(point, CGPointZero)) {
+        //顶点
+        int topOffset = self.downSc.contentSize.height - self.downSc.frame.size.height;
+        if (!self.parentViewController) {
+            topOffset -=PageVCStatusBarHeight;
+        }else{
+            if (!self.param.wFromNavi) {
+                topOffset -=PageVCNavBarHeight;
+            }
+        }
+        point = CGPointMake(self.downSc.contentOffset.x, topOffset);
+    }
+    [self.downSc setContentOffset:point animated:animat];
+}
+
 
 - (void)viewDidLoad{
     self.view.backgroundColor = [UIColor whiteColor];
@@ -206,7 +226,6 @@
         }
     }
     
-    
     //全屏
       if (self.navigationController) {
           for (UIGestureRecognizer *gestureRecognizer in self.downSc.gestureRecognizers) {
@@ -346,7 +365,7 @@
     float yOffset  = scrollView.contentOffset.y;
     //顶点
     int topOffset = scrollView.contentSize.height - scrollView.frame.size.height;
-    if (!self.parentViewController) {
+    if (!self.parentViewController||!self.navigationController) {
         topOffset -=PageVCStatusBarHeight;
     }else{
         if (!self.param.wFromNavi) {
@@ -403,8 +422,8 @@
     //防止第一次加载不成功
     if (self.currentFootView&&
         self.currentFootView.frame.origin.y!=
-        CGRectGetMaxY(self.downSc.frame)-self.currentFootView.frame.size.height) {
-        [self.currentFootView page_y:CGRectGetMaxY(self.downSc.frame)-self.currentFootView.frame.size.height];
+        self.footViewOrginY) {
+        [self.currentFootView page_y:self.footViewOrginY];
     }
 }
 
@@ -440,7 +459,7 @@
             [self.view addSubview:self.currentFootView];
             self.currentFootView.hidden = NO;
             footerViewIndex = index;
-            [self.currentFootView page_y:CGRectGetMaxY(self.downSc.frame)-self.currentFootView.frame.size.height];
+            [self.currentFootView page_y:self.footViewOrginY];
         }else{
             if (self.currentFootView&&
                 end) {
@@ -551,6 +570,12 @@
     return _downSc;
 }
 
+- (CGFloat)footViewOrginY{
+    if (!_footViewOrginY) {
+        _footViewOrginY = CGRectGetMaxY(self.downSc.frame)-self.currentFootView.frame.size.height;
+    }
+    return _footViewOrginY;
+}
 
 - (CGFloat)footViewSizeWidth{
     if (!_footViewSizeWidth) {

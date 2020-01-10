@@ -14,7 +14,10 @@
 #import "WMZPageConfig.h"
 #import "WMZBannerView.h"
 #import "MJRefresh.h"
-@interface FixSonVC ()<UITableViewDelegate,UITableViewDataSource,WMZPageProtocol>
+#import "WMZUsePageVC.h"
+@interface FixSonVC ()<UITableViewDelegate,UITableViewDataSource,WMZPageProtocol>{
+    BOOL sss;
+}
 @property(nonatomic,strong)UIView *bottomView;
 @property(nonatomic,strong)UITableView *ta;
 @property(nonatomic,strong)NSArray *bannerData;
@@ -75,6 +78,28 @@
     .wRepeatSet(YES);
     self.headView = [[WMZBannerView alloc]initConfigureWithModel:self.param];
     ta.tableHeaderView = self.headView;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onBtnAction:) name:@"setDowmScContenOffset" object:nil];
+
+}
+
+- (void)onBtnAction:(id)sender{
+    [self scrollTableToFoot:NO];
+    //模拟键盘弹出改变底部视图的frame
+//    sss = !sss;
+//    WMZUsePageVC *vc = (WMZUsePageVC*)self.parentViewController;
+//    vc.footViewOrginY = sss?400:(PageVCHeight-PageVCTabBarHeight-50);
+//    [self.bottomView page_y:sss?400:(PageVCHeight-PageVCTabBarHeight-50)];
+}
+
+- (void)scrollTableToFoot:(BOOL)animated
+{
+    NSInteger s = [self.ta numberOfSections];
+    if (s<1) return;
+    NSInteger r = [self.ta numberOfRowsInSection:s-1];
+    if (r<1) return;
+    NSIndexPath *ip = [NSIndexPath indexPathForRow:r-1 inSection:s-1];
+    [self.ta scrollToRowAtIndexPath:ip atScrollPosition:UITableViewScrollPositionBottom animated:animated];
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
@@ -118,5 +143,8 @@
     return 70;
 }
 
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 @end

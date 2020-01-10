@@ -40,6 +40,20 @@
           return back;
       });
       self.param = param;
+    
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.tag = 111;
+    [btn setTitleColor:PageColor(0xF4606C) forState:UIControlStateNormal];
+    [btn setTitle:@"第二个控制器滚动到最底部" forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(onBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    [btn sizeToFit];
+    UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    self.navigationItem.rightBarButtonItem = barItem;
 }
 
+- (void)onBtnAction:(id)sender{
+//    [self downScrollViewSetOffset:CGPointZero animated:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setDowmScContenOffset" object:nil];
+}
 @end
