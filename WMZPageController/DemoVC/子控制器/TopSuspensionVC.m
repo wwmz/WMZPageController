@@ -121,7 +121,10 @@
     return 70;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    [self.navigationController pushViewController:[TopSuspensionVC new] animated:YES];
+    NSString *str = @"WMZCustomThreePage";
+    UIViewController *vc = [NSClassFromString(str) new];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 

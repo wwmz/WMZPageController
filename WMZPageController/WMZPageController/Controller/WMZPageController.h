@@ -11,9 +11,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface WMZPageController : UIViewController<UIScrollViewDelegate,WMZPageLoopDelegate,UITableViewDelegate>
-
-//导航栏背景色  //特殊情况自行处理
-@property(nonatomic,strong)UIView *naviBarBackGround;
 //参数
 @property(nonatomic,strong)WMZPageParam *param;
 //frame数组  如果出现frame不准确 可以手动调节一下这个数组的内容 [NSValue 存的rect]
@@ -35,7 +32,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,assign)CGFloat footViewSizeWidth;
 //子控制器固定底部y值 default 最底部-height
 @property(nonatomic,assign)CGFloat footViewOrginY;
-
 
 /*
  *更新

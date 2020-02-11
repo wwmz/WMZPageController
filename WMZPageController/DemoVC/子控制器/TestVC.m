@@ -159,4 +159,8 @@
     return @"删除";
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self.navigationController pushViewController:[TestVC new] animated:YES];
+}
+
 @end

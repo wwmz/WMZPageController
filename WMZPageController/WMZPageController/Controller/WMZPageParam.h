@@ -42,6 +42,8 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,         
 /* =========================================special==============================================*/
 
 /* =========================================Menu==================================================*/
+//导航栏颜色 default 默认颜色 如果出现导航栏颜色不准确可以调用此属性设置
+WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, UIColor*,              wNaviColor)
 //给菜单栏和headView加个背景层 default -
 WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageHeadAndMenuBgView,                  wInsertHeadAndMenuBg)
 //给菜单栏加个下划线 default -
@@ -49,7 +51,7 @@ WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageHeadAndMen
 //自定义菜单栏上的标题
 WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageCustomMenuTitle,                  wCustomMenuTitle)
 //自定义选中后菜单栏上的标题
-WMZPagePropStatementAndPropSetFuncStatement(copy,  WMZPageParam, PageCustomMenuSelectTitle,wCustomMenuSelectTitle)
+WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageCustomMenuSelectTitle,wCustomMenuSelectTitle)
 //默认选中 default 0
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, NSInteger,             wMenuDefaultIndex)
 //菜单最右边固定内容 default nil
@@ -104,6 +106,7 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,      
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuIndicatorRadio)
 //指示器距离按钮的y值(AQY) default 菜单视图的高度-指示器高度-4/wMenuCellPadding
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuIndicatorY)
+
 /* =========================================Menu===============================================*/
 
 /* =========================================Events==================================================*/

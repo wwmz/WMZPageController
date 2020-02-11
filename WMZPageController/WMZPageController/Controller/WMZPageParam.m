@@ -40,6 +40,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, PageBtnPosition,        wMenuImag
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuImageMargin)
 WMZPagePropSetFuncImplementation(WMZPageParam, id,                     wMenuFixRightData)
 WMZPagePropSetFuncImplementation(WMZPageParam, UIColor*,               wMenuBgColor)
+WMZPagePropSetFuncImplementation(WMZPageParam, UIColor*,               wNaviColor)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuFixWidth)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuCellMarginY)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageHeadViewBlock,      wMenuHeadView)

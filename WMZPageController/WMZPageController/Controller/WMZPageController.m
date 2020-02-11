@@ -20,8 +20,10 @@
 @property(nonatomic,strong)UIView *headView;
 //头部视图菜单栏底部的占位视图(如有需要)
 @property(nonatomic,strong)UIView *head_MenuView;
-//视图消失时候的透明度 有透明度变化的时候
-@property(nonatomic,assign)CGFloat lastAlpah;
+//视图消失时候的导航栏透明度 有透明度变化的时候
+@property(nonatomic,strong)NSNumber *lastAlpah;
+//视图出现时候的导航栏透明度
+@property(nonatomic,strong)NSNumber *enterAlpah;
 //底部tableView是否可以滚动
 @property (nonatomic, assign) BOOL canScroll;
 //onTableView是否可以滚动
@@ -30,6 +32,8 @@
 @property (nonatomic, assign) BOOL scrolTotop;
 //到达底部
 @property (nonatomic, assign) BOOL scrolToBottom;
+
+@property (nonatomic, strong) UIView *naviBarBackGround;
 @end
 @implementation WMZPageController
 //更新
@@ -42,11 +46,9 @@
     footerViewIndex = -1;
     if (self.headView) {
         [self.headView removeFromSuperview];
-        self.headView = nil;
     }
     if (self.head_MenuView) {
         [self.head_MenuView removeFromSuperview];
-        self.head_MenuView = nil;
     }
     for (UIViewController *VC in self.childViewControllers) {
         [VC willMoveToParentViewController:nil];
@@ -82,6 +84,9 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self setParam];
         [self UI];
+        if (self.naviBarBackGround&&self.param.wNaviColor) {
+            self.naviBarBackGround.backgroundColor = self.param.wNaviColor;
+        }
     });
 }
 
@@ -89,7 +94,7 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     if (self.naviBarBackGround&&self.param.wNaviAlpha) {
-        self.lastAlpah = self.naviBarBackGround.alpha;
+        self.lastAlpah = @(self.naviBarBackGround.alpha);
     }
      hadWillDisappeal = YES;
 }
@@ -97,8 +102,8 @@
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     if (self.naviBarBackGround&&self.param.wNaviAlpha) {
-        self.lastAlpah = self.naviBarBackGround.alpha;
-        self.naviBarBackGround.alpha = 1;
+        self.lastAlpah = @(self.naviBarBackGround.alpha);
+        self.naviBarBackGround.alpha = self.enterAlpah?self.enterAlpah.floatValue:1;
     }
 }
 
@@ -106,12 +111,14 @@
     [super viewWillAppear:animated];
     hadWillDisappeal = NO;
     if (self.navigationController&&self.param.wNaviAlpha) {
-        if (self.naviBarBackGround&&self.lastAlpah!=0){
-             self.naviBarBackGround.alpha = self.lastAlpah;
+        self.naviBarBackGround.alpha = 0;
+        if (self.naviBarBackGround&&self.lastAlpah){
+            self.naviBarBackGround.alpha = self.lastAlpah.floatValue;
             return;
         }
         if (self.param.wNaviAlphaAll) {
             self.naviBarBackGround = self.navigationController.navigationBar;
+            self.enterAlpah = @(self.naviBarBackGround.alpha);
             [self.naviBarBackGround setAlpha:0];
         }else{
            NSMutableArray *loop= [NSMutableArray new];
@@ -125,12 +132,14 @@
                    if ([[UIDevice currentDevice].systemVersion intValue]>=12&&[[UIDevice currentDevice].systemVersion intValue]<13){
                        if ([NSStringFromClass([view class]) isEqualToString:@"UIVisualEffectView"]) {
                            self.naviBarBackGround = view;
+                           self.enterAlpah = @(self.naviBarBackGround.alpha);
                            [self.naviBarBackGround setAlpha:0];
                             break;
                        }
                    }else{
                        if ([NSStringFromClass([view class]) isEqualToString:@"_UIBarBackground"]||[NSStringFromClass([view class]) isEqualToString:@"_UINavigationBarBackground"]) {
                            self.naviBarBackGround = view;
+                           self.enterAlpah = @(self.naviBarBackGround.alpha);
                            [self.naviBarBackGround setAlpha:0];
                            break;
                        }
@@ -138,7 +147,9 @@
                }
            }
         }
+        
     }
+    
 }
 
 - (void)setParam{
@@ -158,7 +169,6 @@
         self.param.wMenuAnimalTitleBig = NO;
         self.param.wMenuAnimalTitleGradient = NO;
     }
-    
     
     if (self.param.wMenuAnimal == PageTitleMenuYouKu) {
         self.param.wMenuIndicatorWidth = 6;
@@ -211,7 +221,7 @@
                 tabbarHeight = PageVCTabBarHeight;
             }
         }else if ([self.parentViewController isKindOfClass:[UITabBarController class]]) {
-             tabbarHeight = PageVCTabBarHeight;
+            tabbarHeight = PageVCTabBarHeight;
             if (self.parentViewController.navigationController) {
                 headY = (!self.param.wFromNavi&&
                 self.param.wMenuPosition != PageMenuPositionNavi&&
@@ -225,6 +235,12 @@
             statusBarHeight = 0;
         }
     }
+    
+    
+    if (self.hidesBottomBarWhenPushed&&tabbarHeight>=PageVCTabBarHeight) {
+        tabbarHeight -= PageVCTabBarHeight;
+    }
+    
     
     //全屏
       if (self.navigationController) {
@@ -283,7 +299,6 @@
     }else{
         sonChildVCY = 0;
         sonChildVCHeight = self.downSc.frame.size.height - titleMenuhHeight;
-        
     }
     
     if (self.param.wMenuPosition == PageMenuPositionBottom){
@@ -303,13 +318,17 @@
         [self.upSc page_height:CGRectGetMaxY(self.upSc.dataView.frame)];
     }
     for (int i = 0; i<self.param.wTitleArr.count; i++) {
-        CGFloat height = [self canTopSuspension]?self.upSc.dataView.frame.size.height :(sonChildVCHeight-self.headView.frame.size.height);
+        CGFloat height = [self canTopSuspension]?sonChildVCHeight :(sonChildVCHeight-self.headView.frame.size.height);
         if ([self canTopSuspension]) {
             if (!self.parentViewController) {
                 height -=PageVCStatusBarHeight;
             }else{
-                if (!self.param.wFromNavi) {
-                    height -=PageVCNavBarHeight;
+                if (self.navigationController) {
+                    if (!self.param.wFromNavi) {
+                        height -=PageVCNavBarHeight;
+                    }
+                }else{
+                    height -= PageVCStatusBarHeight;
                 }
             }
         }
@@ -317,6 +336,7 @@
                                   [self canTopSuspension]?0:sonChildVCY,
                                   self.downSc.frame.size.width,
                                   height);
+        
         [self.rectArr addObject:[NSValue valueWithCGRect:frame]];
     }
     self.param.titleHeight = self.upSc.mainView.frame.size.height;
