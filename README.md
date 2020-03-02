@@ -419,4 +419,5 @@ LEETheme 使用 MIT 许可证，详情见 [LICENSE](LICENSE) 文件。
 - 20191213 更新cocopod到1.1.0版本 建议更新 新增可添加tableviewCell功能
 - 20200104 更新cocopod到1.1.1版本 修复bug
 - 20200107 更新cocopod到1.1.3版本 修复bug 新增可固定底部
-### 手动安装
+- 20200202 更新cocopod到1.1.4版本 修复bug 
+- 20200202 新增wFixFirst属性 固定在所有控制器的底部的尾视图
