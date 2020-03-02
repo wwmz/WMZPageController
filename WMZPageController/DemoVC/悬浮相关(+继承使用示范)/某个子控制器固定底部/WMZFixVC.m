@@ -20,9 +20,10 @@
     [super viewDidLoad];
       WMZPageParam *param = PageParam()
       .wTitleArrSet(@[@"热门",@"分类",@"推荐"])
-      .wControllersSet(@[[FixSonVC new],[CollectionViewPopDemo new],[CollectionViewPopDemo new]])
-      //固定在所有子控制器底部
-      .wFixFirstSet(YES)
+      .wControllersSet(@[[CollectionViewPopDemo new],[FixSonVC new],[CollectionViewPopDemo new]])
+      //固定在所有子控制器底部  需要放在第一个控制器里 例如此例子
+//     .wControllersSet(@[[FixSonVC new],[CollectionViewPopDemo new],[CollectionViewPopDemo new]])
+//     .wFixFirstSet(YES)
       //悬浮开启
       .wTopSuspensionSet(YES)
       //等分
