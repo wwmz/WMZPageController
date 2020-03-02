@@ -51,6 +51,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wNaviAlph
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wScrollCanTransfer)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wBounces)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wNaviAlphaAll)
+WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wFixFirst)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageHeadAndMenuBgView,  wInsertHeadAndMenuBg)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageHeadAndMenuBgView,  wInsertMenuLine)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageCustomMenuTitle,    wCustomMenuTitle)

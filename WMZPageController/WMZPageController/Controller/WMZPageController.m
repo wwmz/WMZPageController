@@ -483,7 +483,9 @@
         }else{
             if (self.currentFootView&&
                 end) {
-                self.currentFootView.hidden = YES;
+                if (!self.param.wFixFirst) {
+                    self.currentFootView.hidden = YES;
+                }
             }
         }
     }else{
@@ -517,8 +519,10 @@
         if (offset == 0 && [self.sonChildFooterViewDic objectForKey:@(index)]) {
             x = self.footViewOrginX;
         }
-        [self.currentFootView page_x: x];
-        [self.currentFootView page_width:width];
+        if (!self.param.wFixFirst) {
+            [self.currentFootView page_x: x];
+            [self.currentFootView page_width:width];
+        }
     }
 }
 
@@ -526,7 +530,9 @@
 //选中按钮
 - (void)selectBtnWithIndex:(NSInteger)index{
     if (self.currentFootView) {
-        [self.currentFootView page_x:self.footViewOrginX];
+        if (!self.param.wFixFirst) {
+            [self.currentFootView page_x:self.footViewOrginX];
+        }
     }
 }
 
