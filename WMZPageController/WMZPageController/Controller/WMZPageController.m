@@ -40,16 +40,11 @@
 - (void)updatePageController{
     [self.upSc removeFromSuperview];
     [self.downSc removeFromSuperview];
+    self.downSc = [[WMZPageScroller alloc]initWithFrame:CGRectMake(0, 0, PageVCWidth, PageVCHeight) style:UITableViewStyleGrouped];
     [self.sonChildScrollerViewDic removeAllObjects];
     [self.sonChildFooterViewDic removeAllObjects];
     [self.rectArr removeAllObjects];
     footerViewIndex = -1;
-    if (self.headView) {
-        [self.headView removeFromSuperview];
-    }
-    if (self.head_MenuView) {
-        [self.head_MenuView removeFromSuperview];
-    }
     for (UIViewController *VC in self.childViewControllers) {
         [VC willMoveToParentViewController:nil];
         [VC.view removeFromSuperview];
