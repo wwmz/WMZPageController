@@ -44,6 +44,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)downScrollViewSetOffset:(CGPoint)point animated:(BOOL)animat;
 
 
+/*
+*手动调用菜单到第index个
+*/
+- (void)selectMenuWithIndex:(NSInteger)index;
 
 @end
 

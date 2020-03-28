@@ -74,6 +74,13 @@
           }];
            
       });
+    
+    [self.upSc.btnArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (idx == 2) {
+            [obj sendActionsForControlEvents:UIControlEventTouchUpInside];
+            *stop = YES;
+        }
+    }];
 }
 
 @end

@@ -55,5 +55,6 @@
         });
         
         self.param = param;
+    
 }
 @end

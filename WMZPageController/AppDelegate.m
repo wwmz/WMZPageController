@@ -17,6 +17,8 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    
     UITabBarController *ta = [UITabBarController new];
     
     UINavigationController *na1 = [[UINavigationController alloc]initWithRootViewController:[HomeVC new]];
@@ -27,6 +29,9 @@
     na3.tabBarItem.title = @"页面";
     ta.viewControllers = @[na1,[WMZCustomThreePage new],na3];
     self.window.rootViewController = ta;
+    
+//    [UITabBar appearance].translucent = NO;
+//    [UINavigationBar appearance].translucent = NO;
     // Override point for customization after application launch.
     return YES;
 }

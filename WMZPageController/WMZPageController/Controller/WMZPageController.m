@@ -200,27 +200,38 @@
             statusBarHeight = PageVCStatusBarHeight;
         }
     } else if (self.tabBarController) {
-        tabbarHeight = PageVCTabBarHeight;
+        if (!self.tabBarController.tabBar.translucent) {
+            tabbarHeight = 0;
+        }else{
+            tabbarHeight = PageVCTabBarHeight;
+        }
     } else if (self.navigationController){
         headY = (!self.param.wFromNavi&&
                   self.param.wMenuPosition != PageMenuPositionNavi&&
-                  self.param.wMenuPosition != PageMenuPositionBottom)?0:PageVCNavBarHeight;
+                  self.param.wMenuPosition != PageMenuPositionBottom)?0:
+       (!self.navigationController.navigationBar.translucent?0:PageVCNavBarHeight);
     }
     if (self.parentViewController) {
         
         if ([self.parentViewController isKindOfClass:[UINavigationController class]]) {
+            UINavigationController *naPar = (UINavigationController*)self.parentViewController;
             headY = (!self.param.wFromNavi&&
             self.param.wMenuPosition != PageMenuPositionNavi&&
-            self.param.wMenuPosition != PageMenuPositionBottom)?0:PageVCNavBarHeight;
+                     self.param.wMenuPosition != PageMenuPositionBottom)?0:
+            (!naPar.navigationBar.translucent?0:PageVCNavBarHeight);
             if (self.parentViewController.tabBarController) {
-                tabbarHeight = PageVCTabBarHeight;
+                if (!self.parentViewController.tabBarController.tabBar.translucent) {
+                    tabbarHeight = 0;
+                }else{
+                    tabbarHeight = PageVCTabBarHeight;
+                }
             }
         }else if ([self.parentViewController isKindOfClass:[UITabBarController class]]) {
             tabbarHeight = PageVCTabBarHeight;
             if (self.parentViewController.navigationController) {
                 headY = (!self.param.wFromNavi&&
                 self.param.wMenuPosition != PageMenuPositionNavi&&
-                self.param.wMenuPosition != PageMenuPositionBottom)?0:PageVCNavBarHeight;
+                self.param.wMenuPosition != PageMenuPositionBottom)?0:(!self.parentViewController.navigationController.navigationBar.translucent?0:PageVCNavBarHeight);
             }else if(self.parentViewController.presentingViewController){
                 statusBarHeight = PageVCStatusBarHeight;
             }
@@ -320,7 +331,7 @@
             }else{
                 if (self.navigationController) {
                     if (!self.param.wFromNavi) {
-                        height -=PageVCNavBarHeight;
+                        height -= (self.navigationController.navigationBar.translucent?PageVCNavBarHeight:0);
                     }
                 }else{
                     height -= PageVCStatusBarHeight;
@@ -384,7 +395,10 @@
         topOffset -=PageVCStatusBarHeight;
     }else{
         if (!self.param.wFromNavi) {
-            topOffset -=PageVCNavBarHeight;
+            UINavigationController *naPar = (UINavigationController*)self.parentViewController;
+            if (naPar.navigationBar.translucent) {
+                topOffset -=PageVCNavBarHeight;
+            }
         }
     }
     if (yOffset<=0) {
@@ -563,6 +577,19 @@
     }
     return YES;
 }
+
+/*
+*手动调用菜单到第index个
+*/
+- (void)selectMenuWithIndex:(NSInteger)index{
+    [self.upSc.btnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (idx == index) {
+            [obj sendActionsForControlEvents:UIControlEventTouchUpInside];
+            *stop = YES;
+        }
+    }];
+}
+
 - (NSMutableArray *)rectArr{
     if (!_rectArr) {
         _rectArr = [NSMutableArray new];
