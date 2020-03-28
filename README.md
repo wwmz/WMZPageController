@@ -421,3 +421,4 @@ LEETheme 使用 MIT 许可证，详情见 [LICENSE](LICENSE) 文件。
 - 20200107 更新cocopod到1.1.3版本 修复bug 新增可固定底部
 - 20200202 更新cocopod到1.1.4版本 修复bug 
 - 20200202 新增wFixFirst属性 固定在所有控制器的底部的尾视图
+- 20200328 修复设置导航栏translant和tabbar设置translant的布局问题 更新至1.1.5
