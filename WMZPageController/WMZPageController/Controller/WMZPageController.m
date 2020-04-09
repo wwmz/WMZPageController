@@ -227,7 +227,12 @@
                 }
             }
         }else if ([self.parentViewController isKindOfClass:[UITabBarController class]]) {
-            tabbarHeight = PageVCTabBarHeight;
+            UITabBarController *ta = (UITabBarController*)self.parentViewController;
+            if (!ta.tabBar.translucent) {
+                tabbarHeight = 0;
+            }else{
+                tabbarHeight = PageVCTabBarHeight;
+            }
             if (self.parentViewController.navigationController) {
                 headY = (!self.param.wFromNavi&&
                 self.param.wMenuPosition != PageMenuPositionNavi&&
@@ -246,6 +251,7 @@
     if (self.hidesBottomBarWhenPushed&&tabbarHeight>=PageVCTabBarHeight) {
         tabbarHeight -= PageVCTabBarHeight;
     }
+    
     
     
     //全屏
@@ -562,7 +568,6 @@
             self.downSc.showsVerticalScrollIndicator = NO;
             self.currentScroll.showsVerticalScrollIndicator = YES;
         }
-
         if ((int)newH.y<=0) {
             self.canScroll = YES;
         }
