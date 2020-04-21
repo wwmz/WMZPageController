@@ -24,6 +24,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuWidt
 WMZPagePropSetFuncImplementation(WMZPageParam, PageMenuPosition,       wMenuPosition)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuTitleOffset)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuTitleWidth)
+WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wTopOffset)
 WMZPagePropSetFuncImplementation(WMZPageParam, NSInteger,              wMenuDefaultIndex)
 WMZPagePropSetFuncImplementation(WMZPageParam, UIColor*,               wMenuTitleColor)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuCellMargin)

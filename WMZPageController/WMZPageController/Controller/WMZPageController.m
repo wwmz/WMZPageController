@@ -400,12 +400,16 @@
     if (!self.parentViewController||!self.navigationController) {
         topOffset -=PageVCStatusBarHeight;
     }else{
+         UINavigationController *naPar = (UINavigationController*)self.parentViewController;
         if (!self.param.wFromNavi) {
-            UINavigationController *naPar = (UINavigationController*)self.parentViewController;
             if (naPar.navigationBar.translucent) {
                 topOffset -=PageVCNavBarHeight;
             }
         }
+    }
+    //外部传入 修改此属性即可
+    if (self.param.wTopOffset) {
+        topOffset += self.param.wTopOffset;
     }
     if (yOffset<=0) {
         self.scrolToBottom = YES;

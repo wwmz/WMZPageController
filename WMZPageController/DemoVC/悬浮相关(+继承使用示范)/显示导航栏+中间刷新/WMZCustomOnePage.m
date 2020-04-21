@@ -18,7 +18,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
     self.view.backgroundColor = [UIColor whiteColor];
     
     //标题数组
@@ -40,6 +39,8 @@
     .wTopSuspensionSet(YES)
     //头视图y坐标从0开始
     .wFromNaviSet(YES)
+    //如果吸顶偏移量有问题 传入此属性即可 为当前的值+上传入的值
+//    .wTopOffsetSet(-PageVCStatusBarHeight)
     //头部
     .wMenuHeadViewSet(^UIView *{
         UIView *back = [UIView new];

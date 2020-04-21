@@ -43,6 +43,11 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,         
 
 /* =========================================special==============================================*/
 
+/* =========================================other==================================================*/
+//如果滚动的时候偏移量无法吸顶到想要的位置 可以修改此属性(传入正数或者负数) 具体为当前的topOffset + 此wTopOffset 比如传入wTopOffsetSet(-NaviBarHeight) 则偏移量减少了一个导航栏的高度
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wTopOffset)
+/* =========================================Menu==================================================*/
+
 /* =========================================Menu==================================================*/
 //导航栏颜色 default 默认颜色 如果出现导航栏颜色不准确可以调用此属性设置
 WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, UIColor*,              wNaviColor)
