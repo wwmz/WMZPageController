@@ -271,8 +271,10 @@
 
 //点击
 - (void)tap:(UIButton*)btn{
-    if (self.param.wEventClick) {
-        self.param.wEventClick(btn, btn.tag);
+    if (!self.first) {
+        if (self.param.wEventClick) {
+            self.param.wEventClick(btn, btn.tag);
+        }
     }
     if (self.currentTitleIndex == btn.tag) return;
     NSInteger index = btn.tag;
@@ -680,8 +682,8 @@
     
     //变大
     if (self.param.wMenuAnimalTitleBig) {
-        _btnLeft.transform = CGAffineTransformMakeScale(0.9+(1-0.9)*(1-scale), 0.9+(1-0.9)*(1-scale));
-        _btnRight.transform = CGAffineTransformMakeScale(0.9+(1-0.9)*scale, 0.9+(1-0.9)*scale);
+        _btnLeft.transform = CGAffineTransformMakeScale(1+(1-0.9)*(1-scale), 1+(1-0.9)*(1-scale));
+        _btnRight.transform = CGAffineTransformMakeScale(1+(1-0.9)*scale, 1+(1-0.9)*scale);
     }
     
     //渐变

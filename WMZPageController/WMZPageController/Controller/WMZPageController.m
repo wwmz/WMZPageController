@@ -574,6 +574,9 @@
         }
         if ((int)newH.y<=0) {
             self.canScroll = YES;
+            if (self.param.wBounces) {
+                self.currentScroll.contentOffset = CGPointZero;
+            }
         }
     }
 }
