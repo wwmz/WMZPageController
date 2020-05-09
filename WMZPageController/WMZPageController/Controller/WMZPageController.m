@@ -61,7 +61,6 @@
 //更新头部
 - (void)updateHeadView{
     [self setUpHead];
-    self.upSc.currentVC.view.frame = [self.rectArr[self.upSc.currentTitleIndex] CGRectValue];
 }
 
 /*
@@ -364,8 +363,8 @@
     if(self.param.wMenuHeadView&&
        self.param.wMenuPosition != PageMenuPositionNavi&&
        self.param.wMenuPosition != PageMenuPositionBottom) {
-        self.headView = self.param.wMenuHeadView();
-        self.headView.frame = CGRectMake(self.headView.frame.origin.x,  0, self.headView.frame.size.width, self.headView.frame.size.height);
+       self.headView = self.param.wMenuHeadView();
+       self.headView.frame = CGRectMake(self.headView.frame.origin.x,  0, self.headView.frame.size.width, self.headView.frame.size.height);
         self.downSc.tableHeaderView = self.headView;
     }else{
         self.downSc.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake( 0, 0,self.view.frame.size.width, 0.01)];
