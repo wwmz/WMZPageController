@@ -9,6 +9,7 @@
 #define randomColor random(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256))
 #import "CollectionViewPopDemo.h"
 #import "WMZPageConfig.h"
+#import "MJRefresh.h"
 static NSString *const CollectionViewCell = @"CollectionViewCell";
 @interface CollectionViewPopDemo ()<UICollectionViewDelegate, UICollectionViewDataSource,WMZPageProtocol>
 @property(nonatomic,strong)UICollectionView *collectionView;
@@ -35,6 +36,14 @@ static NSString *const CollectionViewCell = @"CollectionViewCell";
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.collectionView];
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:CollectionViewCell];
+      // 上拉刷新
+    __weak CollectionViewPopDemo *weakSelf = self;
+    self.collectionView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            // 结束刷新
+            [weakSelf.collectionView.mj_footer endRefreshing];
+        });
+    }];
 }
 
 

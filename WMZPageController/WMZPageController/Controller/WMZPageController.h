@@ -39,6 +39,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updatePageController;
 
 /*
+*更新头部
+*/
+- (void)updateHeadView;
+
+/*
 *底部手动滚动  传入CGPointZero则为吸顶临界点
 */
 - (void)downScrollViewSetOffset:(CGPoint)point animated:(BOOL)animat;

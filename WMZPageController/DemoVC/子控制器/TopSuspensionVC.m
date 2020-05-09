@@ -24,6 +24,7 @@
 - (void)viewDidLayoutSubviews{
     [super viewDidLayoutSubviews];
     self.ta.frame = self.view.bounds;
+    NSLog(@"11 %@",NSStringFromCGRect(self.view.bounds));
 }
 
 
