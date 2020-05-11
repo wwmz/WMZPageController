@@ -82,11 +82,11 @@
         case 2:{
             param.wTitleArrSet(data)
             .wControllersSet(vcArr)
-            .wMenuCellPaddingSet(25)
+            .wMenuCellPaddingSet(20)
             .wMenuPositionSet(PageMenuPositionNavi)
             .wMenuAnimalTitleGradientSet(NO)
             .wMenuAnimalTitleBigSet(NO)
-            .wMenuAnimalSet(PageTitleMenuPDD);
+            .wMenuAnimalSet(PageTitleMenuAiQY);
             }
        break;
       //今日头条

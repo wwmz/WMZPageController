@@ -370,14 +370,14 @@
     
     
     //滚动到中间
-    CGFloat centerX = self.frame.size.width/2 ;
+    CGFloat centerX = self.mainView.frame.size.width/2 ;
     CGRect indexFrame = btn.frame;
     CGFloat contenSize = self.mainView.contentSize.width;
     CGPoint point = CGPointZero;
     if (indexFrame.origin.x<= centerX) {
         point = CGPointMake(0, 0);
     }else if (CGRectGetMaxX(indexFrame) > (contenSize-centerX)) {
-        point = CGPointMake(self.mainView.contentSize.width-self.frame.size.width , 0);
+        point = CGPointMake(self.mainView.contentSize.width-self.mainView.frame.size.width , 0);
     }else{
         point = CGPointMake(CGRectGetMaxX(indexFrame) -  centerX-  indexFrame.size.width/2, 0);
     }
