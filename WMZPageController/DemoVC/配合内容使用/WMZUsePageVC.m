@@ -10,6 +10,7 @@
 #import "CollectionViewPopDemo.h"
 #import "TopSuspensionVC.h"
 #import "UIImageView+WebCache.h"
+#import "MJRefresh.h"
 @interface WMZUsePageVC ()<UITableViewDataSource>
 
 @end
@@ -18,7 +19,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.title = @"我是标题";
+    __weak WMZUsePageVC *weakSelf = self;
+    //默认标题透明度0
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithRed:10/255.0 green:10/255.0 blue:20/255.0 alpha:0]}];
+    
     WMZPageParam *param = PageParam()
     .wTitleArrSet(@[@"热门",@"分类"])
     .wControllersSet(@[[CollectionViewPopDemo new],[TopSuspensionVC new]])
@@ -30,6 +35,8 @@
     .wFromNaviSet(NO)
     //导航栏透明度变化
     .wNaviAlphaSet(YES)
+    //顶部可下拉
+    .wBouncesSet(YES)
     //头部
     .wMenuHeadViewSet(^UIView *{
         UIView *back = [UIView new];
@@ -39,10 +46,26 @@
         image.frame =back.bounds;
         [back addSubview:image];
         return back;
-    });
+    })
+    //导航栏标题透明度变化
+     .wEventChildVCDidSrollSet(^(UIViewController *pageVC, CGPoint oldPoint, CGPoint newPonit, UIScrollView *currentScrollView) {
+          __strong WMZUsePageVC* strongSelf = weakSelf;
+         [strongSelf.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithRed:10/255.0 green:10/255.0 blue:20/255.0 alpha:newPonit.y/(500+470-2*PageVCNavBarHeight)]}];
+     });
+    
     //实现tableview的协议
     self.downSc.dataSource = self;
     self.param = param;
+    //延时0.1秒
+     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+          // 下拉刷新
+        self.downSc.mj_header= [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf.downSc.mj_header endRefreshing];
+            });
+        }];
+         
+    });
 }
 
 
