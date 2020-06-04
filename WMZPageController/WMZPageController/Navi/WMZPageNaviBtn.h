@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 //处于动画状态
 @property(nonatomic,assign)BOOL animal;
 //有红点提示
-@property(nonatomic,assign)BOOL hasBadge;
+@property(nonatomic,assign)NSInteger hasBadge;
 //富文本
 @property(nonatomic,assign)BOOL attributed;
 //RGB值
@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  显示小红点
  *  @magin 小红点距离控件上方距离
  */
-- (void)showBadgeWithTopMagin:(CGFloat)magin;
+- (void)showBadgeWithTopMagin:(NSDictionary*)info;
 
 /**
  *  隐藏小红点

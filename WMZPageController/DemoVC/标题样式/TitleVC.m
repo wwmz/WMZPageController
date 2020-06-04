@@ -68,7 +68,11 @@
         [vcArr addObject:vc];
     }];
     
-    WMZPageParam *param = PageParam()
+    WMZPageParam *param =
+    PageParam()
+    .wCustomMenuViewSet(^(UIView *bgView) {
+        bgView.alpha = 0.5;
+    })
     .wTitleArrSet(data)
     .wControllersSet(vcArr)
     .wMenuWidthSet([widthDic[@(index)] floatValue])
@@ -162,7 +166,7 @@
         @{@"name":@"LOOK直播",@"image":@"C",@"selectImage":@"D"},
         @{@"name":@"画",@"image":@"B",@"selectImage":@"D"},
         @{@"name":@"现场",@"image":@"C",@"selectImage":@"D"},
-        @{@"name":@"翻唱",@"image":@"B",@"selectImage":@"D"},
+        @{@"name":@"翻唱",@"badge":@(9),@"image":@"B",@"selectImage":@"D"},
         @{@"name":@"MV",@"image":@"C",@"selectImage":@"D"},
         @{@"name":@"游戏",@"badge":@(YES),@"image":@"B",@"selectImage":@"D"},
         @{@"name":@"广场",@"image":@"C",@"selectImage":@"D"},

@@ -78,6 +78,10 @@ typedef enum :NSInteger{
     PageBtnPositionBottom   = 3,            //图片在下，文字在上
 }PageBtnPosition;
 
+typedef enum :NSInteger{
+    PageSpecialTypeOne     = 1,          //菜单栏可见底部子视图
+}PageSpecialType;
+
 
 typedef enum :NSInteger{
     PageTitleMenuNone     = 0,            //无样式
@@ -148,6 +152,10 @@ typedef UIView* (^PageFootViewBlock)(void);
  */
 typedef void (^PageHeadAndMenuBgView)(UIView *bgView);
 
+/*
+ * 自定义红点
+ */
+typedef void (^PageCustomRedText)(UILabel *redLa,NSDictionary *info);
 
 /*
  * 自定义菜单栏

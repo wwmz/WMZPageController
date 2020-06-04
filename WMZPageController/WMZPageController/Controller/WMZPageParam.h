@@ -55,6 +55,10 @@ WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, UIColor*,     
 WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageHeadAndMenuBgView,                  wInsertHeadAndMenuBg)
 //给菜单栏加个下划线 default -
 WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageHeadAndMenuBgView,                  wInsertMenuLine)
+//自定义菜单栏 default -
+WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageHeadAndMenuBgView,                  wCustomMenuView)
+//自定义菜单右上角红点
+WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageCustomRedText,                  wCustomRedView)
 //自定义菜单栏上的标题
 WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageCustomMenuTitle,                  wCustomMenuTitle)
 //自定义选中后菜单栏上的标题
@@ -130,6 +134,14 @@ WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageVCChangeBl
 WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageChildVCScroll,     wEventChildVCDidSroll)
 /* =========================================Events==================================================*/
 
+
+/* =========================================special==================================================*/
+
+
+/* =========================================special==================================================*/
+
+//特殊样式实际demo 实际效果看demo
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, PageSpecialType,       wMenuSpecifial)
 
 /* =========================================开放的属性==================================================*/
 //标题高度

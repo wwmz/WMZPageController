@@ -13,6 +13,9 @@
 @end
 @implementation WMZPageNaviBtn
 
+- (void)setHighlighted:(BOOL)highlighted{
+    
+}
 
 -(void)setRadii:(CGSize)size RoundingCorners:(UIRectCorner)rectCorner {
     //设置只有一半圆角
@@ -168,7 +171,7 @@
 static char badgeViewKey;
 static NSInteger const pointWidth = 7; //小红点的宽高
 @implementation WMZPageNaviBtn (HMBadge)
-- (void)showBadgeWithTopMagin:(CGFloat)magin
+- (void)showBadgeWithTopMagin:(NSDictionary*)info
 {
     if (self.badge == nil) {
         CGRect frame = CGRectMake(self.maxSize.width+self.param.wMenuCellMargin/2, self.param.wMenuCellPadding/2-pointWidth, pointWidth, pointWidth);
@@ -176,8 +179,12 @@ static NSInteger const pointWidth = 7; //小红点的宽高
         self.badge.backgroundColor = PageColor(0xff5153);
         self.badge.layer.cornerRadius = pointWidth / 2;
         self.badge.layer.masksToBounds = YES;
+        self.badge.textAlignment = NSTextAlignmentCenter;
         [self addSubview:self.badge];
         [self bringSubviewToFront:self.badge];
+        if (self.param.wCustomRedView) {
+            self.param.wCustomRedView(self.badge,info);
+        }
     }
 }
 

@@ -35,7 +35,6 @@
 }
 
 - (void)setUp{
-
     //标题菜单
     NSDictionary *dic = @{
         @(PageMenuPositionLeft):[NSValue valueWithCGRect:CGRectMake(0, 0 , self.param.wMenuWidth,0)],
@@ -54,7 +53,7 @@
     self.dataView.scrollEnabled = self.param.wScrollCanTransfer;
     self.dataView.contentSize = CGSizeMake(self.param.wTitleArr.count*PageVCWidth,0);
     self.dataView.delegate = self;
-
+    
     self.currentTitleIndex = -1;
     NSMutableArray *heightArr = [NSMutableArray new];
     WMZPageNaviBtn *temp = nil;
@@ -98,6 +97,7 @@
     if (!self.param.wMenuIndicatorY) {
         self.param.wMenuIndicatorY = self.param.wMenuCellPadding/4;
     }
+    
 }
 
 //初始化指示器
@@ -219,8 +219,9 @@
      [self.mainView addSubview:btn];
      [self.btnArr addObject:btn];
      //设置右上角红点
-     if ([self getTitleData:self.param.wTitleArr[i] key:@"badge"]) {
-        [btn showBadgeWithTopMagin:0];
+     NSString *badge = [self getTitleData:self.param.wTitleArr[i] key:@"badge"];
+     if (badge) {
+        [btn showBadgeWithTopMagin:self.param.wTitleArr[i]];
      }
        
      if (self.param.wMenuPosition != PageMenuPositionNavi) {
@@ -253,10 +254,15 @@
             self.mainView.scrollEnabled = YES;
           }
           float max =[[heightArr valueForKeyPath:@"@max.floatValue"] floatValue];
-          
+          if (pageIsIphoneX&&self.param.wMenuPosition == PageMenuPositionBottom) {
+              max+=15;
+          }
           [self.mainView page_height:max];
           self.mainView.contentSize = CGSizeMake(CGRectGetMaxX(btn.frame), 0);
       }
+     if (self.param.wCustomMenuView) {
+         self.param.wCustomMenuView(self.mainView);
+     }
 }
 
 //解析字典
@@ -351,7 +357,7 @@
                     fixBackgroundColor = tempBackgroundColor;
                 }
             }
-            self.backgroundColor = tempBackgroundColor;
+            self.mainView.backgroundColor = tempBackgroundColor;
             if (!self.param.wMenuIndicatorImage) {
                 self.lineView.backgroundColor = indicatorColor?:self.param.wMenuIndicatorColor;
             }
@@ -391,7 +397,7 @@
     //改变指示器frame
     CGRect lineRect = indexFrame;
     lineRect.size.height = self.param.wMenuIndicatorHeight?:PageK1px;
-    lineRect.origin.y = self.mainView.frame.size.height - lineRect.size.height/2 - self.param.wMenuIndicatorY;
+    lineRect.origin.y = [self getMainHeight] - lineRect.size.height/2 - self.param.wMenuIndicatorY;
     lineRect.size.width =  self.param.wMenuIndicatorWidth?:(dataWidth+10);
     lineRect.origin.x =  (indexFrame.size.width - lineRect.size.width)/2 + indexFrame.origin.x;
     
@@ -433,6 +439,9 @@
     }
 }
 
+- (CGFloat)getMainHeight{
+    return ((pageIsIphoneX&&self.param.wMenuPosition == PageMenuPositionBottom)?(self.mainView.frame.size.height - 15):self.mainView.frame.size.height);
+}
 
 #pragma -mark- scrollerDeleagte
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
@@ -674,8 +683,8 @@
         if (rect.size.height!= (self.param.wMenuIndicatorHeight?:PageK1px)) {
             rect.size.height = self.param.wMenuIndicatorHeight?:PageK1px;
         }
-        if (rect.origin.y != (self.mainView.frame.size.height-self.param.wMenuIndicatorY-rect.size.height/2)) {
-            rect.origin.y = self.mainView.frame.size.height-self.param.wMenuIndicatorY-rect.size.height/2;
+        if (rect.origin.y != ([self getMainHeight]-self.param.wMenuIndicatorY-rect.size.height/2)) {
+            rect.origin.y = [self getMainHeight]-self.param.wMenuIndicatorY-rect.size.height/2;
         }
         self.lineView.frame = rect;
     }
@@ -705,7 +714,7 @@
     if (self.param.wMenuAnimal == PageTitleMenuYouKu) {
         CGRect rect = self.lineView.frame;
         rect.size.height = rect.size.width;
-        rect.origin.y = self.mainView.frame.size.height-rect.size.height/2-self.param.wMenuCellPadding/4;
+        rect.origin.y = [self getMainHeight]-rect.size.height/2-self.param.wMenuCellPadding/4;
         self.lineView.frame = rect;
         self.lineView.layer.cornerRadius = rect.size.height/2;
     }

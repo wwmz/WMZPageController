@@ -303,7 +303,11 @@
         sonChildVCHeight = self.downSc.frame.size.height;
     }else if (self.param.wMenuPosition == PageMenuPositionBottom) {
         sonChildVCY = 0;
-        sonChildVCHeight = self.downSc.frame.size.height - titleMenuhHeight;
+        if (self.param.wMenuSpecifial == PageSpecialTypeOne) {
+            sonChildVCHeight = self.downSc.frame.size.height;
+        }else{
+            sonChildVCHeight = self.downSc.frame.size.height - titleMenuhHeight;
+        }
     }else{
         sonChildVCY = 0;
         sonChildVCHeight = self.downSc.frame.size.height - titleMenuhHeight;
@@ -312,11 +316,20 @@
         sonChildVCHeight -= self.param.wTopOffset;
     }
     
+    
     if (self.param.wMenuPosition == PageMenuPositionBottom){
-        [self.upSc.dataView page_y:0];
-        [self.upSc.dataView page_height:sonChildVCHeight];
-        [self.upSc.mainView page_y:CGRectGetMaxY(self.upSc.dataView.frame)];
-        [self.upSc page_height:CGRectGetMaxY(self.upSc.mainView.frame)];
+        if (self.param.wMenuSpecifial == PageSpecialTypeOne) {
+            [self.upSc.dataView page_y:0];
+            [self.upSc.dataView page_height:sonChildVCHeight];
+            [self.upSc.mainView page_y:sonChildVCHeight-titleMenuhHeight];
+            [self.upSc page_height:CGRectGetMaxY(self.upSc.mainView.frame)];
+            [self.upSc bringSubviewToFront:self.upSc.mainView];
+        }else{
+            [self.upSc.dataView page_y:0];
+            [self.upSc.dataView page_height:sonChildVCHeight];
+            [self.upSc.mainView page_y:CGRectGetMaxY(self.upSc.dataView.frame)];
+            [self.upSc page_height:CGRectGetMaxY(self.upSc.mainView.frame)];
+        }
     }else if (self.param.wMenuPosition == PageMenuPositionNavi && self.navigationController) {
         [self.upSc.mainView removeFromSuperview];
         [self.upSc.dataView page_y:0];

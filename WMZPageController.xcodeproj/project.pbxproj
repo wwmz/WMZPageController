@@ -36,6 +36,8 @@
 		F31983132355AE02002D305B /* MJRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = F31982FB2355AE02002D305B /* MJRefreshAutoFooter.m */; };
 		F31983142355AE02002D305B /* MJRefreshComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = F31982FD2355AE02002D305B /* MJRefreshComponent.m */; };
 		F31C8619239E1DCE00B06C93 /* PageController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F31C8618239E1DCE00B06C93 /* PageController.bundle */; };
+		F32BC2D824892BEC003FC614 /* WMZDemoOne.m in Sources */ = {isa = PBXBuildFile; fileRef = F32BC2D724892BEC003FC614 /* WMZDemoOne.m */; };
+		F32BC2DB24895144003FC614 /* WMZDemoOneSonVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F32BC2DA24895144003FC614 /* WMZDemoOneSonVC.m */; };
 		F32E009423308C2A004920BD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F32E009323308C2A004920BD /* AppDelegate.m */; };
 		F32E009723308C2A004920BD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F32E009623308C2A004920BD /* ViewController.m */; };
 		F32E009A23308C2A004920BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F32E009823308C2A004920BD /* Main.storyboard */; };
@@ -196,6 +198,10 @@
 		F31982FE2355AE02002D305B /* MJRefreshFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshFooter.h; sourceTree = "<group>"; };
 		F31982FF2355AE02002D305B /* MJRefreshBackFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBackFooter.h; sourceTree = "<group>"; };
 		F31C8618239E1DCE00B06C93 /* PageController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = PageController.bundle; sourceTree = "<group>"; };
+		F32BC2D624892BEC003FC614 /* WMZDemoOne.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMZDemoOne.h; sourceTree = "<group>"; };
+		F32BC2D724892BEC003FC614 /* WMZDemoOne.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMZDemoOne.m; sourceTree = "<group>"; };
+		F32BC2D924895144003FC614 /* WMZDemoOneSonVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMZDemoOneSonVC.h; sourceTree = "<group>"; };
+		F32BC2DA24895144003FC614 /* WMZDemoOneSonVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMZDemoOneSonVC.m; sourceTree = "<group>"; };
 		F32E008F23308C2A004920BD /* WMZPageController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WMZPageController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F32E009223308C2A004920BD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F32E009323308C2A004920BD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -530,6 +536,25 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		F32BC2D424892BD1003FC614 /* 实际app使用实例(更新中) */ = {
+			isa = PBXGroup;
+			children = (
+				F32BC2D524892BD1003FC614 /* 示例1 */,
+			);
+			path = "实际app使用实例(更新中)";
+			sourceTree = "<group>";
+		};
+		F32BC2D524892BD1003FC614 /* 示例1 */ = {
+			isa = PBXGroup;
+			children = (
+				F32BC2D624892BEC003FC614 /* WMZDemoOne.h */,
+				F32BC2D724892BEC003FC614 /* WMZDemoOne.m */,
+				F32BC2D924895144003FC614 /* WMZDemoOneSonVC.h */,
+				F32BC2DA24895144003FC614 /* WMZDemoOneSonVC.m */,
+			);
+			path = "示例1";
+			sourceTree = "<group>";
+		};
 		F32E008623308C2A004920BD = {
 			isa = PBXGroup;
 			children = (
@@ -856,6 +881,7 @@
 		F3C85DAB234F12670087C629 /* DemoVC */ = {
 			isa = PBXGroup;
 			children = (
+				F32BC2D424892BD1003FC614 /* 实际app使用实例(更新中) */,
 				F3052CF823B5EB210016CE17 /* 配合内容使用 */,
 				F392D48723A377E100B00FBF /* 悬浮相关(+继承使用示范) */,
 				F392D47323A36BC600B00FBF /* 标题样式 */,
@@ -1034,6 +1060,7 @@
 				F31983112355AE02002D305B /* MJRefreshHeader.m in Sources */,
 				F3A1FF802334D6AF004B12F6 /* UIImage+MultiFormat.m in Sources */,
 				F3A1FEF42334D5ED004B12F6 /* WMZBannerParam.m in Sources */,
+				F32BC2DB24895144003FC614 /* WMZDemoOneSonVC.m in Sources */,
 				F3A1FF9E2334D6AF004B12F6 /* UIView+WebCache.m in Sources */,
 				F3A1FF782334D6AF004B12F6 /* UIImage+ForceDecode.m in Sources */,
 				F3E74DCD2354075800A0F785 /* WMZPageParam.m in Sources */,
@@ -1108,6 +1135,7 @@
 				F3A1FF712334D6AF004B12F6 /* NSImage+Compatibility.m in Sources */,
 				F3A1FF9B2334D6AF004B12F6 /* SDWebImageDefine.m in Sources */,
 				F3A1FF922334D6AF004B12F6 /* SDWebImageTransition.m in Sources */,
+				F32BC2D824892BEC003FC614 /* WMZDemoOne.m in Sources */,
 				F3A1FF732334D6AF004B12F6 /* SDImageCoder.m in Sources */,
 				F3A1FF882334D6AF004B12F6 /* SDImageIOCoder.m in Sources */,
 				F3A1FF852334D6AF004B12F6 /* SDWebImagePrefetcher.m in Sources */,
