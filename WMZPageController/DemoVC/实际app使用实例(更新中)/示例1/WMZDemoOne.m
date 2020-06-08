@@ -52,7 +52,7 @@
     .wMenuAnimalSet(PageTitleMenuAiQY)
     .wMenuPositionSet(PageMenuPositionBottom)
     .wMenuTitleWidthSet(self.view.frame.size.width / 4)
-    .wControllersSet(@[[WMZDemoOneSonVC new],[WMZDemoOneSonVC new],[WMZDemoOneSonVC new],[WMZDemoOneSonVC new]]);
+    .wControllersSet(@[[[UINavigationController alloc]initWithRootViewController:[WMZDemoOneSonVC new]],[WMZDemoOneSonVC new],[WMZDemoOneSonVC new],[WMZDemoOneSonVC new]]);
      self.param = param;
 }
 

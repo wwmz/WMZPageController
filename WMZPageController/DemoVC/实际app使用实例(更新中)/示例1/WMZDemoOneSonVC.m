@@ -14,12 +14,20 @@
 #import "WMZDemoOneSonVC.h"
 #import "WMZPageConfig.h"
 #import "MJRefresh.h"
+#import "WMZDemoOne.h"
 static NSString *const CollectionViewCell = @"CollectionViewCell";
 @interface WMZDemoOneSonVC ()<UICollectionViewDelegate, UICollectionViewDataSource,WMZPageProtocol>
 @property(nonatomic,strong)UICollectionView *collectionView;
 @end
 
 @implementation WMZDemoOneSonVC
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    WMZDemoOne *parentVC = (WMZDemoOne*)self.navigationController.parentViewController;
+    [parentVC.upSc.mainView setHidden:NO];
+}
+
 //实现协议 悬浮 必须实现
 - (UIScrollView *)getMyScrollView{
     return self.collectionView;
@@ -45,15 +53,18 @@ static NSString *const CollectionViewCell = @"CollectionViewCell";
         });
     }];
 }
-
-
-
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     UICollectionViewCell *cell = (UICollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CollectionViewCell forIndexPath:indexPath];
     cell.backgroundColor = randomColor;
     return cell;
-        
 }
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    UIViewController *vc = [NSClassFromString(@"HomeVC") new];
+    WMZDemoOne *parentVC = (WMZDemoOne*)self.navigationController.parentViewController;
+    [parentVC.upSc.mainView setHidden:YES];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return 20;

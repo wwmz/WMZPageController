@@ -92,7 +92,8 @@
         NSArray *arr = @[@"WMZDemoOne"];
         UIViewController *vc = [NSClassFromString(arr[indexPath.row]) new];
         vc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:vc animated:YES];
+        vc.modalPresentationStyle = UIModalPresentationFullScreen;
+        [self presentViewController:vc animated:YES completion:nil];
     }else{
         Base *obj = (Base*)[NSClassFromString(self.VCData[indexPath.section]) new];
         [obj pushWithVC:self withIndex:indexPath.row];
