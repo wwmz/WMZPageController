@@ -71,7 +71,7 @@
     WMZPageParam *param =
     PageParam()
     .wCustomMenuViewSet(^(UIView *bgView) {
-        bgView.alpha = 0.5;
+//        bgView.alpha = 0.5;
     })
     .wTitleArrSet(data)
     .wControllersSet(vcArr)
