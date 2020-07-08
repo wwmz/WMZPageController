@@ -289,7 +289,6 @@
     self.downSc.tableFooterView = self.upSc;
     
     if (self.navigationController) {
-        
         for (UIGestureRecognizer *gestureRecognizer in self.upSc.gestureRecognizers) {
             [gestureRecognizer requireGestureRecognizerToFail:self.navigationController.interactivePopGestureRecognizer];
         }
@@ -389,12 +388,14 @@
             if (!self.parentViewController) {
                 height -=PageVCStatusBarHeight;
             }else{
-                if (self.navigationController) {
-                    if (!self.param.wFromNavi) {
-                        height -= (self.navigationController.navigationBar.translucent?PageVCNavBarHeight:0);
+                if (![self.parentViewController isKindOfClass:[WMZPageController class]]) {
+                    if (self.navigationController) {
+                        if (!self.param.wFromNavi) {
+                            height -= (self.navigationController.navigationBar.translucent?PageVCNavBarHeight:0);
+                        }
+                    }else{
+                        height -= PageVCStatusBarHeight;
                     }
-                }else{
-                    height -= PageVCStatusBarHeight;
                 }
             }
         }
@@ -431,7 +432,7 @@
         topOffset -=PageVCStatusBarHeight;
     }else{
          UINavigationController *naPar = (UINavigationController*)self.parentViewController;
-        if (!self.param.wFromNavi) {
+        if (!self.param.wFromNavi&&[naPar isKindOfClass:[UINavigationController class]]) {
             if (naPar.navigationBar.translucent) {
                 topOffset -=PageVCNavBarHeight;
             }

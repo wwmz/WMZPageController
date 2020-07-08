@@ -67,7 +67,7 @@
         vc.page = idx;
         [vcArr addObject:vc];
     }];
-    
+    WMZPageController *VC =  [WMZPageController new];
     WMZPageParam *param =
     PageParam()
     .wCustomMenuViewSet(^(UIView *bgView) {
@@ -83,7 +83,17 @@
     }
     if (index == 9) {
         param.wMenuImagePositionSet(PageBtnPositionLeft)
-             .wMenuFixRightDataSet(@{@"name":@"金币",@"image":@"B"});
+             .wMenuFixRightDataSet(@{@"name":@"金币",@"image":@"B"})
+        .wEventFixedClickSet(^(id anyID, NSInteger index) {
+            NSLog(@"固定标题点击%ld",index);
+            //模拟更新
+            [VC.upSc.btnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if (obj.tag == 10086) {
+                    [obj setTitle:@"更新" forState:UIControlStateNormal];
+                    *stop = YES;
+                }
+            }];
+        });
     }
     if (index == 10) {
         param.wMenuTitleWidthSet(PageVCWidth/data.count);
@@ -116,9 +126,9 @@
                    }];
         });
     }
-    WMZPageController *VC =  [WMZPageController new];
     VC.param = param;
     [vc.navigationController pushViewController:VC animated:YES];
+    
 }
 
 //普通标题

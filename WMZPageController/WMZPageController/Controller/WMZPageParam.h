@@ -117,6 +117,8 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,      
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuIndicatorRadio)
 //指示器距离按钮的y值(AQY) default 菜单视图的高度-指示器高度-4/wMenuCellPadding
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuIndicatorY)
+//背景圆圈的圆角 默认高度的一半
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuCircilRadio)
 
 /* =========================================Menu===============================================*/
 

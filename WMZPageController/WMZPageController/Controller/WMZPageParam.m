@@ -65,6 +65,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, PageVCChangeBlock,      wEventBeg
 WMZPagePropSetFuncImplementation(WMZPageParam, PageVCChangeBlock,      wEventEndTransferController)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageChildVCScroll,      wEventChildVCDidSroll)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuIndicatorY)
+WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuCircilRadio)
 - (instancetype)init{
     if (self = [super init]) {
         _wMenuAnimal = PageTitleMenuNone;

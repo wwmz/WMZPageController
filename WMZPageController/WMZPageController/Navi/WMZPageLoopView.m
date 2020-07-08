@@ -127,6 +127,7 @@
 - (void)setUpFixRightBtn:(WMZPageNaviBtn*)temp{
     if (self.param.wMenuFixRightData) {
         WMZPageNaviBtn *fixBtn = [WMZPageNaviBtn buttonWithType:UIButtonTypeCustom];
+        CGFloat menuFixWidth = self.param.wMenuFixWidth;
         id text = [self getTitleData:self.param.wMenuFixRightData key:@"name"];
         id image = [self getTitleData:self.param.wMenuFixRightData key:@"image"];
         id selectImage = [self getTitleData:self.param.wMenuFixRightData key:@"selectImage"];
@@ -141,11 +142,11 @@
         }
         if (text && image) {
             [fixBtn TagSetImagePosition:self.param.wMenuImagePosition spacing:self.param.wMenuImageMargin];
-            self.param.wMenuFixWidth+=30;
+            menuFixWidth+=30;
         }
         fixBtn.titleLabel.font = [UIFont systemFontOfSize:self.param.wMenuTitleFont weight:self.param.wMenuTitleWeight];
         [fixBtn setTitleColor:self.param.wMenuTitleColor forState:UIControlStateNormal];
-        fixBtn.frame = CGRectMake(CGRectGetWidth(self.frame)-self.param.wMenuFixWidth, temp.frame.origin.y, self.param.wMenuFixWidth, temp.frame.size.height);
+        fixBtn.frame = CGRectMake(CGRectGetWidth(self.frame)-menuFixWidth, temp.frame.origin.y, menuFixWidth, temp.frame.size.height);
         fixBtn.tag = 10086;
         [self addSubview:fixBtn];
         [self bringSubviewToFront:fixBtn];
@@ -156,7 +157,7 @@
         [fixBtn  setAdjustsImageWhenHighlighted:NO];
         [fixBtn addTarget:self action:@selector(fixTap:) forControlEvents:UIControlEventTouchUpInside];
         self.fixBtn = fixBtn;
-        self.mainView.contentSize = CGSizeMake(self.mainView.contentSize.width+self.param.wMenuFixWidth, 0);
+        self.mainView.contentSize = CGSizeMake(self.mainView.contentSize.width+menuFixWidth, 0);
         [self.btnArr addObject:fixBtn];
     }
 }
@@ -420,7 +421,7 @@
         lineRect.size.width =  lineRect.size.width + 4;
         lineRect.size.height =  lineRect.size.height - 8 ;
         self.lineView.layer.masksToBounds = YES;
-        self.lineView.layer.cornerRadius = lineRect.size.height/2;
+        self.lineView.layer.cornerRadius =  self.param.wMenuCircilRadio?:(lineRect.size.height/2);
     }
     
     [UIView animateWithDuration:0.1 animations:^{
