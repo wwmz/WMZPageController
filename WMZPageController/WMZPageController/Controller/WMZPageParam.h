@@ -138,12 +138,25 @@ WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageChildVCScr
 
 
 /* =========================================special==================================================*/
-
-
-/* =========================================special==================================================*/
-
 //特殊样式实际demo 实际效果看demo
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, PageSpecialType,       wMenuSpecifial)
+/* =========================================special==================================================*/
+
+
+/* =========================================changeMenu===============================================*/
+
+//滑动到顶部改变菜单栏的高度 可传入正负值 改变的高度为当前的titleHeight+传入wTopChangeHeight default 0
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wTopChangeHeight)
+
+//改变高度的block 可在此做标题的操作
+WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageMenuChangeHeight,  wEventMenuChangeHeight)
+
+//恢复原来高度的block 可在此做标题的操作
+WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageMenuNormalHeight,  wEventMenuNormalHeight)
+
+
+/* =========================================changeMenu===============================================*/
+
 
 /* =========================================开放的属性==================================================*/
 //标题高度

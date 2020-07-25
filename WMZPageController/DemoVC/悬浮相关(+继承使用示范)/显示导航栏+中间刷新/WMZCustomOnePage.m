@@ -20,7 +20,6 @@
     // Do any additional setup after loading the view.
     
     __weak WMZCustomOnePage *weakSelf = self;
-    
     self.view.backgroundColor = [UIColor whiteColor];
     
     //标题数组
@@ -57,18 +56,18 @@
     
     
    //模拟更新头部
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.param.wMenuHeadViewSet(^UIView *{
-            UIView *back = [UIView new];
-            back.frame = CGRectMake(0, 0, PageVCWidth, 400);
-            UIImageView *image = [UIImageView new];
-            [image sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576232579081&di=29b77f2a5119755d3c1c3c7ce2595527&imgtype=0&src=http%3A%2F%2Fi2.bangqu.com%2Fr2%2Fnews%2F20180810%2F304a6c35725753744e48.jpg"]];
-            image.frame = back.bounds;
-            [back addSubview:image];
-            return back;
-        });
-        [self updateHeadView];
-    });
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        self.param.wMenuHeadViewSet(^UIView *{
+//            UIView *back = [UIView new];
+//            back.frame = CGRectMake(0, 0, PageVCWidth, 400);
+//            UIImageView *image = [UIImageView new];
+//            [image sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576232579081&di=29b77f2a5119755d3c1c3c7ce2595527&imgtype=0&src=http%3A%2F%2Fi2.bangqu.com%2Fr2%2Fnews%2F20180810%2F304a6c35725753744e48.jpg"]];
+//            image.frame = back.bounds;
+//            [back addSubview:image];
+//            return back;
+//        });
+//        [self updateHeadView];
+//    });
     
     self.param = param;
 }

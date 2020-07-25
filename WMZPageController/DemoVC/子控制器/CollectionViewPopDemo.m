@@ -26,9 +26,9 @@ static NSString *const CollectionViewCell = @"CollectionViewCell";
     [super viewDidLayoutSubviews];
     self.collectionView.frame = self.view.bounds;
 }
-- (void)viewDidAppear:(BOOL)animated{
-    self.collectionView.frame = self.view.bounds;
-}
+//- (void)viewDidAppear:(BOOL)animated{
+//    self.collectionView.frame = self.view.bounds;
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

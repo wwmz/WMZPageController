@@ -39,9 +39,9 @@
     UITableView *ta = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     [self.view addSubview:ta];
     
+    ta.estimatedRowHeight = 100;
     if (@available(iOS 11.0, *)) {
        ta.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-       ta.estimatedRowHeight = 0.01;
     }else{
         self.automaticallyAdjustsScrollViewInsets = NO;
     }

@@ -13,6 +13,8 @@
     NSInteger footerViewIndex;
     CGFloat sonChildVCHeight;
     CGFloat sonChildVCY;
+    CGRect pageDataFrame;
+    CGRect pageUpScFrame;
 }
 //当前子控制器中的滚动视图
 @property(nonatomic,strong)UIScrollView *currentScroll;
@@ -47,7 +49,6 @@
     self.downSc = [[WMZPageScroller alloc]initWithFrame:CGRectMake(0, 0, PageVCWidth, PageVCHeight) style:UITableViewStyleGrouped];
     [self.sonChildScrollerViewDic removeAllObjects];
     [self.sonChildFooterViewDic removeAllObjects];
-    [self.rectArr removeAllObjects];
     footerViewIndex = -1;
     for (UIViewController *VC in self.childViewControllers) {
         [VC willMoveToParentViewController:nil];
@@ -267,19 +268,21 @@
               [gestureRecognizer requireGestureRecognizerToFail:self.navigationController.interactivePopGestureRecognizer];
           }
       }
+    
       if (@available(iOS 11.0, *)) {
-          self.downSc.estimatedRowHeight = 0.01;
           self.downSc.estimatedSectionFooterHeight = 0.01;
           self.downSc.estimatedSectionHeaderHeight = 0.01;
           self.downSc.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-      }else{
-           self.downSc.estimatedRowHeight = 0;
       }
+      self.downSc.estimatedRowHeight = 100;
       self.downSc.sectionHeaderHeight = 0.01;
       self.downSc.sectionFooterHeight = 0.01;
       self.downSc.delegate = self;
       self.downSc.bounces = self.param.wBounces;
       self.downSc.frame = CGRectMake(0, headY, self.view.frame.size.width, self.view.frame.size.height-headY-tabbarHeight);
+      self.downSc.canScroll = [self canTopSuspension];
+      self.downSc.scrollEnabled = [self canTopSuspension];
+      self.downSc.wFromNavi = self.param.wFromNavi;
       [self.view addSubview:self.downSc];
     
 
@@ -294,6 +297,32 @@
         }
     }
     //底部
+    [self setUpMenuAndDataViewFrame];
+    
+    if (self.param.wCustomMenuTitle) {
+        self.param.wCustomMenuTitle(self.upSc.btnArr);
+    }
+    
+    [self setUpHead];
+   
+    [self.upSc.btnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (idx == self.param.wMenuDefaultIndex) {
+            self.upSc.first = YES;
+            [obj sendActionsForControlEvents:UIControlEventTouchUpInside];
+            *stop = YES;
+        }
+    }];
+    self.canScroll = YES;
+    self.scrolToBottom = YES;
+    
+    if (@available(iOS 11.0, *)) {
+        self.downSc.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+}
+
+- (void)setUpMenuAndDataViewFrame{
     sonChildVCY = 0;
     sonChildVCHeight = 0;
     CGFloat titleMenuhHeight = self.upSc.mainView.frame.size.height;
@@ -314,6 +343,25 @@
     if (self.param.wTopOffset) {
         sonChildVCHeight -= self.param.wTopOffset;
     }
+    
+    CGFloat height = [self canTopSuspension]?sonChildVCHeight :(sonChildVCHeight-self.headHeight);
+    if ([self canTopSuspension]) {
+        if (!self.parentViewController) {
+            height -=PageVCStatusBarHeight;
+        }else{
+            if (![self.parentViewController isKindOfClass:[WMZPageController class]]) {
+                if (self.navigationController) {
+                    if (!self.param.wFromNavi) {
+                        height -= (self.navigationController.navigationBar.translucent?PageVCNavBarHeight:0);
+                        
+                    }
+                }else{
+                    height -= PageVCStatusBarHeight;
+                }
+            }
+        }
+    }
+    sonChildVCHeight = height;
     
     
     if (self.param.wMenuPosition == PageMenuPositionBottom){
@@ -340,34 +388,10 @@
         [self.upSc.dataView page_height:sonChildVCHeight];
         [self.upSc page_height:CGRectGetMaxY(self.upSc.dataView.frame)];
     }
-    
-   
     self.param.titleHeight = self.upSc.mainView.frame.size.height;
     self.downSc.menuTitleHeight = self.param.titleHeight;
-    self.downSc.canScroll = [self canTopSuspension];
-    self.downSc.scrollEnabled = [self canTopSuspension];
-    self.downSc.wFromNavi = self.param.wFromNavi;
-    if (self.param.wCustomMenuTitle) {
-        self.param.wCustomMenuTitle(self.upSc.btnArr);
-    }
-    
-    [self setUpHead];
-   
-    [self.upSc.btnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (idx == self.param.wMenuDefaultIndex) {
-            self.upSc.first = YES;
-            [obj sendActionsForControlEvents:UIControlEventTouchUpInside];
-            *stop = YES;
-        }
-    }];
-    self.canScroll = YES;
-    self.scrolToBottom = YES;
-    
-    if (@available(iOS 11.0, *)) {
-        self.downSc.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    }else {
-        self.automaticallyAdjustsScrollViewInsets = NO;
-    }
+    pageDataFrame = self.upSc.dataView.frame;
+    pageUpScFrame = self.upSc.frame;
 }
 
 - (void)setUpHead{
@@ -380,30 +404,6 @@
         self.downSc.tableHeaderView = self.headView;
     }else{
         self.downSc.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake( 0, 0,self.view.frame.size.width, 0.01)];
-    }
-    self.rectArr = [NSMutableArray new];
-    for (int i = 0; i<self.param.wTitleArr.count; i++) {
-        CGFloat height = [self canTopSuspension]?sonChildVCHeight :(sonChildVCHeight-self.headHeight);
-        if ([self canTopSuspension]) {
-            if (!self.parentViewController) {
-                height -=PageVCStatusBarHeight;
-            }else{
-                if (![self.parentViewController isKindOfClass:[WMZPageController class]]) {
-                    if (self.navigationController) {
-                        if (!self.param.wFromNavi) {
-                            height -= (self.navigationController.navigationBar.translucent?PageVCNavBarHeight:0);
-                        }
-                    }else{
-                        height -= PageVCStatusBarHeight;
-                    }
-                }
-            }
-        }
-        CGRect frame = CGRectMake(i * self.downSc.frame.size.width,
-                                  [self canTopSuspension]?0:sonChildVCY,
-                                  self.downSc.frame.size.width,
-                                  height);
-        [self.rectArr addObject:[NSValue valueWithCGRect:frame]];
     }
     //全景
     if (self.head_MenuView) {
@@ -428,22 +428,14 @@
     float yOffset  = scrollView.contentOffset.y;
     //顶点
     int topOffset = scrollView.contentSize.height - scrollView.frame.size.height;
-    if (!self.parentViewController||!self.navigationController) {
-        topOffset -=PageVCStatusBarHeight;
-    }else{
-         UINavigationController *naPar = (UINavigationController*)self.parentViewController;
-        if (!self.param.wFromNavi&&[naPar isKindOfClass:[UINavigationController class]]) {
-            if (naPar.navigationBar.translucent) {
-                topOffset -=PageVCNavBarHeight;
-            }
-        }
-    }
+    
     //外部传入 修改此属性即可
     if (self.param.wTopOffset) {
         topOffset += self.param.wTopOffset;
     }
     if (yOffset<=0) {
         self.scrolToBottom = YES;
+        
     }else{
         if (yOffset >= topOffset) {
             scrollView.contentOffset = CGPointMake(self.downSc.contentOffset.x, topOffset);
@@ -466,8 +458,8 @@
         }else {
              self.sonCanScroll = NO;
         }
+
     }
-    
     CGFloat delta = scrollView.contentOffset.y/topOffset;
     if (delta>1) {
         delta = 1;
@@ -497,6 +489,27 @@
     }
 }
 
+//改变菜单栏高度
+- (void)changeMenuFrame{
+    if (!self.param.wTopChangeHeight) return;
+    if (self.upSc.mainView.frame.size.height == self.param.titleHeight&&!self.sonCanScroll)return;
+    CGFloat offsetHeight = self.param.wTopChangeHeight>0?MIN(self.currentScroll.contentOffset.y, self.param.wTopChangeHeight):MAX (-self.currentScroll.contentOffset.y, self.param.wTopChangeHeight);
+    if (self.upSc.mainView.frame.size.height == (self.param.titleHeight-self.param.wTopChangeHeight)&&self.sonCanScroll&&offsetHeight == self.param.wTopChangeHeight)  return;
+    [self.upSc.mainView page_height:self.param.titleHeight-offsetHeight];
+    [self.upSc.dataView page_y:CGRectGetMaxY(self.upSc.mainView.frame)];
+    [self.upSc.dataView page_height:pageDataFrame.size.height+offsetHeight];
+    if (offsetHeight == 0) {
+        if (self.param.wEventMenuNormalHeight) {
+            self.param.wEventMenuNormalHeight(self.upSc.btnArr);
+        }
+    }else{
+        if (self.param.wEventMenuChangeHeight) {
+            self.param.wEventMenuChangeHeight(self.upSc.btnArr,self.currentScroll.contentOffset.y);
+        }
+    }
+    //设置下划线
+    [self.upSc endAninamal];
+}
 //设置悬浮
 - (void)setUpSuspension:(UIViewController*)newVC index:(NSInteger)index end:(BOOL)end{
     if (![self canTopSuspension]) return;
@@ -597,12 +610,13 @@
         if (newH.y==newOld.y)  return;
         if (!self.sonCanScroll&&!self.scrolToBottom) {
             self.currentScroll.contentOffset = CGPointZero;
-            self.downSc.showsVerticalScrollIndicator = YES;
+            self.downSc.showsVerticalScrollIndicator = NO;
             self.currentScroll.showsVerticalScrollIndicator = NO;
         }else{
             self.downSc.showsVerticalScrollIndicator = NO;
-            self.currentScroll.showsVerticalScrollIndicator = YES;
+            self.currentScroll.showsVerticalScrollIndicator = NO;
         }
+        [self changeMenuFrame];
         if ((int)newH.y<=0) {
             self.canScroll = YES;
             if (self.param.wBounces) {
@@ -632,14 +646,6 @@
         }
     }];
 }
-
-- (NSMutableArray *)rectArr{
-    if (!_rectArr) {
-        _rectArr = [NSMutableArray new];
-    }
-    return _rectArr;
-}
-
 - (NSMutableDictionary *)sonChildScrollerViewDic{
     if (!_sonChildScrollerViewDic) {
         _sonChildScrollerViewDic = [NSMutableDictionary new];

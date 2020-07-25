@@ -165,6 +165,25 @@
     }
     
 }
+
+- (void)setAttributedTitle:(NSAttributedString *)title forState:(UIControlState)state{
+    [super setAttributedTitle:title forState:state];
+    UIColor *color = [title attribute:NSForegroundColorAttributeName atIndex:0 effectiveRange:nil];
+    CGFloat red = 0.0;
+    CGFloat green = 0.0;
+    CGFloat blue = 0.0;
+    CGFloat alpha = 0.0;
+    [color getRed:&red green:&green blue:&blue alpha:&alpha];
+    if (state == UIControlStateNormal) {
+        self.unSelectedColorR = red;
+        self.unSelectedColorB = blue;
+        self.unSelectedColorG = green;
+    }else{
+        self.selectedColorR = red;
+        self.selectedColorB = blue;
+        self.selectedColorG = green;
+    }
+}
 @end
 
 

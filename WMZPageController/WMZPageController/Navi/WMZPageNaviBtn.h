@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,assign)NSInteger hasBadge;
 //富文本
 @property(nonatomic,assign)BOOL attributed;
+//初始文本内容
+@property(nonatomic,copy)NSString* normalText;
 //RGB值
 @property (nonatomic, assign) CGFloat selectedColorR;
 @property (nonatomic, assign) CGFloat selectedColorG;

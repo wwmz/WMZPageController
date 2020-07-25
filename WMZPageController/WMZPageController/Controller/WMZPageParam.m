@@ -44,6 +44,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, UIColor*,               wMenuBgCo
 WMZPagePropSetFuncImplementation(WMZPageParam, UIColor*,               wNaviColor)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuFixWidth)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuCellMarginY)
+WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wTopChangeHeight)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageHeadViewBlock,      wMenuHeadView)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuTitleWeight)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wTopSuspension)
@@ -64,6 +65,8 @@ WMZPagePropSetFuncImplementation(WMZPageParam, PageClickBlock,         wEventCli
 WMZPagePropSetFuncImplementation(WMZPageParam, PageVCChangeBlock,      wEventBeganTransferController)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageVCChangeBlock,      wEventEndTransferController)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageChildVCScroll,      wEventChildVCDidSroll)
+WMZPagePropSetFuncImplementation(WMZPageParam, PageMenuChangeHeight,   wEventMenuChangeHeight)
+WMZPagePropSetFuncImplementation(WMZPageParam, PageMenuNormalHeight,   wEventMenuNormalHeight)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuIndicatorY)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuCircilRadio)
 - (instancetype)init{

@@ -14,6 +14,7 @@
 #import "WMZPageProtocol.h"
 #import "NSObject+SafeKVO.h"
 #import "UIView+PageRect.h"
+@class WMZPageNaviBtn;
 #define   PageVCWidth   [UIScreen mainScreen].bounds.size.width
 #define   PageVCHeight  [UIScreen mainScreen].bounds.size.height
 
@@ -167,6 +168,17 @@ typedef void (^PageCustomMenuTitle)(NSArray *titleArr);
  * 滚动 后改变标题
  */
 typedef void (^PageCustomMenuSelectTitle)(NSArray *titleArr);
+
+
+/*
+ * 切换高度block
+ */
+typedef void (^PageMenuChangeHeight)(NSArray<WMZPageNaviBtn*>*titleArr,CGFloat offset);
+
+/*
+ * 恢复原来高度block
+ */
+typedef void (^PageMenuNormalHeight)(NSArray<WMZPageNaviBtn*>*titleArr);
 
 
 #endif /* WMZPageConfig_h */

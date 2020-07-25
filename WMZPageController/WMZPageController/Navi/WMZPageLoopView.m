@@ -172,6 +172,7 @@
    id name = [self getTitleData:self.param.wTitleArr[i] key:@"name"];
    if (name) {
        [btn setTitle:name forState:UIControlStateNormal];
+       btn.normalText = name;
    }
    CGSize size =  btn.maxSize;
    //设置图片
@@ -358,7 +359,9 @@
                     fixBackgroundColor = tempBackgroundColor;
                 }
             }
-            self.mainView.backgroundColor = tempBackgroundColor;
+            if (!self.param.wInsertHeadAndMenuBg) {
+                self.mainView.backgroundColor = tempBackgroundColor;
+            }
             if (!self.param.wMenuIndicatorImage) {
                 self.lineView.backgroundColor = indicatorColor?:self.param.wMenuIndicatorColor;
             }
@@ -579,7 +582,9 @@
 - (void)addChildVC:(NSInteger)index VC:(UIViewController*)newVC{
     if (![[self findBelongViewControllerForView:self].childViewControllers containsObject:newVC]) {
         [[self findBelongViewControllerForView:self] addChildViewController:newVC];
-        newVC.view.frame = [[self findBelongViewControllerForView:self].rectArr[index] CGRectValue];
+        CGRect frame = CGRectMake(index * self.dataView.frame.size.width,0,self.dataView.frame.size.width,
+                                  self.dataView.frame.size.height);
+        newVC.view.frame = frame;
         [self.dataView addSubview:newVC.view];
         [newVC didMoveToParentViewController:[self findBelongViewControllerForView:self]];
         [[self findBelongViewControllerForView:self].cache setObject:newVC forKey:@(index)];
@@ -718,6 +723,12 @@
         rect.origin.y = [self getMainHeight]-rect.size.height/2-self.param.wMenuCellPadding/4;
         self.lineView.frame = rect;
         self.lineView.layer.cornerRadius = rect.size.height/2;
+    }else if (self.param.wMenuAnimal == PageTitleMenuAiQY){
+        CGRect rect = self.lineView.frame;
+        if (rect.origin.y != ([self getMainHeight]-self.param.wMenuIndicatorY-rect.size.height/2)) {
+            rect.origin.y = [self getMainHeight]-self.param.wMenuIndicatorY-rect.size.height/2;
+        }
+        self.lineView.frame = rect;
     }
 }
 
