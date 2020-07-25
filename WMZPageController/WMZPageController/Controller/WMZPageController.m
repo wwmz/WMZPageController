@@ -18,6 +18,8 @@
 }
 //当前子控制器中的滚动视图
 @property(nonatomic,strong)UIScrollView *currentScroll;
+//子控制器中的滚动视图数组(底部有多层的情况)
+@property(nonatomic,strong)NSArray *currentScrollArr;
 //当前子控制器中需要固定的底部视图
 @property(nonatomic,strong)UIView *currentFootView;
 //头部视图
@@ -71,13 +73,6 @@
     if (CGPointEqualToPoint(point, CGPointZero)) {
         //顶点
         int topOffset = self.downSc.contentSize.height - self.downSc.frame.size.height;
-        if (!self.parentViewController) {
-            topOffset -=PageVCStatusBarHeight;
-        }else{
-            if (!self.param.wFromNavi) {
-                topOffset -=PageVCNavBarHeight;
-            }
-        }
         point = CGPointMake(self.downSc.contentOffset.x, topOffset);
     }
     [self.downSc setContentOffset:point animated:animat];
@@ -515,26 +510,27 @@
     if (![self canTopSuspension]) return;
     if ([newVC conformsToProtocol:@protocol(WMZPageProtocol)]) {
         UIScrollView *view = nil;
-       if ([newVC respondsToSelector:@selector(getMyTableView)]) {
-           UIScrollView *tmpView = [newVC performSelector:@selector(getMyTableView)];
-           if (tmpView&&[tmpView isKindOfClass:[UIScrollView class]]) {
-               view = tmpView;
-           }
-       }else if([newVC respondsToSelector:@selector(getMyScrollView)]){
-           UIScrollView *tmpView = [newVC performSelector:@selector(getMyScrollView)];
-           if (tmpView&&[tmpView isKindOfClass:[UIScrollView class]]) {
-               view = tmpView;
-           }
-       }
-        if (view) {
-            self.currentScroll = view;
-            [self.sonChildScrollerViewDic setObject:view forKey:@(index)];
-            if (self.scrolToBottom) {
-                view.contentOffset = CGPointMake(view.contentOffset.x,0);
+        if ([newVC respondsToSelector:@selector(getMyScrollViews)]) {
+            NSArray *arr = [newVC performSelector:@selector(getMyScrollViews)];
+            [arr enumerateObjectsUsingBlock:^(UIScrollView*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                 [self topSuspensionView:obj index:index*1000+idx+100];
+            }];
+            self.currentScrollArr = arr;
+        }else{
+            if ([newVC respondsToSelector:@selector(getMyTableView)]) {
+                UIScrollView *tmpView = [newVC performSelector:@selector(getMyTableView)];
+                if (tmpView&&[tmpView isKindOfClass:[UIScrollView class]]) {
+                    view = tmpView;
+                }
+            }else if([newVC respondsToSelector:@selector(getMyScrollView)]){
+                UIScrollView *tmpView = [newVC performSelector:@selector(getMyScrollView)];
+                if (tmpView&&[tmpView isKindOfClass:[UIScrollView class]]) {
+                    view = tmpView;
+                }
             }
-            [self.currentScroll pageAddObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+            [self topSuspensionView:view index:index];
         }
-        
+
         if ([newVC respondsToSelector:@selector(fixFooterView)]) {
             UIView *tmpView = [newVC performSelector:@selector(fixFooterView)];
             [self.sonChildFooterViewDic setObject:view forKey:@(index)];
@@ -554,6 +550,17 @@
     }else{
         self.currentScroll = nil;
         self.currentFootView  = nil;
+    }
+}
+
+- (void)topSuspensionView:(UIScrollView*)view index:(NSInteger)index{
+    if (view&&[view isKindOfClass:[UIScrollView class]]) {
+        self.currentScroll = view;
+        [self.sonChildScrollerViewDic setObject:view forKey:@(index)];
+        if (self.scrolToBottom) {
+            view.contentOffset = CGPointMake(view.contentOffset.x,0);
+        }
+        [view pageAddObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
     }
 }
 
@@ -603,8 +610,10 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
     if ([keyPath isEqualToString:@"contentOffset"]) {
         if (![self canTopSuspension]) return;
-        if (self.currentScroll!=object) return;
         if (hadWillDisappeal) return;
+        if (self.currentScroll!=object){
+            self.currentScroll = object;
+        };
         CGPoint newH = [[change objectForKey:@"new"] CGPointValue];
         CGPoint newOld = [[change objectForKey:@"old"] CGPointValue];
         if (newH.y==newOld.y)  return;

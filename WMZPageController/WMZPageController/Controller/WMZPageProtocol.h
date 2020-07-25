@@ -23,6 +23,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (UIScrollView*)getMyScrollView;
 
+/*
+ *悬浮 数组 可滚动视图的数组 适用底部多个tableview的情况
+ */
+- (NSArray*)getMyScrollViews;
 
 /*
  *子控制器需要固定的尾部视图

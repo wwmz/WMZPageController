@@ -119,6 +119,7 @@
 		F3A1FFA62334D6AF004B12F6 /* SDAsyncBlockOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = F3A1FF6E2334D6AF004B12F6 /* SDAsyncBlockOperation.m */; };
 		F3A1FFA72334D6AF004B12F6 /* NSBezierPath+RoundedCorners.m in Sources */ = {isa = PBXBuildFile; fileRef = F3A1FF6F2334D6AF004B12F6 /* NSBezierPath+RoundedCorners.m */; };
 		F3A1FFA82334D6AF004B12F6 /* UIColor+HexString.m in Sources */ = {isa = PBXBuildFile; fileRef = F3A1FF702334D6AF004B12F6 /* UIColor+HexString.m */; };
+		F3D5DCAF24CC6D47007487DC /* WMZMeiTuanSonVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F3D5DCAE24CC6D47007487DC /* WMZMeiTuanSonVC.m */; };
 		F3E74DCA2354075800A0F785 /* WMZPageLoopView.m in Sources */ = {isa = PBXBuildFile; fileRef = F3E74DB92354075800A0F785 /* WMZPageLoopView.m */; };
 		F3E74DCB2354075800A0F785 /* WMZPageNaviBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = F3E74DBB2354075800A0F785 /* WMZPageNaviBtn.m */; };
 		F3E74DCD2354075800A0F785 /* WMZPageParam.m in Sources */ = {isa = PBXBuildFile; fileRef = F3E74DC22354075800A0F785 /* WMZPageParam.m */; };
@@ -373,6 +374,8 @@
 		F3A1FF6E2334D6AF004B12F6 /* SDAsyncBlockOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDAsyncBlockOperation.m; sourceTree = "<group>"; };
 		F3A1FF6F2334D6AF004B12F6 /* NSBezierPath+RoundedCorners.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBezierPath+RoundedCorners.m"; sourceTree = "<group>"; };
 		F3A1FF702334D6AF004B12F6 /* UIColor+HexString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexString.m"; sourceTree = "<group>"; };
+		F3D5DCAD24CC6D47007487DC /* WMZMeiTuanSonVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMZMeiTuanSonVC.h; sourceTree = "<group>"; };
+		F3D5DCAE24CC6D47007487DC /* WMZMeiTuanSonVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMZMeiTuanSonVC.m; sourceTree = "<group>"; };
 		F3E74DB62354075800A0F785 /* WMZPageLoopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMZPageLoopView.h; sourceTree = "<group>"; };
 		F3E74DB72354075800A0F785 /* WMZPageNaviBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMZPageNaviBtn.h; sourceTree = "<group>"; };
 		F3E74DB92354075800A0F785 /* WMZPageLoopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMZPageLoopView.m; sourceTree = "<group>"; };
@@ -657,6 +660,8 @@
 			children = (
 				F370E0FA24C9D97D0080E02D /* WMZMeiTuanVC.h */,
 				F370E0FB24C9D97D0080E02D /* WMZMeiTuanVC.m */,
+				F3D5DCAD24CC6D47007487DC /* WMZMeiTuanSonVC.h */,
+				F3D5DCAE24CC6D47007487DC /* WMZMeiTuanSonVC.m */,
 			);
 			path = "美团";
 			sourceTree = "<group>";
@@ -1121,6 +1126,7 @@
 				F3A1FF952334D6AF004B12F6 /* UIImageView+WebCache.m in Sources */,
 				F3A1FF822334D6AF004B12F6 /* SDWebImageCompat.m in Sources */,
 				F3A1FF742334D6AF004B12F6 /* SDWebImageManager.m in Sources */,
+				F3D5DCAF24CC6D47007487DC /* WMZMeiTuanSonVC.m in Sources */,
 				F3E74DCA2354075800A0F785 /* WMZPageLoopView.m in Sources */,
 				F31983142355AE02002D305B /* MJRefreshComponent.m in Sources */,
 				F392D47A23A36BC600B00FBF /* HomeVC.m in Sources */,

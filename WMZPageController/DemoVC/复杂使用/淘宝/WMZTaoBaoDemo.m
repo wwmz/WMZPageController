@@ -59,7 +59,7 @@
                 [strongSelf customBtn:btn];
             }];
         })
-        //自定义改变高度的UI变化
+        //⚠️自定义改变高度的UI变化
        .wEventMenuChangeHeightSet(^(NSArray<WMZPageNaviBtn *> *titleArr, CGFloat offset) {
             __strong WMZTaoBaoDemo *strongSelf = weakSelf;
            if (offset >= 20) {
@@ -69,7 +69,7 @@
                strongSelf.upSc.lineView.hidden = NO;
            }
         })
-        //自定义恢复高度的UI变化
+        //⚠️自定义恢复高度的UI变化
        .wEventMenuNormalHeightSet(^(NSArray<WMZPageNaviBtn *> *titleArr) {
             __strong WMZTaoBaoDemo *strongSelf = weakSelf;
            [titleArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -78,10 +78,10 @@
             strongSelf.upSc.lineView.hidden = YES;
        });
        self.param = param;
-    
+       
        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
            self.upSc.lineView.hidden = YES;
-        });
+       });
 
 }
 
