@@ -1,5 +1,7 @@
 # WMZPageController - 分页控制器,替换UIPageController方案,具备完整的生命周期,多种指示器样式,多种标题样式,可悬浮,支持ios13暗黑模式(仿淘宝,优酷,爱奇艺,今日头条,简书,京东等多种标题菜单)（cocopod更新至1.1.9，使用有问题的话先看看是不是最新的版本）
 
+# 注意⚠️⚠️  使用悬浮样式需要实现协议 WMZPageProtocol 
+
 演示
 ==============
 ### 动画样式 
@@ -377,9 +379,24 @@
 
 ###  更新 改变wTitleArr和wControllers后直接调用实例方法即可
      /*
-     *更新
+     *更新(全部重新渲染)
      */
      - (void)updatePageController;
+     
+     /*
+     *更新头部
+     */
+     - (void)updateHeadView;
+
+     /*
+     *手动调用菜单到第index个
+     */
+     - (void)selectMenuWithIndex:(NSInteger)index;
+     
+     /*
+     *底部手动滚动  传入CGPointZero则为吸顶临界点
+     */
+     - (void)downScrollViewSetOffset:(CGPoint)point animated:(BOOL)animat;
 
 ### 依赖
 无任何依赖 
