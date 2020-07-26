@@ -1,4 +1,4 @@
-# WMZPageController - 分页控制器,替换UIPageController方案,具备完整的生命周期,多种指示器样式,多种标题样式,可悬浮,支持ios13暗黑模式(仿优酷,爱奇艺,今日头条,简书,京东等多种标题菜单)（cocopod更新至1.1.9，使用有问题的话先看看是不是最新的版本）
+# WMZPageController - 分页控制器,替换UIPageController方案,具备完整的生命周期,多种指示器样式,多种标题样式,可悬浮,支持ios13暗黑模式(仿淘宝,优酷,爱奇艺,今日头条,简书,京东等多种标题菜单)（cocopod更新至1.1.9，使用有问题的话先看看是不是最新的版本）
 
 演示
 ==============
@@ -30,6 +30,13 @@
 | 悬浮导航栏透明度变化+刷新在顶部               |![悬浮导航栏透明度变化+刷新在顶部.gif](https://upload-images.jianshu.io/upload_images/9163368-13ae25b5672ab495.gif?imageMogr2/auto-orient/strip)|
 | 自定义复杂嵌套悬浮UI            |![自定义复杂嵌套悬浮UI.gif](https://upload-images.jianshu.io/upload_images/9163368-face20117ca38861.gif?imageMogr2/auto-orient/strip) |
 
+### 特殊使用
+| 样式                | 作用   (默认值)                                 |
+|-----------------------|-----------------------------------------------------|
+| 作为tabbar使用              | ![tabbar.gif](https://upload-images.jianshu.io/upload_images/9163368-c3d9cb4339d6082a.gif?imageMogr2/auto-orient/strip) |
+| 淘宝首页效果           | ![taobao.gif](https://upload-images.jianshu.io/upload_images/9163368-ef84ae02f9d8bebf.gif?imageMogr2/auto-orient/strip)|
+| 美团外卖商家详情效果(子控制器多级联动)           |![meituan.gif](https://upload-images.jianshu.io/upload_images/9163368-caec9456b1383756.gif?imageMogr2/auto-orient/strip) |
+
 特性
 ==============
 - 链式语法 结构优雅
@@ -43,6 +50,7 @@
 - 支持ios13暗黑模式
 - 支持固定最右边标题
 - 支持自定义菜单标题
+- 支持子控制器多个滚动视图联动
 
 用法
 ==============
@@ -427,3 +435,4 @@ ios问题交流群 937909825(有问题加群哈)
 - 20200424 修复细节问题 更新至1.1.7
 - 20200511 修复bug 更新至1.1.8
 - 20200605 新增自定义红点和特殊样式1 更新至1.1.9
+- 20200726 新增淘宝分页效果/美团商家分页效果 更新至1.1.10
