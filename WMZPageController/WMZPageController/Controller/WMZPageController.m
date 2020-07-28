@@ -455,6 +455,7 @@
         }
 
     }
+    
     CGFloat delta = scrollView.contentOffset.y/topOffset;
     if (delta>1) {
         delta = 1;
@@ -558,7 +559,10 @@
         self.currentScroll = view;
         [self.sonChildScrollerViewDic setObject:view forKey:@(index)];
         if (self.scrolToBottom) {
-            view.contentOffset = CGPointMake(view.contentOffset.x,0);
+            [view setContentOffset:CGPointMake(view.contentOffset.x,0) animated:NO];
+        }
+        if (!self.sonCanScroll&&!self.scrolToBottom) {
+            [view setContentOffset:CGPointZero animated:NO];
         }
         [view pageAddObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
     }
