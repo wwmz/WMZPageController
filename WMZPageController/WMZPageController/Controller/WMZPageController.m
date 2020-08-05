@@ -201,18 +201,20 @@
     CGFloat tabbarHeight = 0;
     CGFloat statusBarHeight = 0;
     if (self.presentingViewController) {
+        
         if (!self.navigationController) {
             statusBarHeight = PageVCStatusBarHeight;
         }
     } else if (self.tabBarController) {
+        
         if (!self.tabBarController.tabBar.translucent) {
             tabbarHeight = 0;
         }else{
             tabbarHeight = PageVCTabBarHeight;
         }
     } else if (self.navigationController){
+        
         headY = (!self.param.wFromNavi&&
-                  self.param.wMenuPosition != PageMenuPositionNavi&&
                   self.param.wMenuPosition != PageMenuPositionBottom)?0:
        (!self.navigationController.navigationBar.translucent?0:PageVCNavBarHeight);
     }
@@ -221,8 +223,7 @@
         if ([self.parentViewController isKindOfClass:[UINavigationController class]]) {
             UINavigationController *naPar = (UINavigationController*)self.parentViewController;
             headY = (!self.param.wFromNavi&&
-            self.param.wMenuPosition != PageMenuPositionNavi&&
-                     self.param.wMenuPosition != PageMenuPositionBottom)?0:
+            self.param.wMenuPosition != PageMenuPositionBottom)?0:
             (!naPar.navigationBar.translucent?0:PageVCNavBarHeight);
             if (self.parentViewController.tabBarController) {
                 if (!self.parentViewController.tabBarController.tabBar.translucent) {
@@ -240,7 +241,6 @@
             }
             if (self.parentViewController.navigationController) {
                 headY = (!self.param.wFromNavi&&
-                self.param.wMenuPosition != PageMenuPositionNavi&&
                 self.param.wMenuPosition != PageMenuPositionBottom)?0:(!self.parentViewController.navigationController.navigationBar.translucent?0:PageVCNavBarHeight);
             }else if(self.parentViewController.presentingViewController){
                 statusBarHeight = PageVCStatusBarHeight;
