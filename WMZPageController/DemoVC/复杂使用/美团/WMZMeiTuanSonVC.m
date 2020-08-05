@@ -9,7 +9,9 @@
 #import "WMZMeiTuanSonVC.h"
 #import "WMZPageProtocol.h"
 #import "WMZPageController.h"
-@interface WMZMeiTuanSonVC ()<UITableViewDelegate,UITableViewDataSource,WMZPageProtocol>
+@interface WMZMeiTuanSonVC ()<UITableViewDelegate,UITableViewDataSource,WMZPageProtocol>{
+    BOOL leftScroll;
+}
 @property(nonatomic,strong)UITableView *leftTa;
 @property(nonatomic,strong)UITableView *rightTa;
 @end
@@ -37,6 +39,7 @@
     }else{
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
+    [self.leftTa selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
@@ -82,14 +85,30 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == _leftTa) {
+        leftScroll = YES;
         WMZPageController *parentVC = (WMZPageController*)self.parentViewController;
         //先置顶 再联动
-        [parentVC downScrollViewSetOffset:CGPointZero animated:YES];
+        [parentVC downScrollViewSetOffset:CGPointZero animated:NO];
+        //如果设置动画 则延迟0.25秒执行self.rightTa滚动的部分
         [self.rightTa scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:indexPath.row] atScrollPosition:UITableViewScrollPositionNone animated:YES];
-    }else{
         
     }
 }
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    //右边联动左边
+    if (scrollView == self.rightTa&&!leftScroll) {
+        NSIndexPath *firstIndexPath = [[self.rightTa indexPathsForVisibleRows]firstObject];
+        NSIndexPath *selectIndexPath = [NSIndexPath indexPathForRow:firstIndexPath.section inSection:0];
+        [self.leftTa scrollToRowAtIndexPath:selectIndexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
+        [self.leftTa selectRowAtIndexPath:selectIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    }
+}
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    if (scrollView == self.rightTa){ //左边联动右边的时候
+        leftScroll = NO;
+    }
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
    return tableView == _leftTa?44:80;
 }
