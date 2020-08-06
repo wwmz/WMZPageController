@@ -8,9 +8,11 @@
 
 #import "WMZPageLoopView.h"
 #import "WMZPageController.h"
+#define pageScale 0.9
 @interface WMZPageLoopView()<UIScrollViewDelegate>
 {
     WMZPageNaviBtn *_btnLeft ;
+    WMZPageNaviBtn *_btnSelect;
     WMZPageNaviBtn *_btnRight;
     CGFloat lastContentOffset;
     WMZPageController *page;
@@ -120,7 +122,6 @@
         self.lineView.layer.cornerRadius = self.param.wMenuIndicatorRadio;
         self.lineView.layer.masksToBounds = YES;
     }
-       
 }
 
 //设置右边固定标题
@@ -279,6 +280,7 @@
 
 //点击
 - (void)tap:(UIButton*)btn{
+    _btnSelect = btn;
     if (!self.first) {
         if (self.param.wEventClick) {
             self.param.wEventClick(btn, btn.tag);
@@ -391,7 +393,6 @@
     }else{
         point = CGPointMake(CGRectGetMaxX(indexFrame) -  centerX-  indexFrame.size.width/2, 0);
     }
-    
     if ([self.mainView isScrollEnabled]) {
         [UIView animateWithDuration:0.25f animations:^(void){
            [self.mainView setContentOffset:point];
@@ -438,13 +439,25 @@
         self.backgroundColor = [UIColor clearColor];
     }
     
+    //变大
+    if (self.param.wMenuAnimalTitleBig) {
+        _btnSelect.transform = CGAffineTransformMakeScale(1 + (1-pageScale), 1 + (1-pageScale));
+    }
+    
     if (self.param.wCustomMenuSelectTitle) {
         self.param.wCustomMenuSelectTitle(self.btnArr);
     }
+    
 }
 
 - (CGFloat)getMainHeight{
-    return ((pageIsIphoneX&&self.param.wMenuPosition == PageMenuPositionBottom)?(self.mainView.frame.size.height - 15):self.mainView.frame.size.height);
+    if ((pageIsIphoneX&&self.param.wMenuPosition == PageMenuPositionBottom)) {
+        return (self.mainView.frame.size.height - 15);
+    }else if (self.param.wMenuPosition == PageMenuPositionNavi) {
+        NSLog(@"%f", [self findBelongViewControllerForView:self].navigationController.navigationItem.titleView.frame.size.height);
+        return 44;
+    }
+    return self.mainView.frame.size.height;
 }
 
 #pragma -mark- scrollerDeleagte
@@ -697,8 +710,8 @@
     
     //变大
     if (self.param.wMenuAnimalTitleBig) {
-        _btnLeft.transform = CGAffineTransformMakeScale(1+(1-0.9)*(1-scale), 1+(1-0.9)*(1-scale));
-        _btnRight.transform = CGAffineTransformMakeScale(1+(1-0.9)*scale, 1+(1-0.9)*scale);
+        _btnLeft.transform = CGAffineTransformMakeScale(1+(1-pageScale)*(1-scale), 1+(1-pageScale)*(1-scale));
+        _btnRight.transform = CGAffineTransformMakeScale(1+(1-pageScale)*scale, 1+(1-pageScale)*scale);
     }
     
     //渐变

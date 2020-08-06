@@ -78,6 +78,11 @@
     .wMenuWidthSet([widthDic[@(index)] floatValue])
     .wMenuDefaultIndexSet(2)
     .wMenuPositionSet([position[@(index)] intValue]);
+    if (index == 6) {
+        param.wMenuAnimalSet(PageTitleMenuAiQY)
+        .wMenuIndicatorYSet(15)
+        .wMenuCellPaddingSet(10);
+    }
     if (index == 8) {
         param.wMenuFixRightDataSet(@"≡");
     }
