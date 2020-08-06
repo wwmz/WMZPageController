@@ -12,7 +12,6 @@
 @interface WMZPageLoopView()<UIScrollViewDelegate>
 {
     WMZPageNaviBtn *_btnLeft ;
-    WMZPageNaviBtn *_btnSelect;
     WMZPageNaviBtn *_btnRight;
     CGFloat lastContentOffset;
     WMZPageController *page;
@@ -160,6 +159,8 @@
         self.fixBtn = fixBtn;
         self.mainView.contentSize = CGSizeMake(self.mainView.contentSize.width+menuFixWidth, 0);
         [self.btnArr addObject:fixBtn];
+        
+         self.mainView.scrollEnabled = !(CGRectGetMaxX(temp.frame) <= (self.mainView.frame.size.width-menuFixWidth));
     }
 }
 
@@ -251,7 +252,7 @@
       }
       //重新设置布局
       if (i == (self.param.wTitleArr.count -1)) {
-          if (CGRectGetMaxX(btn.frame) <= self.frame.size.width) {
+          if (CGRectGetMaxX(btn.frame) <= self.mainView.frame.size.width) {
             self.mainView.scrollEnabled = NO;
           }else{
             self.mainView.scrollEnabled = YES;
@@ -279,8 +280,7 @@
 }
 
 //点击
-- (void)tap:(UIButton*)btn{
-    _btnSelect = btn;
+- (void)tap:(WMZPageNaviBtn*)btn{
     if (!self.first) {
         if (self.param.wEventClick) {
             self.param.wEventClick(btn, btn.tag);
@@ -304,9 +304,10 @@
              [self.loopDelegate setUpSuspension:newVC index:index end:YES];
          }
         self.first = NO;
-
+        if (self.param.wMenuAnimalTitleBig) {
+            btn.transform = CGAffineTransformMakeScale(1 + (1-pageScale), 1 + (1-pageScale));
+        }
     }else{
-
         [self beginAppearanceTransitionWithIndex:index withOldIndex:self.currentTitleIndex];
         self.lastPageIndex = self.currentTitleIndex;
         self.nextPageIndex = index;
@@ -413,7 +414,7 @@
     }
     
     if (self.param.wMenuAnimal == PageTitleMenuPDD) {
-        lineRect.origin.y = self.frame.size.height - lineRect.size.height;
+        lineRect.origin.y = CGRectGetMaxY(self.mainView.frame) - lineRect.size.height;
         lineRect.size.width = self.param.wMenuIndicatorWidth?:dataWidth;
         lineRect.origin.x =  (indexFrame.size.width - lineRect.size.width)/2 + indexFrame.origin.x;
     }
@@ -428,7 +429,7 @@
         self.lineView.layer.cornerRadius =  self.param.wMenuCircilRadio?:(lineRect.size.height/2);
     }
     
-    [UIView animateWithDuration:0.1 animations:^{
+    [UIView animateWithDuration:0.01 animations:^{
         self.lineView.frame = lineRect;
     } completion:^(BOOL finished) {
         
@@ -437,11 +438,6 @@
     self.currentTitleIndex = newIndex;
     if (self.param.wInsertHeadAndMenuBg) {
         self.backgroundColor = [UIColor clearColor];
-    }
-    
-    //变大
-    if (self.param.wMenuAnimalTitleBig) {
-        _btnSelect.transform = CGAffineTransformMakeScale(1 + (1-pageScale), 1 + (1-pageScale));
     }
     
     if (self.param.wCustomMenuSelectTitle) {
@@ -454,7 +450,6 @@
     if ((pageIsIphoneX&&self.param.wMenuPosition == PageMenuPositionBottom)) {
         return (self.mainView.frame.size.height - 15);
     }else if (self.param.wMenuPosition == PageMenuPositionNavi) {
-        NSLog(@"%f", [self findBelongViewControllerForView:self].navigationController.navigationItem.titleView.frame.size.height);
         return 44;
     }
     return self.mainView.frame.size.height;
