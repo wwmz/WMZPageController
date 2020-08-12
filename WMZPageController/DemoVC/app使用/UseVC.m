@@ -86,7 +86,7 @@
             .wMenuPositionSet(PageMenuPositionNavi)
             .wMenuAnimalTitleGradientSet(NO)
             .wMenuAnimalTitleBigSet(NO)
-            .wMenuAnimalSet(PageTitleMenuAiQY);
+            .wMenuAnimalSet(PageTitleMenuPDD);
             }
        break;
       //今日头条
@@ -183,7 +183,7 @@
     
     //更新
     if (index == 7) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)( 1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             NSMutableArray *updateArr = [NSMutableArray new];
             [[self weiboData] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 TestVC *vc = [TestVC new];
@@ -193,9 +193,8 @@
             
             param.wTitleArrSet([self weiboData])
             .wControllersSet(updateArr);
-            
             //更新
-            [VC updatePageController];
+            [VC updateMenuData];
         });
     }
     

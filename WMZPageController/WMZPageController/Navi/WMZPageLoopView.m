@@ -672,7 +672,6 @@
     int num = [arr[0] intValue];
     CGFloat scale = content_X - num;
     int selectIndex = contentOffsetX/sWidth;
-    
     // 拖拽
     if (contentOffsetX <= lastContentOffset ){
         selectIndex = selectIndex+1;
@@ -685,15 +684,17 @@
     }
     
     //跟随滑动
-    if (self.param.wMenuAnimal == PageTitleMenuAiQY || self.param.wMenuAnimal == PageTitleMenuYouKu) {
+    if (self.param.wMenuAnimal == PageTitleMenuAiQY ||
+        self.param.wMenuAnimal == PageTitleMenuYouKu) {
         CGRect rect = self.lineView.frame;
         if (scale < 0.5 ) {
-            rect.size.width = self.param.wMenuIndicatorWidth + ( _btnRight.center.x-_btnLeft.center.x) * scale*2;
-            rect.origin.x = _btnLeft.center.x -self.param.wMenuIndicatorWidth/2;
-        }else if(scale >= 0.5 ){
-            rect.size.width =  self.param.wMenuIndicatorWidth+(_btnRight.center.x-_btnLeft.center.x) * (1-scale)*2;
-            rect.origin.x = _btnLeft.center.x +  2*(scale-0.5)*(_btnRight.center.x - _btnLeft.center.x)-self.param.wMenuIndicatorWidth/2;
-        }
+             rect.origin.x = _btnLeft.center.x -self.param.wMenuIndicatorWidth/2;
+             rect.size.width = self.param.wMenuIndicatorWidth + ( _btnRight.center.x-_btnLeft.center.x) * scale*2;
+         }else if(scale >= 0.5 ){
+             rect.origin.x = _btnLeft.center.x +  2*(scale-0.5)*(_btnRight.center.x - _btnLeft.center.x)-self.param.wMenuIndicatorWidth/2;
+             rect.size.width =  self.param.wMenuIndicatorWidth+(_btnRight.center.x-_btnLeft.center.x) * (1-scale)*2;
+         }
+        
         if (rect.size.height!= (self.param.wMenuIndicatorHeight?:PageK1px)) {
             rect.size.height = self.param.wMenuIndicatorHeight?:PageK1px;
         }
@@ -702,6 +703,17 @@
         }
         self.lineView.frame = rect;
     }
+    
+    
+    if (self.param.wMenuAnimal == PageTitleMenuPDD) {
+        CGRect rect = self.lineView.frame;
+        rect.size.width = self.param.wMenuIndicatorWidth;
+        self.lineView.frame = rect;
+        CGPoint center = self.lineView.center;
+        center.x = _btnLeft.center.x +  (scale)*(_btnRight.center.x - _btnLeft.center.x);
+        self.lineView.center = center;
+    }
+    
     
     //变大
     if (self.param.wMenuAnimalTitleBig) {
@@ -731,7 +743,7 @@
         rect.origin.y = [self getMainHeight]-rect.size.height/2-self.param.wMenuCellPadding/4;
         self.lineView.frame = rect;
         self.lineView.layer.cornerRadius = rect.size.height/2;
-    }else if (self.param.wMenuAnimal == PageTitleMenuAiQY){
+    }else if (self.param.wMenuAnimal == PageTitleMenuAiQY||self.param.wMenuAnimal == PageTitleMenuPDD){
         CGRect rect = self.lineView.frame;
         if (rect.origin.y != ([self getMainHeight]-self.param.wMenuIndicatorY-rect.size.height/2)) {
             rect.origin.y = [self getMainHeight]-self.param.wMenuIndicatorY-rect.size.height/2;

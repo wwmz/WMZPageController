@@ -39,6 +39,8 @@
        .wMenuTitleWidthSet(self.view.frame.size.width / 4)
        //顶部可下拉
        .wBouncesSet(YES)
+       .wMenuAnimalTitleBigSet(NO)
+       .wMenuAnimalTitleGradientSet(NO)
        //头视图y坐标从0开始
        .wFromNaviSet(NO)
        .wNaviAlphaSet(YES)

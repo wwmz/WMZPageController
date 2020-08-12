@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,assign)CGFloat footViewOrginY;
 
 /*
- *更新
+ *全部更新（会全部重新渲染）
  */
 - (void)updatePageController;
 
@@ -40,6 +40,11 @@ NS_ASSUME_NONNULL_BEGIN
 *更新头部
 */
 - (void)updateHeadView;
+
+/*
+*更新菜单栏
+*/
+- (void)updateMenuData;
 
 /*
 *底部手动滚动  传入CGPointZero则为吸顶临界点

@@ -79,7 +79,7 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,      
 WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, UIColor*,              wMenuBgColor)
 //菜单按钮的左右间距 default 20
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuCellMargin)
-//菜单按钮的上下间距 default 20 (可根据此属性改变导航栏的高度)
+//菜单按钮的上下间距 default 20 (可根据此属性改变菜单栏的高度)
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuCellPadding)
 //菜单按钮的高度 不设置此属性则高度为文字字体大小+wMenuCellPadding
 //WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuHeight)

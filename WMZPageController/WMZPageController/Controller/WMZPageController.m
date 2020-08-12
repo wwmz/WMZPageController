@@ -44,52 +44,9 @@
 @property (nonatomic, assign) CGFloat headHeight;
 @end
 @implementation WMZPageController
-//更新
-- (void)updatePageController{
-    [self.upSc removeFromSuperview];
-    [self.downSc removeFromSuperview];
-    self.downSc = [[WMZPageScroller alloc]initWithFrame:CGRectMake(0, 0, PageVCWidth, PageVCHeight) style:UITableViewStyleGrouped];
-    [self.sonChildScrollerViewDic removeAllObjects];
-    [self.sonChildFooterViewDic removeAllObjects];
-    footerViewIndex = -1;
-    for (UIViewController *VC in self.childViewControllers) {
-        [VC willMoveToParentViewController:nil];
-        [VC.view removeFromSuperview];
-        [VC removeFromParentViewController];
-    }
-    [self setParam];
-    [self UI];
-}
-
-//更新头部
-- (void)updateHeadView{
-    [self setUpHead];
-}
-
-/*
-*底部手动滚动  传入CGPointZero则为吸顶临界点
-*/
-- (void)downScrollViewSetOffset:(CGPoint)point animated:(BOOL)animat;{
-    if (CGPointEqualToPoint(point, CGPointZero)) {
-        //顶点
-        int topOffset = self.downSc.contentSize.height - self.downSc.frame.size.height;
-        point = CGPointMake(self.downSc.contentOffset.x, topOffset);
-    }
-    [self.downSc setContentOffset:point animated:animat];
-}
-
-
 - (void)viewDidLoad{
     self.view.backgroundColor = [UIColor whiteColor];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self setParam];
-        [self UI];
-        if (self.naviBarBackGround&&self.param.wNaviColor) {
-            self.naviBarBackGround.backgroundColor = self.param.wNaviColor;
-        }
-    });
 }
-
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -168,6 +125,11 @@
         self.param.wMenuAnimal == PageTitleMenuPDD) {
         self.param.wMenuAnimalTitleBig = NO;
         self.param.wMenuAnimalTitleGradient = NO;
+        if (self.param.wMenuAnimal == PageTitleMenuPDD) {
+            if (!self.param.wMenuIndicatorWidth) {
+                self.param.wMenuIndicatorWidth = 25;
+            }
+        }
     }
     
     if (self.param.wMenuAnimal == PageTitleMenuYouKu) {
@@ -193,7 +155,6 @@
 
 
 - (void)UI{
-
     self.cache = [NSCache new];
     self.cache.countLimit = 30;
     footerViewIndex = -1;
@@ -310,11 +271,10 @@
     self.canScroll = YES;
     self.scrolToBottom = YES;
     
-    if (@available(iOS 11.0, *)) {
-        self.downSc.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    }else {
-        self.automaticallyAdjustsScrollViewInsets = NO;
-    }
+}
+
+- (void)updateMenuData{
+     [self UI];
 }
 
 - (void)setUpMenuAndDataViewFrame{
@@ -659,6 +619,50 @@
         }
     }];
 }
+
+//更新
+- (void)updatePageController{
+    [self.upSc removeFromSuperview];
+    [self.downSc removeFromSuperview];
+    self.downSc = [[WMZPageScroller alloc]initWithFrame:CGRectMake(0, 0, PageVCWidth, PageVCHeight) style:UITableViewStyleGrouped];
+    [self.sonChildScrollerViewDic removeAllObjects];
+    [self.sonChildFooterViewDic removeAllObjects];
+    footerViewIndex = -1;
+    for (UIViewController *VC in self.childViewControllers) {
+        [VC willMoveToParentViewController:nil];
+        [VC.view removeFromSuperview];
+        [VC removeFromParentViewController];
+    }
+    [self setParam];
+    [self UI];
+}
+
+//更新头部
+- (void)updateHeadView{
+    [self setUpHead];
+}
+
+/*
+*底部手动滚动  传入CGPointZero则为吸顶临界点
+*/
+- (void)downScrollViewSetOffset:(CGPoint)point animated:(BOOL)animat;{
+    if (CGPointEqualToPoint(point, CGPointZero)) {
+        //顶点
+        int topOffset = self.downSc.contentSize.height - self.downSc.frame.size.height;
+        point = CGPointMake(self.downSc.contentOffset.x, topOffset);
+    }
+    [self.downSc setContentOffset:point animated:animat];
+}
+
+//数据
+- (void)showData{
+    [self setParam];
+    [self UI];
+    if (self.naviBarBackGround&&self.param.wNaviColor) {
+        self.naviBarBackGround.backgroundColor = self.param.wNaviColor;
+    }
+}
+
 - (NSMutableDictionary *)sonChildScrollerViewDic{
     if (!_sonChildScrollerViewDic) {
         _sonChildScrollerViewDic = [NSMutableDictionary new];
@@ -699,11 +703,17 @@
     return _footViewSizeWidth;
 }
 
+- (void)setParam:(WMZPageParam *)param{
+    _param = param;
+    [self performSelector:@selector(showData) withObject:nil afterDelay:CGFLOAT_MIN];
+}
+
 - (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     [self.cache removeAllObjects];
     [self.sonChildScrollerViewDic removeAllObjects];
 }
+
 
 - (void)dealloc{
     [self.sonChildScrollerViewDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {

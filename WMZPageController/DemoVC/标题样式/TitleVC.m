@@ -79,7 +79,7 @@
     .wMenuDefaultIndexSet(2)
     .wMenuPositionSet([position[@(index)] intValue]);
     if (index == 6) {
-        param.wMenuAnimalSet(PageTitleMenuAiQY)
+        param.wMenuAnimalSet(PageTitleMenuPDD)
         .wMenuIndicatorYSet(15)
         .wMenuCellPaddingSet(10);
     }
@@ -187,10 +187,8 @@
         @{@"name":@"广场",@"image":@"C",@"selectImage":@"D"},
     ];
 }
-
 //固定宽度标题
 - (NSArray*)fixData{
     return @[@"推荐",@"热点",@"关注"];
 }
-
 @end
