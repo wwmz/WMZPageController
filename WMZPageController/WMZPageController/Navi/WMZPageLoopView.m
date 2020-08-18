@@ -395,10 +395,9 @@
         point = CGPointMake(CGRectGetMaxX(indexFrame) -  centerX-  indexFrame.size.width/2, 0);
     }
     if ([self.mainView isScrollEnabled]) {
-        [UIView animateWithDuration:0.25f animations:^(void){
-           [self.mainView setContentOffset:point];
-        }];
+        [self.mainView setContentOffset:point animated:self.first?NO:YES];
     }
+    
     CGFloat dataWidth = btn.titleLabel.frame.size.width?:btn.maxSize.width;
     //改变指示器frame
     CGRect lineRect = indexFrame;
@@ -411,12 +410,6 @@
         lineRect.size.height = lineRect.size.width;
         self.lineView.layer.masksToBounds = YES;
         self.lineView.layer.cornerRadius = lineRect.size.height/2;
-    }
-    
-    if (self.param.wMenuAnimal == PageTitleMenuPDD) {
-        lineRect.origin.y = CGRectGetMaxY(self.mainView.frame) - lineRect.size.height;
-        lineRect.size.width = self.param.wMenuIndicatorWidth?:dataWidth;
-        lineRect.origin.x =  (indexFrame.size.width - lineRect.size.width)/2 + indexFrame.origin.x;
     }
     
     if (self.param.wMenuAnimal == PageTitleMenuCircle) {
