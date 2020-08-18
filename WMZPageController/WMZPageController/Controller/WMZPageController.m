@@ -217,7 +217,6 @@
     if (self.hidesBottomBarWhenPushed&&tabbarHeight>=PageVCTabBarHeight) {
         tabbarHeight -= PageVCTabBarHeight;
     }
-    
     //全屏
       if (self.navigationController) {
           for (UIGestureRecognizer *gestureRecognizer in self.downSc.gestureRecognizers) {
