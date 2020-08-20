@@ -106,6 +106,7 @@
         [self.navigationController pushViewController:VC animated:YES];
     }else if (indexPath.section  == 9) {
         WMZNaviPageController *VC = [WMZNaviPageController new];
+        VC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:VC animated:YES];
     }else{
         Base *obj = (Base*)[NSClassFromString(self.VCData[indexPath.section]) new];
