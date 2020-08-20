@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "WMZPageController"
-  s.version      = "1.2.3"
+  s.version      = "1.2.4"
   s.platform     = :ios, "8.0"
   s.requires_arc = true
   s.license      = "Copyright (c) 2019年 WMZ. All rights reserved."
