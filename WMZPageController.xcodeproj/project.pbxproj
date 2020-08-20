@@ -120,6 +120,7 @@
 		F3A1FFA82334D6AF004B12F6 /* UIColor+HexString.m in Sources */ = {isa = PBXBuildFile; fileRef = F3A1FF702334D6AF004B12F6 /* UIColor+HexString.m */; };
 		F3BAC20924DA45DD00CB8F6B /* WMZTaoBaoDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = F3BAC20824DA45DD00CB8F6B /* WMZTaoBaoDemo.m */; };
 		F3D5DCAF24CC6D47007487DC /* WMZMeiTuanSonVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F3D5DCAE24CC6D47007487DC /* WMZMeiTuanSonVC.m */; };
+		F3DCBFBA24EE11EC001B2B04 /* WMZNaviPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DCBFB924EE11EC001B2B04 /* WMZNaviPageController.swift */; };
 		F3E74DCA2354075800A0F785 /* WMZPageLoopView.m in Sources */ = {isa = PBXBuildFile; fileRef = F3E74DB92354075800A0F785 /* WMZPageLoopView.m */; };
 		F3E74DCB2354075800A0F785 /* WMZPageNaviBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = F3E74DBB2354075800A0F785 /* WMZPageNaviBtn.m */; };
 		F3E74DCD2354075800A0F785 /* WMZPageParam.m in Sources */ = {isa = PBXBuildFile; fileRef = F3E74DC22354075800A0F785 /* WMZPageParam.m */; };
@@ -376,6 +377,8 @@
 		F3BAC20824DA45DD00CB8F6B /* WMZTaoBaoDemo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMZTaoBaoDemo.m; sourceTree = "<group>"; };
 		F3D5DCAD24CC6D47007487DC /* WMZMeiTuanSonVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMZMeiTuanSonVC.h; sourceTree = "<group>"; };
 		F3D5DCAE24CC6D47007487DC /* WMZMeiTuanSonVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMZMeiTuanSonVC.m; sourceTree = "<group>"; };
+		F3DCBFB824EE11EC001B2B04 /* WMZPageController-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WMZPageController-Bridging-Header.h"; sourceTree = "<group>"; };
+		F3DCBFB924EE11EC001B2B04 /* WMZNaviPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WMZNaviPageController.swift; sourceTree = "<group>"; };
 		F3E74DB62354075800A0F785 /* WMZPageLoopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMZPageLoopView.h; sourceTree = "<group>"; };
 		F3E74DB72354075800A0F785 /* WMZPageNaviBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMZPageNaviBtn.h; sourceTree = "<group>"; };
 		F3E74DB92354075800A0F785 /* WMZPageLoopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMZPageLoopView.m; sourceTree = "<group>"; };
@@ -932,6 +935,7 @@
 		F3C85DAB234F12670087C629 /* DemoVC */ = {
 			isa = PBXGroup;
 			children = (
+				F3DCBFB224EE10F3001B2B04 /* 放在导航栏里(swift使用示范) */,
 				F370E0F724C9D93D0080E02D /* 复杂使用 */,
 				F32BC2D424892BD1003FC614 /* 实际app使用实例(更新中) */,
 				F3052CF823B5EB210016CE17 /* 配合内容使用 */,
@@ -944,6 +948,15 @@
 				F392D47023A36BC600B00FBF /* app使用 */,
 			);
 			path = DemoVC;
+			sourceTree = "<group>";
+		};
+		F3DCBFB224EE10F3001B2B04 /* 放在导航栏里(swift使用示范) */ = {
+			isa = PBXGroup;
+			children = (
+				F3DCBFB924EE11EC001B2B04 /* WMZNaviPageController.swift */,
+				F3DCBFB824EE11EC001B2B04 /* WMZPageController-Bridging-Header.h */,
+			);
+			path = "放在导航栏里(swift使用示范)";
 			sourceTree = "<group>";
 		};
 		F3E74DB52354075800A0F785 /* Navi */ = {
@@ -1043,6 +1056,7 @@
 				TargetAttributes = {
 					F32E008E23308C2A004920BD = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1130;
 					};
 					F32E00A623308C2C004920BD = {
 						CreatedOnToolsVersion = 10.0;
@@ -1143,6 +1157,7 @@
 				F3A1FF752334D6AF004B12F6 /* UIImageView+HighlightedWebCache.m in Sources */,
 				F32E009723308C2A004920BD /* ViewController.m in Sources */,
 				F31983092355AE02002D305B /* MJRefreshBackNormalFooter.m in Sources */,
+				F3DCBFBA24EE11EC001B2B04 /* WMZNaviPageController.swift in Sources */,
 				F392D47F23A36BC600B00FBF /* IndicatorVC.m in Sources */,
 				F392D47E23A36BC600B00FBF /* TitleVC.m in Sources */,
 				F3A1FF982334D6AF004B12F6 /* UIImage+MemoryCacheCost.m in Sources */,
@@ -1389,6 +1404,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HR6T4LQD9T;
@@ -1401,6 +1417,9 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.WMZPageController1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "WMZPageController/DemoVC/放在导航栏里(swift使用示范)/WMZPageController-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1409,6 +1428,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HR6T4LQD9T;
@@ -1421,6 +1441,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.WMZPageController1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "WMZPageController/DemoVC/放在导航栏里(swift使用示范)/WMZPageController-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1428,6 +1450,7 @@
 		F32E00BF23308C2C004920BD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = WMZPageControllerTests/Info.plist;
@@ -1446,6 +1469,7 @@
 		F32E00C023308C2C004920BD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = WMZPageControllerTests/Info.plist;
@@ -1464,6 +1488,7 @@
 		F32E00C223308C2C004920BD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = WMZPageControllerUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1481,6 +1506,7 @@
 		F32E00C323308C2C004920BD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = WMZPageControllerUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

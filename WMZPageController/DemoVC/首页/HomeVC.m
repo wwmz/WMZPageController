@@ -12,6 +12,7 @@
 #import "HomeVC.h"
 #import "Base.h"
 #import "WMZPageConfig.h"
+#import "WMZPageController-Swift.h"
 @interface HomeVC ()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic,strong)UITableView *ta;
 @property(nonatomic,strong)NSArray *taData;
@@ -103,6 +104,9 @@
         NSArray *arr = @[@"WMZTaoBaoDemo",@"WMZMeiTuanVC"];
         UIViewController *VC = [NSClassFromString(arr[indexPath.row]) new];
         [self.navigationController pushViewController:VC animated:YES];
+    }else if (indexPath.section  == 9) {
+        WMZNaviPageController *VC = [WMZNaviPageController new];
+        [self.navigationController pushViewController:VC animated:YES];
     }else{
         Base *obj = (Base*)[NSClassFromString(self.VCData[indexPath.section]) new];
         [obj pushWithVC:self withIndex:indexPath.row];
@@ -122,6 +126,7 @@
         @[@"实际使用demoOne(作为tabbar)"],
         @[@"实际使用demoTwo(动态富文本)"],
         @[@"淘宝滑动动态改变菜单栏",@"美团商家详情两层联调"],
+        @[@"swift使用示范(放在导航栏上)"]
         ];
     }
     return _taData;
@@ -129,7 +134,7 @@
 
 - (NSArray *)titleData{
     if (!_titleData) {
-        _titleData = @[@"完整手动管理控制器生命周期",@"标题样式",@"指示器样式",@"实际使用",@"悬浮使用(+继承使用示范)",@"综合使用",@"PageSpecialType",@"PageSpecialType",@"复杂使用"];
+        _titleData = @[@"完整手动管理控制器生命周期",@"标题样式",@"指示器样式",@"实际使用",@"悬浮使用(+继承使用示范)",@"综合使用",@"PageSpecialType",@"PageSpecialType",@"复杂使用",@"swift"];
     }
     return _titleData;
 }

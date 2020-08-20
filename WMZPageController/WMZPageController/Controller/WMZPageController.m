@@ -261,7 +261,7 @@
     [self setUpHead];
    
     [self.upSc.btnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (idx == self.param.wMenuDefaultIndex) {
+        if (idx == self.param.wMenuDefaultIndex && obj.tag!=10086) {
             self.upSc.first = YES;
             [obj sendActionsForControlEvents:UIControlEventTouchUpInside];
             *stop = YES;
