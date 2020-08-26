@@ -141,7 +141,6 @@
             [fixBtn setImage:[UIImage imageNamed:selectImage] forState:UIControlStateSelected];
         }
         if (text && image) {
-            [fixBtn TagSetImagePosition:self.param.wMenuImagePosition spacing:self.param.wMenuImageMargin];
             menuFixWidth+=30;
         }
         fixBtn.titleLabel.font = [UIFont systemFontOfSize:self.param.wMenuTitleFont weight:self.param.wMenuTitleWeight];
@@ -150,6 +149,9 @@
         fixBtn.tag = 10086;
         [self addSubview:fixBtn];
         [self bringSubviewToFront:fixBtn];
+        if (self.hasImage) {
+            [fixBtn TagSetImagePosition:self.param.wMenuImagePosition spacing:self.param.wMenuImageMargin];
+        }
         if (self.param.wMenuFixShadow) {
            [fixBtn viewShadowPathWithColor:PageColor(0x333333) shadowOpacity:0.8 shadowRadius:3 shadowPathType:PageShadowPathLeft shadowPathWidth:2];
             fixBtn.alpha = 0.9;
@@ -182,9 +184,8 @@
      id selectImage = [self getTitleData:self.param.wTitleArr[i] key:@"selectImage"];
      if (image) {
         [btn setImage:[UIImage imageNamed:image] forState:UIControlStateNormal];
-         btn.imageView.contentMode = UIViewContentModeScaleAspectFit;
+         btn.imageView.contentMode = UIViewContentModeScaleAspectFill;
          if (name) {
-            [btn TagSetImagePosition:self.param.wMenuImagePosition spacing:self.param.wMenuImageMargin];
             self.hasImage = YES;
          }
      }
@@ -222,6 +223,11 @@
      [heightArr addObject:@(btn.frame.size.height+self.param.wMenuCellMarginY)];
      [self.mainView addSubview:btn];
      [self.btnArr addObject:btn];
+    
+     if (self.hasImage) {
+         [btn TagSetImagePosition:self.param.wMenuImagePosition spacing:self.param.wMenuImageMargin];
+     }
+    
      //设置右上角红点
      NSString *badge = [self getTitleData:self.param.wTitleArr[i] key:@"badge"];
      if (badge) {

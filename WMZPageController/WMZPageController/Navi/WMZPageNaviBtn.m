@@ -6,7 +6,6 @@
 //  Created by wmz on 2019/9/22.
 //  Copyright © 2019 wmz. All rights reserved.
 //
-
 #import "WMZPageNaviBtn.h"
 @interface WMZPageNaviBtn()
 @property(nonatomic,assign)CGSize minSize;
@@ -70,49 +69,40 @@
 
 
 - (void)TagSetImagePosition:(PageBtnPosition)postion spacing:(CGFloat)spacing {
-    CGFloat imgW = self.imageView.image.size.width;
-    CGFloat imgH = self.imageView.image.size.height;
-    CGSize trueSize = CGSizeMake(self.maxSize.width, self.maxSize.height);
-    
-    CGFloat trueLabW = trueSize.width;
-    CGFloat trueLabH = trueSize.height;
-//    if (self.max) {
-//        trueLabW -= (imgW+spacing+spacing);
-//    }
-    //image中心移动的x距离
-    CGFloat imageOffsetX = trueLabW/2 ;
-    //image中心移动的y距离
-    CGFloat imageOffsetY = trueLabH/2 + spacing/2;
-    //label左边缘移动的x距离
-    CGFloat labelOffsetX1 = imgW/2 - trueLabW/2 + trueLabW/2;
-    //label右边缘移动的x距离
-    CGFloat labelOffsetX2 = imgW/2 + trueLabW/2 - trueLabW/2;
-    //label中心移动的y距离
-    CGFloat labelOffsetY = imgH/2 + spacing/2;
-    switch (postion) {
-        case PageBtnPositionLeft:
-            self.imageEdgeInsets = UIEdgeInsetsMake(0, -spacing/2, 0, spacing/2);
-            self.titleEdgeInsets = UIEdgeInsetsMake(0, spacing/2, 0, -spacing/2);
-            break;
-            
-        case PageBtnPositionRight:
-            self.imageEdgeInsets = UIEdgeInsetsMake(0, trueLabW + spacing/2, 0, -(trueLabW + spacing/2));
-            self.titleEdgeInsets = UIEdgeInsetsMake(0, -(imgW + spacing/2), 0, imgW + spacing/2);
-            break;
-            
-        case PageBtnPositionTop:
-            self.imageEdgeInsets = UIEdgeInsetsMake(-imageOffsetY, imageOffsetX, imageOffsetY, -imageOffsetX);
-            self.titleEdgeInsets = UIEdgeInsetsMake(labelOffsetY, -labelOffsetX1, -labelOffsetY, labelOffsetX2);
-            break;
-            
-        case PageBtnPositionBottom:
-            self.imageEdgeInsets = UIEdgeInsetsMake(imageOffsetY, imageOffsetX, -imageOffsetY, -imageOffsetX);
-            self.titleEdgeInsets = UIEdgeInsetsMake(-labelOffsetY, -labelOffsetX1, labelOffsetY, labelOffsetX2);
-            break;
-            
-        default:
-            break;
-    }
+     CGFloat imgWidth = self.imageView.bounds.size.width;
+     CGFloat imgHeight = self.imageView.bounds.size.height;
+     CGFloat labWidth = self.titleLabel.bounds.size.width;
+     CGFloat labHeight = self.titleLabel.bounds.size.height;
+     CGSize textSize = [self.titleLabel.text sizeWithAttributes:@{NSFontAttributeName:self.titleLabel.font}];
+     CGSize frameSize = CGSizeMake(ceilf(textSize.width), ceilf(textSize.height));
+     if (labWidth < frameSize.width) {
+         labWidth = frameSize.width;
+     }
+     CGFloat kMargin = spacing/2.0;
+     switch (postion) {
+         case PageBtnPositionLeft:
+             [self setImageEdgeInsets:UIEdgeInsetsMake(0, -kMargin, 0, kMargin)];
+             [self setTitleEdgeInsets:UIEdgeInsetsMake(0, kMargin, 0, -kMargin)];
+             break;
+             
+         case PageBtnPositionRight:
+            [self setImageEdgeInsets:UIEdgeInsetsMake(0, labWidth + kMargin, 0, -labWidth - kMargin)];
+             [self setTitleEdgeInsets:UIEdgeInsetsMake(0, -imgWidth - kMargin, 0, imgWidth + kMargin)];
+             break;
+             
+         case PageBtnPositionTop:
+             [self setImageEdgeInsets:UIEdgeInsetsMake(0,0, labHeight + spacing, -labWidth)];
+             [self setTitleEdgeInsets:UIEdgeInsetsMake(imgHeight + spacing, -imgWidth, 0, 0)];
+             break;
+             
+         case PageBtnPositionBottom:
+             [self setImageEdgeInsets:UIEdgeInsetsMake(labHeight + spacing,0, 0, -labWidth)];
+             [self setTitleEdgeInsets:UIEdgeInsetsMake(0, -imgWidth, imgHeight + spacing, 0)];
+             break;
+             
+         default:
+             break;
+     }
 }
 
 - (void)viewShadowPathWithColor:(UIColor *)shadowColor shadowOpacity:(CGFloat)shadowOpacity shadowRadius:(CGFloat)shadowRadius shadowPathType:(PageShadowPathType)shadowPathType shadowPathWidth:(CGFloat)shadowPathWidth{
