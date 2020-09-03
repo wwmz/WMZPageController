@@ -181,4 +181,9 @@ typedef void (^PageMenuChangeHeight)(NSArray<WMZPageNaviBtn*>*titleArr,CGFloat o
 typedef void (^PageMenuNormalHeight)(NSArray<WMZPageNaviBtn*>*titleArr);
 
 
+/*
+ * vc数组
+ */
+typedef UIViewController* (^PageViewControllerIndex)(NSInteger index);
+
 #endif /* WMZPageConfig_h */

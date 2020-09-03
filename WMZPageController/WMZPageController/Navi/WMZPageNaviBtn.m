@@ -174,6 +174,48 @@
         self.selectedColorG = green;
     }
 }
+- (NSAttributedString*)setImageWithStr:(NSString*)str
+                                  font:(UIFont*)font
+                         textAlignment:(NSTextAlignment)textAlignment textColor:(nullable UIColor*)textColor
+                       backgroundColor:(nullable UIColor*)backgroundColor
+                          cornerRadius:(CGFloat)cornerRadius{
+    CGFloat aaW1 = [self boundingRectWithSize:str Font:font Size:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)].width+20;
+    UILabel *aaL1 = [UILabel new];
+    aaL1.frame = CGRectMake(0, 0, aaW1, 18);
+    aaL1.text = str;
+    aaL1.font = font;
+    aaL1.textAlignment = textAlignment;
+    if (textColor) {
+       aaL1.textColor = textColor;
+    }
+    if (cornerRadius) {
+        if (backgroundColor) {
+            aaL1.layer.backgroundColor = backgroundColor.CGColor;
+            aaL1.layer.cornerRadius = cornerRadius;
+        }
+    }else{
+        if (backgroundColor) {
+            aaL1.backgroundColor = backgroundColor;
+        }
+    }
+    UIImage *image1 = [self imageWithUIView:aaL1];
+    NSTextAttachment *attach1 = [[NSTextAttachment alloc] init];
+    attach1.bounds = CGRectMake(0, 10, aaW1, 20);
+    attach1.image = image1;
+    NSAttributedString * imageStr1= [NSAttributedString attributedStringWithAttachment:attach1];
+    return imageStr1;
+}
+
+//view转成image
+- (UIImage*) imageWithUIView:(UIView*) view{
+    UIGraphicsBeginImageContext(view.bounds.size);
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    [view.layer renderInContext:ctx];
+    UIImage* tImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return tImage;
+}
+
 @end
 
 

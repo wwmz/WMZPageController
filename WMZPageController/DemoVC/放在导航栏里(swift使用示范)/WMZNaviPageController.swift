@@ -15,7 +15,9 @@ class WMZNaviPageController: WMZPageController {
         // Do any additional setup after loading the view.
         let param:WMZPageParam = PageParam()
             .wTitleArrSet()(["第一页","第二页"])
-            .wControllersSet()([TestVC(),TestVC()])
+            .wViewControllerSet()({(index:NSInteger)->(UIViewController?)in
+                return TestVC();
+            })
             .wMenuPositionSet()(.init(3))
             .wMenuAnimalSet()(.init(6))
             .wMenuCellPaddingSet()(20)
@@ -23,7 +25,6 @@ class WMZNaviPageController: WMZPageController {
             .wMenuWidthSet()(200)
             .wMenuIndicatorYSet()(5)
         self.param = param;
-        
     }
     
 

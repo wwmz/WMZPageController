@@ -716,8 +716,8 @@
 		F392D47023A36BC600B00FBF /* app使用 */ = {
 			isa = PBXGroup;
 			children = (
-				F392D47123A36BC600B00FBF /* UseVC.m */,
 				F392D47223A36BC600B00FBF /* UseVC.h */,
+				F392D47123A36BC600B00FBF /* UseVC.m */,
 			);
 			path = "app使用";
 			sourceTree = "<group>";
@@ -725,8 +725,8 @@
 		F392D47323A36BC600B00FBF /* 标题样式 */ = {
 			isa = PBXGroup;
 			children = (
-				F392D47423A36BC600B00FBF /* TitleVC.m */,
 				F392D47523A36BC600B00FBF /* TitleVC.h */,
+				F392D47423A36BC600B00FBF /* TitleVC.m */,
 			);
 			path = "标题样式";
 			sourceTree = "<group>";
@@ -734,8 +734,8 @@
 		F392D47623A36BC600B00FBF /* 指示器样式 */ = {
 			isa = PBXGroup;
 			children = (
-				F392D47723A36BC600B00FBF /* IndicatorVC.m */,
 				F392D47823A36BC600B00FBF /* IndicatorVC.h */,
+				F392D47723A36BC600B00FBF /* IndicatorVC.m */,
 			);
 			path = "指示器样式";
 			sourceTree = "<group>";

@@ -17,23 +17,17 @@
 @implementation WMZCustomOnePage
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-    self.view.backgroundColor = [UIColor whiteColor];
-    
     //标题数组
     NSArray *data = @[@"热门",@"男装",@"美妆",@"手机",@"食品",@"电器",@"鞋包",@"百货",@"女装",@"汽车",@"电脑"];
+    WMZPageParam *param =
+    PageParam()
     //控制器数组
-    NSMutableArray *vcArr = [NSMutableArray new];
-    [data enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        TopSuspensionVC *vc = [TopSuspensionVC new];
-        vc.page = idx;
-        [vcArr addObject:vc];
-    }];
-    
-    WMZPageParam *param = PageParam()
+    .wViewControllerSet(^UIViewController *(NSInteger index) {
+       TopSuspensionVC *vc = [TopSuspensionVC new];
+        vc.page = index;
+        return vc;
+    })
     .wTitleArrSet(data)
-    .wControllersSet(vcArr)
     .wMenuAnimalSet(PageTitleMenuPDD)
     .wMenuDefaultIndexSet(3)
     //悬浮开启

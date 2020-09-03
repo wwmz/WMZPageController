@@ -67,8 +67,11 @@ WMZPagePropSetFuncImplementation(WMZPageParam, PageVCChangeBlock,      wEventEnd
 WMZPagePropSetFuncImplementation(WMZPageParam, PageChildVCScroll,      wEventChildVCDidSroll)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageMenuChangeHeight,   wEventMenuChangeHeight)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageMenuNormalHeight,   wEventMenuNormalHeight)
+WMZPagePropSetFuncImplementation(WMZPageParam, PageViewControllerIndex,              wViewController)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuIndicatorY)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuCircilRadio)
+WMZPagePropSetFuncImplementation(WMZPageParam, UIFont*,                wMenuTitleUIFont)
+WMZPagePropSetFuncImplementation(WMZPageParam, UIFont*,                wMenuTitleSelectUIFont)
 - (instancetype)init{
     if (self = [super init]) {
         _wMenuAnimal = PageTitleMenuNone;
@@ -81,6 +84,8 @@ WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuCirc
         _wMenuAnimalTitleBig = YES;
         _wMenuAnimalTitleGradient = YES;
         _wMenuTitleFont = 17.0f;
+        _wMenuTitleUIFont = [UIFont systemFontOfSize:17.0f];
+        _wMenuTitleSelectUIFont = [UIFont systemFontOfSize:18.5f];
         _wMenuImagePosition = PageBtnPositionTop;
         _wMenuImageMargin = 5.0f;
         _wMenuCellMargin = 30.0f;

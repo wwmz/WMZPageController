@@ -10,130 +10,144 @@
 //
 
 #import "TitleVC.h"
+#import "TestVC.h"
 @implementation TitleVC
 
-- (void)pushWithVC:(UIViewController *)vc withIndex:(NSInteger)index{
-    //数据
-    NSDictionary *dic = @{
-          @(0):@"textData",
-          @(1):@"lineBreakData",
-          @(2):@"redTipData",
-          @(3):@"attributesData",
-          @(4):@"imageData",
-          @(5):@"imageData",
-          @(6):@"textData",
-          @(7):@"textData",
-          @(8):@"textData",
-          @(9):@"textData",
-          @(10):@"fixData",
-          @(11):@"textData",
-      };
-    //位置
-    NSDictionary *position = @{
-          @(0):@(PageMenuPositionLeft),
-          @(1):@(PageMenuPositionLeft),
-          @(2):@(PageMenuPositionLeft),
-          @(3):@(PageMenuPositionLeft),
-          @(4):@(PageMenuPositionLeft),
-          @(5):@(PageMenuPositionBottom),
-          @(6):@(PageMenuPositionNavi),
-          @(7):@(PageMenuPositionCenter),
-          @(8):@(PageMenuPositionLeft),
-          @(9):@(PageMenuPositionLeft),
-          @(10):@(PageMenuPositionLeft),
-          @(11):@(PageMenuPositionLeft),
-      };
-    //菜单宽度
-    NSDictionary *widthDic = @{
-         @(0):@(PageVCWidth),
-         @(1):@(PageVCWidth),
-         @(2):@(PageVCWidth),
-         @(3):@(PageVCWidth),
-         @(4):@(PageVCWidth),
-         @(5):@(PageVCWidth),
-         @(6):@(PageVCWidth*0.6),
-         @(7):@(PageVCWidth*0.7),
-         @(8):@(PageVCWidth),
-         @(9):@(PageVCWidth),
-         @(10):@(PageVCWidth),
-         @(11):@(PageVCWidth),
-    };
-    NSArray *data = @[];
-    SuppressPerformSelectorLeakWarning(data = [self performSelector:NSSelectorFromString(dic[@(index)])]);
-      
-    NSMutableArray *vcArr = [NSMutableArray new];
-    [data enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        TestVC *vc = [TestVC new];
-        vc.page = idx;
-        [vcArr addObject:vc];
-    }];
-    WMZPageController *VC =  [WMZPageController new];
-    WMZPageParam *param =
-    PageParam()
-    .wCustomMenuViewSet(^(UIView *bgView) {
-//        bgView.alpha = 0.5;
-    })
-    .wTitleArrSet(data)
-    .wControllersSet(vcArr)
-    .wMenuWidthSet([widthDic[@(index)] floatValue])
-    .wMenuDefaultIndexSet(2)
-    .wMenuPositionSet([position[@(index)] intValue]);
-    if (index == 6) {
-        param.wMenuAnimalSet(PageTitleMenuPDD)
-        .wMenuIndicatorYSet(15)
-        .wMenuCellPaddingSet(10);
-    }
-    if (index == 8) {
-        param.wMenuFixRightDataSet(@"≡");
-    }
-    if (index == 9) {
-        param.wMenuImagePositionSet(PageBtnPositionLeft)
-             .wMenuFixRightDataSet(@{@"name":@"金币",@"image":@"B"})
-        .wEventFixedClickSet(^(id anyID, NSInteger index) {
-            NSLog(@"固定标题点击%ld",index);
-            //模拟更新
-            [VC.upSc.btnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                if (obj.tag == 10086) {
-                    [obj setTitle:@"更新" forState:UIControlStateNormal];
-                    *stop = YES;
-                }
-            }];
-        });
-    }
-    if (index == 10) {
-        param.wMenuTitleWidthSet(PageVCWidth/data.count);
-    }
-    //自定义标题
-    if (index == 11) {
-        param.wMenuBgColorSet(PageColor(0xf8f6f8))
-        .wMenuCellMarginYSet(10)
-        .wMenuTitleWidthSet(100)
-        .wMenuAnimalSet(PageTitleMenuPDD)
-        //自定义静态标题
-        .wCustomMenuTitleSet(^(NSArray *titleArr) {
-            [titleArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                if (idx!=titleArr.count-1) {
-                [obj viewPathWithColor:PageColor(0x666666) PathType:PageShadowPathRight PathWidth:PageK1px heightScale:0.4];
-                }
-            }];
-        })
-        //自定义滑动后标题的变化
-        .wCustomMenuSelectTitleSet(^(NSArray *titleArr) {
-            [titleArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                       if (obj.isSelected) {
-                            obj.layer.masksToBounds = YES;
-                           [obj setRadii:CGSizeMake(10, 10) RoundingCorners:UIRectCornerTopLeft|UIRectCornerTopRight];
-                            obj.backgroundColor = [UIColor whiteColor];
-                       }else{
-                          [obj setRadii:CGSizeMake(0, 0) RoundingCorners:UIRectCornerTopLeft|UIRectCornerTopRight];
-                           obj.backgroundColor = PageColor(0xf8f6f8);
-                       }
-                   }];
-        });
-    }
-    VC.param = param;
-    [vc.navigationController pushViewController:VC animated:YES];
+
+- (void)viewDidLoad{
+    [super viewDidLoad];
     
+      NSInteger index = self.index.integerValue; 
+    
+     //数据
+        NSDictionary *dic = @{
+              @(0):@"textData",
+              @(1):@"lineBreakData",
+              @(2):@"redTipData",
+              @(3):@"attributesData",
+              @(4):@"imageData",
+              @(5):@"imageData",
+              @(6):@"textData",
+              @(7):@"textData",
+              @(8):@"textData",
+              @(9):@"textData",
+              @(10):@"fixData",
+              @(11):@"textData",
+          };
+        //位置
+        NSDictionary *position = @{
+              @(0):@(PageMenuPositionLeft),
+              @(1):@(PageMenuPositionLeft),
+              @(2):@(PageMenuPositionLeft),
+              @(3):@(PageMenuPositionLeft),
+              @(4):@(PageMenuPositionLeft),
+              @(5):@(PageMenuPositionBottom),
+              @(6):@(PageMenuPositionNavi),
+              @(7):@(PageMenuPositionCenter),
+              @(8):@(PageMenuPositionLeft),
+              @(9):@(PageMenuPositionLeft),
+              @(10):@(PageMenuPositionLeft),
+              @(11):@(PageMenuPositionLeft),
+          };
+        //菜单宽度
+        NSDictionary *widthDic = @{
+             @(0):@(PageVCWidth),
+             @(1):@(PageVCWidth),
+             @(2):@(PageVCWidth),
+             @(3):@(PageVCWidth),
+             @(4):@(PageVCWidth),
+             @(5):@(PageVCWidth),
+             @(6):@(PageVCWidth*0.6),
+             @(7):@(PageVCWidth*0.7),
+             @(8):@(PageVCWidth),
+             @(9):@(PageVCWidth),
+             @(10):@(PageVCWidth),
+             @(11):@(PageVCWidth),
+        };
+        NSArray *data = [self performSelector:NSSelectorFromString(dic[@(index)]) withObject:nil];
+        WMZPageParam *param =
+        PageParam()
+        .wTitleArrSet(data)
+        .wViewControllerSet(^UIViewController *(NSInteger index) {
+            TestVC *vc = [TestVC new];
+            vc.page = index;
+            return vc;
+        })
+        .wCustomMenuViewSet(^(UIView *bgView) {
+    //        bgView.alpha = 0.5;
+        })
+        .wMenuWidthSet([widthDic[@(index)] floatValue])
+        .wMenuDefaultIndexSet(2)
+        .wMenuPositionSet([position[@(index)] intValue]);
+    
+        if (index == 6) {
+            param.wMenuAnimalSet(PageTitleMenuPDD)
+            .wMenuIndicatorYSet(15)
+            .wMenuCellPaddingSet(10);
+        }
+    
+        if (index == 8) {
+            param.wMenuFixRightDataSet(@"≡");
+        }
+    
+        if (index == 9) {
+            param.wMenuImagePositionSet(PageBtnPositionLeft)
+                 .wMenuFixRightDataSet(@{@"name":@"金币",@"image":@"B"})
+            .wEventFixedClickSet(^(id anyID, NSInteger index) {
+                NSLog(@"固定标题点击%ld",index);
+                //模拟更新
+                [self.upSc.btnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    if (obj.tag == 10086) {
+                        [obj setTitle:@"更新" forState:UIControlStateNormal];
+                        *stop = YES;
+                    }
+                }];
+            });
+        }
+    
+        if (index == 10) {
+            param.wMenuTitleWidthSet(PageVCWidth/data.count);
+        }
+    
+        //自定义标题
+        if (index == 11) {
+            param.wMenuBgColorSet(PageColor(0xf8f6f8))
+            .wMenuCellMarginYSet(10)
+            .wMenuTitleWidthSet(100)
+            .wMenuAnimalSet(PageTitleMenuPDD)
+            //自定义静态标题
+            .wCustomMenuTitleSet(^(NSArray *titleArr) {
+                [titleArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    if (idx!=titleArr.count-1) {
+                    [obj viewPathWithColor:PageColor(0x666666) PathType:PageShadowPathRight PathWidth:PageK1px heightScale:0.4];
+                    }
+                }];
+            })
+            //自定义滑动后标题的变化
+            .wCustomMenuSelectTitleSet(^(NSArray *titleArr) {
+                [titleArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                           if (obj.isSelected) {
+                                obj.layer.masksToBounds = YES;
+                               [obj setRadii:CGSizeMake(10, 10) RoundingCorners:UIRectCornerTopLeft|UIRectCornerTopRight];
+                                obj.backgroundColor = [UIColor whiteColor];
+                           }else{
+                              [obj setRadii:CGSizeMake(0, 0) RoundingCorners:UIRectCornerTopLeft|UIRectCornerTopRight];
+                               obj.backgroundColor = PageColor(0xf8f6f8);
+                           }
+                       }];
+            });
+        }
+        self.param = param;
+    
+    
+    if (index == 7) {
+        UIView *view = [UIView new];
+        view.frame = CGRectMake(0, 0, 100, 50);
+        view.backgroundColor = [UIColor redColor];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.upSc addSubview:view];
+        });
+    }
 }
 
 //普通标题

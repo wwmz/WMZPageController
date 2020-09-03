@@ -13,22 +13,15 @@
 @implementation AllPropertiesVC
 
 - (void)pushWithVC:(UIViewController *)vc withIndex:(NSInteger)index{
-       NSArray *data = @[@"推荐",@"LOOK直播",@"画",@"现场",@"翻唱",@"MV",@"广场",@"游戏"];
-    
-       NSMutableArray *vcArr = [NSMutableArray new];
-       [data enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-           TestVC *vc = [TestVC new];
-           vc.page = idx;
-           [vcArr addObject:vc];
-       }];
-    
        WMZPageParam *param =
        //初始化
        PageParam()
+        //设置控制器数组 必传
+       .wViewControllerSet(^UIViewController *(NSInteger index) {
+           return [TestVC new];
+       })
        //设置标题数组 必传
-       .wTitleArrSet(data)
-       //设置控制器数组 必传
-       .wControllersSet(vcArr)
+       .wTitleArrSet(@[@"推荐",@"LOOK直播",@"画",@"现场",@"翻唱",@"MV"])
        //设置指示器和动画样式
        .wMenuAnimalSet(PageTitleMenuAiQY)
        //是否开启选中变大
@@ -36,7 +29,7 @@
        //是否开启滑动标题颜色渐变
        .wMenuAnimalTitleGradientSet(NO)
        //标题font
-       .wMenuTitleFontSet(15.0f)
+       .wMenuTitleUIFontSet([UIFont systemFontOfSize:15.0f])
        //标题菜单栏的宽度 默认屏幕宽度
        .wMenuWidthSet(PageVCWidth)
        //指示器的宽度

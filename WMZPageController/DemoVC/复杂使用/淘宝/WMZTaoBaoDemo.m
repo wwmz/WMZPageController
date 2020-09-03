@@ -20,16 +20,11 @@
     //标题数组
        __weak WMZTaoBaoDemo *weakSelf = self;
        NSArray *data = @[@"全部\n猜你喜欢",@"直播\n新品搭配购",@"便宜好货\n低价抢购",@"买家秀\n真实晒单"];
-       //控制器数组
-       NSMutableArray *vcArr = [NSMutableArray new];
-       [data enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-           CollectionViewPopDemo *vc = [CollectionViewPopDemo new];
-           [vcArr addObject:vc];
-       }];
-       
        WMZPageParam *param = PageParam()
        .wTitleArrSet(data)
-       .wControllersSet(vcArr)
+       .wViewControllerSet(^UIViewController *(NSInteger index) {
+          return [CollectionViewPopDemo new];
+        })
        //⚠️此为改变菜单栏高度的属性  传入正数为高度减少的数值 负数为高度增加的数值
        .wTopChangeHeightSet(20)
        //悬浮开启
@@ -68,7 +63,7 @@
                [titleArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                    [strongSelf changeBtn:obj];
                }];
-               strongSelf.upSc.lineView.hidden = NO;
+               [strongSelf.upSc.lineView setHidden:NO];
            }
         })
         //⚠️自定义恢复高度的UI变化
@@ -77,7 +72,7 @@
            [titleArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                [strongSelf customBtn:obj];
            }];
-            strongSelf.upSc.lineView.hidden = YES;
+           [strongSelf.upSc.lineView setHidden:YES];
        });
        self.param = param;
        
@@ -97,19 +92,24 @@
       
     [mStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15.0f] range:[btn.normalText rangeOfString:btn.normalText]];
     [mStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:18.0f weight:20] range:[btn.normalText rangeOfString:array[0]]];
-    [mSelectStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:18.0f weight:20] range:[btn.normalText rangeOfString:array[0]]];
-    [mSelectStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15.0f] range:[btn.normalText rangeOfString:array[1]]];
-      
     [mStr addAttribute:NSForegroundColorAttributeName value:PageColor(0x333333) range:[btn.normalText rangeOfString:array[0]]];
-    [mStr addAttribute:NSForegroundColorAttributeName value:PageColor(0x999999) range:[btn.normalText rangeOfString:array[1]]];
-    [mSelectStr addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:[btn.normalText rangeOfString:array[0]]];
-    [mSelectStr addAttribute:NSForegroundColorAttributeName value:PageColor(0xffffff) range:[btn.normalText rangeOfString:array[1]]];
-    
     [mStr addAttribute:NSBackgroundColorAttributeName value:[UIColor clearColor] range:[btn.normalText rangeOfString:btn.normalText]];
-    [mSelectStr addAttribute:NSBackgroundColorAttributeName value:[UIColor orangeColor] range:[btn.normalText rangeOfString:array[1]]];
-
+    
+    [mSelectStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:18.0f weight:20] range:[btn.normalText rangeOfString:array[0]]];
+    [mSelectStr addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:[btn.normalText rangeOfString:array[0]]];
+    
+    if (!btn.attributedSelectImage) {
+        btn.attributedSelectImage = [btn setImageWithStr:array[1] font:[UIFont boldSystemFontOfSize:15.0f] textAlignment:NSTextAlignmentCenter textColor:[UIColor whiteColor] backgroundColor:[UIColor orangeColor] cornerRadius:9];
+    }
+    if (!btn.attributedImage) {
+        btn.attributedImage = [btn setImageWithStr:array[1] font:[UIFont boldSystemFontOfSize:15.0f] textAlignment:NSTextAlignmentCenter textColor:PageColor(0x999999) backgroundColor:nil cornerRadius:0];
+    }
+    
+    [mStr replaceCharactersInRange:[btn.normalText rangeOfString:array[1]] withAttributedString:btn.attributedImage];
+    [mSelectStr replaceCharactersInRange:[btn.normalText rangeOfString:array[1]] withAttributedString:btn.attributedSelectImage];
     [btn setAttributedTitle:mStr forState:UIControlStateNormal];
     [btn setAttributedTitle:mSelectStr forState:UIControlStateSelected];
+    
 }
 
 //改变高度富文本
@@ -127,5 +127,4 @@
     [btn setAttributedTitle:mStr forState:UIControlStateNormal];
     [btn setAttributedTitle:mSelectStr forState:UIControlStateSelected];
 }
-
 @end

@@ -53,7 +53,7 @@
      [mStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15.0f] range:[btn.titleLabel.text rangeOfString:btn.titleLabel.text]];
      [mStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:18.0f] range:[btn.titleLabel.text rangeOfString:array[0]]];
     
-     [mStr addAttribute:NSForegroundColorAttributeName value:PageColor(0x999999) range:[btn.titleLabel.text rangeOfString:array[0]]];
+    [mStr addAttribute:NSForegroundColorAttributeName value:PageColor(0x999999) range:[btn.titleLabel.text rangeOfString:array[0]]];
     [mSelectStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:20.0f] range:[btn.titleLabel.text rangeOfString:array[1]]];
 
     [btn setAttributedTitle:mStr forState:UIControlStateNormal];

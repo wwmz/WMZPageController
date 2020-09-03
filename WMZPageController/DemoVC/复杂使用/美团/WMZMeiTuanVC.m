@@ -26,6 +26,9 @@
        
        WMZPageParam *param = PageParam()
        .wTitleArrSet(data)
+       .wViewControllerSet(^UIViewController *(NSInteger index) {
+          return [WMZMeiTuanSonVC new];
+        })
        .wControllersSet(vcArr)
        //悬浮开启
        .wTopSuspensionSet(YES)

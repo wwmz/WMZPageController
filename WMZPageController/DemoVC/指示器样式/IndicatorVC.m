@@ -11,40 +11,30 @@
 //
 
 #import "IndicatorVC.h"
+#import "TestVC.h"
 @implementation IndicatorVC
 
-
-- (void)pushWithVC:(UIViewController *)vc withIndex:(NSInteger)index{
-
+- (void)viewDidLoad{
+    [super viewDidLoad];
+    
     //动画
     NSDictionary *animal = @{
-          @(0):@(PageTitleMenuNone),
-          @(1):@(PageTitleMenuLine),
-          @(2):@(PageTitleMenuAiQY),
-          @(3):@(PageTitleMenuTouTiao),
-          @(4):@(PageTitleMenuYouKu),
-          @(5):@(PageTitleMenuCircle),
-      };
-    
-    NSArray *data = [self textData];
-    NSMutableArray *vcArr = [NSMutableArray new];
-    [data enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        TestVC *vc = [TestVC new];
-        vc.page = idx;
-        [vcArr addObject:vc];
-    }];
-    
+        @(0):@(PageTitleMenuNone),
+        @(1):@(PageTitleMenuLine),
+        @(2):@(PageTitleMenuAiQY),
+        @(3):@(PageTitleMenuTouTiao),
+        @(4):@(PageTitleMenuYouKu),
+        @(5):@(PageTitleMenuCircle),
+    };
+       
     WMZPageParam *param = PageParam()
-    .wTitleArrSet(data)
-    .wControllersSet(vcArr)
-    .wMenuAnimalSet([animal[@(index)] intValue]);
-    WMZPageController *VC =  [WMZPageController new];
-    VC.param = param;
-    [vc.navigationController pushViewController:VC animated:YES];
+    .wTitleArrSet(@[@"推荐",@"LOOK直播",@"画",@"现场",@"翻唱",@"MV",@"广场",@"游戏"])
+    .wViewControllerSet(^UIViewController *(NSInteger index) {
+           TestVC *vc = [TestVC new];
+           vc.page = index;
+            return vc;
+    })
+    .wMenuAnimalSet([animal[self.index] integerValue]);
+    self.param = param;
 }
-//普通标题
-- (NSArray*)textData{
-    return @[@"推荐",@"LOOK直播",@"画",@"现场",@"翻唱",@"MV",@"广场",@"游戏"];
-}
-
 @end

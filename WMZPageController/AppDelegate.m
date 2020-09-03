@@ -28,6 +28,7 @@
     UINavigationController *na3 = [[UINavigationController alloc]initWithRootViewController:[HomeVC new]];
     na3.tabBarItem.title = @"页面";
     ta.viewControllers = @[na1,[WMZCustomThreePage new],na3];
+    ta.view.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = ta;
     
 //    [UITabBar appearance].translucent = NO;

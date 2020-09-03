@@ -29,9 +29,9 @@
     
     UITableView *ta = [[UITableView alloc]initWithFrame:CGRectMake(0, PageVCNavBarHeight, self.view.frame.size.width,self.view.frame.size.height-PageVCNavBarHeight -PageVCTabBarHeight) style:UITableViewStyleGrouped];
     [self.view addSubview:ta];
+    ta.estimatedRowHeight = 100;
     if (@available(iOS 11.0, *)) {
        ta.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-       ta.estimatedRowHeight = 0.01;
     }else{
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
@@ -109,8 +109,10 @@
         VC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:VC animated:YES];
     }else{
-        Base *obj = (Base*)[NSClassFromString(self.VCData[indexPath.section]) new];
-        [obj pushWithVC:self withIndex:indexPath.row];
+        WMZPageController *VC = (WMZPageController*)[NSClassFromString(self.VCData[indexPath.section]) new];
+        [VC setValue:@(indexPath.row) forKey:@"index"];
+        VC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:VC animated:YES];
     }
 }
 

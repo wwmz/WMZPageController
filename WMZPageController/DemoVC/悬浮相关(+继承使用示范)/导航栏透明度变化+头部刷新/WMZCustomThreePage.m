@@ -27,16 +27,13 @@
       [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithRed:10/255.0 green:10/255.0 blue:20/255.0 alpha:0]}];
      //标题数组
         NSArray *data = @[@"热门",@"男装",@"美妆",@"手机",@"食品",@"电器",@"鞋包",@"百货",@"女装",@"汽车",@"电脑"];
-        //控制器数组
-        NSMutableArray *vcArr = [NSMutableArray new];
-        [data enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            CollectionViewPopDemo *vc = [CollectionViewPopDemo new];
-            [vcArr addObject:vc];
-        }];
-        
         WMZPageParam *param = PageParam()
         .wTitleArrSet(data)
-        .wControllersSet(vcArr)
+        //控制器数组
+        .wViewControllerSet(^UIViewController *(NSInteger index) {
+            CollectionViewPopDemo *vc = [CollectionViewPopDemo new];
+            return vc;
+        })
         //悬浮开启
         .wTopSuspensionSet(YES)
         //顶部可下拉

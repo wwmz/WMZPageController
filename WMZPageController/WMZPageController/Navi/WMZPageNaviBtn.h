@@ -30,6 +30,17 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat unSelectedColorG;
 @property (nonatomic, assign) CGFloat unSelectedColorB;
 
+//富文本图片
+@property(nonatomic,strong)NSAttributedString* attributedImage;
+//富文本选中图片
+@property(nonatomic,strong)NSAttributedString* attributedSelectImage;
+
+- (NSAttributedString*)setImageWithStr:(NSString*)str
+                                  font:(UIFont*)font
+                         textAlignment:(NSTextAlignment)textAlignment
+                             textColor:(nullable UIColor*)textColor
+                       backgroundColor:(nullable UIColor*)backgroundColor
+                          cornerRadius:(CGFloat)cornerRadius;
 //设置图文位置
 - (void)TagSetImagePosition:(PageBtnPosition)postion spacing:(CGFloat)spacing;
 //设置单边阴影

@@ -21,17 +21,12 @@
     
      //标题数组
         NSArray *data = @[@"热门",@"男装",@"美妆",@"手机",@"食品",@"电器",@"鞋包",@"百货",@"女装",@"汽车",@"电脑"];
-        //控制器数组
-        NSMutableArray *vcArr = [NSMutableArray new];
-        [data enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            TopSuspensionVC *vc = [TopSuspensionVC new];
-            vc.page = idx;
-            [vcArr addObject:vc];
-        }];
-        
         WMZPageParam *param = PageParam()
         .wTitleArrSet(data)
-        .wControllersSet(vcArr)
+        //控制器数组
+        .wViewControllerSet(^UIViewController *(NSInteger index) {
+          return [TopSuspensionVC new];
+        })
         //悬浮开启
         .wTopSuspensionSet(YES)
         //头视图y坐标从0开始

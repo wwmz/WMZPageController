@@ -143,7 +143,7 @@
         if (text && image) {
             menuFixWidth+=30;
         }
-        fixBtn.titleLabel.font = [UIFont systemFontOfSize:self.param.wMenuTitleFont weight:self.param.wMenuTitleWeight];
+        fixBtn.titleLabel.font = self.param.wMenuTitleUIFont;
         [fixBtn setTitleColor:self.param.wMenuTitleColor forState:UIControlStateNormal];
         fixBtn.frame = CGRectMake(CGRectGetWidth(self.frame)-menuFixWidth, temp.frame.origin.y, menuFixWidth, temp.frame.size.height);
         fixBtn.tag = 10086;
@@ -213,7 +213,7 @@
         }
      }
 
-     btn.titleLabel.font = [UIFont systemFontOfSize:self.param.wMenuTitleFont weight:self.param.wMenuTitleWeight];
+     btn.titleLabel.font = self.param.wMenuTitleUIFont;
 
      id selectColor = [self getTitleData:self.param.wTitleArr[i] key:@"titleSelectColor"];
      [btn setTitleColor:selectColor?:self.param.wMenuTitleSelectColor forState:UIControlStateSelected];
@@ -377,12 +377,12 @@
             self.fixBtn.backgroundColor = fixBackgroundColor;
             [self.fixBtn setTitleColor:titleColor?:self.param.wMenuTitleColor forState:UIControlStateNormal];
             if (self.param.wMenuAnimalTitleBig) {
-                temp.titleLabel.font = [UIFont systemFontOfSize:self.param.wMenuTitleSelectFont weight:self.param.wMenuTitleWeight];
+                temp.titleLabel.font = self.param.wMenuTitleSelectUIFont;
             }
         }else{
             [temp setTitleColor:titleColor?:self.param.wMenuTitleColor forState:UIControlStateNormal];
             if (self.param.wMenuAnimalTitleBig) {
-               temp.titleLabel.font = [UIFont systemFontOfSize:self.param.wMenuTitleFont weight:self.param.wMenuTitleWeight];
+               temp.titleLabel.font = self.param.wMenuTitleUIFont;
             }
         }
     }
@@ -556,7 +556,7 @@
 }
 
 - (UIViewController*)getVCWithIndex:(NSInteger)index{
-    if (index < 0|| index >= self.param.wControllers.count) {
+    if (index < 0|| index >= self.param.wTitleArr.count) {
         return nil;
     }
     
@@ -564,7 +564,14 @@
         return [[self findBelongViewControllerForView:self].cache objectForKey:@(index)];
     }
     
-    return self.param.wControllers[index];
+    if (self.param.wViewController) {
+       return self.param.wViewController(index);
+    }else{
+        if (self.param.wControllers) {
+            return self.param.wControllers[index];
+        }
+    }
+    return nil;
 }
 
 

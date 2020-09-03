@@ -15,8 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 /* =========================================required==============================================*/
 //标题数组 必传
 WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, NSArray*,              wTitleArr)
-//VC数组 必传
+//VC数组 (已废弃)
 WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, NSArray*,              wControllers)
+//VC数据 必传 1.1.6新增
+WMZPagePropStatementAndPropSetFuncStatement(copy,  WMZPageParam,  PageViewControllerIndex,              wViewController)
+
 /* =========================================required==============================================*/
 
 /* =========================================special==============================================*/
@@ -81,18 +84,20 @@ WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, UIColor*,     
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuCellMargin)
 //菜单按钮的上下间距 default 20 (可根据此属性改变菜单栏的高度)
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuCellPadding)
-//菜单按钮的高度 不设置此属性则高度为文字字体大小+wMenuCellPadding
-//WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuHeight)
 //菜单按钮距离顶部的y值 default 0
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuCellMarginY)
 //菜单的位置 default PageMenuPositionLeft
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, PageMenuPosition,      wMenuPosition)
 //菜单标题左右间距 default 0
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuTitleOffset)
-//菜单标题字体 default 15.0f
+//菜单标题字体 default 17.0f (已废弃)
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuTitleFont)
-//菜单选中标题字体大小 default wMenuTitleFont+1.5
+//菜单选中标题字体大小 default wMenuTitleFont+1.5  (已废弃)
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuTitleSelectFont)
+//菜单标题字体 default [UIFont 15]
+WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, UIFont*,               wMenuTitleUIFont)
+//菜单标题字体 default [UIFont wMenuTitleFont+1.5]
+WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, UIFont*,               wMenuTitleSelectUIFont)
 //菜单标题固定宽度 default 文本内容宽度+wMenuCellMargin
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuTitleWidth)
 //菜单标题字体粗体 default 0

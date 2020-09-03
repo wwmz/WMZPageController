@@ -26,7 +26,10 @@
     
     WMZPageParam *param = PageParam()
     .wTitleArrSet(@[@"热门",@"分类"])
-    .wControllersSet(@[[CollectionViewPopDemo new],[TopSuspensionVC new]])
+    .wViewControllerSet(^UIViewController *(NSInteger index) {
+        if (index == 0) return [CollectionViewPopDemo new];
+        return [TopSuspensionVC new];
+    })
     //悬浮开启
     .wTopSuspensionSet(YES)
     //等分
