@@ -25,7 +25,8 @@
        self.navigationItem.title = @"导航栏标题";
       //默认标题透明度0
       [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithRed:10/255.0 green:10/255.0 blue:20/255.0 alpha:0]}];
-     //标题数组
+    
+       //标题数组
         NSArray *data = @[@"热门",@"男装",@"美妆",@"手机",@"食品",@"电器",@"鞋包",@"百货",@"女装",@"汽车",@"电脑"];
         WMZPageParam *param = PageParam()
         .wTitleArrSet(data)
@@ -60,12 +61,25 @@
         
         self.param = param;
     
+    
+    
       //延时0.1秒
        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             // 下拉刷新
           __weak WMZCustomThreePage *weakSelf = self;
           self.downSc.mj_header= [MJRefreshNormalHeader headerWithRefreshingBlock:^{
               dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                  
+                  
+                  NSArray *data1 = @[@"热门",@"男装",@"美妆"];
+                  self.param.wTitleArrSet(data1)
+                  //控制器数组
+                  .wViewControllerSet(^UIViewController *(NSInteger index) {
+                      CollectionViewPopDemo *vc = [CollectionViewPopDemo new];
+                      return vc;
+                  });
+                  //更新菜单数据
+                  [self updateMenuData];
                   [weakSelf.downSc.mj_header endRefreshing];
               });
           }];

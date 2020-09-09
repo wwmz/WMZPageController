@@ -18,22 +18,25 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
-    if (!self.customView) {
-        UIButton *view = [UIButton buttonWithType:UIButtonTypeCustom];
-        view.backgroundColor = [UIColor redColor];
-        [view setTitle:@"我是自定义导航栏" forState:UIControlStateNormal];
-        [view setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-        view.frame = CGRectMake(0, 0, PageVCWidth, PageVCNavBarHeight);
-        [self.view addSubview:view];
-        self.customView = view;
-        
-        UIButton *back = [UIButton buttonWithType:UIButtonTypeCustom];
-        [back setTitle:@"返回>" forState:UIControlStateNormal];
-        [back setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [self.customView addSubview:back];
-        [back addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
-        back.frame = CGRectMake(20, PageVCStatusBarHeight, 60, 30);
-    }
+    //如果要让底部view在自定义导航栏下面 需要延迟0.1秒加载
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (!self.customView) {
+            UIButton *view = [UIButton buttonWithType:UIButtonTypeCustom];
+            view.backgroundColor = [UIColor redColor];
+            [view setTitle:@"我是自定义导航栏" forState:UIControlStateNormal];
+            [view setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+            view.frame = CGRectMake(0, 0, PageVCWidth, PageVCNavBarHeight);
+            [self.view addSubview:view];
+            self.customView = view;
+            
+            UIButton *back = [UIButton buttonWithType:UIButtonTypeCustom];
+            [back setTitle:@"返回>" forState:UIControlStateNormal];
+            [back setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [self.customView addSubview:back];
+            [back addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+            back.frame = CGRectMake(20, PageVCStatusBarHeight, 60, 30);
+        }
+//    });
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -59,7 +62,7 @@
     .wMenuDefaultIndexSet(3)
     //悬浮开启
     .wTopSuspensionSet(YES)
-    //头视图y坐标从0开始
+    //No为从自定义导航栏顶部开始 yes为从自定义导航栏底部开始
     .wFromNaviSet(YES)
     .wMenuHeadViewSet(^UIView *{
         UIView *back = [UIView new];

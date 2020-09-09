@@ -270,10 +270,9 @@
     self.canScroll = YES;
     self.scrolToBottom = YES;
     
-}
-
-- (void)updateMenuData{
-     [self UI];
+    [self.downSc reloadData];
+    [self.downSc layoutIfNeeded];
+    
 }
 
 - (void)setUpMenuAndDataViewFrame{
@@ -382,7 +381,6 @@
     float yOffset  = scrollView.contentOffset.y;
     //顶点
     int topOffset = scrollView.contentSize.height - scrollView.frame.size.height;
-    
     //外部传入 修改此属性即可
     if (self.param.wTopOffset) {
         topOffset += self.param.wTopOffset;
@@ -598,13 +596,17 @@
     }
 }
 
-- (BOOL)canTopSuspension{
-    if (!self.param.wTopSuspension
-       ||self.param.wMenuPosition == PageMenuPositionBottom
-       ||self.param.wMenuPosition == PageMenuPositionNavi){
-          return NO;
+
+- (void)updateMenuData{
+    footerViewIndex = -1;
+    for (UIViewController *VC in self.childViewControllers) {
+        [VC willMoveToParentViewController:nil];
+        [VC.view removeFromSuperview];
+        [VC removeFromParentViewController];
     }
-    return YES;
+    [self.sonChildScrollerViewDic removeAllObjects];
+    [self.sonChildFooterViewDic removeAllObjects];
+    [self UI];
 }
 
 /*
@@ -661,6 +663,16 @@
         self.naviBarBackGround.backgroundColor = self.param.wNaviColor;
     }
 }
+
+- (BOOL)canTopSuspension{
+    if (!self.param.wTopSuspension
+       ||self.param.wMenuPosition == PageMenuPositionBottom
+       ||self.param.wMenuPosition == PageMenuPositionNavi){
+          return NO;
+    }
+    return YES;
+}
+
 
 - (NSMutableDictionary *)sonChildScrollerViewDic{
     if (!_sonChildScrollerViewDic) {

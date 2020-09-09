@@ -15,10 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 /* =========================================required==============================================*/
 //标题数组 必传
 WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, NSArray*,              wTitleArr)
-//VC数组 (已废弃)
-WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, NSArray*,              wControllers)
 //VC数据 必传 1.1.6新增
 WMZPagePropStatementAndPropSetFuncStatement(copy,  WMZPageParam,  PageViewControllerIndex,              wViewController)
+//VC数组 (已废弃)
+WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, NSArray*,              wControllers)
 
 /* =========================================required==============================================*/
 

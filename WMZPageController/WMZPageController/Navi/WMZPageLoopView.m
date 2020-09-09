@@ -304,7 +304,7 @@
          UIViewController *newVC = [self getVCWithIndex:index];
          [newVC beginAppearanceTransition:YES animated:YES];
          [self addChildVC:index VC:newVC];
-         self.dataView.contentOffset = CGPointMake(index*PageVCWidth, 0);
+         [self.dataView setContentOffset:CGPointMake(index*PageVCWidth, 0) animated:NO];
          [newVC endAppearanceTransition];
          if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:end:)]) {
              [self.loopDelegate setUpSuspension:newVC index:index end:YES];
@@ -319,7 +319,7 @@
         self.nextPageIndex = index;
         self.currentTitleIndex = index;
         [self endAppearanceTransitionWithIndex:self.nextPageIndex withOldIndex:self.lastPageIndex isFlag:NO];
-        self.dataView.contentOffset = CGPointMake(index*PageVCWidth, 0);
+        [self.dataView setContentOffset:CGPointMake(index*PageVCWidth, 0) animated:YES];
     }
         
     

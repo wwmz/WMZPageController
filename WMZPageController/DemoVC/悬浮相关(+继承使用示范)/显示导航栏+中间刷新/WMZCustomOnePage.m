@@ -11,7 +11,6 @@
 #import "TopSuspensionVC.h"
 #import "UIImageView+WebCache.h"
 @interface WMZCustomOnePage ()
-
 @end
 
 @implementation WMZCustomOnePage
@@ -23,12 +22,12 @@
     PageParam()
     //控制器数组
     .wViewControllerSet(^UIViewController *(NSInteger index) {
-       TopSuspensionVC *vc = [TopSuspensionVC new];
+        TopSuspensionVC *vc = [TopSuspensionVC new];
         vc.page = index;
         return vc;
     })
     .wTitleArrSet(data)
-    .wMenuAnimalSet(PageTitleMenuPDD)
+    .wMenuAnimalSet(PageTitleMenuAiQY)
     .wMenuDefaultIndexSet(3)
     //悬浮开启
     .wTopSuspensionSet(YES)
@@ -48,11 +47,13 @@
     });
     
     
+    
    //模拟更新头部
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 //        self.param.wMenuHeadViewSet(^UIView *{
 //            UIView *back = [UIView new];
-//            back.frame = CGRectMake(0, 0, PageVCWidth, 400);
+//            //如果要更新隐藏顶部 高度需设为CGFLOAT_MIN 不能设为0
+//            back.frame = CGRectMake(0, 0, PageVCWidth, 200);
 //            UIImageView *image = [UIImageView new];
 //            [image sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576232579081&di=29b77f2a5119755d3c1c3c7ce2595527&imgtype=0&src=http%3A%2F%2Fi2.bangqu.com%2Fr2%2Fnews%2F20180810%2F304a6c35725753744e48.jpg"]];
 //            image.frame = back.bounds;
@@ -61,7 +62,7 @@
 //        });
 //        [self updateHeadView];
 //    });
-//    
+    
     self.param = param;
 }
 

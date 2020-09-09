@@ -141,12 +141,12 @@
     
     
     if (index == 7) {
-        UIView *view = [UIView new];
-        view.frame = CGRectMake(0, 0, 100, 50);
-        view.backgroundColor = [UIColor redColor];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [self.upSc addSubview:view];
-        });
+//        UIView *view = [UIView new];
+//        view.frame = CGRectMake(0, 0, 100, 50);
+//        view.backgroundColor = [UIColor redColor];
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            [self.upSc addSubview:view];
+//        });
     }
 }
 
