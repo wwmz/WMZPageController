@@ -319,7 +319,7 @@
         self.nextPageIndex = index;
         self.currentTitleIndex = index;
         [self endAppearanceTransitionWithIndex:self.nextPageIndex withOldIndex:self.lastPageIndex isFlag:NO];
-        [self.dataView setContentOffset:CGPointMake(index*PageVCWidth, 0) animated:YES];
+        [self.dataView setContentOffset:CGPointMake(index*PageVCWidth, 0) animated:self.param.wTapScrollAnimal];
     }
         
     
@@ -428,7 +428,7 @@
         self.lineView.layer.cornerRadius =  self.param.wMenuCircilRadio?:(lineRect.size.height/2);
     }
     
-    [UIView animateWithDuration:0.01 animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         self.lineView.frame = lineRect;
     } completion:^(BOOL finished) {
         

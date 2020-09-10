@@ -18,6 +18,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, NSArray*,               wControll
 WMZPagePropSetFuncImplementation(WMZPageParam, PageTitleMenu,          wMenuAnimal)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wMenuAnimalTitleBig)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wMenuAnimalTitleGradient)
+WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wTapScrollAnimal)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wMenuFixShadow)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuTitleSelectFont)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuWidth)

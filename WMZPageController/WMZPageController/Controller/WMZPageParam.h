@@ -41,6 +41,8 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,         
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wBounces)
 //导航栏整个透明 default NO
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wNaviAlphaAll)
+//点击滑动带动画 default NO
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wTapScrollAnimal)
 //特殊属性 固定在所有子控制器的底部 需要在第一个子控制器实现固定底部协议
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wFixFirst)
 
