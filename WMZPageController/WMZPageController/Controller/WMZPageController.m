@@ -228,7 +228,10 @@
           self.downSc.estimatedSectionFooterHeight = 0.01;
           self.downSc.estimatedSectionHeaderHeight = 0.01;
           self.downSc.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+      }else{
+          self.automaticallyAdjustsScrollViewInsets = NO;
       }
+
       self.downSc.estimatedRowHeight = 100;
       self.downSc.sectionHeaderHeight = 0.01;
       self.downSc.sectionFooterHeight = 0.01;

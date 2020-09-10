@@ -719,8 +719,8 @@
 		F392D46D23A36BC600B00FBF /* 全部属性 */ = {
 			isa = PBXGroup;
 			children = (
-				F392D46E23A36BC600B00FBF /* AllPropertiesVC.m */,
 				F392D46F23A36BC600B00FBF /* AllPropertiesVC.h */,
+				F392D46E23A36BC600B00FBF /* AllPropertiesVC.m */,
 			);
 			path = "全部属性";
 			sourceTree = "<group>";

@@ -9,10 +9,11 @@
 //
 
 #import "AllPropertiesVC.h"
-
+#import "TestVC.h"
 @implementation AllPropertiesVC
 
-- (void)pushWithVC:(UIViewController *)vc withIndex:(NSInteger)index{
+-(void)viewDidLoad{
+    [super viewDidLoad];
        WMZPageParam *param =
        //初始化
        PageParam()
@@ -121,16 +122,8 @@
        })
        .wEventChildVCDidSrollSet(^(UIViewController *pageVC, CGPoint oldPoint, CGPoint newPonit, UIScrollView *currentScrollView) {
 //           NSLog(@"滚动");
-       })
-       ;
-
-
-    
-       WMZPageController *VC =  [WMZPageController new];
-       VC.param = param;
-       [vc.navigationController pushViewController:VC animated:YES];
-       
+       });
+    self.param = param;
 }
-
 
 @end
