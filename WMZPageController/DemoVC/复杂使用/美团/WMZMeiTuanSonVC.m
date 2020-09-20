@@ -20,6 +20,12 @@
 @end
 
 @implementation WMZMeiTuanSonVC
+
+/*
+ *本例子只是作为多个滚动视图悬浮的例子 左右的联动需要根据自身的情况调整
+ */
+
+
 //实现协议 悬浮 数组协议 左右联动
 - (NSArray *)getMyScrollViews{
     return @[self.leftTa,self.rightTa];
