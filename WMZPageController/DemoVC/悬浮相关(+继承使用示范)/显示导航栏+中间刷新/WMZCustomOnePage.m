@@ -10,20 +10,28 @@
 #import "WMZCustomOnePage.h"
 #import "TopSuspensionVC.h"
 #import "UIImageView+WebCache.h"
+#import "UseVC.h"
 @interface WMZCustomOnePage ()
 @end
 
 @implementation WMZCustomOnePage
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+//    [self.navigationController setNavigationBarHidden:YES animated:NO];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     //标题数组
     NSArray *data = @[@"热门",@"男装",@"美妆",@"手机",@"食品",@"电器",@"鞋包",@"百货",@"女装",@"汽车",@"电脑"];
     WMZPageParam *param =
     PageParam()
     //控制器数组
     .wViewControllerSet(^UIViewController *(NSInteger index) {
-        TopSuspensionVC *vc = [TopSuspensionVC new];
-        vc.page = index;
+//        TopSuspensionVC *vc = [TopSuspensionVC new];
+//        vc.page = index;
+        UseVC *vc = [UseVC new]; vc.index = @0; return vc;
         return vc;
     })
     .wTitleArrSet(data)
@@ -32,9 +40,9 @@
     //悬浮开启
     .wTopSuspensionSet(YES)
     //头视图y坐标从0开始
-    .wFromNaviSet(YES)
+    .wFromNaviSet(NO)
     //如果吸顶偏移量有问题 传入此属性即可 为当前的值+上传入的值
-//    .wTopOffsetSet(-PageVCStatusBarHeight)
+//    .wTopOffsetSet(44)
     //头部
     .wMenuHeadViewSet(^UIView *{
         UIView *back = [UIView new];
@@ -44,7 +52,8 @@
         image.frame = back.bounds;
         [back addSubview:image];
         return back;
-    });
+    })
+    ;
     
     
     

@@ -186,4 +186,9 @@ typedef void (^PageMenuNormalHeight)(NSArray<WMZPageNaviBtn*>*titleArr);
  */
 typedef UIViewController* (^PageViewControllerIndex)(NSInteger index);
 
+/*
+ * 自定义Y
+ */
+typedef CGFloat (^PageCustomFrameY)(CGFloat nowY);
+
 #endif /* WMZPageConfig_h */

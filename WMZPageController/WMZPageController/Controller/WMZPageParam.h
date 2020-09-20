@@ -16,11 +16,22 @@ NS_ASSUME_NONNULL_BEGIN
 //标题数组 必传
 WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, NSArray*,              wTitleArr)
 //VC数据 必传 1.1.6新增
-WMZPagePropStatementAndPropSetFuncStatement(copy,  WMZPageParam,  PageViewControllerIndex,              wViewController)
+WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam,  PageViewControllerIndex,              wViewController)
 //VC数组 (已废弃)
 WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, NSArray*,              wControllers)
 
 /* =========================================required==============================================*/
+
+/* =========================================customFrame===============================================*/
+
+//自定义整体距离顶部的位置(如果默认算的不准确 或者需要修改) block内会传回当前的值 可对比自行返回最终需要的
+WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY,        wCustomNaviBarY)
+//自定义整体距离底部的位置(如果默认算的不准确 或者需要修改) block内会传回当前的值 可对比自行返回最终需要的
+WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY,        wCustomTabbarY)
+//自定义底部滚动视图的高度(如果默认算的不准确 或者需要修改) block内会传回当前的值 可对比自行返回最终需要的
+WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY,        wCustomDataViewHeight)
+
+/* =========================================customFrame===============================================*/
 
 /* =========================================special==============================================*/
 //特殊属性 菜单滑动到顶部悬浮 default NO
@@ -48,10 +59,6 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,         
 
 /* =========================================special==============================================*/
 
-/* =========================================other==================================================*/
-//如果滚动的时候偏移量无法吸顶到想要的位置 可以修改此属性(传入正数或者负数) 具体为当前的topOffset + 此wTopOffset 比如传入wTopOffsetSet(-NaviBarHeight) 则偏移量减少了一个导航栏的高度
-WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wTopOffset)
-/* =========================================Menu==================================================*/
 
 /* =========================================Menu==================================================*/
 //导航栏颜色 default 默认颜色 如果出现导航栏颜色不准确可以调用此属性设置

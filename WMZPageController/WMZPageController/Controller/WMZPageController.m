@@ -38,8 +38,6 @@
 @property (nonatomic, assign) BOOL scrolTotop;
 //到达底部
 @property (nonatomic, assign) BOOL scrolToBottom;
-
-@property (nonatomic, strong) UIView *naviBarBackGround;
 //headHeight
 @property (nonatomic, assign) CGFloat headHeight;
 @end
@@ -162,25 +160,21 @@
     CGFloat tabbarHeight = 0;
     CGFloat statusBarHeight = 0;
     if (self.presentingViewController) {
-        
         if (!self.navigationController) {
             statusBarHeight = PageVCStatusBarHeight;
         }
     } else if (self.tabBarController) {
-        
         if (!self.tabBarController.tabBar.translucent) {
             tabbarHeight = 0;
         }else{
             tabbarHeight = PageVCTabBarHeight;
         }
     } else if (self.navigationController){
-        
         headY = (!self.param.wFromNavi&&
                   self.param.wMenuPosition != PageMenuPositionBottom)?0:
        (!self.navigationController.navigationBar.translucent?0:PageVCNavBarHeight);
     }
     if (self.parentViewController) {
-        
         if ([self.parentViewController isKindOfClass:[UINavigationController class]]) {
             UINavigationController *naPar = (UINavigationController*)self.parentViewController;
             headY = (!self.param.wFromNavi&&
@@ -217,33 +211,40 @@
     if (self.hidesBottomBarWhenPushed&&tabbarHeight>=PageVCTabBarHeight) {
         tabbarHeight -= PageVCTabBarHeight;
     }
+    
+    if (self.param.wCustomNaviBarY) {
+        headY = self.param.wCustomNaviBarY(headY);
+    }
+    if (self.param.wCustomTabbarY) {
+        tabbarHeight = self.param.wCustomTabbarY(tabbarHeight);
+    }
+
     //全屏
-      if (self.navigationController) {
-          for (UIGestureRecognizer *gestureRecognizer in self.downSc.gestureRecognizers) {
-              [gestureRecognizer requireGestureRecognizerToFail:self.navigationController.interactivePopGestureRecognizer];
-          }
-      }
+    if (self.navigationController) {
+        for (UIGestureRecognizer *gestureRecognizer in self.downSc.gestureRecognizers) {
+             [gestureRecognizer requireGestureRecognizerToFail:self.navigationController.interactivePopGestureRecognizer];
+        }
+    }
     
-      if (@available(iOS 11.0, *)) {
-          self.downSc.estimatedSectionFooterHeight = 0.01;
-          self.downSc.estimatedSectionHeaderHeight = 0.01;
-          self.downSc.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-      }else{
-          self.automaticallyAdjustsScrollViewInsets = NO;
-      }
+    if (@available(iOS 11.0, *)) {
+        self.downSc.estimatedSectionFooterHeight = 0.01;
+        self.downSc.estimatedSectionHeaderHeight = 0.01;
+        self.downSc.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }else{
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
 
-      self.downSc.estimatedRowHeight = 100;
-      self.downSc.sectionHeaderHeight = 0.01;
-      self.downSc.sectionFooterHeight = 0.01;
-      self.downSc.delegate = self;
-      self.downSc.bounces = self.param.wBounces;
-      self.downSc.frame = CGRectMake(0, headY, self.view.frame.size.width, self.view.frame.size.height-headY-tabbarHeight);
-      self.downSc.canScroll = [self canTopSuspension];
-      self.downSc.scrollEnabled = [self canTopSuspension];
-      self.downSc.wFromNavi = self.param.wFromNavi;
-      [self.view addSubview:self.downSc];
+    self.downSc.estimatedRowHeight = 100;
+    self.downSc.sectionHeaderHeight = 0.01;
+    self.downSc.sectionFooterHeight = 0.01;
+    self.downSc.delegate = self;
+    self.downSc.bounces = self.param.wBounces;
+    self.downSc.frame = CGRectMake(0, headY, self.view.frame.size.width, self.view.frame.size.height-headY-tabbarHeight);
+    self.downSc.canScroll = [self canTopSuspension];
+    self.downSc.scrollEnabled = [self canTopSuspension];
+    self.downSc.wFromNavi = self.param.wFromNavi;
+    [self.view addSubview:self.downSc];
     
-
    //滚动和菜单视图
     self.upSc = [[WMZPageLoopView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) param:self.param];
     self.upSc.loopDelegate = self;
@@ -296,17 +297,15 @@
         sonChildVCY = 0;
         sonChildVCHeight = self.downSc.frame.size.height - titleMenuhHeight;
     }
-    if (self.param.wTopOffset) {
-        sonChildVCHeight -= self.param.wTopOffset;
-    }
-    
+
     CGFloat height = [self canTopSuspension]?sonChildVCHeight :(sonChildVCHeight-self.headHeight);
+    
     if ([self canTopSuspension]) {
         if (!self.parentViewController) {
             height -=PageVCStatusBarHeight;
         }else{
             if (![self.parentViewController isKindOfClass:[WMZPageController class]]) {
-                if (self.navigationController) {
+                if (self.navigationController&&![self.navigationController isNavigationBarHidden]) {
                     if (!self.param.wFromNavi) {
                         height -= (self.navigationController.navigationBar.translucent?PageVCNavBarHeight:0);
                         
@@ -319,7 +318,10 @@
     }
     sonChildVCHeight = height;
     
-    
+    if (self.param.wCustomDataViewHeight) {
+        sonChildVCHeight = self.param.wCustomDataViewHeight(sonChildVCHeight);
+    }
+
     if (self.param.wMenuPosition == PageMenuPositionBottom){
         if (self.param.wMenuSpecifial == PageSpecialTypeOne) {
             [self.upSc.dataView page_y:0];
@@ -384,10 +386,6 @@
     float yOffset  = scrollView.contentOffset.y;
     //顶点
     int topOffset = scrollView.contentSize.height - scrollView.frame.size.height;
-    //外部传入 修改此属性即可
-    if (self.param.wTopOffset) {
-        topOffset += self.param.wTopOffset;
-    }
     if (yOffset<=0) {
         self.scrolToBottom = YES;
         
@@ -413,9 +411,7 @@
         }else {
              self.sonCanScroll = NO;
         }
-
     }
-    
     CGFloat delta = scrollView.contentOffset.y/topOffset;
     if (delta>1) {
         delta = 1;

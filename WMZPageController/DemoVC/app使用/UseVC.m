@@ -51,6 +51,7 @@
                     vc.page = index;
                      return vc;
              })
+             .wMenuDefaultIndexSet(3)
              .wMenuIndicatorYSet(5)
              .wMenuTitleUIFontSet([UIFont systemFontOfSize:17.0f])
              .wMenuTitleWeightSet(50)

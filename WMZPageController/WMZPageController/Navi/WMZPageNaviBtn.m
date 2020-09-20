@@ -176,12 +176,17 @@
 }
 - (NSAttributedString*)setImageWithStr:(NSString*)str
                                   font:(UIFont*)font
-                         textAlignment:(NSTextAlignment)textAlignment textColor:(nullable UIColor*)textColor
+                         textAlignment:(NSTextAlignment)textAlignment
+                             textColor:(nullable UIColor*)textColor
+                                height:(CGFloat)height
                        backgroundColor:(nullable UIColor*)backgroundColor
                           cornerRadius:(CGFloat)cornerRadius{
+    if (height == 0) {
+        height = 18.0f;
+    }
     CGFloat aaW1 = [self boundingRectWithSize:str Font:font Size:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)].width+20;
     UILabel *aaL1 = [UILabel new];
-    aaL1.frame = CGRectMake(0, 0, aaW1, 18);
+    aaL1.frame = CGRectMake(0, 0, aaW1, height);
     aaL1.text = str;
     aaL1.font = font;
     aaL1.textAlignment = textAlignment;
@@ -200,7 +205,7 @@
     }
     UIImage *image1 = [self imageWithUIView:aaL1];
     NSTextAttachment *attach1 = [[NSTextAttachment alloc] init];
-    attach1.bounds = CGRectMake(0, 10, aaW1, 20);
+    attach1.bounds = CGRectMake(0, 10, aaW1, height);
     attach1.image = image1;
     NSAttributedString * imageStr1= [NSAttributedString attributedStringWithAttachment:attach1];
     return imageStr1;
@@ -208,12 +213,12 @@
 
 //view转成image
 - (UIImage*) imageWithUIView:(UIView*) view{
-    UIGraphicsBeginImageContext(view.bounds.size);
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    [view.layer renderInContext:ctx];
-    UIImage* tImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return tImage;
+   CGSize s = view.bounds.size;
+   UIGraphicsBeginImageContextWithOptions(s, NO, [UIScreen mainScreen].scale);
+   [view.layer renderInContext:UIGraphicsGetCurrentContext()];
+   UIImage*image = UIGraphicsGetImageFromCurrentImageContext();
+   UIGraphicsEndImageContext();
+   return image;
 }
 
 @end

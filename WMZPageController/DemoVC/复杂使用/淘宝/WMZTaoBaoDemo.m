@@ -20,7 +20,8 @@
     //标题数组
        __weak WMZTaoBaoDemo *weakSelf = self;
        NSArray *data = @[@"全部\n猜你喜欢",@"直播\n新品搭配购",@"便宜好货\n低价抢购",@"买家秀\n真实晒单"];
-       WMZPageParam *param = PageParam()
+       WMZPageParam *param =
+       PageParam()
        .wTitleArrSet(data)
        .wViewControllerSet(^UIViewController *(NSInteger index) {
           return [CollectionViewPopDemo new];
@@ -99,10 +100,10 @@
     [mSelectStr addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:[btn.normalText rangeOfString:array[0]]];
     
     if (!btn.attributedSelectImage) {
-        btn.attributedSelectImage = [btn setImageWithStr:array[1] font:[UIFont boldSystemFontOfSize:15.0f] textAlignment:NSTextAlignmentCenter textColor:[UIColor whiteColor] backgroundColor:[UIColor orangeColor] cornerRadius:9];
+        btn.attributedSelectImage = [btn setImageWithStr:array[1] font:[UIFont boldSystemFontOfSize:15.0f] textAlignment:NSTextAlignmentCenter textColor:[UIColor whiteColor] height:18.0f backgroundColor:[UIColor orangeColor] cornerRadius:9];
     }
     if (!btn.attributedImage) {
-        btn.attributedImage = [btn setImageWithStr:array[1] font:[UIFont boldSystemFontOfSize:15.0f] textAlignment:NSTextAlignmentCenter textColor:PageColor(0x999999) backgroundColor:nil cornerRadius:0];
+        btn.attributedImage = [btn setImageWithStr:array[1] font:[UIFont boldSystemFontOfSize:15.0f] textAlignment:NSTextAlignmentCenter textColor:PageColor(0x333333) height:18.0f backgroundColor:nil cornerRadius:0];
     }
     
     [mStr replaceCharactersInRange:[btn.normalText rangeOfString:array[1]] withAttributedString:btn.attributedImage];

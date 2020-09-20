@@ -30,6 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,assign)CGFloat footViewSizeWidth;
 //子控制器固定底部y值 default 最底部-height
 @property(nonatomic,assign)CGFloat footViewOrginY;
+//透明视图
+@property (nonatomic, strong) UIView *naviBarBackGround;
 
 /*!
 *

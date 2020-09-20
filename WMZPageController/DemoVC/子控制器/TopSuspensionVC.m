@@ -78,6 +78,7 @@
     }];
     // 设置自动切换透明度(在导航栏下面自动隐藏)
     self.ta.mj_header.automaticallyChangeAlpha = YES;
+
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{

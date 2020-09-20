@@ -298,18 +298,17 @@
         [self.loopDelegate selectBtnWithIndex:index];
     }
     if (self.first) {
-         self.lastPageIndex = self.currentTitleIndex;
-         self.nextPageIndex = index;
-         self.currentTitleIndex = index;
-         UIViewController *newVC = [self getVCWithIndex:index];
-         [newVC beginAppearanceTransition:YES animated:YES];
-         [self addChildVC:index VC:newVC];
-         [self.dataView setContentOffset:CGPointMake(index*PageVCWidth, 0) animated:NO];
-         [newVC endAppearanceTransition];
-         if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:end:)]) {
-             [self.loopDelegate setUpSuspension:newVC index:index end:YES];
-         }
-        self.first = NO;
+        self.lastPageIndex = self.currentTitleIndex;
+        self.nextPageIndex = index;
+        self.currentTitleIndex = index;
+        UIViewController *newVC = [self getVCWithIndex:index];
+        [newVC beginAppearanceTransition:YES animated:YES];
+        [self addChildVC:index VC:newVC];
+        [self.dataView setContentOffset:CGPointMake(index*PageVCWidth, 0) animated:NO];
+        [newVC endAppearanceTransition];
+        if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:end:)]) {
+            [self.loopDelegate setUpSuspension:newVC index:index end:YES];
+        }
         if (self.param.wMenuAnimalTitleBig) {
             btn.transform = CGAffineTransformMakeScale(1 + (1-pageScale), 1 + (1-pageScale));
         }
@@ -324,6 +323,10 @@
         
     
     [self scrollToIndex:index];
+    
+    if (self.first) {
+        self.first = NO;
+    }
 }
 
 //固定标题点击
@@ -428,12 +431,17 @@
         self.lineView.layer.cornerRadius =  self.param.wMenuCircilRadio?:(lineRect.size.height/2);
     }
     
-    [UIView animateWithDuration:0.2 animations:^{
-        self.lineView.frame = lineRect;
-    } completion:^(BOOL finished) {
-        
-    }];
     
+    if (self.first) {
+        self.lineView.frame = lineRect;
+    }else{
+        [UIView animateWithDuration:0.2 animations:^{
+            self.lineView.frame = lineRect;
+        } completion:^(BOOL finished) {
+            
+        }];
+    }
+        
     self.currentTitleIndex = newIndex;
     if (self.param.wInsertHeadAndMenuBg) {
         self.backgroundColor = [UIColor clearColor];
@@ -442,6 +450,7 @@
     if (self.param.wCustomMenuSelectTitle) {
         self.param.wCustomMenuSelectTitle(self.btnArr);
     }
+
     
 }
 

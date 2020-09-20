@@ -39,6 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
                                   font:(UIFont*)font
                          textAlignment:(NSTextAlignment)textAlignment
                              textColor:(nullable UIColor*)textColor
+                                height:(CGFloat)height
                        backgroundColor:(nullable UIColor*)backgroundColor
                           cornerRadius:(CGFloat)cornerRadius;
 //设置图文位置

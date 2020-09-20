@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "HomeVC.h"
-#import "WMZCustomThreePage.h"
+#import "WMZPageCustomNaviVC.h"
 @interface AppDelegate ()
 
 @end
@@ -23,11 +23,9 @@
     
     UINavigationController *na1 = [[UINavigationController alloc]initWithRootViewController:[HomeVC new]];
     na1.tabBarItem.title = @"页面";
-    UINavigationController *na2 = [[UINavigationController alloc]initWithRootViewController:[WMZCustomThreePage new]];
-    na2.tabBarItem.title = @"页面";
     UINavigationController *na3 = [[UINavigationController alloc]initWithRootViewController:[HomeVC new]];
     na3.tabBarItem.title = @"页面";
-    ta.viewControllers = @[na1,[WMZCustomThreePage new],na3];
+    ta.viewControllers = @[na1,[WMZPageCustomNaviVC new],na3];
     ta.view.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = ta;
     

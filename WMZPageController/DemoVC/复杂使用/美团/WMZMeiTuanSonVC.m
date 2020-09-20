@@ -14,6 +14,9 @@
 }
 @property(nonatomic,strong)UITableView *leftTa;
 @property(nonatomic,strong)UITableView *rightTa;
+@property(nonatomic,assign)CGFloat contentOffset;
+@property(nonatomic,assign)CGFloat oldOffset;
+@property(nonatomic,assign)BOOL dircetionUp;  //滑动方向
 @end
 
 @implementation WMZMeiTuanSonVC
@@ -39,21 +42,22 @@
     }else{
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-    [self.leftTa selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.dircetionUp = YES;
+        WMZPageController *superVC = (WMZPageController*)self.parentViewController;
+        [superVC downScrollViewSetOffset:CGPointZero animated:NO];
+        leftScroll = YES;
+        NSInteger num = 5;
+        [self.rightTa scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:num] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+        [self.leftTa scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:num inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:NO];
+        [self.leftTa selectRowAtIndexPath:[NSIndexPath indexPathForRow:num inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
+        self.rightTa.contentOffset = CGPointMake(self.rightTa.contentOffset.x, self.rightTa.contentOffset.y+30);
+    
+    });
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     return nil;
-}
-
-- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *view = [UIView new];
-    view.backgroundColor = PageColor(0xeeeeee);
-    return view;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 10;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -71,7 +75,7 @@
         if (!cell) {
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         }
-        cell.textLabel.text = @"测试文本";
+        cell.textLabel.text = [NSString stringWithFormat:@"%ld-%ld",indexPath.section,indexPath.row];
         cell.backgroundColor = PageColor(0xeeeeee);
         return cell;
     }
@@ -79,10 +83,24 @@
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
-    cell.textLabel.text = @"测试文本";
+    cell.textLabel.text = [NSString stringWithFormat:@"测试文本%ld-%ld",indexPath.section,indexPath.row];
     cell.detailTextLabel.text = @"测试详情文本";
     return cell;
 }
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    if (tableView == self.rightTa) {
+        return [NSString stringWithFormat:@"标题%ld",section];
+    }
+    return @"";
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (tableView == self.rightTa) {
+        return 30;
+    }
+    return 0.01;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == _leftTa) {
         leftScroll = YES;
@@ -90,29 +108,40 @@
         //先置顶 再联动
         [parentVC downScrollViewSetOffset:CGPointZero animated:NO];
         //如果设置动画 则延迟0.25秒执行self.rightTa滚动的部分
-        [self.rightTa scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:indexPath.row] atScrollPosition:UITableViewScrollPositionNone animated:YES];
+        [self.rightTa scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:indexPath.row] atScrollPosition:UITableViewScrollPositionTop animated:YES];
         
     }
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     //右边联动左边
     if (scrollView == self.rightTa&&!leftScroll) {
-        NSIndexPath *firstIndexPath = [[self.rightTa indexPathsForVisibleRows]firstObject];
+        CGFloat newOffsetY = scrollView.contentOffset.y;
+        if (newOffsetY > self.oldOffset && self.oldOffset > self.contentOffset){//上滑
+            self.dircetionUp = YES;
+        }else if(newOffsetY < self.oldOffset && self.oldOffset < self.contentOffset){//下滑
+            self.dircetionUp = NO;
+        }
+        NSIndexPath *firstIndexPath = self.dircetionUp?[self.rightTa indexPathsForVisibleRows].lastObject:[self.rightTa indexPathsForVisibleRows].firstObject;
         NSIndexPath *selectIndexPath = [NSIndexPath indexPathForRow:firstIndexPath.section inSection:0];
         [self.leftTa scrollToRowAtIndexPath:selectIndexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
         [self.leftTa selectRowAtIndexPath:selectIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+        self.oldOffset = scrollView.contentOffset.y;
     }
+    
 }
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    if (scrollView!=self.rightTa) return;
     if (scrollView == self.rightTa){ //左边联动右边的时候
         leftScroll = NO;
+        self.contentOffset = scrollView.contentOffset.y;
     }
 }
-
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    self.oldOffset = scrollView.contentOffset.y;
+}
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
    return tableView == _leftTa?44:80;
 }
-
 - (UITableView *)leftTa{
     if (!_leftTa) {
         _leftTa = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
