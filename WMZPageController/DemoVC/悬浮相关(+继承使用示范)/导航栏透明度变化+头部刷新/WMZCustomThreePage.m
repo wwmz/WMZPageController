@@ -39,7 +39,7 @@
         .wTopSuspensionSet(YES)
         //顶部可下拉
         .wBouncesSet(YES)
-        //头视图y坐标从0开始
+        //头视图y坐标从导航栏开始
         .wFromNaviSet(NO)
         //导航栏透明度变化
         .wNaviAlphaSet(YES)

@@ -29,9 +29,8 @@
     PageParam()
     //控制器数组
     .wViewControllerSet(^UIViewController *(NSInteger index) {
-//        TopSuspensionVC *vc = [TopSuspensionVC new];
-//        vc.page = index;
-        UseVC *vc = [UseVC new]; vc.index = @0; return vc;
+        TopSuspensionVC *vc = [TopSuspensionVC new];
+        vc.page = index;
         return vc;
     })
     .wTitleArrSet(data)
@@ -39,8 +38,8 @@
     .wMenuDefaultIndexSet(3)
     //悬浮开启
     .wTopSuspensionSet(YES)
-    //头视图y坐标从0开始
-    .wFromNaviSet(NO)
+    //头视图y坐标从导航栏开始
+    .wFromNaviSet(YES)
     //如果吸顶偏移量有问题 传入此属性即可 为当前的值+上传入的值
 //    .wTopOffsetSet(44)
     //头部
