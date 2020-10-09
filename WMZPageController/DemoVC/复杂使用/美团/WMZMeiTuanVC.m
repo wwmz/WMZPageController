@@ -17,19 +17,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
        NSArray *data = @[@"点菜",@"评价",@"商家"];
-       //控制器数组
-       NSMutableArray *vcArr = [NSMutableArray new];
-       [data enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-           WMZMeiTuanSonVC *vc = [WMZMeiTuanSonVC new];
-           [vcArr addObject:vc];
-       }];
-       
        WMZPageParam *param = PageParam()
        .wTitleArrSet(data)
        .wViewControllerSet(^UIViewController *(NSInteger index) {
           return [WMZMeiTuanSonVC new];
         })
-       .wControllersSet(vcArr)
        //悬浮开启
        .wTopSuspensionSet(YES)
        .wMenuAnimalSet(PageTitleMenuAiQY)

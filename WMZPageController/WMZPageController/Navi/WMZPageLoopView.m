@@ -15,6 +15,7 @@
     WMZPageNaviBtn *_btnRight;
     CGFloat lastContentOffset;
     WMZPageController *page;
+    NSInteger _currentTitleIndex;
 }
 //最底部下划线
 @property(nonatomic,strong)UIView *bottomView;
@@ -30,6 +31,7 @@
 - (instancetype)initWithFrame:(CGRect)frame param:(WMZPageParam*)param{
     if (self = [super initWithFrame:frame]) {
         self.param = param;
+        self.backgroundColor = param.wBgColor;
         [self setUp];
     }
     return self;
@@ -63,7 +65,6 @@
         [self setPropertiesWithBtn:btn withIndex:i withHeightArr:heightArr withTemp:temp];
         temp = btn;
     }
-    
     //布局frame
     if (self.param.wMenuPosition == PageMenuPositionBottom) {
         CGRect rect = self.frame;
@@ -389,7 +390,6 @@
             }
         }
     }
-    
     
     //滚动到中间
     CGFloat centerX = self.mainView.frame.size.width/2 ;
@@ -800,9 +800,9 @@
     return _mainView;
 }
 
-- (UIScrollView *)dataView{
+- (WMZPageDataView *)dataView{
     if (!_dataView) {
-        _dataView = [UIScrollView new];
+        _dataView = [WMZPageDataView new];
         _dataView.showsVerticalScrollIndicator = NO;
         _dataView.showsHorizontalScrollIndicator = NO;
         _dataView.pagingEnabled = YES;
@@ -816,11 +816,17 @@
     return _dataView;
 }
 
-- (NSMutableArray *)btnArr{
+
+- (NSMutableArray<WMZPageNaviBtn *> *)btnArr{
     if (!_btnArr) {
         _btnArr = [NSMutableArray new];
     }
     return _btnArr;
+}
+
+- (void)setCurrentTitleIndex:(NSInteger)currentTitleIndex{
+    _currentTitleIndex = currentTitleIndex;
+    self.dataView.currentIndex = currentTitleIndex;
 }
 
 - (void)dealloc{

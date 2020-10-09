@@ -61,30 +61,22 @@
         
         self.param = param;
     
-    
-    
-      //延时0.1秒
-       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            // 下拉刷新
-          __weak WMZCustomThreePage *weakSelf = self;
-          self.downSc.mj_header= [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                  
-                  
-                  NSArray *data1 = @[@"热门",@"男装",@"美妆"];
-                  self.param.wTitleArrSet(data1)
-                  //控制器数组
-                  .wViewControllerSet(^UIViewController *(NSInteger index) {
-                      CollectionViewPopDemo *vc = [CollectionViewPopDemo new];
-                      return vc;
-                  });
-                  //更新菜单数据
-                  [self updateMenuData];
-                  [weakSelf.downSc.mj_header endRefreshing];
-              });
-          }];
-           
-      });
+
+    self.downSc.mj_header= [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        __strong WMZCustomThreePage *strongSelf = weakSelf;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                NSArray *data1 = @[@"热门",@"男装",@"美妆"];
+                strongSelf.param.wTitleArrSet(data1)
+                   //控制器数组
+                .wViewControllerSet(^UIViewController *(NSInteger index) {
+                    CollectionViewPopDemo *vc = [CollectionViewPopDemo new];
+                    return vc;
+                });
+                //更新菜单数据
+                [strongSelf updateMenuData];
+                [strongSelf.downSc.mj_header endRefreshing];
+            });
+        }];
 }
 
 @end

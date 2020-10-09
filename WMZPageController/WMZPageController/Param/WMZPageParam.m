@@ -49,7 +49,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, PageSpecialType,        wMenuSpec
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuImageMargin)
 WMZPagePropSetFuncImplementation(WMZPageParam, id,                     wMenuFixRightData)
 WMZPagePropSetFuncImplementation(WMZPageParam, UIColor*,               wMenuBgColor)
-WMZPagePropSetFuncImplementation(WMZPageParam, UIColor*,               wNaviColor)
+WMZPagePropSetFuncImplementation(WMZPageParam, UIColor*,               wBgColor)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuFixWidth)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuCellMarginY)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wTopChangeHeight)
@@ -98,6 +98,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, UIFont*,                wMenuTitl
         _wFromNavi = YES;
         _wScrollCanTransfer = YES;
         _wMenuTitleSelectFont = 18.5;
+        _wBgColor = PageColor(0xffffff);
     }
     return self;
 }

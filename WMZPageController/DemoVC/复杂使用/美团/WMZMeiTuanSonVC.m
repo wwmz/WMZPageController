@@ -40,25 +40,29 @@
     [super viewDidLoad];
     [self.view addSubview:self.leftTa];
     [self.view addSubview:self.rightTa];
+    
     if (@available(iOS 11.0, *)) {
-       _leftTa.estimatedSectionFooterHeight = 0.01;
-       _leftTa.estimatedSectionHeaderHeight = 0.01;
-       _rightTa.estimatedSectionFooterHeight = 0.01;
-       _rightTa.estimatedSectionHeaderHeight = 0.01;
+        _leftTa.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        _rightTa.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        _leftTa.estimatedSectionFooterHeight = 0.01;
+        _leftTa.estimatedSectionHeaderHeight = 0.01;
+        _rightTa.estimatedSectionFooterHeight = 0.01;
+        _rightTa.estimatedSectionHeaderHeight = 0.01;
     }else{
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.dircetionUp = YES;
         WMZPageController *superVC = (WMZPageController*)self.parentViewController;
         [superVC downScrollViewSetOffset:CGPointZero animated:NO];
         leftScroll = YES;
         NSInteger num = 5;
-        [self.rightTa scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:num] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-        [self.leftTa scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:num inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:NO];
-        [self.leftTa selectRowAtIndexPath:[NSIndexPath indexPathForRow:num inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
-        self.rightTa.contentOffset = CGPointMake(self.rightTa.contentOffset.x, self.rightTa.contentOffset.y+30);
-    
+        [self.leftTa scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:num inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:YES];
+        [self.leftTa selectRowAtIndexPath:[NSIndexPath indexPathForRow:num inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
+        [self.rightTa scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:num] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        [self.rightTa selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:num] animated:YES scrollPosition:UITableViewScrollPositionTop];
+//        self.rightTa.contentOffset = CGPointMake(self.rightTa.contentOffset.x, self.rightTa.contentOffset.y+30);
     });
 }
 
@@ -153,6 +157,7 @@
         _leftTa = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
         _leftTa.dataSource = self;
         _leftTa.delegate = self;
+        _leftTa.estimatedRowHeight = 100;
     }
     return _leftTa;
 }
@@ -161,6 +166,7 @@
         _rightTa = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
         _rightTa.dataSource = self;
         _rightTa.delegate = self;
+        _rightTa.estimatedRowHeight = 100;
     }
     return _rightTa;
 }

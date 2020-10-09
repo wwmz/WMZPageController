@@ -21,11 +21,11 @@
 
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    if (!self.canScroll) return NO;
     CGFloat naVi = self.wFromNavi?PageVCNavBarHeight:0;
     CGFloat segmentViewContentScrollViewHeight = PageVCHeight - naVi - self.menuTitleHeight;
     CGPoint currentPoint = [gestureRecognizer locationInView:self];
     CGRect containRect = CGRectMake(0, self.contentSize.height - segmentViewContentScrollViewHeight, PageVCWidth, segmentViewContentScrollViewHeight);
-    if (!self.canScroll) return NO;
     if (CGRectContainsPoint(containRect, currentPoint) ) {
         return YES;
     }

@@ -47,9 +47,9 @@
            {
              param.wTitleArrSet(data)
             .wViewControllerSet(^UIViewController *(NSInteger index) {
-                    TestVC *vc = [TestVC new];
-                    vc.page = index;
-                     return vc;
+                TestVC *vc = [TestVC new];
+                vc.page = index;
+                return vc;
              })
              .wMenuDefaultIndexSet(3)
              .wMenuIndicatorYSet(5)
@@ -115,10 +115,14 @@
           case 4:{
 
                 param.wTitleArrSet(data)
+               //减掉导航栏高度(根据实际情况)
+               .wCustomDataViewHeightSet(^CGFloat(CGFloat nowY) {
+                   return nowY - PageVCNavBarHeight;
+               })
                .wViewControllerSet(^UIViewController *(NSInteger index) {
-                       TestVC *vc = [TestVC new];
-                       vc.page = index;
-                        return vc;
+                    TestVC *vc = [TestVC new];
+                    vc.page = index;
+                    return vc;
                 })
                .wMenuFixRightDataSet(@"+")
                .wMenuAnimalSet(PageTitleMenuNone);
@@ -127,7 +131,12 @@
               
                WMZPageParam *headParam = PageParam()
                .wTitleArrSet([self weiboTitleData])
-               .wControllersSet(@[[TestVC new],sonVC])
+                .wViewControllerSet(^UIViewController *(NSInteger index) {
+                    if (index == 1) {
+                        return [TestVC new];
+                    }
+                    return sonVC;
+                })
                .wMenuPositionSet(PageMenuPositionNavi)
                .wMenuWidthSet(150);
               

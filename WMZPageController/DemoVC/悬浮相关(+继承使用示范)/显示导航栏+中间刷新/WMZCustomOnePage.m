@@ -16,10 +16,6 @@
 
 @implementation WMZCustomOnePage
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-//    [self.navigationController setNavigationBarHidden:YES animated:NO];
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -40,8 +36,6 @@
     .wTopSuspensionSet(YES)
     //头视图y坐标从导航栏开始
     .wFromNaviSet(YES)
-    //如果吸顶偏移量有问题 传入此属性即可 为当前的值+上传入的值
-//    .wTopOffsetSet(44)
     //头部
     .wMenuHeadViewSet(^UIView *{
         UIView *back = [UIView new];
@@ -53,10 +47,11 @@
         return back;
     })
     ;
+
+    self.param = param;
     
     
-    
-   //模拟更新头部
+    //   模拟更新头部
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 //        self.param.wMenuHeadViewSet(^UIView *{
 //            UIView *back = [UIView new];
@@ -71,7 +66,6 @@
 //        [self updateHeadView];
 //    });
     
-    self.param = param;
 }
 
 @end

@@ -10,6 +10,7 @@
 #import "WMZPageNaviBtn.h"
 #import "WMZPageParam.h"
 #import "WMZPageScroller.h"
+#import "WMZPageDataView.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol WMZPageLoopDelegate <NSObject>
@@ -34,11 +35,11 @@ NS_ASSUME_NONNULL_BEGIN
 //菜单视图
 @property(nonatomic,strong)UIScrollView *mainView;
 //底部视图
-@property(nonatomic,strong)UIScrollView *dataView;
+@property(nonatomic,strong)WMZPageDataView *dataView;
 
 @property(nonatomic,strong)UIButton *lineView;
 
-@property(nonatomic,strong)NSMutableArray *btnArr;
+@property(nonatomic,strong)NSMutableArray <WMZPageNaviBtn*>*btnArr;
 
 @property(nonatomic,assign)NSInteger currentTitleIndex;
 //可能的下一个视图

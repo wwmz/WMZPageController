@@ -19,7 +19,7 @@
     [super viewDidLoad];
         self.view.backgroundColor = [UIColor whiteColor];
     
-     //标题数组
+        //标题数组
         NSArray *data = @[@"热门",@"男装",@"美妆",@"手机",@"食品",@"电器",@"鞋包",@"百货",@"女装",@"汽车",@"电脑"];
         WMZPageParam *param = PageParam()
         .wTitleArrSet(data)

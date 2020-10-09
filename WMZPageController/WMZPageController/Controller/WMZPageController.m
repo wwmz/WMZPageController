@@ -108,10 +108,6 @@
 }
 
 - (void)setParam{
-    if (self.param.wInsertHeadAndMenuBg) {
-        self.head_MenuView = [UIView new];
-        self.param.wInsertHeadAndMenuBg(self.head_MenuView);
-    }
     if (self.param.wMenuAnimal == PageTitleMenuAiQY) {
         if (!self.param.wMenuIndicatorWidth) {
             self.param.wMenuIndicatorWidth = 20;
@@ -207,7 +203,6 @@
         }
     }
     
-    
     if (self.hidesBottomBarWhenPushed&&tabbarHeight>=PageVCTabBarHeight) {
         tabbarHeight -= PageVCTabBarHeight;
     }
@@ -226,17 +221,7 @@
         }
     }
     
-    if (@available(iOS 11.0, *)) {
-        self.downSc.estimatedSectionFooterHeight = 0.01;
-        self.downSc.estimatedSectionHeaderHeight = 0.01;
-        self.downSc.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    }else{
-        self.automaticallyAdjustsScrollViewInsets = NO;
-    }
 
-    self.downSc.estimatedRowHeight = 100;
-    self.downSc.sectionHeaderHeight = 0.01;
-    self.downSc.sectionFooterHeight = 0.01;
     self.downSc.delegate = self;
     self.downSc.bounces = self.param.wBounces;
     self.downSc.frame = CGRectMake(0, headY, self.view.frame.size.width, self.view.frame.size.height-headY-tabbarHeight);
@@ -250,11 +235,6 @@
     self.upSc.loopDelegate = self;
     self.downSc.tableFooterView = self.upSc;
     
-    if (self.navigationController) {
-        for (UIGestureRecognizer *gestureRecognizer in self.upSc.gestureRecognizers) {
-            [gestureRecognizer requireGestureRecognizerToFail:self.navigationController.interactivePopGestureRecognizer];
-        }
-    }
     //底部
     [self setUpMenuAndDataViewFrame];
     
@@ -315,7 +295,13 @@
                 }
             }
         }
+    }else{
+       NSLog(@"111 %@",self.parentViewController);
+        if ([self.parentViewController isKindOfClass:[WMZPageController class]]) {
+            height -= PageVCNavBarHeight;
+        }
     }
+
     sonChildVCHeight = height;
     
     if (self.param.wCustomDataViewHeight) {
@@ -363,6 +349,12 @@
     }else{
         self.downSc.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake( 0, 0,self.view.frame.size.width, 0.01)];
     }
+    
+    if (self.param.wInsertHeadAndMenuBg) {
+        self.head_MenuView = [UIView new];
+        self.param.wInsertHeadAndMenuBg(self.head_MenuView);
+    }
+    
     //全景
     if (self.head_MenuView) {
         self.head_MenuView.frame = CGRectMake(0, self.headView?CGRectGetMinX(self.headView.frame):CGRectGetMinX(self.upSc.frame), self.upSc.frame.size.width, CGRectGetMaxY(self.upSc.frame)-self.upSc.dataView.frame.size.height);
@@ -622,6 +614,7 @@
 
 //更新
 - (void)updatePageController{
+    [self removeKVO];
     [self.upSc removeFromSuperview];
     [self.downSc removeFromSuperview];
     self.downSc = [[WMZPageScroller alloc]initWithFrame:CGRectMake(0, 0, PageVCWidth, PageVCHeight) style:UITableViewStyleGrouped];
@@ -642,6 +635,20 @@
     [self setUpHead];
 }
 
+//标题数量内容不变情况下只更新内容 (高度需要提前布置好 这里不更新标题的高度)
+- (void)updateTitle{
+    [self.upSc.btnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (obj&&[obj isKindOfClass:[WMZPageNaviBtn class]]) {
+            NSString *string = [obj titleForState:UIControlStateNormal];
+            if (self.param.wTitleArr&&self.param.wTitleArr.count>idx) {
+                string = self.param.wTitleArr[idx];
+            }
+            [obj setTitle:string forState:UIControlStateNormal];
+        }
+    }];
+}
+
+
 /*
 *底部手动滚动  传入CGPointZero则为吸顶临界点
 */
@@ -650,7 +657,7 @@
         //顶点
         int topOffset = self.downSc.contentSize.height - self.downSc.frame.size.height;
         point = CGPointMake(self.downSc.contentOffset.x, topOffset);
-    }
+    }  
     [self.downSc setContentOffset:point animated:animat];
 }
 
@@ -658,9 +665,6 @@
 - (void)showData{
     [self setParam];
     [self UI];
-    if (self.naviBarBackGround&&self.param.wNaviColor) {
-        self.naviBarBackGround.backgroundColor = self.param.wNaviColor;
-    }
 }
 
 - (BOOL)canTopSuspension{
@@ -671,7 +675,6 @@
     }
     return YES;
 }
-
 
 - (NSMutableDictionary *)sonChildScrollerViewDic{
     if (!_sonChildScrollerViewDic) {
@@ -690,6 +693,16 @@
 - (WMZPageScroller *)downSc{
     if (!_downSc) {
         _downSc = [[WMZPageScroller alloc]initWithFrame:CGRectMake(0, 0, PageVCWidth, PageVCHeight) style:UITableViewStyleGrouped];
+       _downSc.estimatedRowHeight = 100;
+       _downSc.sectionHeaderHeight = 0.01;
+       _downSc.sectionFooterHeight = 0.01;
+        if (@available(iOS 11.0, *)) {
+            _downSc.estimatedSectionFooterHeight = 0.01;
+            _downSc.estimatedSectionHeaderHeight = 0.01;
+            _downSc.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        }else{
+            self.automaticallyAdjustsScrollViewInsets = NO;
+        }
     }
     return _downSc;
 }
@@ -715,7 +728,8 @@
 
 - (void)setParam:(WMZPageParam *)param{
     _param = param;
-    [self performSelector:@selector(showData) withObject:nil afterDelay:CGFLOAT_MIN];
+    [self viewDidLayoutSubviews];
+    [self showData];
 }
 
 - (void)didReceiveMemoryWarning{
@@ -724,10 +738,13 @@
     [self.sonChildScrollerViewDic removeAllObjects];
 }
 
-
-- (void)dealloc{
+- (void)removeKVO{
     [self.sonChildScrollerViewDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
         [obj removeAllObserverdKeyPath:self withKey:@"contentOffset"];
     }];
+}
+
+- (void)dealloc{
+    [self removeKVO];
 }
 @end

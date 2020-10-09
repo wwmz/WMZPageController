@@ -50,6 +50,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateMenuData;
 
 /*!
+* @brief 标题数量内容不变情况下只更新内容
+*/
+- (void)updateTitle;
+
+/*!
 * @brief 底部手动滚动 传入CGPointZero则为吸顶临界点
 * @param point 滚动的坐标
 * @param animat 滚动动画

@@ -7,7 +7,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
-            uuid = "DCEDE8AD-655F-42C6-AC01-8CA09B787EA6"
+            uuid = "E3CFA9F2-1B31-4030-A721-8B1B79D38B63"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -18,32 +18,80 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0A02193C-699F-4CAB-8038-F977A41A3D6A"
+            uuid = "ECE43A0A-5988-4655-8AC8-C3C721DDA1AD"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WMZPageController/DemoVC/&#x60ac;&#x6d6e;&#x76f8;&#x5173;(+&#x7ee7;&#x627f;&#x4f7f;&#x7528;&#x793a;&#x8303;)/&#x663e;&#x793a;&#x5bfc;&#x822a;&#x680f;+&#x4e2d;&#x95f4;&#x5237;&#x65b0;/WMZCustomOnePage.m"
+            filePath = "WMZPageController/DemoVC/&#x60ac;&#x6d6e;&#x76f8;&#x5173;(+&#x7ee7;&#x627f;&#x4f7f;&#x7528;&#x793a;&#x8303;)/&#x81ea;&#x5b9a;&#x4e49;&#x5bfc;&#x822a;&#x680f;/WMZPageCustomNaviVC.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "-viewWillAppear:"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "-viewDidLoad"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1E959C00-B600-459B-A3CA-5415D2438DEF"
+            uuid = "C48C8448-5D4A-4DDD-8B23-D007E1BD61CA"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WMZPageController/WMZPageController/Navi/WMZPageLoopView.m"
+            filePath = "WMZPageController/DemoVC/&#x60ac;&#x6d6e;&#x76f8;&#x5173;(+&#x7ee7;&#x627f;&#x4f7f;&#x7528;&#x793a;&#x8303;)/&#x81ea;&#x5b9a;&#x4e49;&#x5bfc;&#x822a;&#x680f;/WMZPageCustomNaviVC.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "684"
-            endingLineNumber = "684"
-            landmarkName = "-animalAction:lastContrnOffset:"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C904A664-7E2C-43B6-B647-91CCF8FB312D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WMZPageController/WMZPageController/Controller/WMZPageController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "200"
+            endingLineNumber = "200"
+            landmarkName = "-UI"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F7902CEF-3279-4085-B07E-C943497A9516"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WMZPageController/WMZPageController/Controller/WMZPageScroller.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "-gestureRecognizer:shouldRecognizeSimultaneouslyWithGestureRecognizer:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E92FEDA1-0E64-4E48-98DC-993ABA57FC86"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WMZPageController/WMZPageController/Controller/WMZPageScroller.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "-gestureRecognizer:shouldRequireFailureOfGestureRecognizer:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

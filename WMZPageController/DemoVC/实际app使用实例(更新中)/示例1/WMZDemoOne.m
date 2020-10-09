@@ -38,6 +38,9 @@
         redLa.layer.masksToBounds = NO;
         redLa.frame = rect;
     })
+     .wCustomTabbarYSet(^CGFloat(CGFloat nowY) {
+         return nowY;
+     })
     //菜单标题颜色
     .wMenuTitleColorSet(PageDarkColor(PageColor(0x333333), PageColor(0xffffff)))
     //菜单标题选中的颜色

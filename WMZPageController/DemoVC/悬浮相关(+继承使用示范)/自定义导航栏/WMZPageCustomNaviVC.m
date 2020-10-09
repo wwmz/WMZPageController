@@ -15,29 +15,6 @@
 @end
 
 @implementation WMZPageCustomNaviVC
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:animated];
-    //如果要让底部view在自定义导航栏下面 需要延迟0.1秒加载
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if (!self.customView) {
-            UIButton *view = [UIButton buttonWithType:UIButtonTypeCustom];
-            view.backgroundColor = [UIColor redColor];
-            [view setTitle:@"我是自定义导航栏" forState:UIControlStateNormal];
-            [view setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-            view.frame = CGRectMake(0, 0, PageVCWidth, PageVCNavBarHeight);
-            [self.view addSubview:view];
-            self.customView = view;
-            
-            UIButton *back = [UIButton buttonWithType:UIButtonTypeCustom];
-            [back setTitle:@"返回>" forState:UIControlStateNormal];
-            [back setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            [self.customView addSubview:back];
-            [back addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
-            back.frame = CGRectMake(20, PageVCStatusBarHeight, 60, 30);
-        }
-    });
-}
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
@@ -47,6 +24,10 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //隐藏导航栏 (如果隐藏导航栏放在viewWillAppeal里 则会默认悬浮到导航栏下面)
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
      //标题数组
     NSArray *data = @[@"热门",@"男装",@"美妆",@"手机",@"食品",@"电器",@"鞋包",@"百货",@"女装",@"汽车",@"电脑"];
     WMZPageParam *param =
@@ -68,9 +49,9 @@
 //     .wCustomTabbarYSet(^CGFloat(CGFloat nowY) {
 //         return nowY;
 //     })
-    //调整底部高度 举例子 此时调整滚动到导航栏栏下(这个自定义导航栏隐藏了原来的导航栏 正常的话是会悬浮到状态栏那里，改变这里减掉一部分就会自动悬浮到自定义导航栏那里)
+    // 正常的话是会悬浮到状态栏那里，改变这里减掉一部分就会自动悬浮到自定义导航栏那里)
     .wCustomDataViewHeightSet(^CGFloat(CGFloat nowY) {
-        return nowY - PageVCStatusBarHeight;
+        return nowY- PageVCStatusBarHeight;
     })
     //悬浮开启
     .wTopSuspensionSet(YES)
@@ -86,6 +67,27 @@
         return back;
     });
     self.param = param;
+    
+    [self.view addSubview:self.customView];
+}
+
+- (UIButton *)customView{
+    if (!_customView) {
+        UIButton *view = [UIButton buttonWithType:UIButtonTypeCustom];
+        view.backgroundColor = [UIColor redColor];
+        [view setTitle:@"我是自定义导航栏" forState:UIControlStateNormal];
+        [view setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        view.frame = CGRectMake(0, 0, PageVCWidth, PageVCNavBarHeight);
+        _customView = view;
+              
+        UIButton *back = [UIButton buttonWithType:UIButtonTypeCustom];
+        [back setTitle:@"返回>" forState:UIControlStateNormal];
+        [back setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.customView addSubview:back];
+        [back addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+        back.frame = CGRectMake(20, PageVCStatusBarHeight, 60, 30);
+    }
+    return _customView;
 }
 
 @end

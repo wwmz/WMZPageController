@@ -61,8 +61,6 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,         
 
 
 /* =========================================Menu==================================================*/
-//导航栏颜色 default 默认颜色 如果出现导航栏颜色不准确可以调用此属性设置
-WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, UIColor*,              wNaviColor)
 //给菜单栏和headView加个背景层 default -
 WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageHeadAndMenuBgView,                  wInsertHeadAndMenuBg)
 //给菜单栏加个下划线 default -
@@ -89,6 +87,8 @@ WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageHeadViewBl
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuWidth)
 //菜单背景颜色 default ffffff
 WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, UIColor*,              wMenuBgColor)
+//整体视图背景颜色 default ffffff
+WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, UIColor*,              wBgColor)
 //菜单按钮的左右间距 default 20
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuCellMargin)
 //菜单按钮的上下间距 default 20 (可根据此属性改变菜单栏的高度)
