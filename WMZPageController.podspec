@@ -14,5 +14,5 @@ Pod::Spec.new do |s|
   s.author       = { "wmz" => "925457662@qq.com" }
   s.source       = { :git => "https://github.com/wwmz/WMZPageController.git",:tag => s.version.to_s}
   s.source_files = "WMZPageController/WMZPageController/**/*.{h,m}"
-  s.resources     = "WMZPageController/WMZPageController/PageController.bundle"
+  s.resources     = "WMZPageController/WMZPageController/DataSource/PageController.bundle"
 end
