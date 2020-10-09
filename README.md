@@ -427,7 +427,7 @@
 
 许可证
 ==============
-LEETheme 使用 MIT 许可证，详情见 [LICENSE](LICENSE) 文件。
+WMZPageControlller 使用 MIT 许可证，详情见 [LICENSE](LICENSE) 文件。
 
 
 个人主页
