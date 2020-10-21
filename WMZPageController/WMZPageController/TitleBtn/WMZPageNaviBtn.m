@@ -30,6 +30,7 @@
         _maxSize = [self boundingRectWithSize:self.titleLabel.text Font:self.titleLabel.font Size:
                     CGSizeMake(CGFLOAT_MAX, self.param.wMenuPosition == PageMenuPositionNavi?35:CGFLOAT_MAX)];
     }
+    
     return _maxSize;
 }
 

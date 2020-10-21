@@ -81,9 +81,7 @@
         .wMenuPositionSet([position[@(index)] intValue]);
     
         if (index == 6) {
-            param.wMenuAnimalSet(PageTitleMenuPDD)
-            .wMenuIndicatorYSet(15)
-            .wMenuCellPaddingSet(10);
+            param.wMenuAnimalSet(PageTitleMenuPDD);
         }
     
         if (index == 8) {

@@ -32,7 +32,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,assign)CGFloat footViewOrginY;
 //透明视图
 @property (nonatomic, strong) UIView *naviBarBackGround;
-
 /*!
 *
 * @brief 更新全部(会全部重新渲染)

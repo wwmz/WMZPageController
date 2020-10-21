@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,assign)CGSize maxSize;
 //处于动画状态
 @property(nonatomic,assign)BOOL animal;
+//仅点击不加载页面 保持原页面
+@property(nonatomic,assign)BOOL onlyClick;
 //有红点提示
 @property(nonatomic,assign)NSInteger hasBadge;
 //富文本
@@ -29,7 +31,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat unSelectedColorR;
 @property (nonatomic, assign) CGFloat unSelectedColorG;
 @property (nonatomic, assign) CGFloat unSelectedColorB;
-
 //富文本图片
 @property(nonatomic,strong)NSAttributedString* attributedImage;
 //富文本选中图片

@@ -14,6 +14,7 @@
 - (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style{
     if (self = [super initWithFrame:frame style:style]) {
         self.showsHorizontalScrollIndicator = NO;
+        self.showsVerticalScrollIndicator = NO;
         self.scrollsToTop = NO;
     }
     return self;

@@ -18,8 +18,6 @@
 #define   PageVCWidth   [UIScreen mainScreen].bounds.size.width
 #define   PageVCHeight  [UIScreen mainScreen].bounds.size.height
 
-#define myHeight 100
-
 #define PageDarkColor(light,dark)    \
 ({\
     UIColor *wMenuIndicator = nil; \
@@ -90,8 +88,7 @@ typedef enum :NSInteger{
     PageTitleMenuCircle   = 2,            //背景圆角框
     PageTitleMenuAiQY     = 3,            //爱奇艺效果(指示器跟随移动)
     PageTitleMenuTouTiao  = 4,            //今日头条效果(变大加颜色渐变)
-    PageTitleMenuYouKu    = 5,            //优酷效果(变大字体加粗 指示器圆点 指示器跟随移动)
-    PageTitleMenuPDD      = 6,            //拼多多效果(底部线条)
+    PageTitleMenuPDD      = 5,            //拼多多效果(底部线条)
 }PageTitleMenu;
 
 
@@ -120,6 +117,7 @@ typedef enum :NSInteger{
     PageGradientChangeDirectionUpwardDiagonalLine,       //主对角线方向渐变
     PageGradientChangeDirectionDownDiagonalLine,         //副对角线方向渐变
 }PageGradientChangeDirection;
+
 
 
 /*
@@ -161,7 +159,7 @@ typedef void (^PageCustomRedText)(UILabel *redLa,NSDictionary *info);
 /*
  * 自定义菜单栏
  */
-typedef void (^PageCustomMenuTitle)(NSArray *titleArr);
+typedef void (^PageCustomMenuTitle)(NSArray<WMZPageNaviBtn*> *titleArr);
 
 
 /*

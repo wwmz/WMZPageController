@@ -25,8 +25,8 @@
             filePath = "WMZPageController/DemoVC/&#x60ac;&#x6d6e;&#x76f8;&#x5173;(+&#x7ee7;&#x627f;&#x4f7f;&#x7528;&#x793a;&#x8303;)/&#x81ea;&#x5b9a;&#x4e49;&#x5bfc;&#x822a;&#x680f;/WMZPageCustomNaviVC.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
             landmarkName = "-viewDidLoad"
             landmarkType = "7">
          </BreakpointContent>
@@ -41,25 +41,9 @@
             filePath = "WMZPageController/DemoVC/&#x60ac;&#x6d6e;&#x76f8;&#x5173;(+&#x7ee7;&#x627f;&#x4f7f;&#x7528;&#x793a;&#x8303;)/&#x81ea;&#x5b9a;&#x4e49;&#x5bfc;&#x822a;&#x680f;/WMZPageCustomNaviVC.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
             landmarkName = "-viewDidLoad"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C904A664-7E2C-43B6-B647-91CCF8FB312D"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "WMZPageController/WMZPageController/Controller/WMZPageController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "200"
-            endingLineNumber = "200"
-            landmarkName = "-UI"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -92,6 +76,52 @@
             startingLineNumber = "36"
             endingLineNumber = "36"
             landmarkName = "-gestureRecognizer:shouldRequireFailureOfGestureRecognizer:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3C6F7EB1-E180-485C-86A0-B05F43C0268E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WMZPageController/WMZPageController/CsutomScrollerView/WMZPageDataView.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
+            landmarkName = "-gestureRecognizer:shouldRecognizeSimultaneouslyWithGestureRecognizer:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BEE0ED1E-33E0-436B-BB80-14C6CB555B13"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WMZPageController/WMZPageController/Navi/WMZPageLoopView.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "510"
+            endingLineNumber = "510">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2C9A4A40-62CD-4049-B922-A8C4E9CB08CD"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WMZPageController/WMZPageController/DataView/WMZPageLoopView.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "387"
+            endingLineNumber = "387"
+            landmarkName = "-animalAction:lastContrnOffset:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

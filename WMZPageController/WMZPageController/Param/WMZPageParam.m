@@ -54,6 +54,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuFixW
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuCellMarginY)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wTopChangeHeight)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageHeadViewBlock,      wMenuHeadView)
+WMZPagePropSetFuncImplementation(WMZPageParam, PageCustomMenuTitle,    wCustomMenufixTitle)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuTitleWeight)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageHeadAndMenuBgView,  wCustomMenuView)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageCustomRedText,      wCustomRedView)
@@ -73,6 +74,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, PageCustomFrameY,       wCustomNa
 WMZPagePropSetFuncImplementation(WMZPageParam, PageCustomFrameY,       wCustomTabbarY)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuIndicatorY)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuCircilRadio)
+WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuHeight)
 WMZPagePropSetFuncImplementation(WMZPageParam, UIFont*,                wMenuTitleUIFont)
 WMZPagePropSetFuncImplementation(WMZPageParam, UIFont*,                wMenuTitleSelectUIFont)
 - (instancetype)init{
@@ -97,8 +99,9 @@ WMZPagePropSetFuncImplementation(WMZPageParam, UIFont*,                wMenuTitl
         _wMenuFixShadow = YES;
         _wFromNavi = YES;
         _wScrollCanTransfer = YES;
-        _wMenuTitleSelectFont = 18.5;
+        _wMenuTitleSelectFont = 18.5f;
         _wBgColor = PageColor(0xffffff);
+        _wMenuHeight = 55.0f;
     }
     return self;
 }

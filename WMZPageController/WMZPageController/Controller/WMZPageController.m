@@ -117,19 +117,16 @@
     if (self.param.wMenuAnimal == PageTitleMenuNone||
         self.param.wMenuAnimal == PageTitleMenuCircle||
         self.param.wMenuAnimal == PageTitleMenuPDD) {
-        self.param.wMenuAnimalTitleBig = NO;
         self.param.wMenuAnimalTitleGradient = NO;
         if (self.param.wMenuAnimal == PageTitleMenuPDD) {
             if (!self.param.wMenuIndicatorWidth) {
                 self.param.wMenuIndicatorWidth = 25;
             }
+        }else{
+            self.param.wMenuAnimalTitleBig = NO;
         }
     }
     
-    if (self.param.wMenuAnimal == PageTitleMenuYouKu) {
-        self.param.wMenuIndicatorWidth = 6;
-        self.param.wMenuIndicatorHeight = 3;
-    }
     if (self.param.wMenuAnimal == PageTitleMenuCircle) {
         if (CGColorEqualToColor(self.param.wMenuIndicatorColor.CGColor, PageColor(0xE5193E).CGColor)) {
             self.param.wMenuIndicatorColor = PageColor(0xe1f9fe);
@@ -137,11 +134,24 @@
         if (CGColorEqualToColor(self.param.wMenuTitleSelectColor.CGColor, PageColor(0xE5193E).CGColor)) {
             self.param.wMenuTitleSelectColor = PageColor(0x00baf9);
         }
+        if (self.param.wMenuIndicatorHeight <= 15.0f) {
+            self.param.wMenuIndicatorHeight = 0;
+        }
+        
     }
     
     if (self.param.wMenuPosition == PageMenuPositionNavi) {
         if (CGColorEqualToColor(self.param.wMenuBgColor.CGColor, PageColor(0xffffff).CGColor)) {
             self.param.wMenuBgColor = [UIColor clearColor];
+        }
+        if (self.param.wMenuHeight == 55.0f) {
+            self.param.wMenuHeight = 40.0f;
+        }
+    }
+    
+    if (self.param.wMenuSpecifial == PageSpecialTypeOne) {
+        if (self.param.wMenuHeight == 55.0f) {
+            self.param.wMenuHeight = 75.0f;
         }
     }
     
@@ -246,7 +256,7 @@
    
     [self.upSc.btnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (idx == self.param.wMenuDefaultIndex && obj.tag!=10086) {
-            self.upSc.first = YES;
+            self.upSc.mainView.first = YES;
             [obj sendActionsForControlEvents:UIControlEventTouchUpInside];
             *stop = YES;
         }
@@ -296,7 +306,6 @@
             }
         }
     }else{
-       NSLog(@"111 %@",self.parentViewController);
         if ([self.parentViewController isKindOfClass:[WMZPageController class]]) {
             height -= PageVCNavBarHeight;
         }
@@ -349,12 +358,10 @@
     }else{
         self.downSc.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake( 0, 0,self.view.frame.size.width, 0.01)];
     }
-    
     if (self.param.wInsertHeadAndMenuBg) {
         self.head_MenuView = [UIView new];
         self.param.wInsertHeadAndMenuBg(self.head_MenuView);
     }
-    
     //全景
     if (self.head_MenuView) {
         self.head_MenuView.frame = CGRectMake(0, self.headView?CGRectGetMinX(self.headView.frame):CGRectGetMinX(self.upSc.frame), self.upSc.frame.size.width, CGRectGetMaxY(self.upSc.frame)-self.upSc.dataView.frame.size.height);
@@ -372,6 +379,7 @@
 
 //底部滚动
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
     if (scrollView!=self.downSc) return;
     if (![self canTopSuspension]) return;
     //偏移量
@@ -380,7 +388,6 @@
     int topOffset = scrollView.contentSize.height - scrollView.frame.size.height;
     if (yOffset<=0) {
         self.scrolToBottom = YES;
-        
     }else{
         if (yOffset >= topOffset) {
             scrollView.contentOffset = CGPointMake(self.downSc.contentOffset.x, topOffset);
@@ -505,7 +512,9 @@
 - (void)topSuspensionView:(UIScrollView*)view index:(NSInteger)index{
     if (view&&[view isKindOfClass:[UIScrollView class]]) {
         self.currentScroll = view;
-        [self.sonChildScrollerViewDic setObject:view forKey:@(index)];
+        if (view) {
+            [self.sonChildScrollerViewDic setObject:view forKey:@(index)];
+        }
         if (self.scrolToBottom) {
             [view setContentOffset:CGPointMake(view.contentOffset.x,0) animated:NO];
         }

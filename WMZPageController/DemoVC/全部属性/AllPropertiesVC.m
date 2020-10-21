@@ -43,8 +43,6 @@
 //       .wMenuIndicatorImageSet(@"")
        //菜单内部按钮的内左右间距
        .wMenuCellMarginSet(20)
-       //菜单内部按钮的内上下间距
-       .wMenuCellPaddingSet(20)
        //菜单内部按钮的外间距
        .wMenuTitleOffsetSet(5)
        //菜单的位置

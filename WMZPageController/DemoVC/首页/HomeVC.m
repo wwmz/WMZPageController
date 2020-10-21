@@ -108,6 +108,10 @@
         WMZNaviPageController *VC = [WMZNaviPageController new];
         VC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:VC animated:YES];
+    }else if (indexPath.section  == 10) {
+        NSArray *arr = @[@"WeiBoController",@"WangZheController"];
+        UIViewController *VC = [NSClassFromString(arr[indexPath.row]) new];
+        [self.navigationController pushViewController:VC animated:YES];
     }else{
         WMZPageController *VC = (WMZPageController*)[NSClassFromString(self.VCData[indexPath.section]) new];
         [VC setValue:@(indexPath.row) forKey:@"index"];
@@ -122,14 +126,15 @@
         @[@"链式语法展示所有属性"],
         @[@"普通标题",@"换行标题",@"带红点普通标题",@"富文本标题",@"图文标题(图上文下)",@"图文标题(图左文右),标题在底部",
           @"导航栏标题",@"居中标题",@"固定最右边标题",@"固定最右边图片+标题",@"固定宽度标题",@"自定义标题内容"],
-        @[@"无样式",@"下划线不跟随移动",@"下划线跟随移动",@"字体变大",@"圆点+跟随滑动+颜色渐变",@"背景框"],
-        @[@"爱奇艺",@"优酷",@"拼多多",@"今日头条",@"微博",@"京东",@"简书",@"适配暗黑模式"],
+        @[@"无样式",@"下划线不跟随移动",@"下划线跟随移动",@"字体变大",@"背景框"],
+        @[@"爱奇艺",@"拼多多",@"今日头条",@"京东",@"简书",@"适配暗黑模式"],
         @[@"悬浮效果(导航栏不隐藏+刷新在中间)",@"悬浮效果(添加全局背景色)",@"悬浮效果(导航栏透明度变化+刷新在顶部)",@"子控制器有子视图固定底部/尾视图固定在全局底部",@"自定义导航栏"],
         @[@"实现tableviewDataSource协议写复杂UI"],
         @[@"实际使用demoOne(作为tabbar)"],
         @[@"实际使用demoTwo(动态富文本)"],
         @[@"淘宝滑动动态改变菜单栏",@"美团商家详情两层联调"],
-        @[@"swift使用示范(放在导航栏上)"]
+        @[@"swift使用示范(放在导航栏上)"],
+        @[@"微博两层嵌套"]
         ];
     }
     return _taData;
@@ -137,7 +142,7 @@
 
 - (NSArray *)titleData{
     if (!_titleData) {
-        _titleData = @[@"完整手动管理控制器生命周期",@"标题样式",@"指示器样式",@"实际使用",@"悬浮使用(+继承使用示范)",@"综合使用",@"PageSpecialType",@"PageSpecialType",@"复杂使用",@"swift"];
+        _titleData = @[@"完整手动管理控制器生命周期",@"标题样式",@"指示器样式",@"实际使用",@"悬浮使用(+继承使用示范)",@"综合使用",@"PageSpecialType",@"PageSpecialType",@"复杂使用",@"swift",@"嵌套使用"];
     }
     return _titleData;
 }

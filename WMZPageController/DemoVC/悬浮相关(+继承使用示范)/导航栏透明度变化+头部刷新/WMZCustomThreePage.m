@@ -12,6 +12,7 @@
 #import "CollectionViewPopDemo.h"
 #import "UIImageView+WebCache.h"
 #import "MJRefresh.h"
+#import "TopSuspensionVC.h"
 @interface WMZCustomThreePage ()
 
 @end
@@ -32,7 +33,7 @@
         .wTitleArrSet(data)
         //控制器数组
         .wViewControllerSet(^UIViewController *(NSInteger index) {
-            CollectionViewPopDemo *vc = [CollectionViewPopDemo new];
+            TopSuspensionVC *vc = [TopSuspensionVC new];
             return vc;
         })
         //悬浮开启
@@ -46,9 +47,9 @@
         //头部
         .wMenuHeadViewSet(^UIView *{
             UIView *back = [UIView new];
-            back.frame = CGRectMake(0, 0, PageVCWidth, 470);
+            back.frame = CGRectMake(0, 0, PageVCWidth, 300);
             UIImageView *image = [UIImageView new];
-            [image sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576232579082&di=f6ae983436a2512d41ed5b25789cf212&imgtype=0&src=http%3A%2F%2Fbig5.ocn.com.cn%2FUpload%2Fuserfiles%2F18%252858%2529.png"]];
+            [image sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602673230263&di=c9290650541d8edf911ff008a3bfa4dc&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fpic%2Ff%2F33%2F648011013.jpg"]];
             image.frame =back.bounds;
             [back addSubview:image];
             return back;
@@ -56,7 +57,7 @@
         //导航栏标题透明度变化
         .wEventChildVCDidSrollSet(^(UIViewController *pageVC, CGPoint oldPoint, CGPoint newPonit, UIScrollView *currentScrollView) {
              __strong WMZCustomThreePage* strongSelf = weakSelf;
-            [strongSelf.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithRed:10/255.0 green:10/255.0 blue:20/255.0 alpha:newPonit.y/(470-PageVCNavBarHeight)]}];
+            [strongSelf.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithRed:10/255.0 green:10/255.0 blue:20/255.0 alpha:newPonit.y/(300-PageVCNavBarHeight)]}];
         });
         
         self.param = param;
@@ -77,6 +78,10 @@
                 [strongSelf.downSc.mj_header endRefreshing];
             });
         }];
+    
+    self.upSc.mainView.clipsToBounds = YES;
+    self.upSc.mainView.layer.masksToBounds = YES;
+    self.upSc.mainView.layer.cornerRadius = 10;
 }
 
 @end

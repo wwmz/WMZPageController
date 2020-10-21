@@ -25,19 +25,15 @@
        NSArray *data = @[];
        if (index == 0) {
            data = [self AQYData];
-       }else if (index == 1) {
-           data = [self YKData];
-       }else if(index == 2){
+       }else if(index == 1){
            data = [self PDDData];
-       }else if(index == 3){
+       }else if(index == 2){
            data = [self ToutiaoData];
-       }else if(index == 4){
-           data = [self weiboData];
-       }else if(index == 5){
+       }else if(index == 3){
            data = [self JDData];
-       }else if(index == 6){
+       }else if(index == 4){
            data = [self JSData];
-       }else if(index == 7){
+       }else if(index == 5){
            data = [self PDDData];
        }
        WMZPageParam *param = PageParam();
@@ -64,35 +60,14 @@
              .wMenuAnimalSet(PageTitleMenuAiQY);
            }
           break;
-          //优酷
-          case 1:{
-                param.wTitleArrSet(data)
-               .wViewControllerSet(^UIViewController *(NSInteger index) {
-                       TestVC *vc = [TestVC new];
-                       vc.page = index;
-                        return vc;
-                })
-               .wMenuTitleUIFontSet([UIFont systemFontOfSize:17.0f])
-               .wMenuTitleWeightSet(50)
-               .wMenuCellPaddingSet(40)
-               .wMenuTitleColorSet(PageColor(0xcadbe4))
-               .wMenuTitleSelectColorSet(PageColor(0x00dcfb))
-               .wMenuIndicatorColorSet(PageColor(0x00dcfb))
-               .wMenuBgColorSet(PageColor(0x224b74))
-               .wMenuAnimalTitleGradientSet(NO)
-               .wMenuFixRightDataSet(@"≡")
-               .wMenuAnimalSet(PageTitleMenuYouKu);
-          }
-          break;
            //拼多多
-           case 2:{
+           case 1:{
                param.wTitleArrSet(data)
                .wViewControllerSet(^UIViewController *(NSInteger index) {
-                       TestVC *vc = [TestVC new];
-                       vc.page = index;
-                        return vc;
+                    TestVC *vc = [TestVC new];
+                    vc.page = index;
+                    return vc;
                 })
-               .wMenuCellPaddingSet(20)
                .wMenuPositionSet(PageMenuPositionNavi)
                .wMenuAnimalTitleGradientSet(NO)
                .wMenuAnimalTitleBigSet(NO)
@@ -100,7 +75,7 @@
                }
           break;
          //今日头条
-          case 3:{
+          case 2:{
                param.wTitleArrSet(data)
                .wViewControllerSet(^UIViewController *(NSInteger index) {
                        TestVC *vc = [TestVC new];
@@ -111,41 +86,10 @@
                .wMenuAnimalSet(PageTitleMenuTouTiao);
            }
          break;
-           //微博  嵌套使用
-          case 4:{
-
-                param.wTitleArrSet(data)
-               //减掉导航栏高度(根据实际情况)
-               .wCustomDataViewHeightSet(^CGFloat(CGFloat nowY) {
-                   return nowY - PageVCNavBarHeight;
-               })
-               .wViewControllerSet(^UIViewController *(NSInteger index) {
-                    TestVC *vc = [TestVC new];
-                    vc.page = index;
-                    return vc;
-                })
-               .wMenuFixRightDataSet(@"+")
-               .wMenuAnimalSet(PageTitleMenuNone);
-               WMZPageController *sonVC =  [WMZPageController new];
-               sonVC.param = param;
-              
-               WMZPageParam *headParam = PageParam()
-               .wTitleArrSet([self weiboTitleData])
-                .wViewControllerSet(^UIViewController *(NSInteger index) {
-                    if (index == 1) {
-                        return [TestVC new];
-                    }
-                    return sonVC;
-                })
-               .wMenuPositionSet(PageMenuPositionNavi)
-               .wMenuWidthSet(150);
-              
-              self.param = headParam;
-
-           }
-         return;
-         //京东
-         case 5:{
+       //  京东
+         case 3:{
+             
+             
                
                param.wTitleArrSet(data)
                .wViewControllerSet(^UIViewController *(NSInteger index) {
@@ -160,12 +104,11 @@
                .wMenuIndicatorImageSet(@"E")
                .wMenuIndicatorHeightSet(15)
                .wMenuIndicatorWidthSet(20)
-               .wMenuCellPaddingSet(40)
                .wMenuAnimalSet(PageTitleMenuLine);
            }
            break;
           //简书
-           case 6:{
+           case 4:{
                      
            param.wTitleArrSet(data)
            .wViewControllerSet(^UIViewController *(NSInteger index) {
@@ -186,7 +129,7 @@
            .wMenuAnimalSet(PageTitleMenuPDD);
            }
            break;
-         case 7:{
+         case 5:{
              
            param.wTitleArrSet(data)
            .wViewControllerSet(^UIViewController *(NSInteger index) {
@@ -194,7 +137,7 @@
                 vc.page = index;
                 return vc;
             })
-           .wMenuAnimalSet(PageTitleMenuYouKu)
+           .wMenuAnimalSet(PageTitleMenuAiQY)
            //菜单标题颜色
            .wMenuTitleColorSet(PageDarkColor(PageColor(0x333333), PageColor(0xffffff)))
            //菜单标题选中的颜色
@@ -212,13 +155,13 @@
          break;
        }
     
-       if (index == 2) {
+       if (index == 1) {
            self.navigationItem.hidesBackButton = YES;
        }
        self.param = param;
 
        //更新
-       if (index == 7) {
+       if (index == 5) {
            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)( 1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                param
                .wTitleArrSet([self weiboData])
@@ -275,21 +218,6 @@
 }
 
 
-/*
- 优酷标题
- */
-- (NSArray*)YKData{
-    return @[
-    @"精选",
-    @"热点",
-    @{
-        @"name":@"电影",
-        @"backgroundColor":PageColor(0x00224a),
-        @"titleColor":PageColor(0x0095bd)
-    },
-    @"综艺",@"高清",@"广东",@"动漫",@"直播"
-    ];
-}
 
 /*
  拼多多标题
@@ -324,7 +252,7 @@
 }
 
 /*
-微博内容
+微博内容 @"onlyClick":@(YES) 仅点击不加载页面
 */
 - (NSArray*)weiboData{
     return

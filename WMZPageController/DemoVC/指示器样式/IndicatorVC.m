@@ -23,12 +23,11 @@
         @(1):@(PageTitleMenuLine),
         @(2):@(PageTitleMenuAiQY),
         @(3):@(PageTitleMenuTouTiao),
-        @(4):@(PageTitleMenuYouKu),
-        @(5):@(PageTitleMenuCircle),
+        @(4):@(PageTitleMenuCircle),
     };
        
     WMZPageParam *param = PageParam()
-    .wTitleArrSet(@[@"推荐",@"LOOK直播",@"画",@"现场",@"翻唱",@"MV",@"广场",@"游戏"])
+    .wTitleArrSet(@[@"推荐",@"LOOK直播",@"画画",@"现场",@"翻唱",@"MV",@"广场",@"游戏"])
     .wViewControllerSet(^UIViewController *(NSInteger index) {
            TestVC *vc = [TestVC new];
            vc.page = index;

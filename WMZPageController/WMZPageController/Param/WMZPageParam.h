@@ -19,7 +19,6 @@ WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, NSArray*,     
 WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam,  PageViewControllerIndex,              wViewController)
 //VC数组 (已废弃)
 WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, NSArray*,              wControllers)
-
 /* =========================================required==============================================*/
 
 /* =========================================customFrame===============================================*/
@@ -34,7 +33,7 @@ WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY
 /* =========================================customFrame===============================================*/
 
 /* =========================================special==============================================*/
-//特殊属性 菜单滑动到顶部悬浮 default NO
+//特殊属性 菜单滑动到顶部悬浮 default NO 需要实现协议
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wTopSuspension)
 //导航栏透明度变化 default NO
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wNaviAlpha)
@@ -61,6 +60,10 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,         
 
 
 /* =========================================Menu==================================================*/
+
+
+//菜单栏高度 default 60
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,                  wMenuHeight)
 //给菜单栏和headView加个背景层 default -
 WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageHeadAndMenuBgView,                  wInsertHeadAndMenuBg)
 //给菜单栏加个下划线 default -
@@ -73,9 +76,11 @@ WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageCustomRedT
 WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageCustomMenuTitle,                  wCustomMenuTitle)
 //自定义选中后菜单栏上的标题
 WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageCustomMenuSelectTitle,wCustomMenuSelectTitle)
+//自定义固定标题
+WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageCustomMenuTitle,                  wCustomMenufixTitle)
 //默认选中 default 0
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, NSInteger,             wMenuDefaultIndex)
-//菜单最右边固定内容 default nil
+//菜单最右边固定内容 default nil (可传字符串/字典/数组)
 WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, id,                    wMenuFixRightData)
 //菜单最右边固定内容宽度 defaulf 45
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuFixWidth)
@@ -91,7 +96,7 @@ WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, UIColor*,     
 WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, UIColor*,              wBgColor)
 //菜单按钮的左右间距 default 20
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuCellMargin)
-//菜单按钮的上下间距 default 20 (可根据此属性改变菜单栏的高度)
+//菜单按钮的上下间距 default 20 (可根据此属性改变菜单栏的高度)    ⚠️⚠️1.3.0后废除 改用wMenuHeight自行管理高度
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuCellPadding)
 //菜单按钮距离顶部的y值 default 0
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuCellMarginY)
@@ -140,6 +145,7 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,      
 WMZPageParam * PageParam(void);
 //右边固定标题点击
 WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageClickBlock,        wEventFixedClick)
+
 //标题点击
 WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageClickBlock,        wEventClick)
 //控制器开始切换

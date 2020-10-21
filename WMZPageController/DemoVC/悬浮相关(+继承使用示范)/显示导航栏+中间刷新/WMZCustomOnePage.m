@@ -50,7 +50,6 @@
 
     self.param = param;
     
-    
     //   模拟更新头部
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 //        self.param.wMenuHeadViewSet(^UIView *{
