@@ -446,7 +446,7 @@
 
 //结束动画处理
 - (void)endAninamal{
-    return;
+//    return;
 }
 
 - (id)safeObjectAtIndex:(NSUInteger)index data:(NSArray*)data

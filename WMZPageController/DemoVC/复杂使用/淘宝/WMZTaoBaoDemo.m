@@ -26,6 +26,7 @@
        .wViewControllerSet(^UIViewController *(NSInteger index) {
           return [CollectionViewPopDemo new];
         })
+       .wMenuHeightSet(80)
        //⚠️此为改变菜单栏高度的属性  传入正数为高度减少的数值 负数为高度增加的数值
        .wTopChangeHeightSet(20)
        //悬浮开启

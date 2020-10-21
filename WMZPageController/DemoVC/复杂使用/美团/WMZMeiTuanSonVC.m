@@ -52,18 +52,18 @@
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
 
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.dircetionUp = YES;
-        WMZPageController *superVC = (WMZPageController*)self.parentViewController;
-        [superVC downScrollViewSetOffset:CGPointZero animated:NO];
-        leftScroll = YES;
-        NSInteger num = 5;
-        [self.leftTa scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:num inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:YES];
-        [self.leftTa selectRowAtIndexPath:[NSIndexPath indexPathForRow:num inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
-        [self.rightTa scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:num] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-        [self.rightTa selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:num] animated:YES scrollPosition:UITableViewScrollPositionTop];
-//        self.rightTa.contentOffset = CGPointMake(self.rightTa.contentOffset.x, self.rightTa.contentOffset.y+30);
-    });
+    //默认滚动到这里
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        self.dircetionUp = YES;
+//        WMZPageController *superVC = (WMZPageController*)self.parentViewController;
+//        [superVC downScrollViewSetOffset:CGPointZero animated:NO];
+//        leftScroll = YES;
+//        NSInteger num = 5;
+//        [self.leftTa scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:num inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:YES];
+//        [self.leftTa selectRowAtIndexPath:[NSIndexPath indexPathForRow:num inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
+//        [self.rightTa scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:num] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//        [self.rightTa selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:num] animated:YES scrollPosition:UITableViewScrollPositionTop];
+//    });
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{

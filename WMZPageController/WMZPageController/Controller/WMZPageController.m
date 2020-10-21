@@ -458,8 +458,13 @@
             self.param.wEventMenuChangeHeight(self.upSc.btnArr,self.currentScroll.contentOffset.y);
         }
     }
-    //设置下划线
-    [self.upSc endAninamal];
+     if (self.param.wMenuAnimal == PageTitleMenuAiQY||self.param.wMenuAnimal == PageTitleMenuPDD){
+        CGRect rect = self.upSc.lineView.frame;
+        if (rect.origin.y != ([self.upSc.mainView getMainHeight]-self.param.wMenuIndicatorY-rect.size.height/2)) {
+            rect.origin.y = [self.upSc.mainView getMainHeight]-self.param.wMenuIndicatorY-rect.size.height/2;
+        }
+        self.upSc.lineView.frame = rect;
+    }
 }
 //设置悬浮
 - (void)setUpSuspension:(UIViewController*)newVC index:(NSInteger)index end:(BOOL)end{
