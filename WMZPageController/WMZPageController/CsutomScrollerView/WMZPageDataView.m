@@ -34,6 +34,7 @@
         if (firstView!=secondView) {
             if (firstView.level - secondView.level == abs(1) ) {
                 if (firstView.level>secondView.level) {
+                    
                     if (firstView.level == 100000  && secondView.level == 99999) {
                         if (firstView.currentIndex>0&&secondView.currentIndex == 0) {
                             return YES;

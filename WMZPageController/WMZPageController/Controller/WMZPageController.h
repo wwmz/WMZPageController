@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 //头部标题滚动视图
 @property(nonatomic,strong)WMZPageLoopView *upSc;
 //底部全屏滚动视图
-@property(nonatomic,strong)WMZPageScroller *downSc;
+@property(nonatomic,strong,nullable)WMZPageScroller *downSc;
 //缓存
 @property(nonatomic,strong)NSCache *cache;
 //子控制器中可以滚动的视图

@@ -25,8 +25,8 @@
             filePath = "WMZPageController/DemoVC/&#x60ac;&#x6d6e;&#x76f8;&#x5173;(+&#x7ee7;&#x627f;&#x4f7f;&#x7528;&#x793a;&#x8303;)/&#x81ea;&#x5b9a;&#x4e49;&#x5bfc;&#x822a;&#x680f;/WMZPageCustomNaviVC.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
             landmarkName = "-viewDidLoad"
             landmarkType = "7">
          </BreakpointContent>
@@ -41,8 +41,8 @@
             filePath = "WMZPageController/DemoVC/&#x60ac;&#x6d6e;&#x76f8;&#x5173;(+&#x7ee7;&#x627f;&#x4f7f;&#x7528;&#x793a;&#x8303;)/&#x81ea;&#x5b9a;&#x4e49;&#x5bfc;&#x822a;&#x680f;/WMZPageCustomNaviVC.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
             landmarkName = "-viewDidLoad"
             landmarkType = "7">
          </BreakpointContent>
@@ -119,8 +119,8 @@
             filePath = "WMZPageController/WMZPageController/DataView/WMZPageLoopView.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "387"
-            endingLineNumber = "387"
+            startingLineNumber = "379"
+            endingLineNumber = "379"
             landmarkName = "-animalAction:lastContrnOffset:"
             landmarkType = "7">
          </BreakpointContent>

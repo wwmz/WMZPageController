@@ -36,7 +36,6 @@
        .wMenuTitleWidthSet(self.view.frame.size.width / 4)
        //顶部可下拉
        .wBouncesSet(YES)
-       .wMenuAnimalTitleBigSet(NO)
        .wMenuAnimalTitleGradientSet(NO)
        //头视图y坐标从0开始
        .wFromNaviSet(NO)
@@ -77,7 +76,9 @@
            [strongSelf.upSc.lineView setHidden:YES];
        });
        self.param = param;
-       self.upSc.lineView.hidden = YES;
+       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+           self.upSc.lineView.hidden = YES;
+       });
 }
 
 //正常富文本

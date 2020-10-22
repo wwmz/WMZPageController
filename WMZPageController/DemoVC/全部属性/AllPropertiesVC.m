@@ -25,8 +25,6 @@
        .wTitleArrSet(@[@"推荐",@"LOOK直播",@"画",@"现场",@"翻唱",@"MV"])
        //设置指示器和动画样式
        .wMenuAnimalSet(PageTitleMenuAiQY)
-       //是否开启选中变大
-       .wMenuAnimalTitleBigSet(NO)
        //是否开启滑动标题颜色渐变
        .wMenuAnimalTitleGradientSet(NO)
        //标题font

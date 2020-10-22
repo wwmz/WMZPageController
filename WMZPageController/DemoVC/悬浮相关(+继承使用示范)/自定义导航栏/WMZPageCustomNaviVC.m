@@ -9,12 +9,17 @@
 #import "WMZPageCustomNaviVC.h"
 #import "TopSuspensionVC.h"
 #import "UIImageView+WebCache.h"
-#import "WMZPageController.h"
 @interface WMZPageCustomNaviVC ()
 @property(nonatomic,strong)UIButton *customView;
 @end
 
 @implementation WMZPageCustomNaviVC
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
@@ -24,10 +29,6 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    //隐藏导航栏 (如果隐藏导航栏放在viewWillAppeal里 则会默认悬浮到导航栏下面)
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-    
      //标题数组
     NSArray *data = @[@"热门",@{@"name":@"男装",@"onlyClick":@(YES)},
                       @"美妆",@"手机",@"食品",@"电器",@"鞋包",@"百货",@"女装",@"汽车",@"电脑"];
@@ -69,7 +70,10 @@
     });
     self.param = param;
     
-    [self.view addSubview:self.customView];
+    //对于视图的操作需要延时0.1秒
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.view addSubview:self.customView];
+    });
 }
 
 - (UIButton *)customView{

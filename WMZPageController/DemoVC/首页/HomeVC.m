@@ -86,6 +86,7 @@
     if (indexPath.section  == 4) {
         NSArray *arr = @[@"WMZCustomOnePage",@"WMZCustomTwoPage",@"WMZCustomThreePage",@"WMZFixVC",@"WMZPageCustomNaviVC"];
         UIViewController *VC = [NSClassFromString(arr[indexPath.row]) new];
+        VC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:VC animated:YES];
     }else if (indexPath.section  == 5) {
         NSArray *arr = @[@"WMZUsePageVC"];
@@ -112,6 +113,10 @@
         NSArray *arr = @[@"WeiBoController",@"WangZheController"];
         UIViewController *VC = [NSClassFromString(arr[indexPath.row]) new];
         [self.navigationController pushViewController:VC animated:YES];
+    }else if (indexPath.section  == 11) {
+        NSArray *arr = @[@"WMZBackGroundMenuVC"];
+        UIViewController *VC = [NSClassFromString(arr[indexPath.row]) new];
+        [self.navigationController pushViewController:VC animated:YES];
     }else{
         WMZPageController *VC = (WMZPageController*)[NSClassFromString(self.VCData[indexPath.section]) new];
         [VC setValue:@(indexPath.row) forKey:@"index"];
@@ -134,7 +139,8 @@
         @[@"实际使用demoTwo(动态富文本)"],
         @[@"淘宝滑动动态改变菜单栏",@"美团商家详情两层联调"],
         @[@"swift使用示范(放在导航栏上)"],
-        @[@"微博两层嵌套"]
+        @[@"微博两层嵌套",@"三层"],
+        @[@"菜单视图带背景"]
         ];
     }
     return _taData;
@@ -142,7 +148,7 @@
 
 - (NSArray *)titleData{
     if (!_titleData) {
-        _titleData = @[@"完整手动管理控制器生命周期",@"标题样式",@"指示器样式",@"实际使用",@"悬浮使用(+继承使用示范)",@"综合使用",@"PageSpecialType",@"PageSpecialType",@"复杂使用",@"swift",@"嵌套使用"];
+        _titleData = @[@"完整手动管理控制器生命周期",@"标题样式",@"指示器样式",@"实际使用",@"悬浮使用(+继承使用示范)",@"综合使用",@"PageSpecialType",@"PageSpecialType",@"复杂使用",@"swift",@"嵌套使用",@"其他使用"];
     }
     return _titleData;
 }

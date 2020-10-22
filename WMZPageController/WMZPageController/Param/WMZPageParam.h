@@ -14,6 +14,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* =========================================required==============================================*/
 //标题数组 必传
+/*可传带字典的数组
+ badge            红点提示    @(YES) 或者 带数字 @(99)
+ name             标题        @""
+ selectName       选中后的标题  @""
+ indicatorColor   指示器颜色   [UIColor redColor]
+ titleSelectColor 选中字体颜色 [UIColor redColor]
+ titleColor       未选中字体颜色 [UIColor redColor]
+ backgroundColor  选中背景颜色 [UIColor redColor] (如果是数组则是背景色渐变色) @[[UIColor redColor],[UIColor orangeColor]]
+ onlyClick        仅点击页面不加载 @(YES)
+ firstColor       富文本 第一行标题颜色  [UIColor redColor]
+ wrapColor        富文本 第二行标题颜色  [UIColor redColor]
+ image            图片    @""
+ selectImage      选中图片 @""
+ */
 WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, NSArray*,              wTitleArr)
 //VC数据 必传 1.1.6新增
 WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam,  PageViewControllerIndex,              wViewController)
@@ -43,8 +57,6 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,         
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wFromNavi)
 //菜单最右边固定内容是否开启左边阴影 defaulf YES
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wMenuFixShadow)
-//选中变大 default yes
-WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wMenuAnimalTitleBig)
 //开启渐变色 default yes
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wMenuAnimalTitleGradient)
 //顶部可下拉 default NO

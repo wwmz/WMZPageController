@@ -24,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,assign)BOOL attributed;
 //初始文本内容
 @property(nonatomic,copy)NSString* normalText;
+//选中文本
+@property(nonatomic,copy)NSString* selectText;
 //RGB值
 @property (nonatomic, assign) CGFloat selectedColorR;
 @property (nonatomic, assign) CGFloat selectedColorG;

@@ -78,10 +78,7 @@
                 [strongSelf.downSc.mj_header endRefreshing];
             });
         }];
-    
-    self.upSc.mainView.clipsToBounds = YES;
-    self.upSc.mainView.layer.masksToBounds = YES;
-    self.upSc.mainView.layer.cornerRadius = 10;
+
 }
 
 @end

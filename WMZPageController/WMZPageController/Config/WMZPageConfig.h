@@ -79,6 +79,7 @@ typedef enum :NSInteger{
 
 typedef enum :NSInteger{
     PageSpecialTypeOne     = 1,          //菜单栏可见底部子视图
+    PageSpecialTypeScollTab     = 2,     //菜单栏跟随滚动
 }PageSpecialType;
 
 

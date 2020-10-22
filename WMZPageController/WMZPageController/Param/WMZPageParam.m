@@ -16,7 +16,6 @@ WMZPageParam * PageParam(void){
 WMZPagePropSetFuncImplementation(WMZPageParam, NSArray*,               wTitleArr)
 WMZPagePropSetFuncImplementation(WMZPageParam, NSArray*,               wControllers)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageTitleMenu,          wMenuAnimal)
-WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wMenuAnimalTitleBig)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wMenuAnimalTitleGradient)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wTapScrollAnimal)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wMenuFixShadow)
@@ -86,7 +85,6 @@ WMZPagePropSetFuncImplementation(WMZPageParam, UIFont*,                wMenuTitl
         _wMenuBgColor = PageColor(0xffffff);
         _wMenuIndicatorHeight = 3.0f;
         _wMenuWidth = PageVCWidth;
-        _wMenuAnimalTitleBig = YES;
         _wMenuAnimalTitleGradient = YES;
         _wMenuTitleFont = 17.0f;
         _wMenuTitleUIFont = [UIFont systemFontOfSize:17.0f];

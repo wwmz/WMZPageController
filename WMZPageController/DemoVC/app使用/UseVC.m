@@ -70,7 +70,6 @@
                 })
                .wMenuPositionSet(PageMenuPositionNavi)
                .wMenuAnimalTitleGradientSet(NO)
-               .wMenuAnimalTitleBigSet(NO)
                .wMenuAnimalSet(PageTitleMenuPDD);
                }
           break;
@@ -178,6 +177,8 @@
 }
 /*爱奇艺标题
   (滚动完改变颜色)
+  name           标题
+  selectName     选中后的标题
   indicatorColor 指示器颜色
   titleSelectColor 选中字体颜色
   titleColor 未选中字体颜色
@@ -187,6 +188,7 @@
     return @[
     @{
        @"name":@"推荐",
+       @"selectName":@"荐推",
        @"backgroundColor":@[PageColor(0x15314b),PageColor(0x009a93)]},
     @{
        @"name":@"家务男",

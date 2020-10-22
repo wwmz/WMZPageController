@@ -147,6 +147,11 @@
         [btn setTitle:name forState:UIControlStateNormal];
         btn.normalText = name;
     }
+    id selectName = [self getTitleData:self.param.wTitleArr[i] key:@"selectName"];
+    if (selectName) {
+        [btn setTitle:selectName forState:UIControlStateSelected];
+        btn.selectText = selectName;
+    }
     CGSize size =  btn.maxSize;
     //设置图片
     id image = [self getTitleData:self.param.wTitleArr[i] key:@"image"];
@@ -301,7 +306,9 @@
             temp.titleLabel.font = self.param.wMenuTitleSelectUIFont;
             [self.fixBtnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 obj.backgroundColor = fixBackgroundColor;
-                [obj setTitleColor:[temp titleColorForState:UIControlStateSelected] forState:UIControlStateNormal];
+                if (!CGColorEqualToColor(self.param.wMenuBgColor.CGColor, fixBackgroundColor.CGColor)) {
+                    [obj setTitleColor:[temp titleColorForState:UIControlStateSelected] forState:UIControlStateNormal];
+                }
             }];
         }else{
             [temp setTitleColor:titleColor?:self.param.wMenuTitleColor forState:UIControlStateNormal];

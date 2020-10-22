@@ -122,8 +122,6 @@
             if (!self.param.wMenuIndicatorWidth) {
                 self.param.wMenuIndicatorWidth = 25;
             }
-        }else{
-            self.param.wMenuAnimalTitleBig = NO;
         }
     }
     
@@ -159,6 +157,7 @@
 
 
 - (void)UI{
+    BOOL nest = NO;
     self.cache = [NSCache new];
     self.cache.countLimit = 30;
     footerViewIndex = -1;
@@ -210,6 +209,7 @@
             headY = 0;
             tabbarHeight = 0;
             statusBarHeight = 0;
+            nest = YES;
         }
     }
     
@@ -231,7 +231,6 @@
         }
     }
     
-
     self.downSc.delegate = self;
     self.downSc.bounces = self.param.wBounces;
     self.downSc.frame = CGRectMake(0, headY, self.view.frame.size.width, self.view.frame.size.height-headY-tabbarHeight);
@@ -244,6 +243,10 @@
     self.upSc = [[WMZPageLoopView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) param:self.param];
     self.upSc.loopDelegate = self;
     self.downSc.tableFooterView = self.upSc;
+    if (nest) {
+        WMZPageController *superVC = (WMZPageController*)self.parentViewController;
+        self.upSc.dataView.level = superVC.upSc.dataView.level - 1;
+    }
     
     //底部
     [self setUpMenuAndDataViewFrame];
@@ -272,7 +275,7 @@
 - (void)setUpMenuAndDataViewFrame{
     sonChildVCY = 0;
     sonChildVCHeight = 0;
-    CGFloat titleMenuhHeight = self.upSc.mainView.frame.size.height;
+    CGFloat titleMenuhHeight = CGRectGetMaxY(self.upSc.mainView.frame);
     if (self.param.wMenuPosition == PageMenuPositionNavi) {
         sonChildVCY = 0;
         sonChildVCHeight = self.downSc.frame.size.height;
@@ -304,10 +307,6 @@
                     height -= PageVCStatusBarHeight;
                 }
             }
-        }
-    }else{
-        if ([self.parentViewController isKindOfClass:[WMZPageController class]]) {
-            height -= PageVCNavBarHeight;
         }
     }
 
@@ -341,7 +340,7 @@
         [self.upSc.dataView page_height:sonChildVCHeight];
         [self.upSc page_height:CGRectGetMaxY(self.upSc.dataView.frame)];
     }
-    self.param.titleHeight = self.upSc.mainView.frame.size.height;
+    self.param.titleHeight = CGRectGetMaxY(self.upSc.mainView.frame);
     self.downSc.menuTitleHeight = self.param.titleHeight;
     pageDataFrame = self.upSc.dataView.frame;
     pageUpScFrame = self.upSc.frame;
@@ -367,6 +366,7 @@
         self.head_MenuView.frame = CGRectMake(0, self.headView?CGRectGetMinX(self.headView.frame):CGRectGetMinX(self.upSc.frame), self.upSc.frame.size.width, CGRectGetMaxY(self.upSc.frame)-self.upSc.dataView.frame.size.height);
         [self.downSc addSubview:self.head_MenuView];
         [self.downSc sendSubviewToBack:self.head_MenuView];
+        self.upSc.backgroundColor = [UIColor clearColor];
         self.upSc.mainView.backgroundColor = [UIColor clearColor];
         for (WMZPageNaviBtn *btn in self.upSc.btnArr) {
             btn.backgroundColor = [UIColor clearColor];
@@ -631,7 +631,7 @@
     [self removeKVO];
     [self.upSc removeFromSuperview];
     [self.downSc removeFromSuperview];
-    self.downSc = [[WMZPageScroller alloc]initWithFrame:CGRectMake(0, 0, PageVCWidth, PageVCHeight) style:UITableViewStyleGrouped];
+    self.downSc = nil;
     [self.sonChildScrollerViewDic removeAllObjects];
     [self.sonChildFooterViewDic removeAllObjects];
     footerViewIndex = -1;
@@ -706,7 +706,7 @@
 
 - (WMZPageScroller *)downSc{
     if (!_downSc) {
-        _downSc = [[WMZPageScroller alloc]initWithFrame:CGRectMake(0, 0, PageVCWidth, PageVCHeight) style:UITableViewStyleGrouped];
+        _downSc = [[WMZPageScroller alloc]initWithFrame:CGRectMake(0, 0, PageVCWidth, PageVCHeight+0.02) style:UITableViewStyleGrouped];
        _downSc.estimatedRowHeight = 100;
        _downSc.sectionHeaderHeight = 0.01;
        _downSc.sectionFooterHeight = 0.01;
@@ -742,8 +742,13 @@
 
 - (void)setParam:(WMZPageParam *)param{
     _param = param;
-    [self viewDidLayoutSubviews];
-    [self showData];
+    if ([self.parentViewController isKindOfClass:[WMZPageController class]]||
+        self.param.wMenuPosition == PageMenuPositionNavi||
+        self.param.wMenuPosition == PageMenuPositionBottom) {
+        [self showData];
+    }else{
+        [self performSelector:@selector(showData) withObject:nil afterDelay:CGFLOAT_MIN];
+    }
 }
 
 - (void)didReceiveMemoryWarning{

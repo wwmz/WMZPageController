@@ -126,13 +126,6 @@
             if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:end:)]) {
                 [self.loopDelegate setUpSuspension:newVC index:index end:YES];
             }
-            if (self.param.wMenuAnimalTitleBig) {
-                btn.transform = CGAffineTransformMakeScale(1 + (1-pageScale), 1 + (1-pageScale));
-            }
-            if ([newVC isKindOfClass:[WMZPageController class]]) {
-                WMZPageController *tempNewVC = (WMZPageController*)newVC;
-                tempNewVC.upSc.dataView.level = self.dataView.level - 1;
-            }
         }else{
             [self beginAppearanceTransitionWithIndex:index withOldIndex:self.currentTitleIndex];
             self.lastPageIndex = self.currentTitleIndex;
@@ -295,10 +288,6 @@
     if (self.param.wEventBeganTransferController) {
         self.param.wEventBeganTransferController(oldVC, newVC, old, index);
     }
-    if ([newVC isKindOfClass:[WMZPageController class]]) {
-        WMZPageController *tempNewVC = (WMZPageController*)newVC;
-        tempNewVC.upSc.dataView.level = self.dataView.level - 1;
-    }
 }
 
 - (void)addChildVC:(NSInteger)index VC:(UIViewController*)newVC{
@@ -422,12 +411,6 @@
         CGPoint center = self.mainView.lineView.center;
         center.x = _btnLeft.center.x +  (scale)*(_btnRight.center.x - _btnLeft.center.x);
         self.mainView.lineView.center = center;
-    }
-    
-    //变大
-    if (self.param.wMenuAnimalTitleBig) {
-        _btnLeft.transform = CGAffineTransformMakeScale(1+(1-pageScale)*(1-scale), 1+(1-pageScale)*(1-scale));
-        _btnRight.transform = CGAffineTransformMakeScale(1+(1-pageScale)*scale, 1+(1-pageScale)*scale);
     }
     
     //渐变

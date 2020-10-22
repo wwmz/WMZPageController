@@ -27,10 +27,6 @@
         return [TestVC new];
     })
     .wMenuTitleSelectColorSet([UIColor orangeColor])
-    //减掉多出来的高度
-    .wCustomDataViewHeightSet(^CGFloat(CGFloat nowY) {
-        return nowY - PageVCNavBarHeight - PageVCTabBarHeight;
-    })
     .wMenuAnimalSet(PageTitleMenuCircle);
     self.param = param;
 }

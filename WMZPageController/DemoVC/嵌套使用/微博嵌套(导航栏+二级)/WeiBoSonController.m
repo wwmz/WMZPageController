@@ -27,9 +27,9 @@
          return vc;
      })
     .wMenuTitleSelectColorSet([UIColor orangeColor])
-    //减掉导航栏高度+tabbar高度(根据实际情况)
+//    //减掉导航栏高度+tabbar高度(根据实际情况)
     .wCustomDataViewHeightSet(^CGFloat(CGFloat nowY) {
-        return nowY - PageVCNavBarHeight - PageVCTabBarHeight;
+        return nowY ;
     })
     .wMenuFixRightDataSet(@"+")
     .wMenuAnimalSet(PageTitleMenuNone);
