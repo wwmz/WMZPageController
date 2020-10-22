@@ -275,7 +275,7 @@
 - (void)setUpMenuAndDataViewFrame{
     sonChildVCY = 0;
     sonChildVCHeight = 0;
-    CGFloat titleMenuhHeight = CGRectGetMaxY(self.upSc.mainView.frame);
+    CGFloat titleMenuhHeight = self.upSc.mainView.frame.size.height + self.param.wMenuCellMarginY;
     if (self.param.wMenuPosition == PageMenuPositionNavi) {
         sonChildVCY = 0;
         sonChildVCHeight = self.downSc.frame.size.height;
@@ -340,7 +340,7 @@
         [self.upSc.dataView page_height:sonChildVCHeight];
         [self.upSc page_height:CGRectGetMaxY(self.upSc.dataView.frame)];
     }
-    self.param.titleHeight = CGRectGetMaxY(self.upSc.mainView.frame);
+    self.param.titleHeight = self.upSc.mainView.frame.size.height + self.param.wMenuCellMarginY;
     self.downSc.menuTitleHeight = self.param.titleHeight;
     pageDataFrame = self.upSc.dataView.frame;
     pageUpScFrame = self.upSc.frame;
