@@ -13,7 +13,7 @@
 #import "Base.h"
 #import "WMZPageConfig.h"
 #import "WMZPageController-Swift.h"
-@interface HomeVC ()<UITableViewDelegate,UITableViewDataSource>
+@interface HomeVC ()<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate>
 @property(nonatomic,strong)UITableView *ta;
 @property(nonatomic,strong)NSArray *taData;
 @property(nonatomic,strong)NSArray *titleData;
@@ -40,6 +40,22 @@
     ta.dataSource = self;
     ta.delegate = self;
     self.ta = ta;
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController interactivePopGestureRecognizer].delegate = self;
+}
+
+
+//MARK:-侧滑
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
+    
+    if ([[self.navigationController interactivePopGestureRecognizer] isEqual:gestureRecognizer]) {
+            return YES;
+        }
+        return NO;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
