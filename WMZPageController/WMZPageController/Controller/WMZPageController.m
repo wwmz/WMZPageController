@@ -158,8 +158,7 @@
 
 - (void)UI{
     BOOL nest = NO;
-    self.cache = [NSCache new];
-    self.cache.countLimit = 30;
+    self.cache = [NSMutableDictionary new];
     footerViewIndex = -1;
     CGFloat headY = 0;
     CGFloat tabbarHeight = 0;
@@ -258,7 +257,7 @@
     [self setUpHead];
    
     [self.upSc.btnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (idx == self.param.wMenuDefaultIndex && obj.tag!=10086) {
+        if (idx == self.param.wMenuDefaultIndex) {
             self.upSc.mainView.first = YES;
             [obj sendActionsForControlEvents:UIControlEventTouchUpInside];
             *stop = YES;
@@ -671,9 +670,149 @@
         //顶点
         int topOffset = self.downSc.contentSize.height - self.downSc.frame.size.height;
         point = CGPointMake(self.downSc.contentOffset.x, topOffset);
-    }  
+        self.scrolTotop = YES;
+    }
     [self.downSc setContentOffset:point animated:animat];
 }
+
+
+//// 动态插入菜单数据
+//- (void)addMenuTitleWithObject:(NSArray<WMZPageTitleDataModel*>*)objectArr{
+//    [objectArr enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(WMZPageTitleDataModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//        
+//        NSInteger index = obj.index;
+//        NSInteger infactIndex = obj.index;
+//        
+//        if (obj.title) {
+//            NSMutableArray *marr = [NSMutableArray arrayWithArray:self.param.wTitleArr];
+//            if (index <0) {
+//                 [marr addObject:obj.title];
+//            }else{
+//                if (index<self.param.wTitleArr.count) {
+//                    [marr insertObject:obj.title atIndex:index];
+//                }else{
+//                    [marr addObject:obj.title];
+//                }
+//            }
+//            self.param.wTitleArr = [NSArray arrayWithArray:marr];
+//            infactIndex = [self.param.wTitleArr indexOfObject:obj.title];
+//        }
+//        
+//        if (obj.controller) {
+//            NSMutableArray *controllers = [NSMutableArray arrayWithArray:self.param.wControllers];
+//            if (index <0) {
+//                [controllers addObject:obj.controller];
+//            }else{
+//                if (index<self.param.wControllers.count) {
+//                    [controllers insertObject:obj.controller atIndex:index];
+//                }else{
+//                    [controllers addObject:obj.controller];
+//                }
+//            }
+//            self.param.wControllers = [NSArray arrayWithArray:controllers];
+//
+//        }
+//         __block  WMZPageNaviBtn *temp = nil;
+//        [self.param.wControllers enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(UIViewController *  _Nonnull controller, NSUInteger idx, BOOL * _Nonnull stop) {
+//            if (infactIndex >= idx) {
+//                if (infactIndex == idx) {
+//                    WMZPageNaviBtn *temp = nil;
+//                    if ((idx - 1) >= 0 && (idx - 1)<self.upSc.btnArr.count) {
+//                        temp = self.upSc.btnArr[idx - 1];
+//                    }
+//                    WMZPageNaviBtn *btn = [WMZPageNaviBtn buttonWithType:UIButtonTypeCustom];
+//                    [self.upSc.mainView setPropertiesWithBtn:btn withIndex:infactIndex withTemp:temp];
+//                    temp = btn;
+//                    [self.upSc addChildVC:infactIndex VC:controller];
+//                }else{
+//                    WMZPageNaviBtn *btn = self.upSc.btnArr[idx];
+//                    [btn page_x:CGRectGetMaxX(temp.frame) + self.param.wMenuTitleOffset];
+//                    [controller.view page_x:idx * self.upSc.dataView.frame.size.width];
+//                }
+//                
+//            }
+//            [self.cache setObject:controller forKey:@(idx)];
+//        }];
+//
+//       }];
+//    
+//       if (objectArr.count) {
+//           WMZPageNaviBtn *temp = nil;
+//           for (WMZPageNaviBtn *btn in self.upSc.btnArr) {
+//               [btn page_x:temp?CGRectGetMaxX(temp.frame):0];
+//               temp = btn;
+//           }
+//           self.upSc.dataView.contentSize = CGSizeMake(self.param.wTitleArr.count*PageVCWidth,0);
+//           [self.upSc.mainView resetMainViewContenSize:self.upSc.btnArr.lastObject];
+//       }
+//}
+//
+//
+//// 动态删除菜单数据
+//- (void)deleteMenuTitleIndex:(NSArray<NSNumber*>*)indexArr{
+//    [indexArr enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//        NSInteger index = obj.integerValue;
+//        if (self.upSc.mainView&&
+//            self.upSc.mainView.subviews&&
+//            self.upSc.mainView.subviews.count>index) {
+//               UIView *deleteView = self.upSc.mainView.subviews[index];
+//               [deleteView removeFromSuperview];
+//               deleteView = nil;
+//           }
+//      if (self.upSc.dataView&&
+//          self.upSc.dataView.subviews&&
+//          self.upSc.dataView.subviews.count>index) {
+//          UIView *deleteView = self.upSc.dataView.subviews[index];
+//          [deleteView removeFromSuperview];
+//          deleteView = nil;
+//      }
+//      if (self.param.wTitleArr&&
+//          self.param.wTitleArr.count>index) {
+//          NSMutableArray *marr = [NSMutableArray arrayWithArray:self.param.wTitleArr];
+//          [marr removeObjectAtIndex:index];
+//          self.param.wTitleArr = [NSArray arrayWithArray:marr];
+//      }
+//      if (self.param.wControllers&&
+//          self.param.wControllers.count>index) {
+//          NSMutableArray *marr = [NSMutableArray arrayWithArray:self.param.wControllers];
+//          [marr removeObjectAtIndex:index];
+//          self.param.wControllers = [NSArray arrayWithArray:marr];
+//      }
+//      if ([self.cache objectForKey:obj]) {
+//          UIViewController *indexVC = [self.cache objectForKey:obj];
+//          [indexVC willMoveToParentViewController:nil];
+//          [indexVC.view removeFromSuperview];
+//          [indexVC removeFromParentViewController];
+//          indexVC.view = nil;
+//          indexVC = nil;
+//          [self.cache removeObjectForKey:obj];
+//          [self.sonChildScrollerViewDic removeObjectForKey:obj];
+//      }
+//        
+//      if (self.upSc.btnArr&&self.upSc.btnArr.count>index) {
+//          [self.upSc.btnArr removeObjectAtIndex:index];
+//      }
+//    }];
+//    if (indexArr.count) {
+//        WMZPageNaviBtn *temp = nil;
+//        for (WMZPageNaviBtn *btn in self.upSc.btnArr) {
+//            [btn page_x:temp?CGRectGetMaxX(temp.frame):0];
+//            temp = btn;
+//        }
+//        for (int i = 0; i<self.param.wControllers.count; i++) {
+//            [self.cache setObject:self.param.wControllers[i] forKey:@(i)];
+//        }
+//        for (int i = 0;i<self.upSc.dataView.subviews.count;i++) {
+//            UIView *view = self.upSc.dataView.subviews[i];
+//            [view page_x:self.upSc.dataView.frame.size.width *1];
+//        }
+//        self.upSc.dataView.contentSize = CGSizeMake(self.param.wTitleArr.count*PageVCWidth,0);
+//        [self.upSc.mainView resetMainViewContenSize:self.upSc.btnArr.lastObject];
+////        NSInteger index = MIN(self.upSc.currentTitleIndex, self.upSc.btnArr.count - 1);
+//        self.upSc.currentTitleIndex = -1;
+//        [self selectMenuWithIndex:1];
+//    }
+//}
 
 //数据
 - (void)showData{

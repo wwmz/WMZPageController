@@ -37,7 +37,7 @@
 #define PageColor(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #define PageK1px (1 / UIScreen.mainScreen.scale)
 
-#define PageVCIS_iPhoneX ({\
+#define pageIsIphoneX ({\
 BOOL isPhoneX = NO;\
 if (@available(iOS 11.0, *)) {\
 if ([[[UIApplication sharedApplication] delegate] window].safeAreaInsets.bottom > 0.0) {\
@@ -48,23 +48,12 @@ isPhoneX;\
 })
 
 //状态栏高度
-#define PageVCStatusBarHeight (PageVCIS_iPhoneX ? 44.f : 20.f)
+#define PageVCStatusBarHeight (pageIsIphoneX ? 44.f : 20.f)
 //导航栏高度
 #define PageVCNavBarHeight (44.f+PageVCStatusBarHeight)
 //底部标签栏高度
-#define PageVCTabBarHeight (PageVCIS_iPhoneX ? (49.f+34.f) : 49.f)
+#define PageVCTabBarHeight (pageIsIphoneX ? (49.f+34.f) : 49.f)
 
-#define PageWindow   [UIApplication sharedApplication].keyWindow
-
-#define pageIsIphoneX ({\
-BOOL isPhoneX = NO;\
-if (@available(iOS 11.0, *)) {\
-if ([[[UIApplication sharedApplication] delegate] window].safeAreaInsets.bottom > 0.0) {\
-isPhoneX = YES;\
-}\
-}\
-isPhoneX;\
-})
 
 
 #define WMZPagePropStatementAndPropSetFuncStatement(propertyModifier,className, propertyPointerType, propertyName)           \

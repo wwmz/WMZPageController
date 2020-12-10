@@ -275,7 +275,7 @@ selectImage 选中图片
       @"5G",
       @"抽奖",
       @"新时代",
-      @{@"image":@"F",@"selectImage":@"D"},
+      @{@"name":@"哈哈",@"selectImage":@"D"},
       @"电竞",
       @"明星"];
 }

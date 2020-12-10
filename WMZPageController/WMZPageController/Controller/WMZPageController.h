@@ -18,12 +18,11 @@ NS_ASSUME_NONNULL_BEGIN
 //底部全屏滚动视图
 @property(nonatomic,strong,nullable)WMZPageScroller *downSc;
 //缓存
-@property(nonatomic,strong)NSCache *cache;
+@property(nonatomic,strong)NSMutableDictionary *cache;
 //子控制器中可以滚动的视图
 @property(nonatomic,strong)NSMutableDictionary *sonChildScrollerViewDic;
 //子控制器中固定底部的视图
 @property(nonatomic,strong)NSMutableDictionary *sonChildFooterViewDic;
-
 //子控制器固定底部如果不是位于最左边  可设置此属性 默认为0
 @property(nonatomic,assign)CGFloat footViewOrginX;
 //子控制器固定底部宽度如果不是整个屏幕  可设置此属性 默认为底部滚动视图的宽度
@@ -66,6 +65,20 @@ NS_ASSUME_NONNULL_BEGIN
 */
 - (void)selectMenuWithIndex:(NSInteger)index;
 
+
+
+///*!
+//* @brief 动态插入菜单数据
+//* @param objectArr 插入对应数组
+//*/
+//- (void)addMenuTitleWithObject:(NSArray<WMZPageTitleDataModel*>*)objectArr;
+//
+//
+///*!
+//* @brief 动态删除菜单数据
+//* @param indexArr 删除的对应下标 @[@(1),@"2"]
+//*/
+//- (void)deleteMenuTitleIndex:(NSArray<NSNumber*>*)indexArr;
 @end
 
 NS_ASSUME_NONNULL_END

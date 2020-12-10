@@ -33,6 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
 //滚动到index
 - (void)scrollToIndex:(NSInteger)newIndex;
 - (CGFloat)getMainHeight;
+- (void)setPropertiesWithBtn:(WMZPageNaviBtn*)btn withIndex:(NSInteger)i  withTemp:(WMZPageNaviBtn*)temp;
+- (void)resetMainViewContenSize:(WMZPageNaviBtn*)btn;
 @end
 
 NS_ASSUME_NONNULL_END

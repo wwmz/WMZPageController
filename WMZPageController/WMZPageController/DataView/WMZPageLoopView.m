@@ -103,13 +103,15 @@
 }
 //标题点击
 - (void)tap:(WMZPageNaviBtn*)btn{
+    NSInteger index = [self.btnArr indexOfObject:btn];
+    if (index == NSNotFound) return;
     if (!self.mainView.first) {
         if (self.param.wEventClick) {
             self.param.wEventClick(btn, btn.tag);
         }
     }
-    if (self.currentTitleIndex == btn.tag) return;
-    NSInteger index = btn.tag;
+    if (self.currentTitleIndex == index) return;
+    
     if (!btn.onlyClick) {
         if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(selectBtnWithIndex:)]) {
             [self.loopDelegate selectBtnWithIndex:index];
@@ -256,26 +258,39 @@
 }
 
 - (UIViewController*)getVCWithIndex:(NSInteger)index{
+    UIViewController *controller = nil;
     if (index < 0|| index >= self.param.wTitleArr.count) {
-        return nil;
+        return controller;
     }
-    if ([[self findBelongViewControllerForView:self].cache objectForKey:@(index)]) {
-        return [[self findBelongViewControllerForView:self].cache objectForKey:@(index)];
+    controller = [[self findBelongViewControllerForView:self].cache objectForKey:@(index)];
+    if (controller) {
+        NSLog(@"111 %ld  %@",index,controller);
+        return controller;
     }
-    if (self.param.wViewController) {
-       return self.param.wViewController(index);
+    
+    if (self.param.wControllers) {
+        controller = self.param.wControllers[index];
+        if (controller) {
+            NSLog(@"222 %ld  %@",index,controller);
+            return controller;
+        }
     }else{
-        if (self.param.wControllers) {
-            return self.param.wControllers[index];
+        if (self.param.wViewController) {
+            controller = self.param.wViewController(index);
+            if (controller) {
+                return controller;
+            }
         }
     }
-    return nil;
+    return controller;
 }
 
 - (void)beginAppearanceTransitionWithIndex:(NSInteger)index withOldIndex:(NSInteger)old{
+    NSLog(@"新 %ld  旧 %ld",index,old);
     UIViewController *newVC = [self getVCWithIndex:index];
     UIViewController *oldVC = [self getVCWithIndex:old];
-    if (!newVC||!oldVC||(index==old)) return;
+    NSLog(@"新 %@  旧 %@",newVC,oldVC);
+    if (!newVC||!oldVC||(index==old)||(oldVC==newVC)) return;
     [newVC beginAppearanceTransition:YES animated:YES];
     [self addChildVC:index VC:newVC];
     [oldVC beginAppearanceTransition:NO  animated:YES];
@@ -291,6 +306,7 @@
 }
 
 - (void)addChildVC:(NSInteger)index VC:(UIViewController*)newVC{
+    if (!newVC) return;
     if (![[self findBelongViewControllerForView:self].childViewControllers containsObject:newVC]) {
         [[self findBelongViewControllerForView:self] addChildViewController:newVC];
         CGRect frame = CGRectMake(index * self.dataView.frame.size.width,0,self.dataView.frame.size.width,

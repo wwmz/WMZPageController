@@ -93,6 +93,7 @@
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.text = [NSString stringWithFormat:@"测试文本%ld-%ld",indexPath.section,indexPath.row];
     cell.detailTextLabel.text = @"测试详情文本";
     return cell;
@@ -115,11 +116,14 @@
     if (tableView == _leftTa) {
         leftScroll = YES;
         WMZPageController *parentVC = (WMZPageController*)self.parentViewController;
+        if (indexPath.row == 0) {
+            
+        }
         //先置顶 再联动
         [parentVC downScrollViewSetOffset:CGPointZero animated:NO];
         //如果设置动画 则延迟0.25秒执行self.rightTa滚动的部分
         [self.rightTa scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:indexPath.row] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-        
+        [self.rightTa selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:indexPath.row] animated:YES scrollPosition:UITableViewScrollPositionTop];
     }
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{

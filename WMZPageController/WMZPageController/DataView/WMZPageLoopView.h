@@ -10,6 +10,7 @@
 #import "WMZPageScroller.h"
 #import "WMZPageDataView.h"
 #import "WMZPageMunuView.h"
+#import "WMZPageTitleDataModel.h"
 @class WMZPageController;
 NS_ASSUME_NONNULL_BEGIN
 
@@ -74,6 +75,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 //找寻view的父控制器
 - (nullable WMZPageController *)findBelongViewControllerForView:(UIView *)view;
+
+//添加
+- (void)addChildVC:(NSInteger)index VC:(UIViewController*)newVC;
 @end
 
 NS_ASSUME_NONNULL_END

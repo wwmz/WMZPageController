@@ -31,7 +31,6 @@
     .wCustomDataViewHeightSet(^CGFloat(CGFloat nowY) {
         return nowY ;
     })
-    .wMenuFixRightDataSet(@"+")
     .wMenuAnimalSet(PageTitleMenuNone);
     self.param = param;
 }

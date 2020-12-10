@@ -30,7 +30,7 @@
     WMZPageParam *param = PageParam()
     .wTitleArrSet(@[@"关注",@"推荐"])
     .wMenuFixShadowSet(NO)
-    .wMenuFixRightDataSet(@[@{@"name":@"🔍",@"selectName":@"😴"},@{@"image":@"C"}])
+    .wMenuFixRightDataSet(@[@{@"name":@"固定",@"selectName":@"固定1",@"titleColor":[UIColor redColor],@"titleSelectColor":[UIColor blueColor]},@{@"image":@"C"}])
     .wViewControllerSet(^UIViewController *(NSInteger index) {
         if (index == 1) {
             return [WZSecondController new];

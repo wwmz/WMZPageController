@@ -40,12 +40,28 @@
         WMZPageNaviBtn *btn = [WMZPageNaviBtn buttonWithType:UIButtonTypeCustom];
         [self setPropertiesWithBtn:btn withIndex:i withTemp:temp];
         temp = btn;
+        if (i == self.param.wTitleArr.count - 1) {
+            [self resetMainViewContenSize:btn];
+        }
+    }
+    if (self.param.wCustomMenuView) {
+        self.param.wCustomMenuView(self);
     }
     //指示器
     [self setUpIndicator];
     //右边固定标题
     [self setUpFixRightBtn:temp];
     
+}
+
+//重置contensize
+- (void)resetMainViewContenSize:(WMZPageNaviBtn*)btn{
+    if (CGRectGetMaxX(btn.frame) <= self.frame.size.width) {
+        self.scrollEnabled = NO;
+    }else{
+        self.scrollEnabled = YES;
+    }
+    self.contentSize = CGSizeMake(CGRectGetMaxX(btn.frame), 0);
 }
 
 //初始化指示器
@@ -84,15 +100,14 @@
         for (int i = ((int)fixData.count - 1); i>=0; i--) {
             id info = fixData[i];
             WMZPageNaviBtn *fixBtn = [WMZPageNaviBtn buttonWithType:UIButtonTypeCustom];
-            CGFloat menuFixWidth = self.param.wMenuFixWidth;
-            id fixWidth = [self getTitleData:info key:@"width"];
+            CGFloat menuFixWidth = [self getTitleData:info key:@"width"]?[[self getTitleData:info key:@"width"] floatValue]:self.param.wMenuFixWidth;
             id text = [self getTitleData:info key:@"name"];
             id selectText = [self getTitleData:info key:@"selectName"];
             id image = [self getTitleData:info key:@"image"];
             id selectImage = [self getTitleData:info key:@"selectImage"];
-            if (fixWidth && [fixWidth floatValue]>=0) {
-                menuFixWidth = [fixWidth floatValue];
-            }
+            id titleColor = [self getTitleData:info key:@"titleColor"]?:self.param.wMenuTitleColor;
+            id titleSelectColor = [self getTitleData:info key:@"titleSelectColor"]?:self.param.wMenuTitleSelectColor;
+            CGFloat margin = [self getTitleData:info key:@"margin"]?[[self getTitleData:info key:@"margin"] floatValue]:self.param.wMenuImageMargin;
             if (text) {
                 [fixBtn setTitle:text forState:UIControlStateNormal];
             }
@@ -110,14 +125,15 @@
             }
             allWidth += menuFixWidth;
             fixBtn.titleLabel.font = self.param.wMenuTitleUIFont;
-            [fixBtn setTitleColor:self.param.wMenuTitleColor forState:UIControlStateNormal];
+            [fixBtn setTitleColor:titleColor forState:UIControlStateNormal];
+            [fixBtn setTitleColor:titleSelectColor forState:UIControlStateSelected];
             fixBtn.frame = CGRectMake(CGRectGetWidth(self.frame)-allWidth, temp.frame.origin.y, menuFixWidth, temp.frame.size.height);
             fixBtn.tag = 10086+i;
             fixBtn.backgroundColor = temp.backgroundColor;
             [self addSubview:fixBtn];
             [self bringSubviewToFront:fixBtn];
             if (image) {
-                [fixBtn TagSetImagePosition:self.param.wMenuImagePosition spacing:self.param.wMenuImageMargin];
+                [fixBtn TagSetImagePosition:self.param.wMenuImagePosition spacing:margin];
             }
             if (self.param.wMenuFixShadow) {
                [fixBtn viewShadowPathWithColor:PageColor(0x333333) shadowOpacity:0.8 shadowRadius:3 shadowPathType:PageShadowPathLeft shadowPathWidth:2];
@@ -137,26 +153,27 @@
 }
 
 //设置按钮样式
-- (void)setPropertiesWithBtn:(WMZPageNaviBtn*)btn withIndex:(int)i  withTemp:(WMZPageNaviBtn*)temp{
+- (void)setPropertiesWithBtn:(WMZPageNaviBtn*)btn withIndex:(NSInteger)i  withTemp:(WMZPageNaviBtn*)temp{
     CGFloat margin = self.param.wMenuCellMargin;
     btn.param = self.param;
     [btn  setAdjustsImageWhenHighlighted:NO];
     [btn addTarget:self action:@selector(tap:) forControlEvents:UIControlEventTouchUpInside];
-    id name = [self getTitleData:self.param.wTitleArr[i] key:@"name"];
+    id titleInfo = self.param.wTitleArr[i];
+    id name = [self getTitleData:titleInfo key:@"name"];
     if (name) {
         [btn setTitle:name forState:UIControlStateNormal];
         btn.normalText = name;
     }
-    id selectName = [self getTitleData:self.param.wTitleArr[i] key:@"selectName"];
+    id selectName = [self getTitleData:titleInfo key:@"selectName"];
     if (selectName) {
         [btn setTitle:selectName forState:UIControlStateSelected];
         btn.selectText = selectName;
     }
     CGSize size =  btn.maxSize;
     //设置图片
-    id image = [self getTitleData:self.param.wTitleArr[i] key:@"image"];
-    id selectImage = [self getTitleData:self.param.wTitleArr[i] key:@"selectImage"];
-    id onlyClick = [self getTitleData:self.param.wTitleArr[i] key:@"onlyClick"];
+    id image = [self getTitleData:titleInfo key:@"image"];
+    id selectImage = [self getTitleData:titleInfo key:@"selectImage"];
+    id onlyClick = [self getTitleData:titleInfo key:@"onlyClick"];
     if (image) {
         [btn setImage:[UIImage imageNamed:image] forState:UIControlStateNormal];
         btn.imageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -187,18 +204,20 @@
     }
     btn.titleLabel.font = self.param.wMenuTitleUIFont;
 
-    id selectColor = [self getTitleData:self.param.wTitleArr[i] key:@"titleSelectColor"];
+    id selectColor = [self getTitleData:titleInfo key:@"titleSelectColor"]?:self.param.wMenuTitleSelectColor;
+    id color = [self getTitleData:titleInfo key:@"titleColor"]?:self.param.wMenuTitleColor;
     [btn setTitleColor:selectColor?:self.param.wMenuTitleSelectColor forState:UIControlStateSelected];
-    [btn setTitleColor:self.param.wMenuTitleColor forState:UIControlStateNormal];
+    [btn setTitleColor:color forState:UIControlStateNormal];
     btn.tag = i;
     btn.frame = CGRectMake(temp?(CGRectGetMaxX(temp.frame)+self.param.wMenuTitleOffset):0, 0, self.param.wMenuTitleWidth?:(size.width + margin), self.param.wMenuHeight);
     [self addSubview:btn];
     [self.btnArr addObject:btn];
+    CGFloat imageMargin = [self getTitleData:titleInfo key:@"margin"]?[[self getTitleData:titleInfo key:@"margin"] floatValue]:self.param.wMenuImageMargin;
     if (image) {
-        [btn TagSetImagePosition:self.param.wMenuImagePosition spacing:self.param.wMenuImageMargin];
+        [btn TagSetImagePosition:self.param.wMenuImagePosition spacing:imageMargin];
     }
     //设置右上角红点
-    NSString *badge = [self getTitleData:self.param.wTitleArr[i] key:@"badge"];
+    NSString *badge = [self getTitleData:titleInfo key:@"badge"];
     if (badge) {
        [btn showBadgeWithTopMagin:self.param.wTitleArr[i]];
     }
@@ -207,8 +226,8 @@
         btn.titleLabel.textAlignment = NSTextAlignmentCenter;
     }
     //设置富文本
-    id wrapColor = [self getTitleData:self.param.wTitleArr[i] key:@"wrapColor"];
-    id firstColor = [self getTitleData:self.param.wTitleArr[i] key:@"firstColor"];
+    id wrapColor = [self getTitleData:titleInfo key:@"wrapColor"];
+    id firstColor = [self getTitleData:titleInfo key:@"firstColor"];
     if ([btn.titleLabel.text containsString:@"\n"]&&(wrapColor||firstColor)) {
         NSMutableAttributedString *mStr = [[NSMutableAttributedString alloc] initWithString:btn.titleLabel.text];
         NSMutableAttributedString *mSelectStr = [[NSMutableAttributedString alloc] initWithString:btn.titleLabel.text];
@@ -223,18 +242,6 @@
         [btn setAttributedTitle:mStr forState:UIControlStateNormal];
         [btn setAttributedTitle:mSelectStr forState:UIControlStateSelected];
         btn.attributed = YES;
-    }
-    //重新设置布局
-    if (i == (self.param.wTitleArr.count -1)) {
-        if (CGRectGetMaxX(btn.frame) <= self.frame.size.width) {
-           self.scrollEnabled = NO;
-        }else{
-           self.scrollEnabled = YES;
-        }
-        self.contentSize = CGSizeMake(CGRectGetMaxX(btn.frame), 0);
-    }
-    if (self.param.wCustomMenuView) {
-        self.param.wCustomMenuView(self);
     }
 }
 
@@ -264,6 +271,7 @@
 
 //滚动到中间
 - (void)scrollToIndex:(NSInteger)newIndex{
+    if (self.btnArr.count<=newIndex) return;
     WMZPageNaviBtn *btn = self.btnArr[newIndex] ;
     //隐藏右上角红点
     [btn hidenBadge];
@@ -277,7 +285,8 @@
     //改变标题颜色
     
     [self.btnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn * _Nonnull temp, NSUInteger idx, BOOL * _Nonnull stop) {
-        temp.selected = (temp.tag == newIndex ?YES:NO);
+        NSInteger btnIndex = [self.btnArr indexOfObject:temp];
+        temp.selected = (btnIndex == newIndex ?YES:NO);
         if ([temp isSelected]) {
             UIColor *tempBackgroundColor = self.param.wMenuBgColor;
             UIColor *fixBackgroundColor = self.param.wMenuBgColor;

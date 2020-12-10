@@ -34,6 +34,7 @@
         //控制器数组
         .wViewControllerSet(^UIViewController *(NSInteger index) {
             TopSuspensionVC *vc = [TopSuspensionVC new];
+            vc.page = index;
             return vc;
         })
         //悬浮开启
@@ -65,16 +66,17 @@
 
     self.downSc.mj_header= [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         __strong WMZCustomThreePage *strongSelf = weakSelf;
+        //模拟更新数据
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                NSArray *data1 = @[@"热门",@"男装",@"美妆"];
-                strongSelf.param.wTitleArrSet(data1)
-                   //控制器数组
-                .wViewControllerSet(^UIViewController *(NSInteger index) {
-                    CollectionViewPopDemo *vc = [CollectionViewPopDemo new];
-                    return vc;
-                });
-                //更新菜单数据
-                [strongSelf updateMenuData];
+//                NSArray *data1 = @[@"热门",@"男装",@"美妆"];
+//                strongSelf.param.wTitleArrSet(data1)
+//                   //控制器数组
+//                .wViewControllerSet(^UIViewController *(NSInteger index) {
+//                    CollectionViewPopDemo *vc = [CollectionViewPopDemo new];
+//                    return vc;
+//                });
+//                //模拟更新菜单数据
+//                [strongSelf updateMenuData];
                 [strongSelf.downSc.mj_header endRefreshing];
             });
         }];

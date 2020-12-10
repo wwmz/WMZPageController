@@ -29,10 +29,13 @@ NS_ASSUME_NONNULL_BEGIN
  selectImage      选中图片 @""
  */
 WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, NSArray*,              wTitleArr)
-//VC数据 必传 1.1.6新增
+
+
+//VC数据 必传(二选一) 1.1.6新增
 WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam,  PageViewControllerIndex,              wViewController)
-//VC数组 (已废弃)
+//VC数组 必传(二选一) (如果要做标题内容增删操作的需要使用此属性 )
 WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, NSArray*,              wControllers)
+
 /* =========================================required==============================================*/
 
 /* =========================================customFrame===============================================*/
