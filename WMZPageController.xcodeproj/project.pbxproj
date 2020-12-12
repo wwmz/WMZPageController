@@ -672,8 +672,8 @@
 				F3A1FEF72334D6AF004B12F6 /* SDWebImage */,
 				F3A1FEE92334D5ED004B12F6 /* WMZBanner */,
 				F3C85DAB234F12670087C629 /* DemoVC */,
-				F32E009323308C2A004920BD /* AppDelegate.m */,
 				F32E009223308C2A004920BD /* AppDelegate.h */,
+				F32E009323308C2A004920BD /* AppDelegate.m */,
 				F32E009523308C2A004920BD /* ViewController.h */,
 				F32E009623308C2A004920BD /* ViewController.m */,
 				F32E009823308C2A004920BD /* Main.storyboard */,
@@ -871,10 +871,10 @@
 		F392D46523A36BC600B00FBF /* 首页 */ = {
 			isa = PBXGroup;
 			children = (
-				F392D46623A36BC600B00FBF /* Base.m */,
-				F392D46723A36BC600B00FBF /* HomeVC.m */,
 				F392D46823A36BC600B00FBF /* HomeVC.h */,
+				F392D46723A36BC600B00FBF /* HomeVC.m */,
 				F392D46923A36BC600B00FBF /* Base.h */,
+				F392D46623A36BC600B00FBF /* Base.m */,
 			);
 			path = "首页";
 			sourceTree = "<group>";

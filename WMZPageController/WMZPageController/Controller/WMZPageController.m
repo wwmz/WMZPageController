@@ -183,7 +183,8 @@
             UINavigationController *naPar = (UINavigationController*)self.parentViewController;
             headY = (!self.param.wFromNavi&&
             self.param.wMenuPosition != PageMenuPositionBottom)?0:
-            (!naPar.navigationBar.translucent?0:PageVCNavBarHeight);
+            (!naPar.navigationBar.translucent?0:(naPar.isNavigationBarHidden?PageVCStatusBarHeight:PageVCNavBarHeight));
+            //davidli- Update 2020.11.27 适配隐藏导航栏时距离顶部的高度
             if (self.parentViewController.tabBarController) {
                 if (!self.parentViewController.tabBarController.tabBar.translucent) {
                     tabbarHeight = 0;
