@@ -386,25 +386,66 @@
 ### 详情看demo    
 
 ###  更新 改变wTitleArr和wControllers后直接调用实例方法即可
-     /*
-     *更新(全部重新渲染)
-     */
-     - (void)updatePageController;
-     
-     /*
-     *更新头部
-     */
-     - (void)updateHeadView;
+        /*!
+        *
+	* @brief 更新全部(会全部重新渲染)
+	*/
+	- (void)updatePageController;
 
-     /*
-     *手动调用菜单到第index个
-     */
-     - (void)selectMenuWithIndex:(NSInteger)index;
-     
-     /*
-     *底部手动滚动  传入CGPointZero则为吸顶临界点
-     */
-     - (void)downScrollViewSetOffset:(CGPoint)point animated:(BOOL)animat;
+	/*!
+	* @brief 更新头部
+	*/
+	- (void)updateHeadView;
+
+	/*!
+	* @brief 更新菜单栏
+	*/
+	- (void)updateMenuData;
+
+	/*!
+	* @brief 标题数量内容不变情况下只更新内容
+	*/
+	- (void)updateTitle;
+
+	/*!
+	* @brief 底部手动滚动 传入CGPointZero则为吸顶临界点
+	* @param point 滚动的坐标
+	* @param animat 滚动动画
+	*/
+	- (void)downScrollViewSetOffset:(CGPoint)point animated:(BOOL)animat;
+
+	/*!
+	* @brief 手动调用菜单到第index个
+	* @param index 对应下标
+	*/
+	- (void)selectMenuWithIndex:(NSInteger)index;
+
+
+
+	/*!
+	* @brief 动态插入菜单数据
+	* @param insertObject 插入对应model
+	*/
+	- (BOOL)addMenuTitleWithObject:(WMZPageTitleDataModel*)insertObject;
+
+	/*!
+	* @brief 动态删除菜单数据
+	* @param deleteObject 删除的对应下标 如@(1) 或者 传入的标题对象
+	*/
+	- (BOOL)deleteMenuTitleIndex:(id)deleteObject;
+
+
+	/*!
+	* @brief 动态插入菜单数组
+	* @param insertArr 插入对应model的数组
+	*/
+	- (BOOL)addMenuTitleWithObjectArr:(NSArray<WMZPageTitleDataModel*>*)insertArr;
+
+	/*!
+	* @brief 动态删除菜单数组
+	* @param deleteArr @[ 如@(1) 或者 传入的标题对象]
+	*/
+	- (BOOL)deleteMenuTitleIndexArr:(NSArray*)deleteArr;
 
 ### 依赖
 无任何依赖 
@@ -467,4 +508,4 @@ ios问题交流群 937909825(有问题加群哈)
 - 20200920 pod更新至1.2.6 淘宝demo优化 新增自定义顶部距离 自定义整体高度 自定义底部距离
 - 20201009 pod更新至1.2.7 修复bug
 - 20201022 pod更新至1.3.2 iPhone12适配 修复bug 优化结构 
-
+- 20201218 pod更新至1.3.3 新增动态增删方法 优化
