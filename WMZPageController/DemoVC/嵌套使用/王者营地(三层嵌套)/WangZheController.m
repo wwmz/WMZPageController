@@ -17,7 +17,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -37,9 +37,6 @@
         }
         return [TestVC new];
      })
-    .wCustomNaviBarYSet(^CGFloat(CGFloat nowY) {
-        return nowY - PageVCStatusBarHeight;
-    })
     .wMenuIndicatorColorSet([UIColor orangeColor])
     .wMenuTitleSelectColorSet([UIColor orangeColor])
     .wMenuAnimalSet(PageTitleMenuPDD);

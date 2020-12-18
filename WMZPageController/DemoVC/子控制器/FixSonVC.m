@@ -85,8 +85,7 @@
 
 - (void)onBtnAction:(id)sender{
     [self scrollTableToFoot:NO];
-    NSIndexPath *ip = [NSIndexPath indexPathForRow:0 inSection:0    ];
-      [self.ta scrollToRowAtIndexPath:ip atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+
     //模拟键盘弹出改变底部视图的frame
 //    sss = !sss;
 //    WMZUsePageVC *vc = (WMZUsePageVC*)self.parentViewController;

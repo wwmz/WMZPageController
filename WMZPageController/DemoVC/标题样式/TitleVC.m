@@ -78,8 +78,7 @@
         })
         .wMenuWidthSet([widthDic[@(index)] floatValue])
         .wMenuDefaultIndexSet(2)
-        .wMenuPositionSet([position[@(index)] intValue]);
-    
+        .wMenuPositionSet([position[@(index)] intValue]);    
         if (index == 6) {
             param.wMenuAnimalSet(PageTitleMenuPDD);
         }
@@ -92,7 +91,7 @@
             param.wMenuImagePositionSet(PageBtnPositionLeft)
                  .wMenuFixRightDataSet(@{@"name":@"金币",@"image":@"B"})
             .wEventFixedClickSet(^(id anyID, NSInteger index) {
-                NSLog(@"固定标题点击%ld",index);
+                NSLog(@"固定标题点击%ld",(long)index);
                 //模拟更新
                 [self.upSc.btnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                     if (obj.tag == 10086) {

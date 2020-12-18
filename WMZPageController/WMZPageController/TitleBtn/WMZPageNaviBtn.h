@@ -20,8 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,assign)BOOL onlyClick;
 //有红点提示
 @property(nonatomic,assign)NSInteger hasBadge;
-//富文本
-@property(nonatomic,assign)BOOL attributed;
 //初始文本内容
 @property(nonatomic,copy)NSString* normalText;
 //选中文本

@@ -67,18 +67,30 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 
-///*!
-//* @brief 动态插入菜单数据
-//* @param objectArr 插入对应数组
-//*/
-//- (void)addMenuTitleWithObject:(NSArray<WMZPageTitleDataModel*>*)objectArr;
-//
-//
-///*!
-//* @brief 动态删除菜单数据
-//* @param indexArr 删除的对应下标 @[@(1),@"2"]
-//*/
-//- (void)deleteMenuTitleIndex:(NSArray<NSNumber*>*)indexArr;
+/*!
+* @brief 动态插入菜单数据
+* @param insertObject 插入对应model
+*/
+- (BOOL)addMenuTitleWithObject:(WMZPageTitleDataModel*)insertObject;
+
+/*!
+* @brief 动态删除菜单数据
+* @param deleteObject 删除的对应下标 如@(1) 或者 传入的标题对象
+*/
+- (BOOL)deleteMenuTitleIndex:(id)deleteObject;
+
+
+/*!
+* @brief 动态插入菜单数组
+* @param insertArr 插入对应model的数组
+*/
+- (BOOL)addMenuTitleWithObjectArr:(NSArray<WMZPageTitleDataModel*>*)insertArr;
+
+/*!
+* @brief 动态删除菜单数组
+* @param deleteArr @[ 如@(1) 或者 传入的标题对象]
+*/
+- (BOOL)deleteMenuTitleIndexArr:(NSArray*)deleteArr;
 @end
 
 NS_ASSUME_NONNULL_END

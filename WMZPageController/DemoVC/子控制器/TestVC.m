@@ -26,7 +26,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    NSLog(@"viewWillAppear %ld",self.page);
+    NSLog(@"viewWillAppear %ld",(long)self.page);
 }
 
 #pragma mark 注意 可以重新适配tableview的frame 如果你已经适配好了tableview的frame就不用
@@ -37,18 +37,18 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    NSLog(@"viewWillDisappear %ld",self.page);
+    NSLog(@"viewWillDisappear %ld",(long)self.page);
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-    NSLog(@"viewDidDisappear %ld",self.page);
+    NSLog(@"viewDidDisappear %ld",(long)self.page);
 }
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"viewDidLoad %ld",self.page);
+    NSLog(@"viewDidLoad %ld",(long)self.page);
     self.view.backgroundColor = [UIColor whiteColor];
     UITableView *ta = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     [self.view addSubview:ta];
@@ -135,8 +135,8 @@
     [cell.imageView sd_setImageWithURL:[NSURL URLWithString:@"http://b-ssl.duitang.com/uploads/item/201412/17/20141217151102_LThwM.png"]];
     UIGraphicsEndImageContext();//*3
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%ld-路飞",self.page];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld-红发",self.page];
+    cell.textLabel.text = [NSString stringWithFormat:@"%ld-路飞",(long)self.page];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld-红发",(long)self.page];
     return cell;
 }
 

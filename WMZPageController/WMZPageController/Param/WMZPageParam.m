@@ -26,7 +26,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wScrollCa
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wBounces)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wNaviAlphaAll)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wFixFirst)
-WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuTitleSelectFont)
+WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wLazyLoading)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuWidth)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageMenuPosition,       wMenuPosition)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuTitleOffset)
@@ -36,7 +36,6 @@ WMZPagePropSetFuncImplementation(WMZPageParam, UIColor*,               wMenuTitl
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuCellMargin)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuCellPadding)
 WMZPagePropSetFuncImplementation(WMZPageParam, UIColor*,               wMenuTitleSelectColor)
-WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuTitleFont)
 WMZPagePropSetFuncImplementation(WMZPageParam, UIColor*,               wMenuIndicatorColor)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuIndicatorWidth)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuIndicatorHeight)
@@ -47,11 +46,13 @@ WMZPagePropSetFuncImplementation(WMZPageParam, PageBtnPosition,        wMenuImag
 WMZPagePropSetFuncImplementation(WMZPageParam, PageSpecialType,        wMenuSpecifial)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuImageMargin)
 WMZPagePropSetFuncImplementation(WMZPageParam, id,                     wMenuFixRightData)
+WMZPagePropSetFuncImplementation(WMZPageParam, UIColor*,               wMenuTitleBackground)
 WMZPagePropSetFuncImplementation(WMZPageParam, UIColor*,               wMenuBgColor)
 WMZPagePropSetFuncImplementation(WMZPageParam, UIColor*,               wBgColor)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuFixWidth)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuCellMarginY)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wTopChangeHeight)
+WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuBottomMarginY)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageHeadViewBlock,      wMenuHeadView)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageCustomMenuTitle,    wCustomMenufixTitle)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuTitleWeight)
@@ -76,6 +77,8 @@ WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuCirc
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuHeight)
 WMZPagePropSetFuncImplementation(WMZPageParam, UIFont*,                wMenuTitleUIFont)
 WMZPagePropSetFuncImplementation(WMZPageParam, UIFont*,                wMenuTitleSelectUIFont)
+WMZPagePropSetFuncImplementation(WMZPageParam, UIColor*,               wMenuSelectTitleBackground)
+WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuTitleRadios)
 - (instancetype)init{
     if (self = [super init]) {
         _wMenuAnimal = PageTitleMenuNone;
@@ -86,7 +89,6 @@ WMZPagePropSetFuncImplementation(WMZPageParam, UIFont*,                wMenuTitl
         _wMenuIndicatorHeight = 3.0f;
         _wMenuWidth = PageVCWidth;
         _wMenuAnimalTitleGradient = YES;
-        _wMenuTitleFont = 17.0f;
         _wMenuTitleUIFont = [UIFont systemFontOfSize:17.0f];
         _wMenuTitleSelectUIFont = [UIFont systemFontOfSize:18.5f];
         _wMenuImagePosition = PageBtnPositionTop;
@@ -97,9 +99,11 @@ WMZPagePropSetFuncImplementation(WMZPageParam, UIFont*,                wMenuTitl
         _wMenuFixShadow = YES;
         _wFromNavi = YES;
         _wScrollCanTransfer = YES;
-        _wMenuTitleSelectFont = 18.5f;
         _wBgColor = PageColor(0xffffff);
         _wMenuHeight = 55.0f;
+        _wLazyLoading = YES;
+        _wMenuTitleBackground = [UIColor clearColor];
+        _wMenuSelectTitleBackground = [UIColor clearColor];
     }
     return self;
 }

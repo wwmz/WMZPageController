@@ -18,8 +18,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface WMZPageMunuView : UIScrollView
 //当前index
 @property(nonatomic,assign)NSInteger currentTitleIndex;
-//默认选中
-@property(nonatomic,assign)BOOL first;
 //配置
 @property(nonatomic,strong)WMZPageParam *param;
 //下划线
@@ -32,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,weak)id <WMZPageMunuDelegate> menuDelegate;
 //滚动到index
 - (void)scrollToIndex:(NSInteger)newIndex;
+- (void)scrollToIndex:(NSInteger)newIndex animal:(BOOL)animal;
 - (CGFloat)getMainHeight;
 - (void)setPropertiesWithBtn:(WMZPageNaviBtn*)btn withIndex:(NSInteger)i  withTemp:(WMZPageNaviBtn*)temp;
 - (void)resetMainViewContenSize:(WMZPageNaviBtn*)btn;

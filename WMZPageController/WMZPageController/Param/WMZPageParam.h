@@ -27,13 +27,17 @@ NS_ASSUME_NONNULL_BEGIN
  wrapColor        富文本 第二行标题颜色  [UIColor redColor]
  image            图片    @""
  selectImage      选中图片 @""
+ width            自定义标题宽度(优先级最高)   @(100)
+ height           自定义标题高度(优先级最高)   @(100)
+ marginX          自定义标题margin          @(100)
+ y                自定义标题y坐标(优先级最高)  @(100)
  */
 WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, NSArray*,              wTitleArr)
 
 
 //VC数据 必传(二选一) 1.1.6新增
 WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam,  PageViewControllerIndex,              wViewController)
-//VC数组 必传(二选一) (如果要做标题内容增删操作的需要使用此属性 )
+//VC数组 必传(二选一) (如果要做标题内容动态增删操作的必须使用此属性 )
 WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, NSArray*,              wControllers)
 
 /* =========================================required==============================================*/
@@ -70,6 +74,9 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,         
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wTapScrollAnimal)
 //特殊属性 固定在所有子控制器的底部 需要在第一个子控制器实现固定底部协议
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wFixFirst)
+//延迟加载 default YES 注意如果此属性为NO 则无法准确获取控制器的显示frame 需要自己调用wCustomNaviBarY/wCustomTabbarY/wCustomDataViewHeight 调试
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wLazyLoading)
+
 
 /* =========================================special==============================================*/
 
@@ -115,14 +122,12 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,      
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuCellPadding)
 //菜单按钮距离顶部的y值 default 0
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuCellMarginY)
+//菜单按钮距离底部部的y值 default 0
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuBottomMarginY)
 //菜单的位置 default PageMenuPositionLeft
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, PageMenuPosition,      wMenuPosition)
 //菜单标题左右间距 default 0
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuTitleOffset)
-//菜单标题字体 default 17.0f (已废弃)
-WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuTitleFont)
-//菜单选中标题字体大小 default wMenuTitleFont+1.5  (已废弃)
-WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuTitleSelectFont)
 //菜单标题字体 default [UIFont 15]
 WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, UIFont*,               wMenuTitleUIFont)
 //菜单标题字体 default [UIFont wMenuTitleFont+1.5]
@@ -153,6 +158,15 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,      
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuIndicatorY)
 //背景圆圈的圆角 默认高度的一半
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuCircilRadio)
+
+
+//菜单标题背景颜色 default clear
+WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, UIColor*,              wMenuTitleBackground)
+//菜单标题选中背颜色 default clear
+WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, UIColor*,              wMenuSelectTitleBackground)
+//菜单标题圆角 default 0
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuTitleRadios)
+
 
 /* =========================================Menu===============================================*/
 

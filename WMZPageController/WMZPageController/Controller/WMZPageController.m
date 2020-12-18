@@ -45,7 +45,6 @@
 - (void)viewDidLoad{
     self.view.backgroundColor = [UIColor whiteColor];
 }
-
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     if (self.naviBarBackGround&&self.param.wNaviAlpha) {
@@ -53,7 +52,6 @@
     }
      hadWillDisappeal = YES;
 }
-
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     if (self.naviBarBackGround&&self.param.wNaviAlpha) {
@@ -61,7 +59,6 @@
         self.naviBarBackGround.alpha = self.enterAlpah?self.enterAlpah.floatValue:1;
     }
 }
-
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     hadWillDisappeal = NO;
@@ -115,6 +112,7 @@
     }
     
     if (self.param.wMenuAnimal == PageTitleMenuNone||
+        self.param.wMenuAnimal == PageTitleMenuCircleBg||
         self.param.wMenuAnimal == PageTitleMenuCircle||
         self.param.wMenuAnimal == PageTitleMenuPDD) {
         self.param.wMenuAnimalTitleGradient = NO;
@@ -135,9 +133,20 @@
         if (self.param.wMenuIndicatorHeight <= 15.0f) {
             self.param.wMenuIndicatorHeight = 0;
         }
-        
+    }else if (self.param.wMenuAnimal == PageTitleMenuCircleBg) {
+        if (CGColorEqualToColor(self.param.wMenuSelectTitleBackground.CGColor, [UIColor clearColor].CGColor)) {
+            self.param.wMenuSelectTitleBackground = [UIColor orangeColor];
+        }
+        if (CGColorEqualToColor(self.param.wMenuTitleSelectColor.CGColor, PageColor(0xE5193E).CGColor)) {
+            self.param.wMenuTitleSelectColor = [UIColor whiteColor];
+        }
+        if (!self.param.wMenuCellMarginY) {
+            self.param.wMenuCellMarginY = 10.f;
+        }
+        if (!self.param.wMenuBottomMarginY) {
+            self.param.wMenuBottomMarginY = 10.f;
+        }
     }
-    
     if (self.param.wMenuPosition == PageMenuPositionNavi) {
         if (CGColorEqualToColor(self.param.wMenuBgColor.CGColor, PageColor(0xffffff).CGColor)) {
             self.param.wMenuBgColor = [UIColor clearColor];
@@ -146,7 +155,6 @@
             self.param.wMenuHeight = 40.0f;
         }
     }
-    
     if (self.param.wMenuSpecifial == PageSpecialTypeOne) {
         if (self.param.wMenuHeight == 55.0f) {
             self.param.wMenuHeight = 75.0f;
@@ -248,27 +256,19 @@
         self.upSc.dataView.level = superVC.upSc.dataView.level - 1;
     }
     
-    //底部
-    [self setUpMenuAndDataViewFrame];
-    
     if (self.param.wCustomMenuTitle) {
         self.param.wCustomMenuTitle(self.upSc.btnArr);
     }
-    
+    //底部
+    [self setUpMenuAndDataViewFrame];
     [self setUpHead];
-   
-    [self.upSc.btnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (idx == self.param.wMenuDefaultIndex) {
-            self.upSc.mainView.first = YES;
-            [obj sendActionsForControlEvents:UIControlEventTouchUpInside];
-            *stop = YES;
-        }
-    }];
     self.canScroll = YES;
     self.scrolToBottom = YES;
     
     [self.downSc reloadData];
     [self.downSc layoutIfNeeded];
+    
+    [self selectMenuWithIndex:self.param.wMenuDefaultIndex];
     
 }
 
@@ -336,11 +336,11 @@
         [self.upSc page_height:CGRectGetMaxY(self.upSc.dataView.frame)];
         self.navigationItem.titleView = self.upSc.mainView;
     }else{
-        [self.upSc.dataView page_y:CGRectGetMaxY(self.upSc.mainView.frame)];
+        [self.upSc.dataView page_y:CGRectGetMaxY(self.upSc.mainView.frame)+self.param.wMenuBottomMarginY];
         [self.upSc.dataView page_height:sonChildVCHeight];
         [self.upSc page_height:CGRectGetMaxY(self.upSc.dataView.frame)];
     }
-    self.param.titleHeight = self.upSc.mainView.frame.size.height + self.param.wMenuCellMarginY;
+    self.param.titleHeight = self.upSc.mainView.frame.size.height + self.param.wMenuCellMarginY + self.param.wMenuBottomMarginY;
     self.downSc.menuTitleHeight = self.param.titleHeight;
     pageDataFrame = self.upSc.dataView.frame;
     pageUpScFrame = self.upSc.frame;
@@ -369,7 +369,7 @@
         self.upSc.backgroundColor = [UIColor clearColor];
         self.upSc.mainView.backgroundColor = [UIColor clearColor];
         for (WMZPageNaviBtn *btn in self.upSc.btnArr) {
-            btn.backgroundColor = [UIColor clearColor];
+            btn.layer.backgroundColor = [UIColor clearColor].CGColor;
         }
         if (self.headView) {
             self.headView.backgroundColor = [UIColor clearColor];
@@ -518,7 +518,7 @@
     if (view&&[view isKindOfClass:[UIScrollView class]]) {
         self.currentScroll = view;
         if (view) {
-            [self.sonChildScrollerViewDic setObject:view forKey:@(index)];
+            [self.sonChildScrollerViewDic setObject:view forKey:[NSString stringWithFormat:@"%ld",(long)index]];
         }
         if (self.scrolToBottom) {
             [view setContentOffset:CGPointMake(view.contentOffset.x,0) animated:NO];
@@ -526,7 +526,11 @@
         if (!self.sonCanScroll&&!self.scrolToBottom) {
             [view setContentOffset:CGPointZero animated:NO];
         }
-        [view pageAddObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+        @try {
+          [view pageAddObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+        } @catch (NSException *exception) {
+            
+        }
     }
 }
 
@@ -603,6 +607,7 @@
 
 
 - (void)updateMenuData{
+    [self removeKVO];
     footerViewIndex = -1;
     for (UIViewController *VC in self.childViewControllers) {
         [VC willMoveToParentViewController:nil];
@@ -634,6 +639,8 @@
     self.downSc = nil;
     [self.sonChildScrollerViewDic removeAllObjects];
     [self.sonChildFooterViewDic removeAllObjects];
+    self.sonChildScrollerViewDic = [NSMutableDictionary new];
+    self.sonChildFooterViewDic = [NSMutableDictionary new];
     footerViewIndex = -1;
     for (UIViewController *VC in self.childViewControllers) {
         [VC willMoveToParentViewController:nil];
@@ -661,8 +668,6 @@
         }
     }];
 }
-
-
 /*
 *底部手动滚动  传入CGPointZero则为吸顶临界点
 */
@@ -676,151 +681,184 @@
     [self.downSc setContentOffset:point animated:animat];
 }
 
+//动态插入菜单数组
+- (BOOL)addMenuTitleWithObjectArr:(NSArray<WMZPageTitleDataModel*>*)insertArr{
+    __block BOOL success = YES;
+    [insertArr enumerateObjectsUsingBlock:^(WMZPageTitleDataModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        BOOL result = [self addMenuTitleWithObject:obj];
+        if (!result) {
+            success = NO;
+        }
+    }];
+    return success;
+}
 
-//// 动态插入菜单数据
-//- (void)addMenuTitleWithObject:(NSArray<WMZPageTitleDataModel*>*)objectArr{
-//    [objectArr enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(WMZPageTitleDataModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//        
-//        NSInteger index = obj.index;
-//        NSInteger infactIndex = obj.index;
-//        
-//        if (obj.title) {
-//            NSMutableArray *marr = [NSMutableArray arrayWithArray:self.param.wTitleArr];
-//            if (index <0) {
-//                 [marr addObject:obj.title];
-//            }else{
-//                if (index<self.param.wTitleArr.count) {
-//                    [marr insertObject:obj.title atIndex:index];
-//                }else{
-//                    [marr addObject:obj.title];
-//                }
-//            }
-//            self.param.wTitleArr = [NSArray arrayWithArray:marr];
-//            infactIndex = [self.param.wTitleArr indexOfObject:obj.title];
-//        }
-//        
-//        if (obj.controller) {
-//            NSMutableArray *controllers = [NSMutableArray arrayWithArray:self.param.wControllers];
-//            if (index <0) {
-//                [controllers addObject:obj.controller];
-//            }else{
-//                if (index<self.param.wControllers.count) {
-//                    [controllers insertObject:obj.controller atIndex:index];
-//                }else{
-//                    [controllers addObject:obj.controller];
-//                }
-//            }
-//            self.param.wControllers = [NSArray arrayWithArray:controllers];
-//
-//        }
-//         __block  WMZPageNaviBtn *temp = nil;
-//        [self.param.wControllers enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(UIViewController *  _Nonnull controller, NSUInteger idx, BOOL * _Nonnull stop) {
-//            if (infactIndex >= idx) {
-//                if (infactIndex == idx) {
-//                    WMZPageNaviBtn *temp = nil;
-//                    if ((idx - 1) >= 0 && (idx - 1)<self.upSc.btnArr.count) {
-//                        temp = self.upSc.btnArr[idx - 1];
-//                    }
-//                    WMZPageNaviBtn *btn = [WMZPageNaviBtn buttonWithType:UIButtonTypeCustom];
-//                    [self.upSc.mainView setPropertiesWithBtn:btn withIndex:infactIndex withTemp:temp];
-//                    temp = btn;
-//                    [self.upSc addChildVC:infactIndex VC:controller];
-//                }else{
-//                    WMZPageNaviBtn *btn = self.upSc.btnArr[idx];
-//                    [btn page_x:CGRectGetMaxX(temp.frame) + self.param.wMenuTitleOffset];
-//                    [controller.view page_x:idx * self.upSc.dataView.frame.size.width];
-//                }
-//                
-//            }
-//            [self.cache setObject:controller forKey:@(idx)];
-//        }];
-//
-//       }];
-//    
-//       if (objectArr.count) {
-//           WMZPageNaviBtn *temp = nil;
-//           for (WMZPageNaviBtn *btn in self.upSc.btnArr) {
-//               [btn page_x:temp?CGRectGetMaxX(temp.frame):0];
-//               temp = btn;
-//           }
-//           self.upSc.dataView.contentSize = CGSizeMake(self.param.wTitleArr.count*PageVCWidth,0);
-//           [self.upSc.mainView resetMainViewContenSize:self.upSc.btnArr.lastObject];
-//       }
-//}
-//
-//
-//// 动态删除菜单数据
-//- (void)deleteMenuTitleIndex:(NSArray<NSNumber*>*)indexArr{
-//    [indexArr enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//        NSInteger index = obj.integerValue;
-//        if (self.upSc.mainView&&
-//            self.upSc.mainView.subviews&&
-//            self.upSc.mainView.subviews.count>index) {
-//               UIView *deleteView = self.upSc.mainView.subviews[index];
-//               [deleteView removeFromSuperview];
-//               deleteView = nil;
-//           }
-//      if (self.upSc.dataView&&
-//          self.upSc.dataView.subviews&&
-//          self.upSc.dataView.subviews.count>index) {
-//          UIView *deleteView = self.upSc.dataView.subviews[index];
-//          [deleteView removeFromSuperview];
-//          deleteView = nil;
-//      }
-//      if (self.param.wTitleArr&&
-//          self.param.wTitleArr.count>index) {
-//          NSMutableArray *marr = [NSMutableArray arrayWithArray:self.param.wTitleArr];
-//          [marr removeObjectAtIndex:index];
-//          self.param.wTitleArr = [NSArray arrayWithArray:marr];
-//      }
-//      if (self.param.wControllers&&
-//          self.param.wControllers.count>index) {
-//          NSMutableArray *marr = [NSMutableArray arrayWithArray:self.param.wControllers];
-//          [marr removeObjectAtIndex:index];
-//          self.param.wControllers = [NSArray arrayWithArray:marr];
-//      }
-//      if ([self.cache objectForKey:obj]) {
-//          UIViewController *indexVC = [self.cache objectForKey:obj];
-//          [indexVC willMoveToParentViewController:nil];
-//          [indexVC.view removeFromSuperview];
-//          [indexVC removeFromParentViewController];
-//          indexVC.view = nil;
-//          indexVC = nil;
-//          [self.cache removeObjectForKey:obj];
-//          [self.sonChildScrollerViewDic removeObjectForKey:obj];
-//      }
-//        
-//      if (self.upSc.btnArr&&self.upSc.btnArr.count>index) {
-//          [self.upSc.btnArr removeObjectAtIndex:index];
-//      }
-//    }];
-//    if (indexArr.count) {
-//        WMZPageNaviBtn *temp = nil;
-//        for (WMZPageNaviBtn *btn in self.upSc.btnArr) {
-//            [btn page_x:temp?CGRectGetMaxX(temp.frame):0];
-//            temp = btn;
-//        }
-//        for (int i = 0; i<self.param.wControllers.count; i++) {
-//            [self.cache setObject:self.param.wControllers[i] forKey:@(i)];
-//        }
-//        for (int i = 0;i<self.upSc.dataView.subviews.count;i++) {
-//            UIView *view = self.upSc.dataView.subviews[i];
-//            [view page_x:self.upSc.dataView.frame.size.width *1];
-//        }
-//        self.upSc.dataView.contentSize = CGSizeMake(self.param.wTitleArr.count*PageVCWidth,0);
-//        [self.upSc.mainView resetMainViewContenSize:self.upSc.btnArr.lastObject];
-////        NSInteger index = MIN(self.upSc.currentTitleIndex, self.upSc.btnArr.count - 1);
-//        self.upSc.currentTitleIndex = -1;
-//        [self selectMenuWithIndex:1];
-//    }
-//}
 
+//动态删除菜单数组
+- (BOOL)deleteMenuTitleIndexArr:(NSArray*)deleteArr{
+    __block BOOL success = YES;
+    [deleteArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        BOOL result =  [self deleteMenuTitleIndex:obj];
+        if (!result) {
+            success = NO;
+        }
+    }];
+    return success;
+}
+
+//动态插入菜单数据
+- (BOOL)addMenuTitleWithObject:(WMZPageTitleDataModel*)insertObject{
+    if (!insertObject) return NO;
+    //插入的位置
+    NSInteger index = NSNotFound;
+    index = MIN(MAX(insertObject.index, 0), self.param.wTitleArr.count);
+    if (index == NSNotFound || index < 0) return NO;
+    id insertTitle = insertObject.titleInfo?:(insertObject.title);
+    UIViewController* insertController = insertObject.controller;
+    if (!insertTitle){NSLog(@"输入插入的标题"); return NO;}
+    if (!insertController){NSLog(@"输入插入的控制器"); return NO;}
+    NSMutableArray *titleMarr = [NSMutableArray arrayWithArray:self.param.wTitleArr];
+    NSMutableArray *controllerArr = [NSMutableArray arrayWithArray:self.param.wControllers];
+    BOOL last = (index == self.param.wTitleArr.count);
+    
+    last?[titleMarr addObject:insertTitle]:[titleMarr insertObject:insertTitle atIndex:index];
+    self.param.wTitleArr = [NSArray arrayWithArray:titleMarr];
+    last?[controllerArr addObject:insertController]:[controllerArr insertObject:insertController atIndex:index];
+    self.param.wControllers = [NSArray arrayWithArray:controllerArr];
+    
+    WMZPageNaviBtn *btn = [WMZPageNaviBtn buttonWithType:UIButtonTypeCustom];
+    WMZPageNaviBtn *temp = [self.upSc.btnArr objectAtIndex:MAX(0, index - 1)];
+    [self.upSc.mainView setPropertiesWithBtn:btn withIndex:index withTemp:temp];
+    for (int i = 0; i<self.upSc.dataView.subviews.count; i++) {
+        UIView *view = self.upSc.dataView.subviews[i];
+        CGFloat x = index*self.upSc.dataView.frame.size.width;
+        if (view.frame.origin.x>=x) {
+            [view page_x:view.frame.origin.x + self.upSc.dataView.frame.size.width];
+        }
+    }
+    WMZPageNaviBtn *currentBtn = nil;
+    for (int i = 0 ; i<self.upSc.btnArr.count; i++) {
+        WMZPageNaviBtn *btn = self.upSc.btnArr[i];
+        if (i>=index) {
+            [btn page_x:currentBtn?CGRectGetMaxX(currentBtn.frame):0];
+        }
+        currentBtn = btn;
+        btn.tag = i;
+    }
+    
+    NSMutableDictionary *mdic = [NSMutableDictionary new];
+    [self.cache enumerateKeysAndObjectsUsingBlock:^(NSNumber*  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        NSInteger keyNum = key.integerValue;
+        if (keyNum >= index) {
+            NSInteger saveKey = MIN(keyNum + 1, self.param.wTitleArr.count - 1);
+            [mdic setObject:obj forKey:@(saveKey)];
+        }else{
+            [mdic setObject:obj forKey:key];
+        }
+    }];
+    self.cache = [NSMutableDictionary dictionaryWithDictionary:mdic];
+    if (self.upSc.currentTitleIndex >= index) {
+        self.upSc.dataView.contentOffset = CGPointMake(self.upSc.dataView.contentOffset.x + self.upSc.dataView.frame.size.width, 0);
+        self.upSc.currentTitleIndex+=1;
+    }
+    
+    [self.upSc.mainView resetMainViewContenSize:self.upSc.btnArr.lastObject];
+    self.upSc.dataView.contentSize = CGSizeMake(self.param.wTitleArr.count*PageVCWidth,0);
+    return YES;
+}
+
+// 动态删除菜单数据
+- (BOOL)deleteMenuTitleIndex:(id)deleteObject{
+    if (!deleteObject) return NO;
+    NSInteger index = NSNotFound;
+    if ([deleteObject isKindOfClass:[NSNumber class]]) {
+        NSInteger currentIndex = [deleteObject integerValue];
+        if (currentIndex < self.param.wTitleArr.count) {
+            index = currentIndex;
+        }
+    }else{
+        index = [self.param.wTitleArr indexOfObject:deleteObject];
+    }
+    
+    if (index == NSNotFound || index < 0) return NO;
+    if (self.upSc.mainView.subviews.count>index) {
+        UIView *deleteView = self.upSc.mainView.subviews[index];
+        [deleteView removeFromSuperview];
+        deleteView = nil;
+    }
+    NSMutableArray *titleMarr = [NSMutableArray arrayWithArray:self.param.wTitleArr];
+    if (titleMarr.count>index) {
+        [titleMarr removeObjectAtIndex:index];
+        self.param.wTitleArr = [NSArray arrayWithArray:titleMarr];
+    }
+    if (self.upSc.btnArr&&self.upSc.btnArr.count>index) {
+        [self.upSc.btnArr removeObjectAtIndex:index];
+    }
+    NSMutableArray *controllerArr = [NSMutableArray arrayWithArray:self.param.wControllers];
+    if (controllerArr.count>index) {
+        [controllerArr removeObjectAtIndex:index];
+        self.param.wControllers = [NSArray arrayWithArray:controllerArr];
+    }
+    if ([self.cache objectForKey:@(index)]) {
+        if (self.upSc.dataView.subviews.count>index) {
+            UIView *deleteView = self.upSc.dataView.subviews[index];
+            [deleteView removeFromSuperview];
+            deleteView = nil;
+        }
+        UIViewController *indexVC = [self.cache objectForKey:@(index)];
+        [indexVC willMoveToParentViewController:nil];
+        [indexVC.view removeFromSuperview];
+        [indexVC removeFromParentViewController];
+        indexVC.view = nil;
+        indexVC = nil;
+        [self.cache removeObjectForKey:@(index)];
+        UIView *obj = [self.sonChildScrollerViewDic objectForKey:@(index)];
+        [obj paegRemoveObserver:obj forKeyPath:@"contentOffset" context:nil];
+        [self.sonChildScrollerViewDic removeObjectForKey:@(index)];
+    }
+    for (int i = 0; i<self.upSc.dataView.subviews.count; i++) {
+        UIView *view = self.upSc.dataView.subviews[i];
+        CGFloat x = index*self.upSc.dataView.frame.size.width;
+        if (view.frame.origin.x>x) {
+            [view page_x:view.frame.origin.x - self.upSc.dataView.frame.size.width];
+        }
+    }
+    WMZPageNaviBtn *temp = nil;
+    for (int i = 0 ; i<self.upSc.btnArr.count; i++) {
+        WMZPageNaviBtn *btn = self.upSc.btnArr[i];
+        if (i>=index) {
+            [btn page_x:temp?CGRectGetMaxX(temp.frame):0];
+        }
+        temp = btn;
+    }
+    [self.upSc.mainView resetMainViewContenSize:self.upSc.btnArr.lastObject];
+    self.upSc.dataView.contentSize = CGSizeMake(self.param.wTitleArr.count*PageVCWidth,0);
+    if (index == self.upSc.currentTitleIndex) {
+        self.upSc.currentTitleIndex = NSNotFound;
+        self.upSc.currentVC = nil;
+        [self selectMenuWithIndex:MAX(0, MIN(index, self.param.wTitleArr.count - 1))];
+    }else if(index < self.upSc.currentTitleIndex){
+        self.upSc.currentTitleIndex = MAX(self.upSc.currentTitleIndex - 1, 0);
+        NSMutableDictionary *mdic = [NSMutableDictionary new];
+        [self.cache enumerateKeysAndObjectsUsingBlock:^(NSNumber*  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            NSInteger keyNum = key.integerValue;
+            if (keyNum > index) {
+                NSInteger saveKey = MAX(keyNum - 1, 0);
+                [mdic setObject:obj forKey:@(saveKey)];
+            }else{
+                [mdic setObject:obj forKey:key];
+            }
+        }];
+        self.cache = [NSMutableDictionary dictionaryWithDictionary:mdic];
+        self.upSc.dataView.contentOffset = CGPointMake(MAX(0, self.upSc.dataView.contentOffset.x - self.upSc.dataView.frame.size.width) , 0);
+    }
+    return YES;
+}
 //数据
 - (void)showData{
     [self setParam];
     [self UI];
 }
-
 - (BOOL)canTopSuspension{
     if (!self.param.wTopSuspension
        ||self.param.wMenuPosition == PageMenuPositionBottom
@@ -829,21 +867,18 @@
     }
     return YES;
 }
-
 - (NSMutableDictionary *)sonChildScrollerViewDic{
     if (!_sonChildScrollerViewDic) {
-        _sonChildScrollerViewDic = [NSMutableDictionary new];
+        _sonChildScrollerViewDic =  [NSMutableDictionary new];
     }
     return _sonChildScrollerViewDic;
 }
-
 - (NSMutableDictionary *)sonChildFooterViewDic{
     if (!_sonChildFooterViewDic) {
         _sonChildFooterViewDic = [NSMutableDictionary new];
     }
     return _sonChildFooterViewDic;
 }
-
 - (WMZPageScroller *)downSc{
     if (!_downSc) {
         _downSc = [[WMZPageScroller alloc]initWithFrame:CGRectMake(0, 0, PageVCWidth, PageVCHeight+0.02) style:UITableViewStyleGrouped];
@@ -860,26 +895,22 @@
     }
     return _downSc;
 }
-
 - (CGFloat)footViewOrginY{
     if (!_footViewOrginY) {
         _footViewOrginY = CGRectGetMaxY(self.downSc.frame)-self.currentFootView.frame.size.height;
     }
     return _footViewOrginY;
 }
-
 - (CGFloat)headHeight{
     _headHeight = self.headView.frame.size.height;
     return _headHeight;
 }
-
 - (CGFloat)footViewSizeWidth{
     if (!_footViewSizeWidth) {
         _footViewSizeWidth = self.upSc.frame.size.width;
     }
     return _footViewSizeWidth;
 }
-
 - (void)setParam:(WMZPageParam *)param{
     _param = param;
     if ([self.parentViewController isKindOfClass:[WMZPageController class]]||
@@ -887,22 +918,27 @@
         self.param.wMenuPosition == PageMenuPositionBottom) {
         [self showData];
     }else{
-        [self performSelector:@selector(showData) withObject:nil afterDelay:CGFLOAT_MIN];
+        if (self.param.wLazyLoading) {
+            [self performSelector:@selector(showData) withObject:nil afterDelay:CGFLOAT_MIN];
+        }else{
+            [self showData];
+        }
     }
 }
-
 - (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     [self.cache removeAllObjects];
     [self.sonChildScrollerViewDic removeAllObjects];
 }
-
 - (void)removeKVO{
     [self.sonChildScrollerViewDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        [obj removeAllObserverdKeyPath:self withKey:@"contentOffset"];
+        @try {
+            [obj paegRemoveObserver:self forKeyPath:@"contentOffset" context:nil];
+        }@catch (NSException *exception) {
+
+        }
     }];
 }
-
 - (void)dealloc{
     [self removeKVO];
 }

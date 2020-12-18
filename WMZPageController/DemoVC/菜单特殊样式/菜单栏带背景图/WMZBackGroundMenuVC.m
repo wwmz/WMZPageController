@@ -9,6 +9,7 @@
 #import "WMZBackGroundMenuVC.h"
 #import "TopSuspensionVC.h"
 #import "UIImageView+WebCache.h"
+#import "MJRefresh.h"
 @interface WMZBackGroundMenuVC ()
 @end
 
@@ -43,7 +44,7 @@
     .wMenuDefaultIndexSet(3)
     .wMenuCellMarginYSet(PageVCStatusBarHeight+20)
     .wMenuHeightSet(60)
-//    .wTopSuspensionSet(YES)
+    .wBouncesSet(YES)
     .wFromNaviSet(NO);
     self.param = param;
     
@@ -64,6 +65,15 @@
         [back addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
         back.frame = CGRectMake(20, PageVCStatusBarHeight, 60, 20);
     });
+    
+    __weak WMZBackGroundMenuVC* weakSelf = self;
+    self.downSc.mj_header= [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+          __strong WMZBackGroundMenuVC *strongSelf = weakSelf;
+          //模拟更新数据
+          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                  [strongSelf.downSc.mj_header endRefreshing];
+              });
+          }];
 }
 
 @end

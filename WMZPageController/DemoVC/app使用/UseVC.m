@@ -189,27 +189,23 @@
     @{
        @"name":@"推荐",
        @"selectName":@"荐推",
-       @"backgroundColor":@[PageColor(0x15314b),PageColor(0x009a93)]},
-    @{
-       @"name":@"家务男",
-       @"backgroundColor":PageColor(0xffdfa2),
-       @"indicatorColor":PageColor(0x9b4f2d),
-       @"titleSelectColor":PageColor(0x9b4f2d),
-       @"titleColor":PageColor(0xd79869)
+       @"backgroundColor":@[PageColor(0x15314b),PageColor(0x009a93)],
+       @"width":@(50),
+       @"marginX":@(10),
+       @"height":@(55),
     },
     @{
        @"name":@"70年",
-       @"titleColor":PageColor(0xffaa68),
        @"backgroundColor":PageColor(0xd70022),
        @"indicatorColor":PageColor(0xfffcc6),
-       @"titleSelectColor":PageColor(0xfffcc6)
+       @"titleSelectColor":PageColor(0xfffcc6),
      },
      @{
        @"name":@"VIP",
        @"backgroundColor":PageColor(0x3d4659),
        @"titleSelectColor":PageColor(0xe2c285),
        @"indicatorColor":PageColor(0xe2c285),
-       @"titleColor":PageColor(0x9297a5)
+       @"titleSelectColor":PageColor(0x9297a5)
      },
      @{@"name":@"热点",@"backgroundColor":@[PageColor(0x15314b),PageColor(0x009a93)]},
      @{@"name":@"电视剧",@"backgroundColor":@[PageColor(0x15314b),PageColor(0x009a93)]},

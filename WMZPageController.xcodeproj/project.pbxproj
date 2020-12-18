@@ -51,6 +51,7 @@
 		F32E00AC23308C2C004920BD /* WMZPageControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F32E00AB23308C2C004920BD /* WMZPageControllerTests.m */; };
 		F32E00B723308C2C004920BD /* WMZPageControllerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F32E00B623308C2C004920BD /* WMZPageControllerUITests.m */; };
 		F348F0EE25414B22004D5036 /* WMZBackGroundMenuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F348F0ED25414B22004D5036 /* WMZBackGroundMenuVC.m */; };
+		F3634692258C4A1D00030ED5 /* WMZPageRadiosVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F3634691258C4A1D00030ED5 /* WMZPageRadiosVC.m */; };
 		F366E97D24B4A7B000B585E1 /* WMZDemoTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = F366E97C24B4A7B000B585E1 /* WMZDemoTwo.m */; };
 		F370E0FC24C9D97D0080E02D /* WMZMeiTuanVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F370E0FB24C9D97D0080E02D /* WMZMeiTuanVC.m */; };
 		F389FD8A254A7EE60020A62D /* WMZPageTitleDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F389FD89254A7EE60020A62D /* WMZPageTitleDataModel.m */; };
@@ -64,6 +65,7 @@
 		F38F14862539E237009C36A8 /* WMZPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = F38F14792539E237009C36A8 /* WMZPageController.m */; };
 		F38F14872539E237009C36A8 /* WMZPageScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = F38F147D2539E237009C36A8 /* WMZPageScroller.m */; };
 		F38F14882539E237009C36A8 /* WMZPageDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = F38F147E2539E237009C36A8 /* WMZPageDataView.m */; };
+		F3905932258BAB00004DE00E /* WMZDynamicOperatVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F3905931258BAB00004DE00E /* WMZDynamicOperatVC.m */; };
 		F392D47923A36BC600B00FBF /* Base.m in Sources */ = {isa = PBXBuildFile; fileRef = F392D46623A36BC600B00FBF /* Base.m */; };
 		F392D47A23A36BC600B00FBF /* HomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F392D46723A36BC600B00FBF /* HomeVC.m */; };
 		F392D47B23A36BC600B00FBF /* TestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F392D46C23A36BC600B00FBF /* TestVC.m */; };
@@ -244,6 +246,8 @@
 		F32E00B823308C2C004920BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F348F0EC25414B22004D5036 /* WMZBackGroundMenuVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMZBackGroundMenuVC.h; sourceTree = "<group>"; };
 		F348F0ED25414B22004D5036 /* WMZBackGroundMenuVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMZBackGroundMenuVC.m; sourceTree = "<group>"; };
+		F3634690258C4A1D00030ED5 /* WMZPageRadiosVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMZPageRadiosVC.h; sourceTree = "<group>"; };
+		F3634691258C4A1D00030ED5 /* WMZPageRadiosVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMZPageRadiosVC.m; sourceTree = "<group>"; };
 		F366E97B24B4A7B000B585E1 /* WMZDemoTwo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMZDemoTwo.h; sourceTree = "<group>"; };
 		F366E97C24B4A7B000B585E1 /* WMZDemoTwo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMZDemoTwo.m; sourceTree = "<group>"; };
 		F370E0FA24C9D97D0080E02D /* WMZMeiTuanVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMZMeiTuanVC.h; sourceTree = "<group>"; };
@@ -271,6 +275,8 @@
 		F38F147D2539E237009C36A8 /* WMZPageScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMZPageScroller.m; sourceTree = "<group>"; };
 		F38F147E2539E237009C36A8 /* WMZPageDataView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMZPageDataView.m; sourceTree = "<group>"; };
 		F38F14892539E241009C36A8 /* UIView+PageRect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+PageRect.h"; sourceTree = "<group>"; };
+		F3905930258BAB00004DE00E /* WMZDynamicOperatVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMZDynamicOperatVC.h; sourceTree = "<group>"; };
+		F3905931258BAB00004DE00E /* WMZDynamicOperatVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMZDynamicOperatVC.m; sourceTree = "<group>"; };
 		F392D46623A36BC600B00FBF /* Base.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base.m; sourceTree = "<group>"; };
 		F392D46723A36BC600B00FBF /* HomeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeVC.m; sourceTree = "<group>"; };
 		F392D46823A36BC600B00FBF /* HomeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeVC.h; sourceTree = "<group>"; };
@@ -706,7 +712,7 @@
 		F348F0EA254145F3004D5036 /* 菜单特殊样式 */ = {
 			isa = PBXGroup;
 			children = (
-				F348F0EF25415839004D5036 /* 详情tab切换 */,
+				F363468F258C4A0800030ED5 /* 菜单背景圆角 */,
 				F348F0EB2541461E004D5036 /* 菜单栏带背景图 */,
 			);
 			path = "菜单特殊样式";
@@ -721,11 +727,13 @@
 			path = "菜单栏带背景图";
 			sourceTree = "<group>";
 		};
-		F348F0EF25415839004D5036 /* 详情tab切换 */ = {
+		F363468F258C4A0800030ED5 /* 菜单背景圆角 */ = {
 			isa = PBXGroup;
 			children = (
+				F3634690258C4A1D00030ED5 /* WMZPageRadiosVC.h */,
+				F3634691258C4A1D00030ED5 /* WMZPageRadiosVC.m */,
 			);
-			path = "详情tab切换";
+			path = "菜单背景圆角";
 			sourceTree = "<group>";
 		};
 		F366E97A24B4A6ED00B585E1 /* 示例2 */ = {
@@ -866,6 +874,15 @@
 				F38F147E2539E237009C36A8 /* WMZPageDataView.m */,
 			);
 			path = CsutomScrollerView;
+			sourceTree = "<group>";
+		};
+		F390592F258BAAC7004DE00E /* 动态增删菜单标题 */ = {
+			isa = PBXGroup;
+			children = (
+				F3905930258BAB00004DE00E /* WMZDynamicOperatVC.h */,
+				F3905931258BAB00004DE00E /* WMZDynamicOperatVC.m */,
+			);
+			path = "动态增删菜单标题";
 			sourceTree = "<group>";
 		};
 		F392D46523A36BC600B00FBF /* 首页 */ = {
@@ -1125,6 +1142,7 @@
 		F3C85DAB234F12670087C629 /* DemoVC */ = {
 			isa = PBXGroup;
 			children = (
+				F390592F258BAAC7004DE00E /* 动态增删菜单标题 */,
 				F348F0EA254145F3004D5036 /* 菜单特殊样式 */,
 				F32BFFDC253818A300B70F27 /* 嵌套使用 */,
 				F3DCBFB224EE10F3001B2B04 /* 放在导航栏里(swift使用示范) */,
@@ -1339,6 +1357,7 @@
 				F3A1FF992334D6AF004B12F6 /* SDImageCacheConfig.m in Sources */,
 				F31983012355AE02002D305B /* MJRefreshConst.m in Sources */,
 				F3A1FEF62334D5ED004B12F6 /* WMZBannerControl.m in Sources */,
+				F3905932258BAB00004DE00E /* WMZDynamicOperatVC.m in Sources */,
 				F3A1FF772334D6AF004B12F6 /* SDAnimatedImageView.m in Sources */,
 				F3052CF123B5DC1E0016CE17 /* WMZCustomThreePage.m in Sources */,
 				F392D47923A36BC600B00FBF /* Base.m in Sources */,
@@ -1405,6 +1424,7 @@
 				F38F14872539E237009C36A8 /* WMZPageScroller.m in Sources */,
 				F3A1FEF32334D5ED004B12F6 /* WMZBannerFlowLayout.m in Sources */,
 				F31983132355AE02002D305B /* MJRefreshAutoFooter.m in Sources */,
+				F3634692258C4A1D00030ED5 /* WMZPageRadiosVC.m in Sources */,
 				F3A1FF9C2334D6AF004B12F6 /* SDWebImageOptionsProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

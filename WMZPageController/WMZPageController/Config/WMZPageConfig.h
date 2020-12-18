@@ -88,6 +88,7 @@ typedef enum :NSInteger{
     PageTitleMenuAiQY     = 3,            //爱奇艺效果(指示器跟随移动)
     PageTitleMenuTouTiao  = 4,            //今日头条效果(变大加颜色渐变)
     PageTitleMenuPDD      = 5,            //拼多多效果(底部线条)
+    PageTitleMenuCircleBg = 6,            //标题背景圆角
 }PageTitleMenu;
 
 

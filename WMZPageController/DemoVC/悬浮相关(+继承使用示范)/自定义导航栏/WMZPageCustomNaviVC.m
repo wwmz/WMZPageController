@@ -79,9 +79,9 @@
 - (UIButton *)customView{
     if (!_customView) {
         UIButton *view = [UIButton buttonWithType:UIButtonTypeCustom];
-        view.backgroundColor = [UIColor redColor];
+        view.backgroundColor = PageColor(0x4895ef);
         [view setTitle:@"我是自定义导航栏" forState:UIControlStateNormal];
-        [view setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        [view setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         view.frame = CGRectMake(0, 0, PageVCWidth, PageVCNavBarHeight);
         _customView = view;
               

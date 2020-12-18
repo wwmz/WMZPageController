@@ -17,8 +17,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.view.backgroundColor = PageColor(0x4895ef);
+    
     WMZPageParam *param = PageParam()
-    .wMenuBgColorSet(PageColor(0xf8f6f8))
+    .wMenuBgColorSet([UIColor redColor])
     .wMenuTitleSelectColorSet([UIColor redColor])
     .wControllersSet(@[[TopSuspensionVC new],[TopSuspensionVC new],[TopSuspensionVC new],[TopSuspensionVC new],[TopSuspensionVC new],[TopSuspensionVC new],[TopSuspensionVC new]])
     .wTitleArrSet([self attributesData])

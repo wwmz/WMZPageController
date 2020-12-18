@@ -16,6 +16,7 @@
     CGFloat lastContentOffset;
     WMZPageController *page;
     NSInteger _currentTitleIndex;
+    WMZPageNaviBtn *_fixLastBtn ;
 }
 //最底部下划线
 @property(nonatomic,strong)UIView *bottomView;
@@ -38,7 +39,7 @@
 }
 
 - (void)setUp{
-    
+    self.currentTitleIndex = NSNotFound;
     //菜单栏
     [self addSubview:self.mainView];
     self.mainView.frame = [self.frameInfo[@(self.param.wMenuPosition)] CGRectValue];
@@ -105,7 +106,7 @@
 - (void)tap:(WMZPageNaviBtn*)btn{
     NSInteger index = [self.btnArr indexOfObject:btn];
     if (index == NSNotFound) return;
-    if (!self.mainView.first) {
+    if (self.lastPageIndex != NSNotFound) {
         if (self.param.wEventClick) {
             self.param.wEventClick(btn, btn.tag);
         }
@@ -116,11 +117,12 @@
         if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(selectBtnWithIndex:)]) {
             [self.loopDelegate selectBtnWithIndex:index];
         }
-        if (self.mainView.first) {
+        if (self.currentTitleIndex == NSNotFound) {
             self.lastPageIndex = self.currentTitleIndex;
             self.nextPageIndex = index;
             self.currentTitleIndex = index;
             UIViewController *newVC = [self getVCWithIndex:index];
+            self.currentVC = newVC;
             [newVC beginAppearanceTransition:YES animated:YES];
             [self addChildVC:index VC:newVC];
             [self.dataView setContentOffset:CGPointMake(index*PageVCWidth, 0) animated:NO];
@@ -128,6 +130,7 @@
             if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:end:)]) {
                 [self.loopDelegate setUpSuspension:newVC index:index end:YES];
             }
+            [self.mainView scrollToIndex:index animal:NO];
         }else{
             [self beginAppearanceTransitionWithIndex:index withOldIndex:self.currentTitleIndex];
             self.lastPageIndex = self.currentTitleIndex;
@@ -135,21 +138,23 @@
             self.currentTitleIndex = index;
             [self endAppearanceTransitionWithIndex:self.nextPageIndex withOldIndex:self.lastPageIndex isFlag:NO];
             [self.dataView setContentOffset:CGPointMake(index*PageVCWidth, 0) animated:self.param.wTapScrollAnimal];
-        }
-        [self scrollToIndex:index];
-        if (self.mainView.first) {
-            self.mainView.first = NO;
+            [self.mainView scrollToIndex:index];
         }
     }else{
-        [self scrollToIndex:index];
+        [self.mainView scrollToIndex:index];
     }
 }
 //固定标题点击
 - (void)fixTap:(WMZPageNaviBtn*)btn{
-    btn.selected = ![btn isSelected];
+    if (_fixLastBtn) {
+        if (_fixLastBtn == btn) return;
+         _fixLastBtn.selected = NO;
+    }
+    btn.selected = YES;
     if (self.param.wEventFixedClick) {
         self.param.wEventFixedClick(btn, btn.tag);
     }
+    _fixLastBtn = btn;
 }
 #pragma -mark- scrollerDeleagte
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
@@ -199,9 +204,6 @@
     }
 }
 
-- (void)scrollToIndex:(NSInteger)newIndex{
-    [self.mainView scrollToIndex:newIndex];
-}
 
 //管理生命周期
 - (void)lifeCycleManage:(UIScrollView*)scrollView{
@@ -262,16 +264,15 @@
     if (index < 0|| index >= self.param.wTitleArr.count) {
         return controller;
     }
+    
     controller = [[self findBelongViewControllerForView:self].cache objectForKey:@(index)];
     if (controller) {
-        NSLog(@"111 %ld  %@",index,controller);
         return controller;
     }
     
     if (self.param.wControllers) {
         controller = self.param.wControllers[index];
         if (controller) {
-            NSLog(@"222 %ld  %@",index,controller);
             return controller;
         }
     }else{
@@ -286,10 +287,8 @@
 }
 
 - (void)beginAppearanceTransitionWithIndex:(NSInteger)index withOldIndex:(NSInteger)old{
-    NSLog(@"新 %ld  旧 %ld",index,old);
     UIViewController *newVC = [self getVCWithIndex:index];
     UIViewController *oldVC = [self getVCWithIndex:old];
-    NSLog(@"新 %@  旧 %@",newVC,oldVC);
     if (!newVC||!oldVC||(index==old)||(oldVC==newVC)) return;
     [newVC beginAppearanceTransition:YES animated:YES];
     [self addChildVC:index VC:newVC];
