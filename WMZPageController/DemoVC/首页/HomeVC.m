@@ -27,7 +27,7 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UITableView *ta = [[UITableView alloc]initWithFrame:CGRectMake(0, PageVCNavBarHeight, self.view.frame.size.width,self.view.frame.size.height-PageVCNavBarHeight -PageVCTabBarHeight) style:UITableViewStyleGrouped];
+    UITableView *ta = [[UITableView alloc]initWithFrame:CGRectMake(0, PageVCNavBarHeight, self.view.frame.size.width,PageVCHeight -PageVCNavBarHeight -PageVCTabBarHeight) style:UITableViewStyleGrouped];
     [self.view addSubview:ta];
     ta.estimatedRowHeight = 100;
     if (@available(iOS 11.0, *)) {

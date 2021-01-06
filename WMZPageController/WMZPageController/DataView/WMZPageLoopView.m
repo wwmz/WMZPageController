@@ -80,7 +80,7 @@
     if (self.param.wMenuPosition == PageMenuPositionBottom) {
         CGRect rect = self.frame;
         rect.origin.y -= self.frame.size.height;
-        if (pageIsIphoneX) {
+        if (PageIsIphoneX) {
             rect.size.height+=15;
             rect.origin.y-=15;
         }
@@ -376,6 +376,9 @@
        ||self.param.wMenuPosition == PageMenuPositionNavi){
           return NO;
     }
+    if (!self.param.wTitleArr.count) {
+        return NO;
+    }
     return YES;
 }
 
@@ -484,7 +487,7 @@
             @(PageMenuPositionRight):[NSValue valueWithCGRect:CGRectMake(PageVCWidth-self.param.wMenuWidth, self.param.wMenuCellMarginY  , self.param.wMenuWidth,self.param.wMenuHeight)],
             @(PageMenuPositionCenter):[NSValue valueWithCGRect:CGRectMake((PageVCWidth-self.param.wMenuWidth)/2, self.param.wMenuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight)],
             @(PageMenuPositionNavi):[NSValue valueWithCGRect:CGRectMake((PageVCWidth-self.param.wMenuWidth)/2, self.param.wMenuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight)],
-            @(PageMenuPositionBottom):[NSValue valueWithCGRect:CGRectMake(0, PageVCHeight, self.param.wMenuWidth,pageIsIphoneX?(self.param.wMenuHeight + 15):self.param.wMenuHeight)],
+            @(PageMenuPositionBottom):[NSValue valueWithCGRect:CGRectMake(0, PageVCHeight, self.param.wMenuWidth,PageIsIphoneX?(self.param.wMenuHeight + 15):self.param.wMenuHeight)],
         };
     }
     return _frameInfo;

@@ -58,7 +58,7 @@
     .wDataSet(self.bannerData)
     .wRepeatSet(YES);
     self.headView = [[WMZBannerView alloc]initConfigureWithModel:self.param];
-    ta.tableHeaderView = self.headView;
+//    ta.tableHeaderView = self.headView;
 
     // 下拉刷新
     __weak TopSuspensionVC *weakSelf = self;

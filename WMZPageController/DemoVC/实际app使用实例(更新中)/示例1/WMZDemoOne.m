@@ -23,7 +23,7 @@
         @{@"name":@"首页",@"image":@"B"} ,
         @{@"name":@"收藏",@"badge":@(99),@"image":@"C"},
         @{@"name":@"消息",@"badge":@(9),@"image":@"D"},
-       @{@"name":@"我的",@"image":@"B"}
+        @{@"name":@"我的",@"image":@"B"}
     ])
     //自定义红点
     .wCustomRedViewSet(^(UILabel *redLa,NSDictionary *info) {

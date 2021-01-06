@@ -19,7 +19,7 @@ class WMZNaviPageController: WMZPageController {
                 return TestVC();
             })
             .wMenuPositionSet()(.init(3))
-            .wMenuAnimalSet()(.init(6))
+            .wMenuAnimalSet()(.init(5))
             .wMenuTitleWidthSet()(100)
             .wMenuWidthSet()(200)
             .wMenuIndicatorYSet()(5)

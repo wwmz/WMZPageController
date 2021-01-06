@@ -415,7 +415,7 @@
 
 
 - (CGFloat)getMainHeight{
-    if ((pageIsIphoneX&&self.param.wMenuPosition == PageMenuPositionBottom)) {
+    if ((PageIsIphoneX&&self.param.wMenuPosition == PageMenuPositionBottom)) {
         return (self.frame.size.height - 15);
     }else if (self.param.wMenuPosition == PageMenuPositionNavi) {
         return 44;

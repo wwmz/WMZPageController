@@ -37,22 +37,53 @@
 #define PageColor(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #define PageK1px (1 / UIScreen.mainScreen.scale)
 
-#define pageIsIphoneX ({\
+#define  PageWindow \
+({\
+UIWindow *window = nil; \
+if (@available(iOS 13.0, *)) \
+{ \
+    for (UIWindowScene* windowScene in [UIApplication sharedApplication].connectedScenes) { \
+        if (windowScene.activationState == UISceneActivationStateForegroundActive) \
+        { \
+            for (UIWindow *currentWindow in windowScene.windows)\
+            { \
+                if (currentWindow.isKeyWindow)\
+                { \
+                    window = currentWindow; \
+                    break; \
+                }\
+            }\
+        }\
+    }\
+    if(!window){  \
+        window =  [UIApplication sharedApplication].keyWindow; \
+    }\
+}\
+else \
+{ \
+    window =  [UIApplication sharedApplication].keyWindow; \
+}\
+(window); \
+})\
+
+
+#define PageIsIphoneX ({\
 BOOL isPhoneX = NO;\
 if (@available(iOS 11.0, *)) {\
-if ([[[UIApplication sharedApplication] delegate] window].safeAreaInsets.bottom > 0.0) {\
+if (PageWindow.safeAreaInsets.bottom > 0.0) {\
 isPhoneX = YES;\
 }\
 }\
 isPhoneX;\
 })
 
+
 //状态栏高度
-#define PageVCStatusBarHeight (pageIsIphoneX ? 44.f : 20.f)
+#define PageVCStatusBarHeight (PageIsIphoneX ? 44.f : 20.f)
 //导航栏高度
 #define PageVCNavBarHeight (44.f+PageVCStatusBarHeight)
 //底部标签栏高度
-#define PageVCTabBarHeight (pageIsIphoneX ? (49.f+34.f) : 49.f)
+#define PageVCTabBarHeight (PageIsIphoneX ? (49.f+34.f) : 49.f)
 
 
 

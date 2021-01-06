@@ -28,10 +28,10 @@
     ta.viewControllers = @[na1,[WMZPageCustomNaviVC new],na3];
     ta.view.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = ta;
-    
 //    [UITabBar appearance].translucent = NO;
 //    [UINavigationBar appearance].translucent = NO;
     // Override point for customization after application launch.
+    [self.window makeKeyAndVisible];
     return YES;
 }
 

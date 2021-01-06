@@ -82,7 +82,7 @@
         if (index == 6) {
             param.wMenuAnimalSet(PageTitleMenuPDD);
         }
-    
+
         if (index == 8) {
             param.wMenuFixRightDataSet(@"≡");
         }
@@ -103,7 +103,7 @@
         }
     
         if (index == 10) {
-            param.wMenuTitleWidthSet(PageVCWidth/data.count);
+            param.wMenuTitleWidthSet(PageVCWidth/3);
         }
     
         //自定义标题
@@ -122,6 +122,12 @@
             })
             //自定义滑动后标题的变化
             .wCustomMenuSelectTitleSet(^(NSArray *titleArr) {
+                for (WMZPageNaviBtn *obj in titleArr) {
+                    if (obj.isSelected) {
+                        
+                        break;
+                    }
+                }
                 [titleArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                            if (obj.isSelected) {
                                 obj.layer.masksToBounds = YES;

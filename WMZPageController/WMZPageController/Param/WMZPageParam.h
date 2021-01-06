@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
  height           自定义标题高度(优先级最高)   @(100)
  marginX          自定义标题margin          @(100)
  y                自定义标题y坐标(优先级最高)  @(100)
+ canTopSuspension 当前子控制器不悬浮固定在顶部  @(NO)  NO表示不悬浮
  */
 WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, NSArray*,              wTitleArr)
 

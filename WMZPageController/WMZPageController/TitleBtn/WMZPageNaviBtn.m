@@ -76,9 +76,8 @@
      CGFloat labHeight = self.titleLabel.bounds.size.height;
      CGSize textSize = [self.titleLabel.text sizeWithAttributes:@{NSFontAttributeName:self.titleLabel.font}];
      CGSize frameSize = CGSizeMake(ceilf(textSize.width), ceilf(textSize.height));
-     if (labWidth < frameSize.width) {
-         labWidth = frameSize.width;
-     }
+     labWidth = MAX(labWidth, frameSize.width);
+     labHeight = MIN(labHeight, frameSize.height);
      CGFloat kMargin = spacing/2.0;
      switch (postion) {
          case PageBtnPositionLeft:
@@ -87,7 +86,7 @@
              break;
              
          case PageBtnPositionRight:
-            [self setImageEdgeInsets:UIEdgeInsetsMake(0, labWidth + kMargin, 0, -labWidth - kMargin)];
+             [self setImageEdgeInsets:UIEdgeInsetsMake(0, labWidth + kMargin, 0, -labWidth - kMargin)];
              [self setTitleEdgeInsets:UIEdgeInsetsMake(0, -imgWidth - kMargin, 0, imgWidth + kMargin)];
              break;
              

@@ -387,16 +387,16 @@
     //顶点
     int topOffset = scrollView.contentSize.height - scrollView.frame.size.height;
     if (yOffset<=0) {
-        self.scrolToBottom = YES;
+          self.scrolToBottom = YES;
     }else{
-        if (yOffset >= topOffset) {
-            scrollView.contentOffset = CGPointMake(self.downSc.contentOffset.x, topOffset);
-            self.scrolTotop = YES;
-        }else{
-            self.scrolTotop = NO;
-        }
-        self.scrolToBottom = NO;
-    }
+          if (yOffset >= topOffset) {
+              scrollView.contentOffset = CGPointMake(self.downSc.contentOffset.x, topOffset);
+              self.scrolTotop = YES;
+          }else{
+              self.scrolTotop = NO;
+          }
+          self.scrolToBottom = NO;
+      }
     if (self.scrolTotop) {
         self.sonCanScroll = YES;
         if (self.currentScroll.contentSize.height<=self.currentScroll.frame.size.height) {
@@ -408,8 +408,11 @@
         if (!self.canScroll) {
             scrollView.contentOffset = CGPointMake(0, topOffset);
         }else {
-             self.sonCanScroll = NO;
+            self.sonCanScroll = NO;
         }
+    }
+    if (![self currentNotSuspennsion]) {
+        [self.downSc setContentOffset:CGPointMake(0, topOffset) animated:NO];
     }
     CGFloat delta = scrollView.contentOffset.y/topOffset;
     if (delta>1) {
@@ -508,6 +511,10 @@
                 }
             }
         }
+        if (![self currentNotSuspennsion]) {
+            int topOffset = self.downSc.contentSize.height - self.downSc.frame.size.height;
+            [self.downSc setContentOffset:CGPointMake(0, topOffset) animated:YES];
+        }
     }else{
         self.currentScroll = nil;
         self.currentFootView  = nil;
@@ -580,6 +587,7 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
     if ([keyPath isEqualToString:@"contentOffset"]) {
         if (![self canTopSuspension]) return;
+        if (![self currentNotSuspennsion]) return;
         if (hadWillDisappeal) return;
         if (self.currentScroll!=object){
             self.currentScroll = object;
@@ -865,6 +873,21 @@
        ||self.param.wMenuPosition == PageMenuPositionNavi){
           return NO;
     }
+    if (!self.param.wTitleArr.count) {
+        return NO;
+    }
+    return YES;
+}
+//某个子控制不悬浮
+- (BOOL)currentNotSuspennsion{
+    if (self.param.wTitleArr.count > self.upSc.currentTitleIndex) {
+        id data = self.param.wTitleArr[self.upSc.currentTitleIndex];
+        if ([data isKindOfClass:[NSDictionary class]] &&
+            data[@"canTopSuspension"]
+            &&![data[@"canTopSuspension"] boolValue]) {
+            return NO;
+        }
+    }
     return YES;
 }
 - (NSMutableDictionary *)sonChildScrollerViewDic{
@@ -881,7 +904,7 @@
 }
 - (WMZPageScroller *)downSc{
     if (!_downSc) {
-        _downSc = [[WMZPageScroller alloc]initWithFrame:CGRectMake(0, 0, PageVCWidth, PageVCHeight+0.02) style:UITableViewStyleGrouped];
+        _downSc = [[WMZPageScroller alloc]initWithFrame:CGRectMake(0, 0, PageVCWidth, PageVCHeight) style:UITableViewStyleGrouped];
        _downSc.estimatedRowHeight = 100;
        _downSc.sectionHeaderHeight = 0.01;
        _downSc.sectionFooterHeight = 0.01;

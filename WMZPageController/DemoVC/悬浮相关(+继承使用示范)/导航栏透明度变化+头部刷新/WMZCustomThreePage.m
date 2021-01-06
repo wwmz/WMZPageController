@@ -28,15 +28,8 @@
      
     //标题数组
     NSArray *data = @[@"热门",@"男装",@"美妆",@"手机",@"食品",@"电器",@"鞋包",@"百货",@"女装",@"汽车",@"电脑"];
-    NSMutableArray *controllerArr = [NSMutableArray new];
-    for (int i = 0; i<data.count; i++) {
-        TopSuspensionVC *vc = [TopSuspensionVC new];
-        vc.page = i;
-        [controllerArr addObject:vc];
-    }
     WMZPageParam *param = PageParam()
     .wTitleArrSet(data)
-    .wControllersSet(controllerArr)
     //控制器数组
     .wViewControllerSet(^UIViewController *(NSInteger index) {
         TopSuspensionVC *vc = [TopSuspensionVC new];
@@ -81,8 +74,5 @@
                 [strongSelf.downSc.mj_header endRefreshing];
             });
         }];
-
-
 }
-
 @end
