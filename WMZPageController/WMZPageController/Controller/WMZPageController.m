@@ -100,8 +100,7 @@
            }
         }
         
-    }
-    
+    }    
 }
 
 - (void)setParam{
@@ -617,6 +616,7 @@
 - (void)updateMenuData{
     [self removeKVO];
     footerViewIndex = -1;
+    [self.upSc removeFromSuperview];
     for (UIViewController *VC in self.childViewControllers) {
         [VC willMoveToParentViewController:nil];
         [VC.view removeFromSuperview];
@@ -624,6 +624,8 @@
     }
     [self.sonChildScrollerViewDic removeAllObjects];
     [self.sonChildFooterViewDic removeAllObjects];
+    self.sonChildScrollerViewDic = [NSMutableDictionary new];
+    self.sonChildFooterViewDic = [NSMutableDictionary new];
     [self UI];
 }
 
@@ -631,12 +633,14 @@
 *手动调用菜单到第index个
 */
 - (void)selectMenuWithIndex:(NSInteger)index{
-    [self.upSc.btnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (idx == index) {
-            [obj sendActionsForControlEvents:UIControlEventTouchUpInside];
-            *stop = YES;
-        }
-    }];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.upSc.btnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (idx == index) {
+                [obj sendActionsForControlEvents:UIControlEventTouchUpInside];
+                *stop = YES;
+            }
+        }];
+    });
 }
 
 //更新
@@ -705,11 +709,11 @@
 //动态删除菜单数组
 - (BOOL)deleteMenuTitleIndexArr:(NSArray*)deleteArr{
     __block BOOL success = YES;
-    [deleteArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [deleteArr enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         BOOL result =  [self deleteMenuTitleIndex:obj];
-        if (!result) {
-            success = NO;
-        }
+         if (!result) {
+             success = NO;
+         }
     }];
     return success;
 }
@@ -735,7 +739,10 @@
     self.param.wControllers = [NSArray arrayWithArray:controllerArr];
     
     WMZPageNaviBtn *btn = [WMZPageNaviBtn buttonWithType:UIButtonTypeCustom];
-    WMZPageNaviBtn *temp = [self.upSc.btnArr objectAtIndex:MAX(0, index - 1)];
+    WMZPageNaviBtn *temp = nil;
+    if (index > 0) {
+        temp = [self.upSc.btnArr objectAtIndex:MAX(0, index - 1)];
+    }
     [self.upSc.mainView setPropertiesWithBtn:btn withIndex:index withTemp:temp];
     for (int i = 0; i<self.upSc.dataView.subviews.count; i++) {
         UIView *view = self.upSc.dataView.subviews[i];
@@ -821,7 +828,7 @@
         indexVC = nil;
         [self.cache removeObjectForKey:@(index)];
         UIView *obj = [self.sonChildScrollerViewDic objectForKey:@(index)];
-        [obj paegRemoveObserver:obj forKeyPath:@"contentOffset" context:nil];
+        [obj paegRemoveObserver:self forKeyPath:@"contentOffset" context:nil];
         [self.sonChildScrollerViewDic removeObjectForKey:@(index)];
     }
     for (int i = 0; i<self.upSc.dataView.subviews.count; i++) {
@@ -862,6 +869,70 @@
     }
     return YES;
 }
+
+//动态交换菜单标题位置
+- (BOOL)exchangeMenuDataAtIndex:(NSInteger)index withMenuDataAtIndex:(NSInteger)replaceIndex{
+    if (self.param.wTitleArr.count < index ||
+        self.param.wTitleArr.count < replaceIndex) {
+        NSLog(@"输入正确的index或replaceIndex");
+        return NO;
+    }
+    NSMutableArray *titleMarr = [NSMutableArray arrayWithArray:self.param.wTitleArr];
+    [titleMarr exchangeObjectAtIndex:index withObjectAtIndex:replaceIndex];
+    self.param.wTitleArr = [NSArray arrayWithArray:titleMarr];
+    
+    if (self.upSc.btnArr &&
+        self.upSc.btnArr.count > index &&
+        self.upSc.btnArr.count > replaceIndex) {
+        [self.upSc.btnArr exchangeObjectAtIndex:index withObjectAtIndex:replaceIndex];
+    }
+    NSMutableArray *controllerArr = [NSMutableArray arrayWithArray:self.param.wControllers];
+    if (controllerArr.count > index &&
+        controllerArr.count > replaceIndex) {
+        [controllerArr exchangeObjectAtIndex:index withObjectAtIndex:replaceIndex];
+        self.param.wControllers = [NSArray arrayWithArray:controllerArr];
+    }
+    if ([self.cache objectForKey:@(index)] || [self.cache objectForKey:@(replaceIndex)]) {
+        UIViewController *indexVC = [self.cache objectForKey:@(index)];
+        UIViewController *replaceVC = [self.cache objectForKey:@(replaceIndex)];
+        if (replaceVC) {
+            [self.cache removeObjectForKey:@(replaceIndex)];
+            [self.cache setObject:replaceVC forKey:@(index)];
+            [indexVC.view page_x:index * PageVCWidth];
+        }
+        if (indexVC) {
+            [self.cache removeObjectForKey:@(index)];
+            [self.cache setObject:indexVC forKey:@(replaceIndex)];
+            [indexVC.view page_x:replaceIndex * PageVCWidth];
+        }
+        UIScrollView *indexScrollView = [self.sonChildScrollerViewDic objectForKey:@(index)];
+        UIScrollView *replaceScrollView = [self.sonChildScrollerViewDic objectForKey:@(replaceIndex)];
+        if (replaceScrollView) {
+            [self.sonChildScrollerViewDic removeObjectForKey:@(replaceIndex)];
+            [self.sonChildScrollerViewDic setObject:replaceScrollView forKey:@(index)];
+        }
+        if (indexScrollView) {
+            [self.sonChildScrollerViewDic removeObjectForKey:@(index)];
+            [self.sonChildScrollerViewDic setObject:indexScrollView forKey:@(replaceIndex)];
+        }
+        
+        if (self.upSc.currentTitleIndex == index) {
+            self.upSc.dataView.contentOffset = CGPointMake(replaceIndex * PageVCWidth, 0);
+            self.upSc.currentTitleIndex = replaceIndex;
+        }
+        
+    }
+    
+    WMZPageNaviBtn *temp = nil;
+    for (int i = 0 ; i<self.upSc.btnArr.count; i++) {
+        WMZPageNaviBtn *btn = self.upSc.btnArr[i];
+        [btn page_x:temp?CGRectGetMaxX(temp.frame):0];
+        temp = btn;
+    }
+    [self.upSc.mainView resetMainViewContenSize:self.upSc.btnArr.lastObject];
+    return YES;
+}
+
 //数据
 - (void)showData{
     [self setParam];

@@ -88,19 +88,19 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,         
 //菜单栏高度 default 60
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,                  wMenuHeight)
 //给菜单栏和headView加个背景层 default -
-WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageHeadAndMenuBgView,                  wInsertHeadAndMenuBg)
+WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageHeadAndMenuBgView,    wInsertHeadAndMenuBg)
 //给菜单栏加个下划线 default -
-WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageHeadAndMenuBgView,                  wInsertMenuLine)
+WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageHeadAndMenuBgView,    wInsertMenuLine)
 //自定义菜单栏 default -
-WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageHeadAndMenuBgView,                  wCustomMenuView)
+WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageHeadAndMenuBgView,    wCustomMenuView)
 //自定义菜单右上角红点
-WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageCustomRedText,                  wCustomRedView)
+WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageCustomRedText,        wCustomRedView)
 //自定义菜单栏上的标题
-WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageCustomMenuTitle,                  wCustomMenuTitle)
+WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageCustomMenuTitle,      wCustomMenuTitle)
 //自定义选中后菜单栏上的标题
 WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageCustomMenuSelectTitle,wCustomMenuSelectTitle)
 //自定义固定标题
-WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageCustomMenuTitle,                  wCustomMenufixTitle)
+WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageCustomMenuTitle,      wCustomMenufixTitle)
 //默认选中 default 0
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, NSInteger,             wMenuDefaultIndex)
 //菜单最右边固定内容 default nil (可传字符串/字典/数组)

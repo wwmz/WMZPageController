@@ -132,6 +132,7 @@
             }
             [self.mainView scrollToIndex:index animal:NO];
         }else{
+            
             [self beginAppearanceTransitionWithIndex:index withOldIndex:self.currentTitleIndex];
             self.lastPageIndex = self.currentTitleIndex;
             self.nextPageIndex = index;
@@ -147,8 +148,7 @@
 //固定标题点击
 - (void)fixTap:(WMZPageNaviBtn*)btn{
     if (_fixLastBtn) {
-        if (_fixLastBtn == btn) return;
-         _fixLastBtn.selected = NO;
+        _fixLastBtn.selected = NO;
     }
     btn.selected = YES;
     if (self.param.wEventFixedClick) {
@@ -289,6 +289,7 @@
 - (void)beginAppearanceTransitionWithIndex:(NSInteger)index withOldIndex:(NSInteger)old{
     UIViewController *newVC = [self getVCWithIndex:index];
     UIViewController *oldVC = [self getVCWithIndex:old];
+    NSLog(@"%@ %@",newVC,oldVC);
     if (!newVC||!oldVC||(index==old)||(oldVC==newVC)) return;
     [newVC beginAppearanceTransition:YES animated:YES];
     [self addChildVC:index VC:newVC];
@@ -495,5 +496,7 @@
 - (void)setCurrentTitleIndex:(NSInteger)currentTitleIndex{
     _currentTitleIndex = currentTitleIndex;
     self.dataView.currentIndex = currentTitleIndex;
+    self.currentVC = [self getVCWithIndex:currentTitleIndex];
+    
 }
 @end

@@ -126,7 +126,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
         VC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:VC animated:YES];
     }else if (indexPath.section  == 10) {
-        NSArray *arr = @[@"WeiBoController",@"WangZheController"];
+        NSArray *arr = @[@"WeiBoController",@"WangZheController",@"SecondNestVC"];
         UIViewController *VC = [NSClassFromString(arr[indexPath.row]) new];
         [self.navigationController pushViewController:VC animated:YES];
     }else if (indexPath.section  == 11) {

@@ -136,6 +136,8 @@
 		F3A1FFA72334D6AF004B12F6 /* NSBezierPath+RoundedCorners.m in Sources */ = {isa = PBXBuildFile; fileRef = F3A1FF6F2334D6AF004B12F6 /* NSBezierPath+RoundedCorners.m */; };
 		F3A1FFA82334D6AF004B12F6 /* UIColor+HexString.m in Sources */ = {isa = PBXBuildFile; fileRef = F3A1FF702334D6AF004B12F6 /* UIColor+HexString.m */; };
 		F3BAC20924DA45DD00CB8F6B /* WMZTaoBaoDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = F3BAC20824DA45DD00CB8F6B /* WMZTaoBaoDemo.m */; };
+		F3CAE66625A695FF0098D9C2 /* SecondNestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F3CAE66525A695FF0098D9C2 /* SecondNestVC.m */; };
+		F3CAE66925A6AE410098D9C2 /* SecondNextSonVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F3CAE66825A6AE410098D9C2 /* SecondNextSonVC.m */; };
 		F3D5DCAF24CC6D47007487DC /* WMZMeiTuanSonVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F3D5DCAE24CC6D47007487DC /* WMZMeiTuanSonVC.m */; };
 		F3DCBFBA24EE11EC001B2B04 /* WMZNaviPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DCBFB924EE11EC001B2B04 /* WMZNaviPageController.swift */; };
 /* End PBXBuildFile section */
@@ -423,6 +425,10 @@
 		F3A1FF702334D6AF004B12F6 /* UIColor+HexString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexString.m"; sourceTree = "<group>"; };
 		F3BAC20724DA45DD00CB8F6B /* WMZTaoBaoDemo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMZTaoBaoDemo.h; sourceTree = "<group>"; };
 		F3BAC20824DA45DD00CB8F6B /* WMZTaoBaoDemo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMZTaoBaoDemo.m; sourceTree = "<group>"; };
+		F3CAE66425A695FF0098D9C2 /* SecondNestVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondNestVC.h; sourceTree = "<group>"; };
+		F3CAE66525A695FF0098D9C2 /* SecondNestVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondNestVC.m; sourceTree = "<group>"; };
+		F3CAE66725A6AE410098D9C2 /* SecondNextSonVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondNextSonVC.h; sourceTree = "<group>"; };
+		F3CAE66825A6AE410098D9C2 /* SecondNextSonVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondNextSonVC.m; sourceTree = "<group>"; };
 		F3D5DCAD24CC6D47007487DC /* WMZMeiTuanSonVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMZMeiTuanSonVC.h; sourceTree = "<group>"; };
 		F3D5DCAE24CC6D47007487DC /* WMZMeiTuanSonVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMZMeiTuanSonVC.m; sourceTree = "<group>"; };
 		F3DCBFB824EE11EC001B2B04 /* WMZPageController-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WMZPageController-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -468,7 +474,6 @@
 			children = (
 				F3052CEF23B5DC1E0016CE17 /* WMZCustomOnePage.h */,
 				F3052CF023B5DC1E0016CE17 /* WMZCustomOnePage.m */,
-				F392D48923A377E100B00FBF /* 全局背景色 */,
 			);
 			path = "显示导航栏+中间刷新";
 			sourceTree = "<group>";
@@ -620,6 +625,7 @@
 		F32BFFDC253818A300B70F27 /* 嵌套使用 */ = {
 			isa = PBXGroup;
 			children = (
+				F3CAE66325A695620098D9C2 /* 双重二层嵌套 */,
 				F32BFFDD2538196200B70F27 /* 王者营地(三层嵌套) */,
 				F32BFFDE2538196200B70F27 /* 微博嵌套(导航栏+二级) */,
 			);
@@ -950,6 +956,7 @@
 		F392D48723A377E100B00FBF /* 悬浮相关(+继承使用示范) */ = {
 			isa = PBXGroup;
 			children = (
+				F392D48923A377E100B00FBF /* 全局背景色 */,
 				F32457CC2505DE9D0081F412 /* 自定义导航栏 */,
 				F30C9D0C23C383C7001BE9C7 /* 某个子控制器固定底部 */,
 				F3052CEB23B5DC1D0016CE17 /* 导航栏透明度变化+头部刷新 */,
@@ -1160,6 +1167,17 @@
 			path = DemoVC;
 			sourceTree = "<group>";
 		};
+		F3CAE66325A695620098D9C2 /* 双重二层嵌套 */ = {
+			isa = PBXGroup;
+			children = (
+				F3CAE66425A695FF0098D9C2 /* SecondNestVC.h */,
+				F3CAE66525A695FF0098D9C2 /* SecondNestVC.m */,
+				F3CAE66725A6AE410098D9C2 /* SecondNextSonVC.h */,
+				F3CAE66825A6AE410098D9C2 /* SecondNextSonVC.m */,
+			);
+			path = "双重二层嵌套";
+			sourceTree = "<group>";
+		};
 		F3DCBFB224EE10F3001B2B04 /* 放在导航栏里(swift使用示范) */ = {
 			isa = PBXGroup;
 			children = (
@@ -1311,6 +1329,7 @@
 				F3A1FF782334D6AF004B12F6 /* UIImage+ForceDecode.m in Sources */,
 				F31983072355AE02002D305B /* MJRefreshBackGifFooter.m in Sources */,
 				F38F14852539E237009C36A8 /* WMZPageParam.m in Sources */,
+				F3CAE66625A695FF0098D9C2 /* SecondNestVC.m in Sources */,
 				F3A1FF792334D6AF004B12F6 /* UIImage+Transform.m in Sources */,
 				F3A1FF7F2334D6AF004B12F6 /* SDImageCodersManager.m in Sources */,
 				F370E0FC24C9D97D0080E02D /* WMZMeiTuanVC.m in Sources */,
@@ -1319,6 +1338,7 @@
 				F3A1FF912334D6AF004B12F6 /* SDImageCachesManager.m in Sources */,
 				F3A1FF952334D6AF004B12F6 /* UIImageView+WebCache.m in Sources */,
 				F38F147F2539E237009C36A8 /* NSObject+SafeKVO.m in Sources */,
+				F3CAE66925A6AE410098D9C2 /* SecondNextSonVC.m in Sources */,
 				F3A1FF822334D6AF004B12F6 /* SDWebImageCompat.m in Sources */,
 				F32BFFED25382EDD00B70F27 /* WZThirdController.m in Sources */,
 				F3A1FF742334D6AF004B12F6 /* SDWebImageManager.m in Sources */,

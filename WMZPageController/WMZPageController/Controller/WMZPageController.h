@@ -11,25 +11,45 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface WMZPageController : UIViewController<UIScrollViewDelegate,WMZPageLoopDelegate,UITableViewDelegate>
-//参数
+/*
+*参数
+*/
 @property(nonatomic,strong)WMZPageParam *param;
-//头部标题滚动视图
+/*
+*头部标题滚动视图
+*/
 @property(nonatomic,strong)WMZPageLoopView *upSc;
-//底部全屏滚动视图
+/*
+*底部全屏滚动视图
+*/
 @property(nonatomic,strong,nullable)WMZPageScroller *downSc;
-//缓存
+/*
+*缓存
+*/
 @property(nonatomic,strong)NSMutableDictionary *cache;
-//子控制器中可以滚动的视图
+/*
+*子控制器中可以滚动的视图
+*/
 @property(nonatomic,strong)NSMutableDictionary *sonChildScrollerViewDic;
-//子控制器中固定底部的视图
+/*
+*子控制器中固定底部的视图
+*/
 @property(nonatomic,strong)NSMutableDictionary *sonChildFooterViewDic;
-//子控制器固定底部如果不是位于最左边  可设置此属性 默认为0
+/*
+*子控制器固定底部如果不是位于最左边  可设置此属性 默认为0
+*/
 @property(nonatomic,assign)CGFloat footViewOrginX;
-//子控制器固定底部宽度如果不是整个屏幕  可设置此属性 默认为底部滚动视图的宽度
+/*
+*子控制器固定底部宽度如果不是整个屏幕  可设置此属性 默认为底部滚动视图的宽度
+*/
 @property(nonatomic,assign)CGFloat footViewSizeWidth;
-//子控制器固定底部y值 default 最底部-height
+/*
+*子控制器固定底部y值 default 最底部-height
+*/
 @property(nonatomic,assign)CGFloat footViewOrginY;
-//透明视图
+/*
+*透明视图
+*/
 @property (nonatomic, strong) UIView *naviBarBackGround;
 /*!
 *
@@ -65,7 +85,7 @@ NS_ASSUME_NONNULL_BEGIN
 */
 - (void)selectMenuWithIndex:(NSInteger)index;
 
-
+//⚠️使用动态的方法传入的控制器必须使用 wControllers
 
 /*!
 * @brief 动态插入菜单数据
@@ -91,6 +111,15 @@ NS_ASSUME_NONNULL_BEGIN
 * @param deleteArr @[ 如@(1) 或者 传入的标题对象]
 */
 - (BOOL)deleteMenuTitleIndexArr:(NSArray*)deleteArr;
+
+
+/*!
+* @brief 动态交换菜单标题位置
+* @param index 需要交换的位置
+* @param replaceIndex 交换完的位置
+*/
+- (BOOL)exchangeMenuDataAtIndex:(NSInteger)index withMenuDataAtIndex:(NSInteger)replaceIndex;
+
 @end
 
 NS_ASSUME_NONNULL_END

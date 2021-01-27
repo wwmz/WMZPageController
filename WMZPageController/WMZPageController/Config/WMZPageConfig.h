@@ -77,11 +77,19 @@ isPhoneX = YES;\
 isPhoneX;\
 })
 
+#define PageIsIpad ({\
+BOOL isIpad = NO;\
+if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {\
+    isIpad =  YES;\
+}\
+isIpad;\
+})
+
 
 //状态栏高度
-#define PageVCStatusBarHeight (PageIsIphoneX ? 44.f : 20.f)
+#define PageVCStatusBarHeight [[UIApplication sharedApplication] statusBarFrame].size.height
 //导航栏高度
-#define PageVCNavBarHeight (44.f+PageVCStatusBarHeight)
+#define PageVCNavBarHeight ((PageIsIpad?50.f:44.f)+ PageVCStatusBarHeight)
 //底部标签栏高度
 #define PageVCTabBarHeight (PageIsIphoneX ? (49.f+34.f) : 49.f)
 
