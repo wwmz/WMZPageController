@@ -106,10 +106,8 @@
 - (void)tap:(WMZPageNaviBtn*)btn{
     NSInteger index = [self.btnArr indexOfObject:btn];
     if (index == NSNotFound) return;
-    if (self.lastPageIndex != NSNotFound) {
-        if (self.param.wEventClick) {
-            self.param.wEventClick(btn, btn.tag);
-        }
+    if (self.param.wEventClick) {
+        self.param.wEventClick(btn, btn.tag);
     }
     if (self.currentTitleIndex == index) return;
     
@@ -140,6 +138,7 @@
             [self endAppearanceTransitionWithIndex:self.nextPageIndex withOldIndex:self.lastPageIndex isFlag:NO];
             [self.dataView setContentOffset:CGPointMake(index*PageVCWidth, 0) animated:self.param.wTapScrollAnimal];
             [self.mainView scrollToIndex:index];
+            
         }
     }else{
         [self.mainView scrollToIndex:index];
@@ -289,7 +288,6 @@
 - (void)beginAppearanceTransitionWithIndex:(NSInteger)index withOldIndex:(NSInteger)old{
     UIViewController *newVC = [self getVCWithIndex:index];
     UIViewController *oldVC = [self getVCWithIndex:old];
-    NSLog(@"%@ %@",newVC,oldVC);
     if (!newVC||!oldVC||(index==old)||(oldVC==newVC)) return;
     [newVC beginAppearanceTransition:YES animated:YES];
     [self addChildVC:index VC:newVC];

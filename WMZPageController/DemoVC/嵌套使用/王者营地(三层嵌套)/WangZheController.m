@@ -29,6 +29,8 @@
     [super viewDidLoad];
     WMZPageParam *param = PageParam()
     .wTitleArrSet(@[@"关注",@"推荐"])
+    .wMenuWidthSet(PageVCWidth - 40)
+    .wMenuPositionSet(PageMenuPositionCenter)
     .wMenuFixShadowSet(NO)
     .wMenuFixRightDataSet(@[@{@"name":@"固定",@"selectName":@"固定1",@"titleColor":[UIColor redColor],@"titleSelectColor":[UIColor blueColor]},@{@"image":@"C"}])
     .wViewControllerSet(^UIViewController *(NSInteger index) {

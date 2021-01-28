@@ -130,7 +130,7 @@
             fixBtn.titleLabel.font = self.param.wMenuTitleUIFont;
             [fixBtn setTitleColor:titleColor forState:UIControlStateNormal];
             [fixBtn setTitleColor:titleSelectColor forState:UIControlStateSelected];
-            fixBtn.frame = CGRectMake(CGRectGetWidth(self.frame)-allWidth, originY, menuFixWidth, menuFixHeight);
+            fixBtn.frame = CGRectMake(CGRectGetMaxX(self.frame)-allWidth, originY, menuFixWidth, menuFixHeight);
             fixBtn.tag = 10086+i;
             fixBtn.backgroundColor = temp.backgroundColor;
             [self addSubview:fixBtn];

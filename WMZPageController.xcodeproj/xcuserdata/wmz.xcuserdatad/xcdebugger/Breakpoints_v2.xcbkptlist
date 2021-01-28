@@ -50,22 +50,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A85BBC93-6881-4097-BC79-0F651F1F3DB0"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "WMZPageController/WMZPageController/DataView/WMZPageLoopView.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
-            landmarkName = "-tap:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "8D3E4418-824B-48F3-805A-F38CCE98DA67"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -76,6 +60,22 @@
             startingLineNumber = "909"
             endingLineNumber = "909"
             landmarkName = "-exchangeMenuDataAtIndex:withMenuDataAtIndex:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D1D2CC6E-AAF7-400F-9603-2C15A0B73734"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WMZPageController/WMZPageController/DataView/WMZPageLoopView.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "110"
+            endingLineNumber = "110"
+            landmarkName = "-tap:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
