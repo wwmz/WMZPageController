@@ -1,6 +1,7 @@
-# WMZPageController - 分页控制器,替换UIPageController方案,具备完整的生命周期,多种指示器样式,多种标题样式,可悬浮,支持ios13暗黑模式(仿淘宝,优酷,爱奇艺,今日头条,简书,京东等多种标题菜单)（cocopod更新至1.3.5，使用有问题的话先看看是不是最新的版本）
+# WMZPageController - 分页控制器,替换UIPageController方案,具备完整的生命周期,多种指示器样式,多种标题样式,可悬浮,支持ios13暗黑模式(仿淘宝,优酷,爱奇艺,今日头条,简书,京东等多种标题菜单)（cocopod更新至1.3.6，使用有问题的话先看看是不是最新的版本）
 
-# ⚠️⚠️  1.3.2 新增自定义菜单高度  wMenuHeight
+
+
 # ⚠️⚠️  使用悬浮样式需要实现协议 WMZPageProtocol 
 # ⚠️⚠️   
      //自定义整体距离顶部的位置(如果默认算的不准确 或者需要修改) block内会传回当前的值 可对比自行返回最终需要的
@@ -447,6 +448,41 @@
 	*/
 	- (BOOL)deleteMenuTitleIndexArr:(NSArray*)deleteArr;
 
+
+### 常见问题（开始收录）
+     1 问：设置了wTopSuspension为什么没有底部没有滑动？
+       答：先看看子控制器有没有实现WMZPageProtocol协议返回可滚动的视图,再看看子控制器是否自己实现了didscroll等的滑动代理方法把库内的方法覆盖掉了
+     2 问:怎么设置标题的风格,红点等怎么展示
+       答:在传值wTitleArr的时候 把标题字符串换成字典
+       /*可传带字典的数组
+        badge            红点提示    @(YES) 或者 带数字 @(99)
+        name             标题        @""
+        selectName       选中后的标题  @""
+        indicatorColor   指示器颜色   [UIColor redColor]
+        titleSelectColor 选中字体颜色 [UIColor redColor]
+        titleColor       未选中字体颜色 [UIColor redColor]
+        backgroundColor  选中背景颜色 [UIColor redColor] (如果是数组则是背景色渐变色) @[[UIColor redColor],[UIColor orangeColor]]
+        onlyClick        仅点击页面不加载 @(YES)
+        firstColor       富文本 第一行标题颜色  [UIColor redColor]
+        wrapColor        富文本 第二行标题颜色  [UIColor redColor]
+        image            图片    @""
+        selectImage      选中图片 @""
+        width            自定义标题宽度(优先级最高)   @(100)
+        height           自定义标题高度(优先级最高)   @(100)
+        marginX          自定义标题margin          @(100)
+        y                自定义标题y坐标(优先级最高)  @(100)
+        canTopSuspension 当前子控制器不悬浮固定在顶部  @(NO)  NO表示不悬浮
+        */
+       3 问:距离顶部或者距离底部 没有达到需求,有留白或者空出等情况
+         答:可以使用这三个属性进行调整,属性内会返回当前的值,调整的时候只需要根据情况返回适当增加或者减少的值 即可
+         //自定义整体距离顶部的位置 适用于整体距离顶部的距离
+         WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY,        wCustomNaviBarY)
+         //自定义整体距离底部的位置 适用于整体距离底部的距离
+         WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY,        wCustomTabbarY)
+        //自定义底部滚动视图的高度 适用于没有悬浮到需要的位置的时候
+        WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY,        wCustomDataViewHeight)
+       
+
 ### 依赖
 无任何依赖 
 
@@ -458,9 +494,6 @@
 2. 在 Podfile 中添加 `pod 'WMZPageController'`。
 3. 执行 `pod install` 或 `pod update`。
 4. 导入 #import "WMZPageController.h"。
-
-### 注:要消除链式编程的警告 
-要在Buildding Settings 把CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF 设为NO
 
 ### 手动安装
 
@@ -511,3 +544,4 @@ WMZPageControlller 使用 MIT 许可证，详情见 [LICENSE](LICENSE) 文件。
 - 20210127 pod更新至1.3.4 新增动态更新 修复右边按钮只能点击一次的问题 优化
 - 20210128 pod更新至1.3.5  优化
 - 20210204 啥也没更新 又是一年过年了。。。 还能维护多久呢
+- 20210422  pod更新至1.3.6 主要是消除一系列的警告

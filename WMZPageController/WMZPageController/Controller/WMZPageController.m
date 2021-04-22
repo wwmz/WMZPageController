@@ -779,6 +779,7 @@
     
     [self.upSc.mainView resetMainViewContenSize:self.upSc.btnArr.lastObject];
     self.upSc.dataView.contentSize = CGSizeMake(self.param.wTitleArr.count*PageVCWidth,0);
+    [self.upSc.mainView scrollToIndex:self.upSc.currentTitleIndex animal:NO];
     return YES;
 }
 
@@ -867,6 +868,7 @@
         self.cache = [NSMutableDictionary dictionaryWithDictionary:mdic];
         self.upSc.dataView.contentOffset = CGPointMake(MAX(0, self.upSc.dataView.contentOffset.x - self.upSc.dataView.frame.size.width) , 0);
     }
+    [self.upSc.mainView scrollToIndex:self.upSc.currentTitleIndex animal:NO];
     return YES;
 }
 
@@ -930,6 +932,7 @@
         temp = btn;
     }
     [self.upSc.mainView resetMainViewContenSize:self.upSc.btnArr.lastObject];
+    [self.upSc.mainView scrollToIndex:self.upSc.currentTitleIndex animal:NO];
     return YES;
 }
 
