@@ -34,7 +34,7 @@
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    
+    if (!self.currentScroll)  return NO;
     if ([NSStringFromClass(otherGestureRecognizer.view.class) isEqualToString:@"UITableViewWrapperView"] && [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
         return YES;
     } else if ([NSStringFromClass(otherGestureRecognizer.view.class) isEqualToString:@"WMZPageDataView"]) {

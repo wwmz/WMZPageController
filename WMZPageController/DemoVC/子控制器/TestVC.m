@@ -61,10 +61,10 @@
     ta.dataSource = self;
     ta.delegate = self;
     ta.tag = self.page;
-    _bannerData = @[@"http://www.51pptmoban.com/d/file/2014/01/20/e382d9ad5fe92e73a5defa7b47981e07.jpg",
-                                      @"http://hbimg.b0.upaiyun.com/9fd1b3a78826fc29b997e5bc39180c3b1f8ed3d76b4b-LxIY28_fw658",
-                                      @"http://img.sccnn.com/bimg/337/23662.jpg",
-                                  @"http://pic26.nipic.com/20130118/9356147_134953884000_2.jpg"];
+    _bannerData = @[@"https://upload-images.jianshu.io/upload_images/9163368-92b42a0c11caa7a3.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240",
+                                      @"https://upload-images.jianshu.io/upload_images/9163368-e9a09d9dbe63b68b.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240",
+                                      @"https://upload-images.jianshu.io/upload_images/9163368-dc97bebf2f743a60.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240",
+                                  @"https://upload-images.jianshu.io/upload_images/9163368-02e26751674a3bc6.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"];
     self.ta = ta;
     self.param =  BannerParam()
     .wFrameSet(CGRectMake(0, 0, BannerWitdh, BannerHeight/5))
@@ -132,7 +132,7 @@
     CGRect imageRect = CGRectMake(0, 0, itemSize.width, itemSize.height);
     [icon drawInRect:imageRect];
     cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();//*2
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:@"http://b-ssl.duitang.com/uploads/item/201412/17/20141217151102_LThwM.png"]];
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:@"https://upload-images.jianshu.io/upload_images/9163368-dc97bebf2f743a60.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"]];
     UIGraphicsEndImageContext();//*3
     
     cell.textLabel.text = [NSString stringWithFormat:@"%ld-路飞",(long)self.page];

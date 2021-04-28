@@ -40,10 +40,6 @@ NS_ASSUME_NONNULL_BEGIN
 */
 @property(nonatomic,assign)CGFloat footViewOrginX;
 /*
-*子控制器固定底部宽度如果不是整个屏幕  可设置此属性 默认为底部滚动视图的宽度
-*/
-@property(nonatomic,assign)CGFloat footViewSizeWidth;
-/*
 *子控制器固定底部y值 default 最底部-height
 */
 @property(nonatomic,assign)CGFloat footViewOrginY;

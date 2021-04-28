@@ -57,8 +57,8 @@
             filePath = "WMZPageController/WMZPageController/Controller/WMZPageController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "911"
-            endingLineNumber = "911"
+            startingLineNumber = "918"
+            endingLineNumber = "918"
             landmarkName = "-exchangeMenuDataAtIndex:withMenuDataAtIndex:"
             landmarkType = "7">
          </BreakpointContent>

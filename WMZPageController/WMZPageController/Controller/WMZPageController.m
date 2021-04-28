@@ -496,7 +496,8 @@
 
         if ([newVC respondsToSelector:@selector(fixFooterView)]) {
             UIView *tmpView = [newVC performSelector:@selector(fixFooterView)];
-            [self.sonChildFooterViewDic setObject:view forKey:@(index)];
+            if (!tmpView) return;
+            [self.sonChildFooterViewDic setObject:tmpView forKey:@(index)];
             self.currentFootView = tmpView;
             [self.view addSubview:self.currentFootView];
             self.currentFootView.hidden = NO;
@@ -546,18 +547,16 @@
     NSInteger index = floor(scrollView.contentOffset.x/self.upSc.frame.size.width);
     if (self.currentFootView) {
         int x = 0;
-        CGFloat width = self.footViewSizeWidth;
         if (left) {
             if (scrollView.contentOffset.x>(self.upSc.frame.size.width*footerViewIndex)) {
-                x = 0;
-                width -= offset;
+                x -= offset;
             }else{
                 x = (int)self.upSc.frame.size.width - offset;
             }
         }else{
+            
             if (scrollView.contentOffset.x>(self.upSc.frame.size.width*footerViewIndex)) {
-               x = 0;
-               width -= offset;
+               x -= offset;
             }else{
                x = (int)self.upSc.frame.size.width - offset;
             }
@@ -567,7 +566,7 @@
         }
         if (!self.param.wFixFirst) {
             [self.currentFootView page_x: x];
-            [self.currentFootView page_width:width];
+//            [self.currentFootView page_width:width];
         }
     }
 }
@@ -638,6 +637,7 @@
             if (idx == index) {
                 [obj sendActionsForControlEvents:UIControlEventTouchUpInside];
                 *stop = YES;
+                return;
             }
         }];
     });
@@ -777,6 +777,10 @@
         self.upSc.currentTitleIndex+=1;
     }
     
+    if ([self.cache objectForKey:@(self.upSc.currentTitleIndex)]) {
+        self.upSc.currentVC = [self.cache objectForKey:@(self.upSc.currentTitleIndex)];
+    }
+    
     [self.upSc.mainView resetMainViewContenSize:self.upSc.btnArr.lastObject];
     self.upSc.dataView.contentSize = CGSizeMake(self.param.wTitleArr.count*PageVCWidth,0);
     [self.upSc.mainView scrollToIndex:self.upSc.currentTitleIndex animal:NO];
@@ -866,6 +870,9 @@
             }
         }];
         self.cache = [NSMutableDictionary dictionaryWithDictionary:mdic];
+        if ([self.cache objectForKey:@(self.upSc.currentTitleIndex)]) {
+            self.upSc.currentVC = [self.cache objectForKey:@(self.upSc.currentTitleIndex)];
+        }
         self.upSc.dataView.contentOffset = CGPointMake(MAX(0, self.upSc.dataView.contentOffset.x - self.upSc.dataView.frame.size.width) , 0);
     }
     [self.upSc.mainView scrollToIndex:self.upSc.currentTitleIndex animal:NO];
@@ -921,6 +928,11 @@
         if (self.upSc.currentTitleIndex == index) {
             self.upSc.dataView.contentOffset = CGPointMake(replaceIndex * PageVCWidth, 0);
             self.upSc.currentTitleIndex = replaceIndex;
+        }
+        
+        
+        if ([self.cache objectForKey:@(self.upSc.currentTitleIndex)]) {
+            self.upSc.currentVC = [self.cache objectForKey:@(self.upSc.currentTitleIndex)];
         }
         
     }
@@ -1002,11 +1014,9 @@
     _headHeight = self.headView.frame.size.height;
     return _headHeight;
 }
-- (CGFloat)footViewSizeWidth{
-    if (!_footViewSizeWidth) {
-        _footViewSizeWidth = self.upSc.frame.size.width;
-    }
-    return _footViewSizeWidth;
+- (void)setCurrentScroll:(UIScrollView *)currentScroll{
+    _currentScroll = currentScroll;
+    self.downSc.currentScroll = currentScroll;
 }
 - (void)setParam:(WMZPageParam *)param{
     _param = param;

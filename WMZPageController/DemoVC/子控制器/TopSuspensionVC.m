@@ -111,7 +111,7 @@
     CGRect imageRect = CGRectMake(0, 0, itemSize.width, itemSize.height);
     [icon drawInRect:imageRect];
     cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();//*2
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576232579066&di=f0c28d04cd4bfafcec7a23275a933836&imgtype=0&src=http%3A%2F%2Fk.zol-img.com.cn%2Fsjbbs%2F5870%2Fa5869130_s.jpg"]];
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:@"https://upload-images.jianshu.io/upload_images/9163368-dc97bebf2f743a60.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"]];
     UIGraphicsEndImageContext();//*3
     
     cell.textLabel.text = [NSString stringWithFormat:@"%ld-路飞",self.page];

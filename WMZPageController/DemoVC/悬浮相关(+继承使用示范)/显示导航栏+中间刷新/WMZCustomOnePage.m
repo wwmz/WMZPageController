@@ -41,7 +41,7 @@
         UIView *back = [UIView new];
         back.frame = CGRectMake(0, 0, PageVCWidth, 270);
         UIImageView *image = [UIImageView new];
-        [image sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602673230263&di=c9290650541d8edf911ff008a3bfa4dc&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fpic%2Ff%2F33%2F648011013.jpg"]];
+        [image sd_setImageWithURL:[NSURL URLWithString:@"https://upload-images.jianshu.io/upload_images/9163368-02e26751674a3bc6.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"]];
         image.frame = back.bounds;
         [back addSubview:image];
         return back;
@@ -57,7 +57,7 @@
 //            //如果要更新隐藏顶部 高度需设为CGFLOAT_MIN 不能设为0
 //            back.frame = CGRectMake(0, 0, PageVCWidth, 200);
 //            UIImageView *image = [UIImageView new];
-//            [image sd_setImageWithURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576232579081&di=29b77f2a5119755d3c1c3c7ce2595527&imgtype=0&src=http%3A%2F%2Fi2.bangqu.com%2Fr2%2Fnews%2F20180810%2F304a6c35725753744e48.jpg"]];
+//            [image sd_setImageWithURL:[NSURL URLWithString:@"https://upload-images.jianshu.io/upload_images/9163368-dc97bebf2f743a60.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"]];
 //            image.frame = back.bounds;
 //            [back addSubview:image];
 //            return back;

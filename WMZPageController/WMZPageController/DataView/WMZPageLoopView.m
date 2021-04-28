@@ -494,7 +494,7 @@
 - (void)setCurrentTitleIndex:(NSInteger)currentTitleIndex{
     _currentTitleIndex = currentTitleIndex;
     self.dataView.currentIndex = currentTitleIndex;
-    self.currentVC = [self getVCWithIndex:currentTitleIndex];
+//    self.currentVC = [self getVCWithIndex:currentTitleIndex];
     
 }
 @end
