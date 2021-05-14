@@ -106,6 +106,14 @@
     
     [mStr replaceCharactersInRange:[btn.normalText rangeOfString:array[1]] withAttributedString:btn.attributedImage];
     [mSelectStr replaceCharactersInRange:[btn.normalText rangeOfString:array[1]] withAttributedString:btn.attributedSelectImage];
+    
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    //调整间距
+    paragraphStyle.paragraphSpacing = 8;
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+    [mStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:[btn.normalText rangeOfString:array[0]]];
+    [mSelectStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:[btn.normalText rangeOfString:array[0]]];
+    
     [btn setAttributedTitle:mStr forState:UIControlStateNormal];
     [btn setAttributedTitle:mSelectStr forState:UIControlStateSelected];
     
