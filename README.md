@@ -481,6 +481,7 @@
          WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY,        wCustomTabbarY)
         //自定义底部滚动视图的高度 适用于没有悬浮到需要的位置的时候
         WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY,        wCustomDataViewHeight)
+       4 在父控制住self.view addSubview 了自定义的View 看不见 需要延迟0.1秒加载
        
 
 ### 依赖
