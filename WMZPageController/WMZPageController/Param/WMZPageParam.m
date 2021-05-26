@@ -79,6 +79,8 @@ WMZPagePropSetFuncImplementation(WMZPageParam, UIFont*,                wMenuTitl
 WMZPagePropSetFuncImplementation(WMZPageParam, UIFont*,                wMenuTitleSelectUIFont)
 WMZPagePropSetFuncImplementation(WMZPageParam, UIColor*,               wMenuSelectTitleBackground)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuTitleRadios)
+WMZPagePropSetFuncImplementation(WMZPageParam, PageFailureGestureRecognizer,wCustomFailGesture)
+WMZPagePropSetFuncImplementation(WMZPageParam, PageSimultaneouslyGestureRecognizer,wCustomSimultaneouslyGesture)
 - (instancetype)init{
     if (self = [super init]) {
         _wMenuAnimal = PageTitleMenuNone;

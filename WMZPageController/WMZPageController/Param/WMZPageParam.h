@@ -52,6 +52,11 @@ WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY
 //自定义底部滚动视图的高度(如果默认算的不准确 或者需要修改) block内会传回当前的值 可对比自行返回最终需要的
 WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY,        wCustomDataViewHeight)
 
+//自定义Fail手势
+WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageFailureGestureRecognizer,wCustomFailGesture)
+//自定义Simultaneously手势
+WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageSimultaneouslyGestureRecognizer,wCustomSimultaneouslyGesture)
+
 /* =========================================customFrame===============================================*/
 
 /* =========================================special==============================================*/

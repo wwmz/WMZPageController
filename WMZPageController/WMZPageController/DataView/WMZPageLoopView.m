@@ -445,9 +445,7 @@
 }
 
 //结束动画处理
-- (void)endAninamal{
-//    return;
-}
+- (void)endAninamal{}
 
 - (id)safeObjectAtIndex:(NSUInteger)index data:(NSArray*)data
 {
@@ -494,7 +492,5 @@
 - (void)setCurrentTitleIndex:(NSInteger)currentTitleIndex{
     _currentTitleIndex = currentTitleIndex;
     self.dataView.currentIndex = currentTitleIndex;
-//    self.currentVC = [self getVCWithIndex:currentTitleIndex];
-    
 }
 @end

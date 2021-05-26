@@ -9,6 +9,7 @@
 
 #import "WMZPageScroller.h"
 #import "WMZPageConfig.h"
+#import "WMZPageDataView.h"
 @implementation WMZPageScroller
 
 - (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style{
@@ -22,7 +23,10 @@
 
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    if (!self.canScroll) return NO;
+    if (self.wCustomSimultaneouslyGesture) {
+        return self.wCustomSimultaneouslyGesture(gestureRecognizer, otherGestureRecognizer);
+    }
+    if (!self.canScroll) {return NO;}
     CGFloat naVi = self.wFromNavi?PageVCNavBarHeight:0;
     CGFloat segmentViewContentScrollViewHeight = PageVCHeight - naVi - self.menuTitleHeight;
     CGPoint currentPoint = [gestureRecognizer locationInView:self];
@@ -34,10 +38,13 @@
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    if (self.wCustomFailGesture) {
+        return  self.wCustomFailGesture(gestureRecognizer, otherGestureRecognizer);
+    }
     if (!self.currentScroll)  return NO;
     if ([NSStringFromClass(otherGestureRecognizer.view.class) isEqualToString:@"UITableViewWrapperView"] && [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
         return YES;
-    } else if ([NSStringFromClass(otherGestureRecognizer.view.class) isEqualToString:@"WMZPageDataView"]) {
+    } else if ([NSStringFromClass(otherGestureRecognizer.view.class) isEqualToString:@"WMZPageDataView"]&&![NSStringFromClass(self.superview.superview.class) isEqualToString:@"WMZPageDataView"]) {
         return YES;
     } else if ([otherGestureRecognizer.delegate isKindOfClass:NSClassFromString(@"_FDFullscreenPopGestureRecognizerDelegate")]) {
         if (self.contentOffset.x <= 0){

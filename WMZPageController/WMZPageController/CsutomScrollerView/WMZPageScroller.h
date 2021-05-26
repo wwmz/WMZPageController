@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "WMZPageConfig.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface WMZPageScroller : UITableView <UIGestureRecognizerDelegate>
@@ -15,8 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,assign)BOOL canScroll;
 @property(nonatomic,strong)UIScrollView* currentScroll;
 @property(nonatomic,assign)BOOL wFromNavi;
+@property(nonatomic,  copy)PageFailureGestureRecognizer wCustomFailGesture;
+@property(nonatomic,  copy)PageSimultaneouslyGestureRecognizer wCustomSimultaneouslyGesture;
 @end
-
 @interface UIImage (PageImageName)
 //从bundle获取图片
 + (UIImage*)pageBundleImage:(NSString*)name;

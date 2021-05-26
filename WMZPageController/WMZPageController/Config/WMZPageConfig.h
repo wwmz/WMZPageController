@@ -228,4 +228,13 @@ typedef UIViewController* (^PageViewControllerIndex)(NSInteger index);
  */
 typedef CGFloat (^PageCustomFrameY)(CGFloat nowY);
 
+/*
+ * 自定义手势fail
+ */
+typedef BOOL (^PageFailureGestureRecognizer)(UIGestureRecognizer * _Nullable  gestureRecognizer,UIGestureRecognizer * _Nullable otherGestureRecognizer);
+
+/*
+ * 自定义手势Simultaneously
+ */
+typedef BOOL (^PageSimultaneouslyGestureRecognizer)(UIGestureRecognizer *_Nullable gestureRecognizer,UIGestureRecognizer *_Nullable otherGestureRecognizer);
 #endif /* WMZPageConfig_h */
