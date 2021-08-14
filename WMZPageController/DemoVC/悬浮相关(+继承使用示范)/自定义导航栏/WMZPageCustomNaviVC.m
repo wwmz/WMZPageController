@@ -30,7 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
      //标题数组
-    NSArray *data = @[@"热门",@{@"name":@"男装",@"onlyClick":@(YES)},
+    NSArray *data = @[@"热门",@{WMZPageKeyName:@"男装",WMZPageKeyOnlyClick:@(YES)},
                       @"美妆",@"手机",@"食品",@"电器",@"鞋包",@"百货",@"女装",@"汽车",@"电脑"];
     WMZPageParam *param =
     PageParam()

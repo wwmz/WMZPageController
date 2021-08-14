@@ -13,6 +13,7 @@
 #import "UIImageView+WebCache.h"
 #import "MJRefresh.h"
 #import "TopSuspensionVC.h"
+
 @interface WMZCustomThreePage ()
 
 @end
@@ -32,9 +33,9 @@
     .wTitleArrSet(data)
     //控制器数组
     .wViewControllerSet(^UIViewController *(NSInteger index) {
-        TopSuspensionVC *vc = [TopSuspensionVC new];
+        TopSuspensionVC *vc = TopSuspensionVC.new;
         vc.page = index;
-        return vc;
+        return (UIViewController*)vc;  ///单纯消除警告
     })
     //悬浮开启
     .wTopSuspensionSet(YES)

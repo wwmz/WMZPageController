@@ -43,7 +43,7 @@
     //头部
     .wMenuHeadViewSet(^UIView *{
         UIView *back = [UIView new];
-        back.frame = CGRectMake(0, 0, PageVCWidth, 300+PageVCStatusBarHeight);
+        back.frame = CGRectMake(0, 0, PageVCWidth, 300);
         UIImageView *image = [UIImageView new];
         [image sd_setImageWithURL:[NSURL URLWithString:@"https://upload-images.jianshu.io/upload_images/9163368-02e26751674a3bc6.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"]];
         image.frame =back.bounds;
@@ -58,14 +58,18 @@
     
     //实现tableview的协议
     self.downSc.dataSource = self;
+    self.downSc.scrollEnabled = YES;
     self.param = param;
     self.downSc.mj_header= [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [weakSelf.downSc.mj_header endRefreshing];
+            [weakSelf.downSc reloadData];
+            weakSelf.param.wTitleArr = @[@"更新1",@"更新2"];
+            [weakSelf updateMenuData];
+            weakSelf.downSc.scrollEnabled = YES;
         });
     }];
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
@@ -76,15 +80,10 @@
     cell.detailTextLabel.text = @"自定义cell";
     return cell;
 }
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 100;
 }
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 5;
-}
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
 }
 @end

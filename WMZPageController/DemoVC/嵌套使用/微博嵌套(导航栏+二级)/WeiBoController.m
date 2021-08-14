@@ -19,7 +19,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
     NSInteger random = arc4random() % 2;
     WMZPageParam *headParam = PageParam()
     .wTitleArrSet(@[@"关注",@"推荐"])
@@ -29,6 +28,7 @@
         }
         return [TestVC new];
     })
+    .wLazyLoadingSet(NO)
     .wMenuPositionSet(PageMenuPositionNavi)
     .wMenuAnimalSet(PageTitleMenuPDD)
     .wMenuWidthSet(150);

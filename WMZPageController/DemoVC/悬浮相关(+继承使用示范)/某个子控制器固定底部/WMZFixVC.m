@@ -26,7 +26,7 @@
            return [CollectionViewPopDemo new];
        })
 
-      //固定在所有子控制器底部  需要放在第一个控制器里 例如此例子
+      //如果要固定在所有子控制器底部  需要放在第一个控制器里 例如此例子
 //       .wViewControllerSet(^UIViewController *(NSInteger index) {
 //          if (index == 0) return [FixSonVC new] ;
 //          return [CollectionViewPopDemo new];
@@ -65,7 +65,6 @@
 }
 
 - (void)onBtnAction:(id)sender{
-    [self downScrollViewSetOffset:CGPointZero animated:YES];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"setDowmScContenOffset" object:nil];
+    [self downScrollViewSetOffset:CGPointMake(0, CGFLOAT_MIN) animated:YES];
 }
 @end

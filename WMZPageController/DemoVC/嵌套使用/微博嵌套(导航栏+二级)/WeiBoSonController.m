@@ -8,9 +8,7 @@
 
 #import "WeiBoSonController.h"
 #import "TestVC.h"
-#import "MJRefresh.h"
 @interface WeiBoSonController ()
-
 @end
 
 @implementation WeiBoSonController
@@ -26,12 +24,13 @@
          vc.page = index;
          return vc;
      })
+    /// 设为NO 则自己需要根据实际场景手动调整 wCustomTabbarY wCustomNaviY
+    .wLazyLoadingSet(NO)
     .wMenuTitleSelectColorSet([UIColor orangeColor])
-//    //减掉导航栏高度+tabbar高度(根据实际情况)
-    .wCustomDataViewHeightSet(^CGFloat(CGFloat nowY) {
-        return nowY ;
-    })
     .wMenuAnimalSet(PageTitleMenuNone);
+    param.wCustomTabbarY = ^CGFloat(CGFloat nowY) {
+        return PageVCTabBarHeight;
+    };
     self.param = param;
 }
 

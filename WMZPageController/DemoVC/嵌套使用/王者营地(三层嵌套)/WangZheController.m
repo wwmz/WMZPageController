@@ -32,7 +32,7 @@
     .wMenuWidthSet(PageVCWidth - 40)
     .wMenuPositionSet(PageMenuPositionCenter)
     .wMenuFixShadowSet(NO)
-    .wMenuFixRightDataSet(@[@{@"name":@"固定",@"selectName":@"固定1",@"titleColor":[UIColor redColor],@"titleSelectColor":[UIColor blueColor]},@{@"image":@"C"}])
+    .wMenuFixRightDataSet(@[@{WMZPageKeyName:@"固定",WMZPageKeySelectName:@"固定1",WMZPageKeyTitleColor:[UIColor redColor],WMZPageKeyTitleSelectColor:[UIColor blueColor]},@{WMZPageKeyImage:@"C"}])
     .wViewControllerSet(^UIViewController *(NSInteger index) {
         if (index == 1) {
             return [WZSecondController new];

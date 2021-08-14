@@ -18,48 +18,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D09244AA-7AE3-4350-9EC9-EABB9D03B58F"
-            shouldBeEnabled = "No"
+            uuid = "AA1495BD-F072-46C9-BEED-A29D5C20C3C6"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WMZPageController/WMZPageController/MenuView/WMZPageMunuView.m"
+            filePath = "WMZPageController/WMZPageController/WMZPageController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
-            landmarkName = "-setPropertiesWithBtn:withIndex:withTemp:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "561566D1-9E85-44E4-A201-F12A1BDB32C3"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "WMZPageController/DemoVC/&#x60ac;&#x6d6e;&#x76f8;&#x5173;(+&#x7ee7;&#x627f;&#x4f7f;&#x7528;&#x793a;&#x8303;)/&#x5bfc;&#x822a;&#x680f;&#x900f;&#x660e;&#x5ea6;&#x53d8;&#x5316;+&#x5934;&#x90e8;&#x5237;&#x65b0;/WMZCustomThreePage.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
-            landmarkName = "-viewDidLoad"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8D3E4418-824B-48F3-805A-F38CCE98DA67"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "WMZPageController/WMZPageController/Controller/WMZPageController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "918"
-            endingLineNumber = "918"
-            landmarkName = "-exchangeMenuDataAtIndex:withMenuDataAtIndex:"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
+            landmarkName = "-setNaviUI"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

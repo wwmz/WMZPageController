@@ -27,7 +27,7 @@
 
 
 //实现协议 悬浮 数组协议 左右联动
-- (NSArray *)getMyScrollViews{
+- (NSArray<UIScrollView *> *)getMyScrollViews{
     return @[self.leftTa,self.rightTa];
 }
 

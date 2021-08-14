@@ -17,12 +17,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     WMZPageParam *param = PageParam()
-    .wTitleArrSet(@[@"推荐",@"赛事",@"短视频",@"专栏",@"新时代",@"电竞",@"游戏",@"汽车"])
+    .wTitleArrSet(@[@"推荐",@"赛事",@"短视频",@"专栏"])
     .wViewControllerSet(^UIViewController *(NSInteger index) {
         return [SecondNextSonVC new];
     })
+    /// 设为NO 则需要手动调整
+    .wLazyLoadingSet(NO)
     .wMenuTitleSelectColorSet([UIColor orangeColor])
     .wMenuAnimalSet(PageTitleMenuCircle);
+    
     self.param = param;
 }
 

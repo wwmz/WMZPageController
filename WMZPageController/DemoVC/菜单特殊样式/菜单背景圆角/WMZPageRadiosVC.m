@@ -21,10 +21,10 @@
     .wMenuAnimalSet(PageTitleMenuCircleBg)
        //圆角
 //    .wMenuTitleRadiosSet(5)
-       //标题背景颜色
+      // 标题背景颜色
 //    .wMenuTitleBackgroundSet([UIColor clearColor])
-       //标题选中背景
-//    .wMenuSelectTitleBackgroundSet([UIColor blueColor])
+      // 标题选中背景
+    .wMenuSelectTitleBackgroundSet([UIColor blueColor])
     .wMenuTitleColorSet([UIColor orangeColor])
     .wViewControllerSet(^UIViewController *(NSInteger index) {
         return [TestVC new];

@@ -83,7 +83,7 @@
 //    TopSuspensionVC *AddVC2 = [TopSuspensionVC new];
 //    AddVC2.page = 30;
 //    //增加字典标题
-//    BOOL succcess2 =  [self addMenuTitleWithObject:[WMZPageTitleDataModel initWithIndex:3 controller:AddVC2 titleInfo:@{@"name":@"字典标题",@"titleColor":[UIColor orangeColor]}]];
+//    BOOL succcess2 =  [self addMenuTitleWithObject:[WMZPageTitleDataModel initWithIndex:3 controller:AddVC2 titleInfo:@{WMZPageKeyName:@"字典标题",WMZPageKeyTitleColor:[UIColor orangeColor]}]];
 //    
 //    //增加数组
 //    BOOL succcess3 =  [self addMenuTitleWithObjectArr:@[

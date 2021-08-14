@@ -8,14 +8,12 @@
 
 
 #import "TestVC.h"
-#import "WMZBannerView.h"
 #import "WMZPageProtocol.h"
 #import "MJRefresh.h"
+#import "Masonry.h"
+
 @interface TestVC ()<UITableViewDelegate,UITableViewDataSource,WMZPageProtocol>
-@property(nonatomic,strong)UITableView *ta;
-@property(nonatomic,strong)NSArray *bannerData;
-@property(nonatomic,strong)WMZBannerView *headView;
-@property(nonatomic,strong)WMZBannerParam *param;
+@property (nonatomic, strong) UITableView *ta;
 @end
 
 @implementation TestVC
@@ -24,31 +22,8 @@
     return self.ta;
 }
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    NSLog(@"viewWillAppear %ld",(long)self.page);
-}
-
-#pragma mark 注意 可以重新适配tableview的frame 如果你已经适配好了tableview的frame就不用
-- (void)viewDidLayoutSubviews{
-    [super viewDidLayoutSubviews];
-    self.ta.frame = self.view.bounds;
-}
-
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    NSLog(@"viewWillDisappear %ld",(long)self.page);
-}
-
-- (void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
-    NSLog(@"viewDidDisappear %ld",(long)self.page);
-}
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"viewDidLoad %ld",(long)self.page);
     self.view.backgroundColor = [UIColor whiteColor];
     UITableView *ta = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     [self.view addSubview:ta];
@@ -61,18 +36,12 @@
     ta.dataSource = self;
     ta.delegate = self;
     ta.tag = self.page;
-    _bannerData = @[@"https://upload-images.jianshu.io/upload_images/9163368-92b42a0c11caa7a3.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240",
-                                      @"https://upload-images.jianshu.io/upload_images/9163368-e9a09d9dbe63b68b.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240",
-                                      @"https://upload-images.jianshu.io/upload_images/9163368-dc97bebf2f743a60.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240",
-                                  @"https://upload-images.jianshu.io/upload_images/9163368-02e26751674a3bc6.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"];
     self.ta = ta;
-    self.param =  BannerParam()
-    .wFrameSet(CGRectMake(0, 0, BannerWitdh, BannerHeight/5))
-    .wDataSet(self.bannerData)
-    .wRepeatSet(YES);
-    self.headView = [[WMZBannerView alloc]initConfigureWithModel:self.param];
-    ta.tableHeaderView = self.headView;
-
+    [self.ta mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(0);
+    }];
+    
+    
     // 下拉刷新
     __weak TestVC *weakSelf = self;
     self.ta.mj_header= [MJRefreshNormalHeader headerWithRefreshingBlock:^{
@@ -114,33 +83,20 @@
     return NO;
     
 }
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 15;
     
 }
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
-
-    UIImage * icon = cell.imageView.image;
-    CGSize itemSize = CGSizeMake(36, 36);//固定图片大小为36*36
-    UIGraphicsBeginImageContextWithOptions(itemSize, NO, 0.0);//*1
-    CGRect imageRect = CGRectMake(0, 0, itemSize.width, itemSize.height);
-    [icon drawInRect:imageRect];
-    cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();//*2
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:@"https://upload-images.jianshu.io/upload_images/9163368-dc97bebf2f743a60.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"]];
-    UIGraphicsEndImageContext();//*3
-    
-    cell.textLabel.text = [NSString stringWithFormat:@"%ld-路飞",(long)self.page];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld-红发",(long)self.page];
+    cell.imageView.image = [UIImage imageNamed:@"11111"];
+    cell.textLabel.text = [NSString stringWithFormat:@"%ld-我是UIViewController内的",(long)self.page];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld-我是UIViewController内的",(long)self.page];
     return cell;
 }
-
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 100;
 }
@@ -148,11 +104,9 @@
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
     return UITableViewCellEditingStyleDelete;
 }
-
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     
 }
-
 // 修改编辑按钮文字
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
     return @"删除";

@@ -7,23 +7,38 @@
 //
 
 #import "TopSuspensionVC.h"
-#import "WMZBannerView.h"
 #import "WMZPageProtocol.h"
 #import "WMZPageConfig.h"
 #import "MJRefresh.h"
+#import "Masonry.h"
 @interface TopSuspensionVC ()<UITableViewDelegate,UITableViewDataSource,WMZPageProtocol>
 @property(nonatomic,strong)UITableView *ta;
-@property(nonatomic,strong)NSArray *bannerData;
-@property(nonatomic,strong)WMZBannerView *headView;
-@property(nonatomic,strong)WMZBannerParam *param;
 @end
 
 @implementation TopSuspensionVC
 
 #pragma mark 注意 可以重新适配tableview的frame 如果你已经适配好了tableview的frame就不用
-- (void)viewDidLayoutSubviews{
-    [super viewDidLayoutSubviews];
-    self.ta.frame = self.view.bounds;
+//- (void)viewDidLayoutSubviews{
+//    [super viewDidLayoutSubviews];
+//    self.ta.frame = self.view.bounds;
+//}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    NSLog(@"viewWillAppear");
+}
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    NSLog(@"viewDidAppear");
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    NSLog(@"viewWillDisappear");
+}
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    NSLog(@"viewDidDisappear");
 }
 
 
@@ -48,17 +63,10 @@
     ta.dataSource = self;
     ta.delegate = self;
     ta.tag = self.page;
-    _bannerData = @[@"https://upload-images.jianshu.io/upload_images/9163368-92b42a0c11caa7a3.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240",
-                    @"https://upload-images.jianshu.io/upload_images/9163368-e9a09d9dbe63b68b.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240",
-                    @"https://upload-images.jianshu.io/upload_images/9163368-dc97bebf2f743a60.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240",
-                @"https://upload-images.jianshu.io/upload_images/9163368-02e26751674a3bc6.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"];
     self.ta = ta;
-    self.param =  BannerParam()
-    .wFrameSet(CGRectMake(0, 0, BannerWitdh, BannerHeight/5))
-    .wDataSet(self.bannerData)
-    .wRepeatSet(YES);
-    self.headView = [[WMZBannerView alloc]initConfigureWithModel:self.param];
-//    ta.tableHeaderView = self.headView;
+    [self.ta mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(0);
+    }];
 
     // 下拉刷新
     __weak TopSuspensionVC *weakSelf = self;
@@ -67,8 +75,8 @@
             [weakSelf.ta.mj_header endRefreshing];
         });
     }];
-      
-      
+
+
       // 上拉刷新
     self.ta.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -104,18 +112,9 @@
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
-
-    UIImage * icon = cell.imageView.image;
-    CGSize itemSize = CGSizeMake(36, 36);//固定图片大小为36*36
-    UIGraphicsBeginImageContextWithOptions(itemSize, NO, 0.0);//*1
-    CGRect imageRect = CGRectMake(0, 0, itemSize.width, itemSize.height);
-    [icon drawInRect:imageRect];
-    cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();//*2
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:@"https://upload-images.jianshu.io/upload_images/9163368-dc97bebf2f743a60.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"]];
-    UIGraphicsEndImageContext();//*3
-    
-    cell.textLabel.text = [NSString stringWithFormat:@"%ld-路飞",self.page];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld-红发",self.page];
+    cell.imageView.image = [UIImage imageNamed:@"11111"];
+    cell.textLabel.text = [NSString stringWithFormat:@"%ld-我是UIViewController内的",self.page];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld-我是UIViewController内的",self.page];
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -127,7 +126,5 @@
 //    vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
-
-
 
 @end

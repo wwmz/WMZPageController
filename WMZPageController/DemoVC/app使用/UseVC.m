@@ -119,7 +119,7 @@
            .wMenuTitleSelectColorSet(PageColor(0x333333))
            .wMenuTitleColorSet(PageColor(0x666666))
            .wMenuAnimalTitleGradientSet(NO)
-           .wMenuFixRightDataSet(@{@"image":@"G"})
+           .wMenuFixRightDataSet(@{WMZPageKeyImage:@"G"})
            .wMenuFixWidthSet(70)
            .wMenuFixShadowSet(NO)
            .wMenuIndicatorHeightSet(3)
@@ -128,8 +128,17 @@
            .wMenuAnimalSet(PageTitleMenuPDD);
            }
            break;
-         case 5:{
-             
+           case 5:{
+             param.wTitleArrSet(data)
+             .wViewControllerSet(^UIViewController *(NSInteger index) {
+                 TestVC *vc = [TestVC new];
+                  vc.page = index;
+                  return vc;
+              })
+             .wMenuAnimalSet(PageTitleMenuCircle);
+           }
+          break;
+         case 6:{
            param.wTitleArrSet(data)
            .wViewControllerSet(^UIViewController *(NSInteger index) {
                TestVC *vc = [TestVC new];
@@ -145,9 +154,6 @@
            .wMenuIndicatorColorSet(PageDarkColor(PageColor(0xE5193E), [UIColor orangeColor]))
            //菜单背景颜色
            .wMenuBgColorSet(PageDarkColor(PageColor(0xffffff), PageColor(0x666666)));
-             
-             
-           
          }
         break;
          default:
@@ -158,21 +164,6 @@
            self.navigationItem.hidesBackButton = YES;
        }
        self.param = param;
-
-       //更新
-       if (index == 5) {
-           dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)( 1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-               param
-               .wTitleArrSet([self weiboData])
-               .wViewControllerSet(^UIViewController *(NSInteger index) {
-                   TestVC *vc = [TestVC new];
-                    vc.page = index;
-                    return vc;
-               });
-               //更新
-               [self updateMenuData];
-           });
-       }
        
 }
 /*爱奇艺标题
@@ -187,31 +178,31 @@
 - (NSArray*)AQYData{
     return @[
     @{
-       @"name":@"推荐",
-       @"selectName":@"荐推",
-       @"backgroundColor":@[PageColor(0x15314b),PageColor(0x009a93)],
-       @"width":@(50),
-       @"marginX":@(10),
-       @"height":@(55),
+       WMZPageKeyName:@"推荐",
+       WMZPageKeySelectName:@"荐推",
+       WMZPageKeyBackgroundColor:@[PageColor(0x15314b),PageColor(0x009a93)],
+       WMZPageKeyTitleWidth:@(50),
+       WMZPageKeyTitleMarginX:@(10),
+       WMZPageKeyTitleHeight:@(55),
     },
     @{
-       @"name":@"70年",
-       @"backgroundColor":PageColor(0xd70022),
-       @"indicatorColor":PageColor(0xfffcc6),
-       @"titleSelectColor":PageColor(0xfffcc6),
+       WMZPageKeyName:@"70年",
+       WMZPageKeyBackgroundColor:PageColor(0xd70022),
+       WMZPageKeyIndicatorColor:PageColor(0xfffcc6),
+       WMZPageKeyTitleSelectColor:PageColor(0xfffcc6),
      },
      @{
-       @"name":@"VIP",
-       @"backgroundColor":PageColor(0x3d4659),
-       @"titleSelectColor":PageColor(0xe2c285),
-       @"indicatorColor":PageColor(0xe2c285),
-       @"titleSelectColor":PageColor(0x9297a5)
+       WMZPageKeyName:@"VIP",
+       WMZPageKeyBackgroundColor:PageColor(0x3d4659),
+       WMZPageKeyTitleSelectColor:PageColor(0xe2c285),
+       WMZPageKeyIndicatorColor:PageColor(0xe2c285),
+       WMZPageKeyTitleSelectColor:PageColor(0x9297a5)
      },
-     @{@"name":@"热点",@"backgroundColor":@[PageColor(0x15314b),PageColor(0x009a93)]},
-     @{@"name":@"电视剧",@"backgroundColor":@[PageColor(0x15314b),PageColor(0x009a93)]},
-     @{@"name":@"电影",@"backgroundColor":PageColor(0x007e80)},
-     @{@"name":@"儿童",@"backgroundColor":@[PageColor(0x15314b),PageColor(0x009a93)]},
-     @{@"name":@"游戏",@"backgroundColor":PageColor(0x1c2c3b)},
+     @{WMZPageKeyName:@"热点",WMZPageKeyBackgroundColor:@[PageColor(0x15314b),PageColor(0x009a93)]},
+     @{WMZPageKeyName:@"电视剧",WMZPageKeyBackgroundColor:@[PageColor(0x15314b),PageColor(0x009a93)]},
+     @{WMZPageKeyName:@"电影",WMZPageKeyBackgroundColor:PageColor(0x007e80)},
+     @{WMZPageKeyName:@"儿童",WMZPageKeyBackgroundColor:@[PageColor(0x15314b),PageColor(0x009a93)]},
+     @{WMZPageKeyName:@"游戏",WMZPageKeyBackgroundColor:PageColor(0x1c2c3b)},
     ];
 }
 
@@ -233,10 +224,10 @@
 - (NSArray*)ToutiaoData{
     return
     @[
-        @{@"name":@"关注",@"badge":@(YES)},
-        @{@"name":@"推荐",@"badge":@(YES)},@"广州",
-        @{@"name":@"热点",@"badge":@(YES)},
-        @"视频",@{@"name":@"图片",@"badge":@(YES)},@"问答",@"科技",
+        @{WMZPageKeyName:@"关注",WMZPageKeyBadge:@(YES)},
+        @{WMZPageKeyName:@"推荐",WMZPageKeyBadge:@(YES)},@"广州",
+        @{WMZPageKeyName:@"热点",WMZPageKeyBadge:@(YES)},
+        @"视频",@{WMZPageKeyName:@"图片",WMZPageKeyBadge:@(YES)},@"问答",@"科技",
     ];
 }
 
@@ -250,7 +241,7 @@
 }
 
 /*
-微博内容 @"onlyClick":@(YES) 仅点击不加载页面
+微博内容 WMZPageKeyOnlyClick:@(YES) 仅点击不加载页面
 */
 - (NSArray*)weiboData{
     return
@@ -266,12 +257,12 @@ selectImage 选中图片
     return
     @[
       @"推荐",
-      @{@"image":@"F"},
+      @{WMZPageKeyImage:@"F"},
       @"榜单",
       @"5G",
       @"抽奖",
       @"新时代",
-      @{@"name":@"哈哈",@"selectImage":@"D"},
+      @{WMZPageKeyName:@"哈哈",WMZPageKeySelectImage:@"D"},
       @"电竞",
       @"明星"];
 }

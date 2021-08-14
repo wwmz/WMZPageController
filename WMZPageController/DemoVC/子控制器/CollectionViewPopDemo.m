@@ -10,6 +10,8 @@
 #import "CollectionViewPopDemo.h"
 #import "WMZPageConfig.h"
 #import "MJRefresh.h"
+#import "Masonry.h"
+
 static NSString *const CollectionViewCell = @"CollectionViewCell";
 @interface CollectionViewPopDemo ()<UICollectionViewDelegate, UICollectionViewDataSource,WMZPageProtocol>
 @property(nonatomic,strong)UICollectionView *collectionView;
@@ -20,15 +22,6 @@ static NSString *const CollectionViewCell = @"CollectionViewCell";
 - (UIScrollView *)getMyScrollView{
     return self.collectionView;
 }
-
-#pragma mark 注意 可以重新适配tableview的frame 如果你已经适配好了tableview的frame就不用
-- (void)viewDidLayoutSubviews{
-    [super viewDidLayoutSubviews];
-    self.collectionView.frame = self.view.bounds;
-}
-//- (void)viewDidAppear:(BOOL)animated{
-//    self.collectionView.frame = self.view.bounds;
-//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -44,6 +37,10 @@ static NSString *const CollectionViewCell = @"CollectionViewCell";
             [weakSelf.collectionView.mj_footer endRefreshing];
         });
     }];
+    [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(0);
+    }];
+    
 }
 
 
