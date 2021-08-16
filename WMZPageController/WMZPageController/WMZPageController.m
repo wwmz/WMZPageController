@@ -124,7 +124,8 @@
         if (CGColorEqualToColor(self.param.wMenuTitleSelectColor.CGColor, PageColor(0xE5193E).CGColor)) self.param.wMenuTitleSelectColor = PageColor(0x00baf9);
         if (self.param.wMenuIndicatorHeight <= 15.0f)  self.param.wMenuIndicatorHeight = 0;
     }else if (self.param.wMenuAnimal == PageTitleMenuCircleBg) {
-        if (CGColorEqualToColor(self.param.wMenuSelectTitleBackground.CGColor, [UIColor clearColor].CGColor))   self.param.wMenuSelectTitleBackground = [UIColor orangeColor];
+        if (CGColorEqualToColor(self.param.wMenuSelectTitleBackground.CGColor, [UIColor clearColor].CGColor) || !self.param.wMenuSelectTitleBackground)
+            self.param.wMenuSelectTitleBackground = [UIColor orangeColor];
         if (CGColorEqualToColor(self.param.wMenuTitleSelectColor.CGColor, PageColor(0xE5193E).CGColor))  self.param.wMenuTitleSelectColor = [UIColor whiteColor];
         if (!self.param.wMenuCellMarginY)  self.param.wMenuCellMarginY = 10.f;
         if (!self.param.wMenuBottomMarginY)  self.param.wMenuBottomMarginY = 10.f;
@@ -226,10 +227,8 @@
 - (void)setUpMenuAndDataViewFrame{
     sonChildVCHeight = 0;
     CGFloat menuCellMarginY = self.param.wMenuCellMarginY;
-    CGFloat menuCellBottomMarginY = self.param.wMenuBottomMarginY;
     if (!UIEdgeInsetsEqualToEdgeInsets(self.param.wMenuInsets, UIEdgeInsetsZero)){
         menuCellMarginY = self.param.wMenuInsets.top;
-        menuCellBottomMarginY = self.param.wMenuInsets.bottom;
     }
     CGFloat titleMenuhHeight = self.upSc.mainView.frame.size.height + menuCellMarginY;
     if (self.param.wMenuPosition == PageMenuPositionNavi) {
@@ -273,7 +272,7 @@
         [self.upSc page_height:CGRectGetMaxY(self.upSc.dataView.frame)];
         self.navigationItem.titleView = self.upSc.mainView;
     }else{
-        [self.upSc.dataView page_y: CGRectGetMaxY(self.upSc.mainView.frame) + menuCellBottomMarginY];
+        [self.upSc.dataView page_y: CGRectGetMaxY(self.upSc.mainView.frame)];
         [self.upSc.dataView page_height:sonChildVCHeight];
         [self.upSc page_height:CGRectGetMaxY(self.upSc.dataView.frame)];
     }
@@ -367,11 +366,11 @@
 - (void)changeMenuFrame{
     if (!self.param.wTopChangeHeight) return;
     if (self.upSc.mainView.frame.size.height == self.param.wMenuHeight&&!self.sonCanScroll)return;
-    CGFloat offsetHeight = self.param.wTopChangeHeight>0?
+    CGFloat offsetHeight = self.param.wTopChangeHeight > 0?
     MIN(self.currentScroll.contentOffset.y, self.param.wTopChangeHeight):
     MAX (-self.currentScroll.contentOffset.y, self.param.wTopChangeHeight);
-    if (self.upSc.mainView.frame.size.height == (self.param.wMenuHeight - self.param.wTopChangeHeight)&&self.sonCanScroll&&offsetHeight == self.param.wTopChangeHeight)  return;
-    [self.upSc.mainView page_height:self.param.wMenuHeight-offsetHeight];
+    if (self.upSc.mainView.frame.size.height == (self.param.wMenuHeight + self.param.wMenuInsets.bottom - self.param.wTopChangeHeight)&& self.sonCanScroll&&offsetHeight == self.param.wTopChangeHeight)  return;
+    [self.upSc.mainView page_height:self.param.wMenuHeight + self.param.wMenuInsets.bottom -offsetHeight ];
     [self.upSc.dataView page_y:CGRectGetMaxY(self.upSc.mainView.frame)];
     [self.upSc.dataView page_height:pageDataFrame.size.height+offsetHeight];
     if (offsetHeight == 0) {

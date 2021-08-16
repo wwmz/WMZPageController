@@ -410,11 +410,11 @@
         CGFloat menuCellMarginY = self.param.wMenuCellMarginY;
         if (!UIEdgeInsetsEqualToEdgeInsets(self.param.wMenuInsets, UIEdgeInsetsZero)) menuCellMarginY = self.param.wMenuInsets.top;
         _frameInfo = @{
-            @(PageMenuPositionLeft):[NSValue valueWithCGRect:CGRectMake(0, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight)],
-            @(PageMenuPositionRight):[NSValue valueWithCGRect:CGRectMake(PageVCWidth-self.param.wMenuWidth, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight)],
-            @(PageMenuPositionCenter):[NSValue valueWithCGRect:CGRectMake((PageVCWidth-self.param.wMenuWidth)/2, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight)],
-            @(PageMenuPositionNavi):[NSValue valueWithCGRect:CGRectMake((PageVCWidth-self.param.wMenuWidth)/2, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight)],
-            @(PageMenuPositionBottom):[NSValue valueWithCGRect:CGRectMake(0, PageVCHeight, self.param.wMenuWidth,PageIsIphoneX?(self.param.wMenuHeight + 15):self.param.wMenuHeight)],
+            @(PageMenuPositionLeft):[NSValue valueWithCGRect:CGRectMake(0, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight + self.param.wMenuInsets.bottom)],
+            @(PageMenuPositionRight):[NSValue valueWithCGRect:CGRectMake(PageVCWidth-self.param.wMenuWidth, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight + self.param.wMenuInsets.bottom )],
+            @(PageMenuPositionCenter):[NSValue valueWithCGRect:CGRectMake((PageVCWidth-self.param.wMenuWidth)/2, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight + self.param.wMenuInsets.bottom )],
+            @(PageMenuPositionNavi):[NSValue valueWithCGRect:CGRectMake((PageVCWidth-self.param.wMenuWidth)/2, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight + self.param.wMenuInsets.bottom )],
+            @(PageMenuPositionBottom):[NSValue valueWithCGRect:CGRectMake(menuCellMarginY, PageVCHeight, self.param.wMenuWidth,PageIsIphoneX?(self.param.wMenuHeight + 15):self.param.wMenuHeight + self.param.wMenuInsets.bottom )],
         };
     }
     return _frameInfo;

@@ -35,6 +35,8 @@
            data = [self JSData];
        }else if(index == 5){
            data = [self PDDData];
+       }else if(index == 6){
+           data = [self PDDData];
        }
        WMZPageParam *param = PageParam();
        switch (index) {

@@ -98,7 +98,7 @@
 }
 - (UITableView *)tableView{
     if (!_tableView) {
-        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0,  CGRectGetMaxY(self.menuView.frame), self.view.bounds.size.width, self.view.bounds.size.height - PageVCNavBarHeight) style:UITableViewStyleGrouped];
+        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0,  CGRectGetMaxY(self.menuView.frame), self.view.bounds.size.width, self.view.bounds.size.height - PageVCNavBarHeight - 55) style:UITableViewStyleGrouped];
         _tableView.delegate = self;
         _tableView.dataSource = self;
     }
