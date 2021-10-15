@@ -37,7 +37,7 @@
     param.wMenuIndicatorColor = UIColor.orangeColor;
     param.wMenuAnimalTitleGradient = NO;
     param.wMenuAnimal = PageTitleMenuAiQY;
-//    param.wMenuTitleWidth = PageVCWidth/4;
+    param.wMenuTitleWidth = PageVCWidth/4;
     param.wMenuTitleSelectColor = UIColor.orangeColor;
     param.wViewController = ^UIViewController * _Nullable(NSInteger index) {
         return NSClassFromString(@"TestVC").new;
@@ -75,16 +75,16 @@
 - (void)onBtnAction{
     self.param.wTitleArr = @[
         /// 富文本需成对出现   WMZPageKeyName/WMZPageKeySelectName
-        @{WMZPageKeyName:[self getNormalStr:@"未使用213123123213" smallStr:@"(2)"],
-          WMZPageKeySelectName:[self getSelectStr:@"未使用" smallStr:@"(2)"],},
+        @{WMZPageKeyName:[self getNormalStr:@"未使用" smallStr:@"(222)"],
+          WMZPageKeySelectName:[self getSelectStr:@"未使用" smallStr:@"(222)"],},
         
-        @{WMZPageKeyName:[self getNormalStr:@"已使用21312" smallStr:@"(30)"],
-          WMZPageKeySelectName:[self getSelectStr:@"已使用" smallStr:@"(30)"],},
+        @{WMZPageKeyName:[self getNormalStr:@"已使用" smallStr:@"(303)"],
+          WMZPageKeySelectName:[self getSelectStr:@"已使用" smallStr:@"(303)"],},
         
-        @{WMZPageKeyName:[self getNormalStr:@"已取消312312" smallStr:@"(120)"],
+        @{WMZPageKeyName:[self getNormalStr:@"已取消" smallStr:@"(120)"],
           WMZPageKeySelectName:[self getSelectStr:@"已取消" smallStr:@"(120)"],},
         
-        @{WMZPageKeyName:[self getNormalStr:@"已完成321321" smallStr:@"(9)"],
+        @{WMZPageKeyName:[self getNormalStr:@"已完成" smallStr:@"(9)"],
           WMZPageKeySelectName:[self getSelectStr:@"已完成" smallStr:@"(9)"],},
     ];
     [self updateTitle];
