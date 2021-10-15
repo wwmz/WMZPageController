@@ -10,8 +10,6 @@
 #import "WMZPageController.h"
 #import "WMZPageProtocol.h"
 @interface WMZPageLoopView()<UIScrollViewDelegate,WMZPageMunuDelegate>{
-    WMZPageNaviBtn *_btnLeft ;
-    WMZPageNaviBtn *_btnRight;
     CGFloat lastContentOffset;
     NSInteger _currentTitleIndex;
 }
@@ -54,6 +52,8 @@
     self.dataView.contentSize = CGSizeMake(self.param.wTitleArr.count*PageVCWidth,0);
     self.dataView.delegate = self;
     self.dataView.totalCount = self.param.wTitleArr.count;
+    self.dataView.respondGuestureType = self.param.wRespondGuestureType;
+    self.dataView.globalTriggerOffset = self.param.wGlobalTriggerOffset;
     /// 布局frame
     if (self.param.wMenuPosition == PageMenuPositionBottom) {
         CGRect rect = self.frame;
@@ -114,19 +114,23 @@
 - (void)scrollViewDidScroll:(WMZPageDataView *)scrollView{
     if (scrollView != self.dataView) return;
     ///矫正
-    if (self.dataView.totalCount != self.param.wTitleArr.count) {
+    if (self.dataView.totalCount != self.param.wTitleArr.count)
         self.dataView.totalCount = self.param.wTitleArr.count;
-    }
-    if (scrollView.contentOffset.x < 0){
+
+    if (scrollView.contentOffset.x < 0)
         [scrollView setContentOffset:CGPointMake(0, 0) animated:NO];
-    }
-    if (scrollView.contentOffset.x > PageVCWidth * (self.param.wTitleArr.count - 1)){
+
+    if (scrollView.contentOffset.x > PageVCWidth * (self.param.wTitleArr.count - 1))
         [scrollView setContentOffset:CGPointMake(PageVCWidth * (self.param.wTitleArr.count - 1), 0) animated:NO];
+    
+    if (scrollView.popGuestureOffset >= 0 && self.param.wRespondGuestureType != PagePopNone){
+        [scrollView setContentOffset:CGPointMake(scrollView.popGuestureOffset, 0) animated:NO]; return;
     }
+    
     if (![scrollView isDecelerating]&&![scrollView isDragging]) return;
     if (scrollView.contentOffset.x>0 &&scrollView.contentOffset.x<=self.param.wTitleArr.count*PageVCWidth ) {
          [self lifeCycleManage:scrollView];
-         [self animalAction:scrollView lastContrnOffset:lastContentOffset];
+         [self.mainView animalAction:scrollView lastContrnOffset:lastContentOffset];
     }
     if (scrollView.contentOffset.y == 0) return;
     CGPoint contentOffset = scrollView.contentOffset;
@@ -136,6 +140,7 @@
 
 - (void)scrollViewDidEndDragging:(WMZPageDataView *)scrollView willDecelerate:(BOOL)decelerate{
     if (scrollView != self.dataView) return;
+    if (self.dataView.popGuestureOffset != -1) self.dataView.popGuestureOffset = -1;
     if (!decelerate) {
         NSInteger newIndex = scrollView.contentOffset.x/PageVCWidth;
         self.currentTitleIndex = newIndex;
@@ -145,6 +150,7 @@
 
 - (void)scrollViewDidEndDecelerating:(WMZPageDataView *)scrollView{
     if (scrollView != self.dataView) return;
+    if (self.dataView.popGuestureOffset != -1) self.dataView.popGuestureOffset = -1;
     NSInteger newIndex = scrollView.contentOffset.x/PageVCWidth;
     self.currentTitleIndex = newIndex;
     if (!self.hasEndAppearance) [self endAppearanceTransitionWithIndex:self.nextPageIndex withOldIndex:self.lastPageIndex isFlag:NO];
@@ -153,10 +159,20 @@
     if (self.loopDelegate && [self.loopDelegate respondsToSelector:@selector(pageScrollEndWithScrollView:)]) [self.loopDelegate pageScrollEndWithScrollView:scrollView];
 }
 
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView{
+    if (self.dataView.popGuestureOffset != -1) self.dataView.popGuestureOffset = -1;
+}
+
 /// 管理生命周期
 - (void)lifeCycleManage:(UIScrollView*)scrollView{
     CGFloat diffX = scrollView.contentOffset.x - lastContentOffset;
-    self.currentTitleIndex = diffX < 0 ? ceil(scrollView.contentOffset.x/PageVCWidth) : (scrollView.contentOffset.x/PageVCWidth);
+    NSInteger currentIndex = diffX < 0 ? ceil(scrollView.contentOffset.x/PageVCWidth) : (scrollView.contentOffset.x/PageVCWidth);
+    if (self.currentTitleIndex != currentIndex &&
+        self.param.wMenuFollowSliding) {
+        [self.mainView scrollToIndex:currentIndex animal:YES];
+    }
+    self.currentTitleIndex = currentIndex;
+    
     if (self.loopDelegate && [self.loopDelegate respondsToSelector:@selector(pageWithScrollView:left:)]) [self.loopDelegate pageWithScrollView:scrollView left:(diffX < 0)];
     if (diffX > 0) {
         if (self.hasDealAppearance&&self.nextPageIndex == self.currentTitleIndex) {
@@ -323,64 +339,6 @@
     return YES;
 }
 
-/// 动画管理
-- (void)animalAction:(UIScrollView*)scrollView lastContrnOffset:(CGFloat)lastContentOffset{
-    CGFloat contentOffsetX = scrollView.contentOffset.x;
-    CGFloat sWidth =  PageVCWidth;
-    CGFloat content_X = (contentOffsetX / sWidth);
-    NSArray *arr = [[NSString stringWithFormat:@"%f",content_X] componentsSeparatedByString:@"."];
-    int num = [arr[0] intValue];
-    CGFloat scale = content_X - num;
-    int selectIndex = contentOffsetX/sWidth;
-    BOOL left = false;
-    /// 拖拽
-    if (contentOffsetX <= lastContentOffset ){
-        left = YES;
-        selectIndex = selectIndex+1;
-        _btnRight = [self safeObjectAtIndex:selectIndex data:self.btnArr];
-        _btnLeft = [self safeObjectAtIndex:selectIndex-1 data:self.btnArr];
-    } else if (contentOffsetX > lastContentOffset ){
-        _btnRight = [self safeObjectAtIndex:selectIndex+1 data:self.btnArr];
-        _btnLeft = [self safeObjectAtIndex:selectIndex data:self.btnArr];
-    }
-    /// 跟随滑动
-    if (self.param.wMenuAnimal == PageTitleMenuAiQY) {
-        CGRect rect = self.mainView.lineView.frame;
-        if (scale < 0.5 ) {
-            rect.origin.x = _btnLeft.center.x -self.param.wMenuIndicatorWidth/2;
-            rect.size.width = self.param.wMenuIndicatorWidth + ( _btnRight.center.x-_btnLeft.center.x) * scale*2;
-        }else if(scale >= 0.5 ){
-            rect.origin.x = _btnLeft.center.x +  2*(scale-0.5)*(_btnRight.center.x - _btnLeft.center.x)-self.param.wMenuIndicatorWidth/2;
-            rect.size.width =  self.param.wMenuIndicatorWidth+(_btnRight.center.x-_btnLeft.center.x) * (1-scale)*2;
-        }
-        if (rect.size.height!= (self.param.wMenuIndicatorHeight?:PageK1px)) rect.size.height = self.param.wMenuIndicatorHeight?:PageK1px;
-        if (rect.origin.y != ([self.mainView getMainHeight]-self.param.wMenuIndicatorY-rect.size.height/2)) rect.origin.y = [self.mainView getMainHeight]-self.param.wMenuIndicatorY-rect.size.height/2;
-        self.mainView.lineView.frame = rect;
-    }else if (self.param.wMenuAnimal == PageTitleMenuPDD) {
-        CGRect rect = self.mainView.lineView.frame;
-        rect.size.width = self.param.wMenuIndicatorWidth?:rect.size.width;
-        self.mainView.lineView.frame = rect;
-        CGPoint center = self.mainView.lineView.center;
-        center.x = _btnLeft.center.x +  (scale)*(_btnRight.center.x - _btnLeft.center.x);
-        self.mainView.lineView.center = center;
-    }
-    /// 渐变
-    if (self.param.wMenuAnimalTitleGradient) {
-        WMZPageNaviBtn *tempBtn = _btnLeft?:_btnRight;
-        CGFloat difR = tempBtn.selectedColorR - tempBtn.unSelectedColorR;
-        CGFloat difG = tempBtn.selectedColorG - tempBtn.unSelectedColorG;
-        CGFloat difB = tempBtn.selectedColorB - tempBtn.unSelectedColorB;
-        UIColor *leftItemColor  = [UIColor colorWithRed:tempBtn.unSelectedColorR+scale*difR green:tempBtn.unSelectedColorG+scale*difG blue:tempBtn.unSelectedColorB+scale*difB alpha:1];
-        UIColor *rightItemColor = [UIColor colorWithRed:tempBtn.unSelectedColorR+(1-scale)*difR green:tempBtn.unSelectedColorG+(1-scale)*difG blue:tempBtn.unSelectedColorB+(1-scale)*difB alpha:1];
-        _btnLeft.titleLabel.textColor = rightItemColor;
-        _btnRight.titleLabel.textColor = leftItemColor;
-    }
-}
-
-- (id)safeObjectAtIndex:(NSUInteger)index data:(NSArray*)data{
-    return  index < data.count && index >= 0 ? [data objectAtIndex:index] : nil;
-}
-
 - (nullable WMZPageController *)findBelongViewControllerForView:(UIView *)view {
     UIResponder *responder = view;
     while ((responder = [responder nextResponder]))
@@ -414,7 +372,7 @@
             @(PageMenuPositionRight):[NSValue valueWithCGRect:CGRectMake(PageVCWidth-self.param.wMenuWidth, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight + self.param.wMenuInsets.bottom )],
             @(PageMenuPositionCenter):[NSValue valueWithCGRect:CGRectMake((PageVCWidth-self.param.wMenuWidth)/2, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight + self.param.wMenuInsets.bottom )],
             @(PageMenuPositionNavi):[NSValue valueWithCGRect:CGRectMake((PageVCWidth-self.param.wMenuWidth)/2, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight + self.param.wMenuInsets.bottom )],
-            @(PageMenuPositionBottom):[NSValue valueWithCGRect:CGRectMake(menuCellMarginY, PageVCHeight, self.param.wMenuWidth,PageIsIphoneX?(self.param.wMenuHeight + 15):self.param.wMenuHeight + self.param.wMenuInsets.bottom )],
+            @(PageMenuPositionBottom):[NSValue valueWithCGRect:CGRectMake(menuCellMarginY, PageVCHeight, self.param.wMenuWidth,(PageIsIphoneX?(self.param.wMenuHeight + 34):self.param.wMenuHeight) + self.param.wMenuInsets.bottom )],
         };
     }
     return _frameInfo;

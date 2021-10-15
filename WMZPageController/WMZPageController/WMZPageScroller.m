@@ -26,12 +26,7 @@
     if (self.wCustomSimultaneouslyGesture) return self.wCustomSimultaneouslyGesture(gestureRecognizer, otherGestureRecognizer);
     if (self.contentOffset.y < 0) return NO;
     if (!self.canScroll) return NO;
-    CGFloat naVi = self.wFromNavi?PageVCNavBarHeight:0;
-    CGFloat segmentViewContentScrollViewHeight = PageVCHeight - naVi - self.menuTitleHeight;
-    CGPoint currentPoint = [gestureRecognizer locationInView:self];
-    CGRect containRect = CGRectMake(0, self.contentSize.height - segmentViewContentScrollViewHeight, PageVCWidth, segmentViewContentScrollViewHeight);
-    if (CGRectContainsPoint(containRect, currentPoint) ) return YES;
-    return NO;
+    return YES;
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
@@ -39,9 +34,11 @@
     if (!self.currentScroll)  return NO;
     if ([NSStringFromClass(otherGestureRecognizer.view.class) isEqualToString:@"UITableViewWrapperView"] &&
         [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) return YES;
-    if ([NSStringFromClass(otherGestureRecognizer.view.class) isEqualToString:@"WMZPageDataView"]&&
-        ![NSStringFromClass(self.superview.superview.class) isEqualToString:@"WMZPageDataView"])  return YES;
-    if ([otherGestureRecognizer.delegate isKindOfClass:NSClassFromString(@"_FDFullscreenPopGestureRecognizerDelegate")] &&  self.contentOffset.x <= 0) return YES;
+    if ([NSStringFromClass(otherGestureRecognizer.view.class) isEqualToString:@"WMZPageDataView"]){
+        if (![self.superview.superview isKindOfClass:WMZPageDataView.class]) {
+            return YES;;
+        }
+    }
     return NO;
 }
 

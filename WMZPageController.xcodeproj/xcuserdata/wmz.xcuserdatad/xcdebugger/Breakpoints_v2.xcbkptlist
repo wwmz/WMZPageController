@@ -7,10 +7,11 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
-            uuid = "E3CFA9F2-1B31-4030-A721-8B1B79D38B63"
+            uuid = "89A1EB1B-E332-47C5-872E-590C12DF38D5"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
+            breakpointStackSelectionBehavior = "1"
             scope = "1"
             stopOnStyle = "0">
          </BreakpointContent>
@@ -18,16 +19,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "AA1495BD-F072-46C9-BEED-A29D5C20C3C6"
-            shouldBeEnabled = "Yes"
+            uuid = "99C07A46-72DB-4DB7-959B-FB2DAAEAA6F6"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WMZPageController/WMZPageController/WMZPageController.m"
+            filePath = "WMZPageController/WMZPageController/WMZPageNaviBtn.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
-            landmarkName = "-setNaviUI"
+            startingLineNumber = "421"
+            endingLineNumber = "421"
+            landmarkName = "-hasKey:withObserver:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

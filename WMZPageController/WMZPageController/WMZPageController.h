@@ -8,6 +8,7 @@
 
 
 #import "WMZPageLoopView.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface WMZPageController : UIViewController<UIScrollViewDelegate,WMZPageLoopDelegate,UITableViewDelegate>
@@ -16,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 头部标题滚动视图
 @property (nonatomic, strong) WMZPageLoopView *upSc;
 /// 底部全屏滚动视图
-@property (nonatomic, strong, nullable)WMZPageScroller *downSc;
+@property (nonatomic, strong, nullable) WMZPageScroller *downSc;
 /// 缓存
 @property (nonatomic, strong) NSMutableDictionary *cache;
 /// 子控制器中可以滚动的视图
@@ -36,10 +37,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// @brief 更新头部
 - (void)updateHeadView;
 
-/// @brief 更新菜单栏
+/// @brief 更新菜单栏和视图层
 - (void)updateMenuData;
 
-/// @brief 标题数量内容不变情况下只更新内容
+/// @brief 标题数量内容不变情况下 只更新标题 用于刷新头部数据 会重新初始化标题 属性不变 如果自定义了标题要重新设置一下
 - (void)updateTitle;
 
 /// @brief 底部手动滚动 传入CGPointZero则为吸顶临界点

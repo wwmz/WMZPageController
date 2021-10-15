@@ -46,6 +46,9 @@ WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wFixFirst
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wLazyLoading)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wHeadScaling)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wHideRedCircle)
+WMZPagePropSetFuncImplementation(WMZPageParam, PagePopType,            wRespondGuestureType)
+WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wMenuFollowSliding)
+WMZPagePropSetFuncImplementation(WMZPageParam, int,                    wGlobalTriggerOffset)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuWidth)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageMenuPosition,       wMenuPosition)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuTitleOffset)
@@ -98,6 +101,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, UIColor*,               wMenuSele
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuTitleRadios)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageFailureGestureRecognizer,wCustomFailGesture)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageSimultaneouslyGestureRecognizer,wCustomSimultaneouslyGesture)
+WMZPagePropSetFuncImplementation(WMZPageParam, PageJDAnimalBlock,      wEventCustomJDAnimal)
 WMZPagePropSetFuncImplementation(WMZPageParam, UIEdgeInsets,           wMenuInsets)
 - (instancetype)init{
     if (self = [super init]) {
@@ -106,7 +110,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, UIEdgeInsets,           wMenuInse
         _wMenuTitleSelectColor = PageColor(0xE5193E);
         _wMenuIndicatorColor = PageColor(0xE5193E);
         _wMenuBgColor = PageColor(0xffffff);
-        _wMenuIndicatorHeight = 3.0f;
+        _wMenuIndicatorHeight = 3.1;
         _wMenuWidth = PageVCWidth;
         _wMenuAnimalTitleGradient = YES;
         _wMenuTitleUIFont = [UIFont systemFontOfSize:17.0f];
@@ -123,6 +127,9 @@ WMZPagePropSetFuncImplementation(WMZPageParam, UIEdgeInsets,           wMenuInse
         _wLazyLoading = YES;
         _wMenuInsets = UIEdgeInsetsZero;
         _wHideRedCircle = YES;
+        _wMenuFollowSliding = YES;
+        _wRespondGuestureType = PagePopFirst;
+        _wGlobalTriggerOffset = UIScreen.mainScreen.bounds.size.width * 0.15;
     }
     return self;
 }

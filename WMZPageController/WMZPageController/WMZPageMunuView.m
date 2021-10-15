@@ -8,6 +8,12 @@
 
 #import "WMZPageMunuView.h"
 
+@interface WMZPageMunuView(){
+    WMZPageNaviBtn *_btnLeft;
+    WMZPageNaviBtn *_btnRight;
+}
+@end
+
 @implementation WMZPageMunuView
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -32,7 +38,9 @@
 
 /// UI
 - (void)UI{
+    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     self.btnArr = [NSMutableArray new];
+    [self addSubview:self.containView];
     WMZPageNaviBtn *temp = nil;
     for (int i = 0; i<self.param.wTitleArr.count; i++) {
         WMZPageNaviBtn *btn = [WMZPageNaviBtn buttonWithType:UIButtonTypeCustom];
@@ -63,6 +71,30 @@
     }
 }
 
+- (void)updateUI{
+    [self.btnArr makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self.btnArr removeAllObjects];
+    WMZPageNaviBtn *temp = nil;
+    for (int i = 0; i< self.param.wTitleArr.count; i++) {
+        WMZPageNaviBtn *btn = [WMZPageNaviBtn buttonWithType:UIButtonTypeCustom];
+        [self setPropertiesWithBtn:btn withIndex:i withTemp:temp];
+        temp = btn;
+        if (i == self.param.wTitleArr.count - 1) {
+            [self resetMainViewContenSize:btn];
+        }
+        if (self.lastBTN) {
+            if (i == self.lastBTN.tag) {
+                self.lastBTN = btn;
+            }
+        }else{
+            if (i == self.currentTitleIndex) {
+                self.lastBTN = btn;
+            }
+        }
+    }
+    [self scrollToIndex:self.lastBTN.tag animal:NO];
+}
+
 - (void)setDefaultSelect:(NSInteger)index{
     if (self.btnArr.count <= index) return;
     [self.btnArr[index] sendActionsForControlEvents:UIControlEventTouchUpInside];
@@ -72,19 +104,22 @@
 - (void)resetMainViewContenSize:(WMZPageNaviBtn*)btn{
     self.scrollEnabled = (CGRectGetMaxX(btn.frame) > self.frame.size.width);
     self.contentSize = CGSizeMake(CGRectGetMaxX(btn.frame), 0);
+    CGRect rect = self.frame;
     if (self.contentSize.width < self.frame.size.width &&
         self.param.wMenuPosition == PageMenuPositionCenter &&
         self.param.wMenuWidth == PageVCWidth) {
-        CGRect rect = self.frame;
         rect.size.width = self.contentSize.width + self.param.wMenuInsets.left + self.param.wMenuInsets.right;
         rect.origin.x = (PageVCWidth - rect.size.width)/2;
         self.frame = rect;
     }
+    if (self.btnArr.count) {
+        self.containView.frame = CGRectMake(self.btnArr.firstObject.frame.origin.x, btn.frame.origin.y, CGRectGetMaxX(btn.frame), btn.frame.size.height);
+    }
 }
 
-//初始化指示器
+/// 初始化指示器
 - (void)setUpIndicator{
-    self.lineView = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.lineView = [WMZPageNaviBtn buttonWithType:UIButtonTypeCustom];
     if (self.param.wMenuIndicatorImage) {
         [self.lineView setImage:[UIImage imageNamed:self.param.wMenuIndicatorImage] forState:UIControlStateNormal];
     }else{
@@ -97,8 +132,8 @@
     }
     self.lineView.hidden = (self.param.wMenuAnimal == PageTitleMenuNone||
                             self.param.wMenuAnimal == PageTitleMenuTouTiao||
-                            self.param.wMenuAnimal == PageTitleMenuCircleBg
-                            );
+                            self.param.wMenuAnimal == PageTitleMenuCircleBg||
+                            self.param.wMenuAnimal == PageTitleMenuJD);
     if (self.param.wMenuIndicatorRadio) {
         self.lineView.layer.cornerRadius = self.param.wMenuIndicatorRadio;
         self.lineView.layer.masksToBounds = YES;
@@ -272,7 +307,6 @@
         [self.btnArr addObject:btn];
         [self addSubview:btn];
     }
-    
 }
 
 /// 解析字典
@@ -311,6 +345,9 @@
         if (self.lastBTN.layer.backgroundColor && !self.param.wMenuTitleBackground) self.lastBTN.layer.backgroundColor = UIColor.clearColor.CGColor;
         if ([self getTitleData:self.lastBTN.config key:WMZPageKeyImage]) {
             [self.lastBTN tagSetImagePosition:self.param.wMenuImagePosition spacing:[self getTitleData:self.lastBTN.config key:WMZPageKeyImageOffset]?[[self getTitleData:self.lastBTN.config key:WMZPageKeyImageOffset] floatValue]:self.param.wMenuImageMargin];
+        }
+        if (self.param.wMenuAnimal == PageTitleMenuJD && self.lastBTN != btn){
+            [self.lastBTN jdRemoveLayer];
         }
     }
     btn.selected = YES;
@@ -379,7 +416,7 @@
         }else{
             lineRect.size.height = self.param.wMenuIndicatorHeight?:PageK1px;
             lineRect.origin.y = [self getMainHeight] - lineRect.size.height/2 - self.param.wMenuIndicatorY;
-            lineRect.size.width =  self.param.wMenuIndicatorWidth?:(dataWidth+6);
+            lineRect.size.width =  self.param.wMenuIndicatorWidth?: (dataWidth + 6);
             lineRect.origin.x =  (indexFrame.size.width - lineRect.size.width)/2 + indexFrame.origin.x;
         }
         if (!animal) {
@@ -393,7 +430,89 @@
     self.currentTitleIndex = newIndex;
     if (self.param.wInsertHeadAndMenuBg) self.backgroundColor = [UIColor clearColor];
     if (self.param.wCustomMenuSelectTitle) self.param.wCustomMenuSelectTitle(self.btnArr);
+    if (self.param.wMenuAnimal == PageTitleMenuJD){
+        if (self.lastBTN != btn) {
+            btn.jdLayer.backgroundColor = self.param.wMenuIndicatorColor;
+            if (self.param.wEventCustomJDAnimal) self.param.wEventCustomJDAnimal(btn, btn.jdLayer);
+            [btn jdAddLayer];
+        }
+    }
     self.lastBTN = btn;
+}
+
+/// 动画管理
+- (void)animalAction:(UIScrollView*)scrollView lastContrnOffset:(CGFloat)lastContentOffset {
+    CGFloat contentOffsetX = scrollView.contentOffset.x;
+    CGFloat sWidth =  PageVCWidth;
+    CGFloat content_X = (contentOffsetX / sWidth);
+    NSArray *arr = [[NSString stringWithFormat:@"%f",content_X] componentsSeparatedByString:@"."];
+    int num = [arr[0] intValue];
+    CGFloat scale = content_X - num;
+    int selectIndex = contentOffsetX/sWidth;
+    BOOL left = false;
+    /// 拖拽
+    if (contentOffsetX <= lastContentOffset){
+        left = YES;
+        selectIndex = selectIndex+1;
+        _btnRight = [self safeObjectAtIndex:selectIndex data:self.btnArr];
+        _btnLeft = [self safeObjectAtIndex:selectIndex-1 data:self.btnArr];
+    } else if (contentOffsetX > lastContentOffset ){
+        _btnRight = [self safeObjectAtIndex:selectIndex+1 data:self.btnArr];
+        _btnLeft = [self safeObjectAtIndex:selectIndex data:self.btnArr];
+    }
+    /// 跟随滑动
+    if (self.param.wMenuAnimal == PageTitleMenuAiQY) {
+        CGRect rect = self.lineView.frame;
+        if (scale < 0.5 ) {
+            rect.origin.x = _btnLeft.center.x -self.param.wMenuIndicatorWidth/2;
+            rect.size.width = self.param.wMenuIndicatorWidth + (_btnRight.center.x-_btnLeft.center.x) * scale*2;
+        }else if(scale >= 0.5 ){
+            rect.origin.x = _btnLeft.center.x +  2 * (scale - 0.5) * (_btnRight.center.x - _btnLeft.center.x) - self.param.wMenuIndicatorWidth / 2;
+            rect.size.width =  self.param.wMenuIndicatorWidth + (_btnRight.center.x-_btnLeft.center.x) * (1-scale)*2;
+        }
+        if (rect.size.height!= (self.param.wMenuIndicatorHeight?:PageK1px)) rect.size.height = self.param.wMenuIndicatorHeight?:PageK1px;
+        if (rect.origin.y != ([self getMainHeight]-self.param.wMenuIndicatorY-rect.size.height/2)) rect.origin.y = [self getMainHeight]-self.param.wMenuIndicatorY-rect.size.height/2;
+        self.lineView.frame = rect;
+    }else if (self.param.wMenuAnimal == PageTitleMenuPDD) {
+        CGRect rect = self.lineView.frame;
+        rect.size.width = self.param.wMenuIndicatorWidth?:rect.size.width;
+        self.lineView.frame = rect;
+        CGPoint center = self.lineView.center;
+        center.x = _btnLeft.center.x +  (scale)*(_btnRight.center.x - _btnLeft.center.x);
+        self.lineView.center = center;
+    }else if (self.param.wMenuAnimal == PageTitleMenuNewAiQY) {
+        CGPoint center = self.lineView.center;
+        CGRect rect = self.lineView.frame;
+        if (scale < 0.5) {
+            rect.size.width = (1 - scale * 2) * self.param.wMenuIndicatorWidth;
+            self.lineView.frame = rect;
+            self.lineView.alpha = (1 - scale * 2);
+            center.x = _btnLeft.center.x;
+        }else{
+            rect.size.width =  (scale - 0.5) * 2 * self.param.wMenuIndicatorWidth;
+            self.lineView.alpha = scale;
+            self.lineView.frame = rect;
+            center.x = _btnRight.center.x;
+        }
+        self.lineView.center = center;
+    }else if (self.param.wMenuAnimal == PageTitleMenuJD) {
+
+    }
+    /// 渐变
+    if (self.param.wMenuAnimalTitleGradient) {
+        WMZPageNaviBtn *tempBtn = _btnLeft?:_btnRight;
+        CGFloat difR = tempBtn.selectedColorR - tempBtn.unSelectedColorR;
+        CGFloat difG = tempBtn.selectedColorG - tempBtn.unSelectedColorG;
+        CGFloat difB = tempBtn.selectedColorB - tempBtn.unSelectedColorB;
+        UIColor *leftItemColor  = [UIColor colorWithRed:tempBtn.unSelectedColorR+scale*difR green:tempBtn.unSelectedColorG+scale*difG blue:tempBtn.unSelectedColorB+scale*difB alpha:1];
+        UIColor *rightItemColor = [UIColor colorWithRed:tempBtn.unSelectedColorR+(1-scale)*difR green:tempBtn.unSelectedColorG+(1-scale)*difG blue:tempBtn.unSelectedColorB+(1-scale)*difB alpha:1];
+        _btnLeft.titleLabel.textColor = rightItemColor;
+        _btnRight.titleLabel.textColor = leftItemColor;
+    }
+}
+
+- (id)safeObjectAtIndex:(NSUInteger)index data:(NSArray*)data{
+    return  index < data.count && index >= 0 ? [data objectAtIndex:index] : nil;
 }
 
 - (CGFloat)getMainHeight{
@@ -408,6 +527,10 @@
 
 - (NSMutableArray<WMZPageNaviBtn *> *)fixBtnArr{
     return _fixBtnArr ?: ({ _fixBtnArr = NSMutableArray.new;});
+}
+
+- (UIView *)containView{
+    return _containView ?: ({ _containView = UIView.new;});
 }
 
 @end

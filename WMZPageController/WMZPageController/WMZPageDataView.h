@@ -6,7 +6,7 @@
 //  Copyright © 2020 wmz. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "WMZPageConfig.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,6 +19,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger level;
 
 @property (nonatomic, assign) BOOL left;
+/// 触发侧滑手势
+@property (nonatomic, assign) CGFloat popGuestureOffset;
+/// respondGuestureType为All时候的响应位置
+@property (nonatomic, assign) int globalTriggerOffset;
+///响应侧滑/全屏手势
+@property (nonatomic, assign) PagePopType respondGuestureType;
 
 @end
 

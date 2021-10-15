@@ -106,48 +106,88 @@ return self;                                                                    
 }
 /// 按钮图文位置
 typedef enum :NSInteger{
-    PageBtnPositionLeft     = 0,                         ///图片在左，文字在右，默认
-    PageBtnPositionRight    = 1,                         ///图片在右，文字在左
-    PageBtnPositionTop      = 2,                         ///图片在上，文字在下
-    PageBtnPositionBottom   = 3,                         ///图片在下，文字在上
+    ///图片在左，文字在右，默认
+    PageBtnPositionLeft     = 0,
+    ///图片在右，文字在左
+    PageBtnPositionRight    = 1,
+    ///图片在上，文字在下
+    PageBtnPositionTop      = 2,
+    ///图片在下，文字在上
+    PageBtnPositionBottom   = 3,
 }PageBtnPosition;
 
 ///指示器的效果
 typedef enum :NSInteger{
-    PageTitleMenuNone     = 0,                           ///无样式
-    PageTitleMenuLine     = 1,                           ///带下划线
-    PageTitleMenuCircle   = 2,                           ///背景圆角框
-    PageTitleMenuAiQY     = 3,                           ///爱奇艺效果(指示器跟随移动)
-    PageTitleMenuTouTiao  = 4,                           ///今日头条效果(变大加颜色渐变)
-    PageTitleMenuPDD      = 5,                           ///拼多多效果(底部线条)
-    PageTitleMenuCircleBg = 6,                           ///标题背景圆角
+    ///无样式
+    PageTitleMenuNone     = 0,
+    ///带下划线
+    PageTitleMenuLine     = 1,
+    ///背景圆角框
+    PageTitleMenuCircle   = 2,
+    ///爱奇艺效果(指示器跟随移动)
+    PageTitleMenuAiQY     = 3,
+    ///今日头条效果(变大加颜色渐变)
+    PageTitleMenuTouTiao  = 4,
+    ///拼多多效果(底部线条)
+    PageTitleMenuPDD      = 5,
+    ///标题背景圆角
+    PageTitleMenuCircleBg = 6,
+    ///新爱奇艺效果(指示器跟随移动)
+    PageTitleMenuNewAiQY  = 7,
+    ///京东（动画下标）
+    PageTitleMenuJD       = 8,
 }PageTitleMenu;
 
 ///菜单栏的位置
 typedef enum :NSInteger{
-    PageMenuPositionLeft          = 0,                   ///上左
-    PageMenuPositionRight         = 1,                   ///上右
-    PageMenuPositionCenter        = 2,                   ///居中
-    PageMenuPositionNavi          = 3,                   ///导航栏
-    PageMenuPositionBottom        = 4,                   ///底部
+    ///上左
+    PageMenuPositionLeft          = 0,
+    ///上右
+    PageMenuPositionRight         = 1,
+    ///居中
+    PageMenuPositionCenter        = 2,
+    ///导航栏
+    PageMenuPositionNavi          = 3,
+    ///底部
+    PageMenuPositionBottom        = 4,
 }PageMenuPosition;
+
+/// 响应侧滑或者全屏返回
+typedef enum :NSInteger{
+    ///不响应
+    PagePopNone         = 0,
+    ///第一个响应
+    PagePopFirst        = 1,
+    ///全部响应
+    PagePopAll          = 2,
+}PagePopType;
 
 ///设置阴影
 typedef enum :NSInteger{
-    PageShadowPathTop,                                   ///上
-    PageShadowPathBottom,                                ///下
-    PageShadowPathLeft,                                  ///左
-    PageShadowPathRight,                                 ///右
-    PageShadowPathCommon,                                ///普通
-    PageShadowPathAround                                 ///四边
+    ///上
+    PageShadowPathTop,
+    ///下
+    PageShadowPathBottom,
+    ///左
+    PageShadowPathLeft,
+    ///右
+    PageShadowPathRight,
+    ///普通
+    PageShadowPathCommon,
+    ///四边
+    PageShadowPathAround                               
 }PageShadowPathType;
 
 ///渐变色
 typedef enum :NSInteger{
-    PageGradientChangeDirectionLevel,                    ///水平方向渐变
-    PageGradientChangeDirectionVertical,                 ///垂直方向渐变
-    PageGradientChangeDirectionUpwardDiagonalLine,       ///主对角线方向渐变
-    PageGradientChangeDirectionDownDiagonalLine,         ///副对角线方向渐变
+    ///水平方向渐变
+    PageGradientChangeDirectionLevel,
+    ///垂直方向渐变
+    PageGradientChangeDirectionVertical,
+    ///主对角线方向渐变
+    PageGradientChangeDirectionUpwardDiagonalLine,
+    ///副对角线方向渐变
+    PageGradientChangeDirectionDownDiagonalLine,
 }PageGradientChangeDirection;
 
 ///标题点击
@@ -194,5 +234,8 @@ typedef BOOL (^PageFailureGestureRecognizer)(UIGestureRecognizer * _Nullable  ge
 
 ///自定义手势Simultaneously
 typedef BOOL (^PageSimultaneouslyGestureRecognizer)(UIGestureRecognizer *_Nullable gestureRecognizer,UIGestureRecognizer *_Nullable otherGestureRecognizer);
+
+/// 自定义京东动画视图frame
+typedef void (^PageJDAnimalBlock)(WMZPageNaviBtn *_Nullable sender,UIView *_Nullable jdLayer);
 
 #endif /* WMZPageConfig_h */

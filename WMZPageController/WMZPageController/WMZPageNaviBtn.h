@@ -9,6 +9,8 @@
 #import "WMZPageConfig.h"
 #import "WMZPageParam.h"
 
+
+
 NS_ASSUME_NONNULL_BEGIN
 @interface WMZPageLabel:UILabel
 /// 内边距
@@ -19,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface WMZPageNaviBtn : UIButton
 /// 角标
 @property (nonatomic, strong) WMZPageLabel *badge;
+/// jdLayer
+@property (nonatomic, strong) UIView *jdLayer;
 /// 参数
 @property (nonatomic, strong) WMZPageParam *param;
 /// 配置参数
@@ -26,25 +30,25 @@ NS_ASSUME_NONNULL_BEGIN
 /// 最大size
 @property (nonatomic, assign) CGSize maxSize;
 /// 仅点击不加载页面 保持原页面
-@property (nonatomic, assign,getter=isOnlyClick) BOOL onlyClick;
+@property (nonatomic, assign, getter=isOnlyClick) BOOL onlyClick;
 /// 有红点提示
 @property (nonatomic, assign) NSInteger hasBadge;
 /// 初始文本内容
-@property (nonatomic,   copy) NSString* normalText;
+@property (nonatomic,   copy) NSString *normalText;
 /// 选中文本
-@property (nonatomic,   copy) NSString* selectText;
+@property (nonatomic,   copy) NSString *selectText;
 /// RGB值
-@property (nonatomic, assign ,readonly) CGFloat selectedColorR;
+@property (nonatomic, assign, readonly) CGFloat selectedColorR;
 
-@property (nonatomic, assign ,readonly) CGFloat selectedColorG;
+@property (nonatomic, assign, readonly) CGFloat selectedColorG;
 
-@property (nonatomic, assign ,readonly) CGFloat selectedColorB;
+@property (nonatomic, assign, readonly) CGFloat selectedColorB;
 
-@property (nonatomic, assign ,readonly) CGFloat unSelectedColorR;
+@property (nonatomic, assign, readonly) CGFloat unSelectedColorR;
 
-@property (nonatomic, assign ,readonly) CGFloat unSelectedColorG;
+@property (nonatomic, assign, readonly) CGFloat unSelectedColorG;
 
-@property (nonatomic, assign ,readonly) CGFloat unSelectedColorB;
+@property (nonatomic, assign, readonly) CGFloat unSelectedColorB;
 /// 富文本图片
 @property (nonatomic, strong)NSAttributedString* attributedImage;
 /// 富文本选中图片
@@ -72,7 +76,10 @@ NS_ASSUME_NONNULL_BEGIN
                 shadowPathWidth:(CGFloat)shadowPathWidth;
 /// 设置圆角
 -(void)setRadii:(CGSize)size RoundingCorners:(UIRectCorner)rectCorner;
-
+/// jdAddLayer
+- (void)jdAddLayer;
+/// jdRemoveLayer
+- (void)jdRemoveLayer;
 @end
 
 @interface UIColor (GradientColor)

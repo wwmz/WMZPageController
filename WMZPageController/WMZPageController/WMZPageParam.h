@@ -51,6 +51,7 @@ FOUNDATION_EXPORT WMZPageBTNKey const WMZPageKeyTitleMarginY;
 /// 当前子控制器不悬浮固定在顶部  @(NO)  NO表示不悬浮
 FOUNDATION_EXPORT WMZPageBTNKey const WMZPageKeyCanTopSuspension;
 
+
 WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, NSArray*,              wTitleArr)
 /// 1.4.0之后 新增支持UIView 一样用法都是用这个属性 直接传入UIView即可 有警告的话用强转UIViewController
 /// VC数据 必传(二选一) 1.1.6新增
@@ -104,14 +105,19 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,         
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wHeadScaling)
 /// 点击隐藏红点 default YES
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wHideRedCircle)
-/// 系统导航栏透明度设为0
+/// 菜单栏跟随滑动 default YES  为NO则视图手势滑动结束菜单栏再滑动  v1.4.1
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wMenuFollowSliding)
+
+
+/// 响应侧滑或者全屏返回手势 default PagePopFirst 首个子视图/子控制器响应  v1.4.1
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, PagePopType,           wRespondGuestureType)
+/// 全部返回响应手势的位置 wRespondGuestureType为PagePopAll有效 default pageWidth * 0.15  v1.4.1
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, int,                   wGlobalTriggerOffset)
 
 /* =========================================special==============================================*/
 
 
 /* =========================================Menu==================================================*/
-
-
 /// 菜单栏高度 default 60
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,                  wMenuHeight)
 /// 给菜单栏和headView加个背景层 default -
@@ -193,7 +199,7 @@ WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, NSString*,    
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuIndicatorHeight)
 /// 指示器圆角 default 0
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuIndicatorRadio)
-/// 指示器距离按钮的y值(AQY) default 菜单视图的高度-指示器高度-4/wMenuCellPadding
+/// 指示器距离按钮的y值(AQY) default 5
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuIndicatorY)
 
 
@@ -212,6 +218,10 @@ WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageVCChangeBl
 WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageVCChangeBlock,     wEventEndTransferController)
 /// 子控制器滚动(做滚动时候自己的操作)  =>开启悬浮有效
 WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageChildVCScroll,     wEventChildVCDidSroll)
+
+/// 自定义京东动画frame
+WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageJDAnimalBlock,     wEventCustomJDAnimal)
+
 /* =========================================Events==================================================*/
 
 /* =========================================changeMenu===============================================*/

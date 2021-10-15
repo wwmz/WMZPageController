@@ -7,10 +7,10 @@
 //
 
 #import "WMZPageConfig.h"
-#import "WMZPageScroller.h"
 #import "WMZPageDataView.h"
 #import "WMZPageMunuView.h"
 #import "WMZPageTitleDataModel.h"
+#import "WMZPageScroller.h"
 
 @class WMZPageController;
 

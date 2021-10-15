@@ -74,17 +74,44 @@ static NSInteger const pointWidth = 7; //小红点的宽高
     }
 }
 
-- (WMZPageLabel *)badge{
-    if (!_badge) {
-        _badge = WMZPageLabel.new;
-        _badge.backgroundColor = PageColor(0xff5153);
-        _badge.layer.cornerRadius = pointWidth / 2;
-        _badge.font = [UIFont systemFontOfSize:12];
-        _badge.layer.masksToBounds = YES;
-        _badge.alpha = 0;
-        _badge.textAlignment = NSTextAlignmentCenter;
-    }
-    return _badge;
+- (void)jdAddLayer{
+    [self addSubview:self.jdLayer];
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint:CGPointMake(0, self.jdLayer.frame.size.height)];
+    [path addQuadCurveToPoint:CGPointMake(self.jdLayer.frame.size.width,0) controlPoint:CGPointMake(self.jdLayer.frame.size.width * 0.5, self.jdLayer.frame.size.height)];
+    
+    CAShapeLayer *pathLayer = [CAShapeLayer new];
+    pathLayer.frame = CGRectZero;
+    pathLayer.path = path.CGPath;
+    pathLayer.lineWidth = 3;
+    pathLayer.fillColor = UIColor.clearColor.CGColor;
+    pathLayer.strokeColor = UIColor.orangeColor.CGColor;
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath: @"strokeEnd"];
+    animation.fromValue = @0 ;
+    animation.toValue = @1 ;
+    animation.duration = 0.4 ;
+    [pathLayer addAnimation:animation forKey :@"strokeEnd"];
+    self.jdLayer.layer.mask = pathLayer;
+}
+
+- (void)jdRemoveLayer{
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint:CGPointMake(self.jdLayer.frame.size.width,0)];
+    [path addQuadCurveToPoint:CGPointMake(0, self.jdLayer.frame.size.height) controlPoint:CGPointMake(self.jdLayer.frame.size.width * 0.5, self.jdLayer.frame.size.height)];
+    CAShapeLayer *pathLayer = [CAShapeLayer new];
+    pathLayer.frame = CGRectZero;
+    pathLayer.path = path.CGPath;
+    pathLayer.lineWidth = 3;
+    pathLayer.fillColor = UIColor.clearColor.CGColor;
+    pathLayer.strokeColor = UIColor.orangeColor.CGColor;
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath: @"strokeEnd"];
+    animation.fromValue = @1 ;
+    animation.toValue = @0 ;
+    animation.duration = 0.2 ;
+    animation.removedOnCompletion = NO;
+    animation.fillMode = kCAFillModeForwards;
+    [pathLayer addAnimation:animation forKey :@"strokeEnd"];
+    self.jdLayer.layer.mask = pathLayer;
 }
 
 - (void)setHighlighted:(BOOL)highlighted{
@@ -97,14 +124,6 @@ static NSInteger const pointWidth = 7; //小红点的宽高
     maskLayer.frame = self.bounds;
     maskLayer.path = maskPath.CGPath;
     self.layer.mask = maskLayer;
-}
-
-- (CGSize)maxSize{
-    if (!_maxSize.width||!_maxSize.height) {
-        _maxSize = [self boundingRectWithSize:self.titleLabel.text Font:self.titleLabel.font Size:
-                    CGSizeMake(CGFLOAT_MAX, self.param.wMenuPosition == PageMenuPositionNavi?35:CGFLOAT_MAX)];
-    }
-    return _maxSize;
 }
 
 -(CGSize)boundingRectWithSize:(NSString*)txt Font:(UIFont*) font Size:(CGSize)size{
@@ -210,6 +229,7 @@ static NSInteger const pointWidth = 7; //小红点的宽高
         self.selectedColorG = green;
     }
 }
+
 - (NSAttributedString*)setImageWithStr:(NSString*)str
                                   font:(UIFont*)font
                          textAlignment:(NSTextAlignment)textAlignment
@@ -249,6 +269,36 @@ static NSInteger const pointWidth = 7; //小红点的宽高
    UIImage*image = UIGraphicsGetImageFromCurrentImageContext();
    UIGraphicsEndImageContext();
    return image;
+}
+
+- (CGSize)maxSize{
+    if (!_maxSize.width||!_maxSize.height) {
+        _maxSize = [self boundingRectWithSize:self.titleLabel.text Font:self.titleLabel.font Size:
+                    CGSizeMake(CGFLOAT_MAX, self.param.wMenuPosition == PageMenuPositionNavi?35:CGFLOAT_MAX)];
+    }
+    
+    return _maxSize;
+}
+
+- (WMZPageLabel *)badge{
+    if (!_badge) {
+        _badge = WMZPageLabel.new;
+        _badge.backgroundColor = PageColor(0xff5153);
+        _badge.layer.cornerRadius = pointWidth / 2;
+        _badge.font = [UIFont systemFontOfSize:12];
+        _badge.layer.masksToBounds = YES;
+        _badge.alpha = 0;
+        _badge.textAlignment = NSTextAlignmentCenter;
+    }
+    return _badge;
+}
+
+- (UIView *)jdLayer{
+    if (!_jdLayer) {
+        _jdLayer = UIView.new;
+        _jdLayer.frame = CGRectMake(CGRectGetWidth(self.frame) - 20, CGRectGetHeight(self.frame) - 20, 13, 8);
+    }
+    return _jdLayer;
 }
 
 @end
@@ -352,13 +402,15 @@ static NSInteger const pointWidth = 7; //小红点的宽高
 @implementation NSObject (SafeKVO)
 
 - (void)pageAddObserver:(nonnull NSObject *)observer forKeyPath:(nonnull NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(nullable void *)context {
-    if (![self hasKey:keyPath withObserver:observer])
+    if (![self hasKey:keyPath withObserver:observer]){
         [self addObserver:observer forKeyPath:keyPath options:options context:context];
+    }
 }
 
 - (void)paegRemoveObserver:(nonnull NSObject *)observer forKeyPath:(nonnull NSString *)keyPath context:(nullable void *)context {
-    if ([self hasKey:keyPath withObserver:observer])
+    if ([self hasKey:keyPath withObserver:observer]){
         [self removeObserver:observer forKeyPath:keyPath context:context];
+    }
 }
 
 - (BOOL)hasKey:(NSString *)kvoKey withObserver:(nonnull NSObject *)observer {
@@ -369,10 +421,12 @@ static NSInteger const pointWidth = 7; //小红点的宽高
     if (arr) {
         for (int i = 0; i<arr.count; i++) {
             NSString *keyPath = arr[i];
-            NSObject *obj = objArr[i];
-            if ([keyPath isEqualToString:kvoKey]&&obj == observer) {
-                hasKey = YES;
-                break;
+            if (objArr.count > i) {
+                NSObject *obj = objArr[i];
+                if ([keyPath isEqualToString:kvoKey]&&obj == observer) {
+                    hasKey = YES;
+                    break;
+                }
             }
         }
     }

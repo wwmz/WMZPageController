@@ -45,8 +45,8 @@
 @end
 
 @implementation WMZPageController
-
 - (void)viewDidLoad{
+    [super viewDidLoad];
     self.view.backgroundColor = UIColor.whiteColor;
 }
 
@@ -204,7 +204,6 @@
     self.downSc.frame = CGRectMake(0, headY, self.view.bounds.size.width, self.view.bounds.size.height - headY - tabbarHeight);
     self.downSc.canScroll = [self canTopSuspension];
     self.downSc.scrollEnabled = [self canTopSuspension];
-    self.downSc.wFromNavi = self.param.wFromNavi;
     [self.view addSubview:self.downSc];
     /// 滚动和菜单视图
     self.upSc = [[WMZPageLoopView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) param:self.param];
@@ -216,12 +215,10 @@
     [self setUpHead];
     self.canScroll = YES;
     self.scrolToBottom = YES;
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.downSc reloadData];
-        [self.downSc layoutIfNeeded];
-        [self selectMenuWithIndex:self.param.wMenuDefaultIndex];
-    });
+
+    [self.downSc reloadData];
+    [self.downSc layoutIfNeeded];
+    [self selectMenuWithIndex:self.param.wMenuDefaultIndex];
 }
 
 - (void)setUpMenuAndDataViewFrame{
@@ -276,7 +273,7 @@
         [self.upSc.dataView page_height:sonChildVCHeight];
         [self.upSc page_height:CGRectGetMaxY(self.upSc.dataView.frame)];
     }
-    self.downSc.menuTitleHeight = self.param.wMenuHeight + self.param.wMenuInsets.top + self.param.wMenuInsets.bottom;
+    self.downSc.containHeight = self.upSc.dataView.frame.size.height;
     pageDataFrame = self.upSc.dataView.frame;
 }
 
@@ -287,7 +284,7 @@
        self.param.wMenuPosition != PageMenuPositionNavi&&
        self.param.wMenuPosition != PageMenuPositionBottom) {
        self.headViewSonView = self.param.wMenuHeadView();
-       if (!self.headView) self.headView = UIView.new;
+       self.headView = UIView.new;
        self.headView.frame = CGRectMake(0,  0, self.headViewSonView.frame.size.width, self.headViewSonView.frame.size.height);
        [self.headView addSubview:self.headViewSonView];
        self.downSc.tableHeaderView = self.headView;
@@ -331,7 +328,8 @@
     if (yOffset <= 0) {
         self.scrolToBottom = YES;
     }else{
-        if (yOffset >= topOffset) scrollView.contentOffset = CGPointMake(self.downSc.contentOffset.x, topOffset);
+        if (yOffset >= topOffset)
+            scrollView.contentOffset = CGPointMake(self.downSc.contentOffset.x, topOffset);
         self.scrolTotop = (yOffset >= topOffset);
         self.scrolToBottom = NO;
     }
@@ -434,12 +432,20 @@
     if (view &&
         [view isKindOfClass:[UIScrollView class]]) {
         self.currentScroll = view;
-        if (view) [self.sonChildScrollerViewDic setObject:view forKey:[NSString stringWithFormat:@"%ld",(long)index]];
+        NSString *key = [NSString stringWithFormat:@"%ld",(long)index];
+        if (!self.sonChildScrollerViewDic[key]) {
+            [view pageAddObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+        }else{
+            if (self.sonChildScrollerViewDic[key] != view) {
+                UIView *tempView = self.sonChildScrollerViewDic[key];
+                [tempView paegRemoveObserver:self forKeyPath:@"contentOffset" context:nil];
+                [view paegRemoveObserver:self forKeyPath:@"contentOffset" context:nil];
+                [view pageAddObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+            }
+        }
+        [self.sonChildScrollerViewDic setObject:view forKey:key];
         if (self.scrolToBottom)  [view setContentOffset:CGPointMake(view.contentOffset.x,0) animated:NO];
         if (!self.sonCanScroll && !self.scrolToBottom) [view setContentOffset:CGPointZero animated:NO];
-        @try {
-          [view pageAddObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
-        } @catch (NSException *exception){}
     }
 }
 
@@ -468,7 +474,6 @@
             [self.currentFootView page_x: x];
     }
 }
-
 
 /// 选中按钮
 - (void)selectBtnWithIndex:(NSInteger)index{
@@ -525,15 +530,13 @@
 }
 
 - (void)selectMenuWithIndex:(NSInteger)index{
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.upSc.btnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if (idx == index) {
-                [obj sendActionsForControlEvents:UIControlEventTouchUpInside];
-                *stop = YES;
-                return;
-            }
-        }];
-    });
+    [self.upSc.btnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn*  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (idx == index) {
+            [obj sendActionsForControlEvents:UIControlEventTouchUpInside];
+            *stop = YES;
+            return;
+        }
+    }];
 }
 
 - (void)updatePageController{
@@ -563,13 +566,7 @@
 }
 
 - (void)updateTitle{
-    [self.upSc.btnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (obj&&[obj isKindOfClass:[WMZPageNaviBtn class]]) {
-            NSString *string = [obj titleForState:UIControlStateNormal];
-            if (self.param.wTitleArr && self.param.wTitleArr.count>idx) string = self.param.wTitleArr[idx];
-            [obj setTitle:string forState:UIControlStateNormal];
-        }
-    }];
+    [self.upSc.mainView updateUI];
 }
 
 - (void)downScrollViewSetOffset:(CGPoint)point animated:(BOOL)animat;{
@@ -587,107 +584,6 @@
 - (void)showData{
     [self setParam];
     [self UI];
-}
-
-- (BOOL)canTopSuspension{
-    if (!self.param.wTopSuspension
-       ||self.param.wMenuPosition == PageMenuPositionBottom
-        ||self.param.wMenuPosition == PageMenuPositionNavi) return NO;
-    if (!self.param.wTitleArr.count) return NO;
-    return YES;
-}
-
-/// 某个子控制不悬浮
-- (BOOL)currentNotSuspennsion{
-    if (self.param.wTitleArr.count > self.upSc.currentTitleIndex) {
-        id data = self.param.wTitleArr[self.upSc.currentTitleIndex];
-        if ([data isKindOfClass:[NSDictionary class]] &&
-            data[WMZPageKeyCanTopSuspension] &&
-            ![data[WMZPageKeyCanTopSuspension] boolValue]) return NO;
-    }
-    return YES;
-}
-
-- (NSMutableDictionary *)sonChildScrollerViewDic{
-    if (!_sonChildScrollerViewDic) {
-        _sonChildScrollerViewDic =  [NSMutableDictionary new];
-    }
-    return _sonChildScrollerViewDic;
-}
-
-- (NSMutableDictionary *)sonChildFooterViewDic{
-    if (!_sonChildFooterViewDic) {
-        _sonChildFooterViewDic = [NSMutableDictionary new];
-    }
-    return _sonChildFooterViewDic;
-}
-
-- (WMZPageScroller *)downSc{
-    if (!_downSc) {
-        _downSc = [[WMZPageScroller alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-        _downSc.sectionHeaderHeight = 0.01;
-        _downSc.estimatedRowHeight = 100;
-        _downSc.sectionFooterHeight = 0.01;
-        if (@available(iOS 11.0, *)) {
-            _downSc.estimatedSectionFooterHeight = 0.01;
-            _downSc.estimatedSectionHeaderHeight = 0.01;
-            _downSc.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-        }else{
-            self.automaticallyAdjustsScrollViewInsets = NO;
-        }
-    }
-    return _downSc;
-}
-
-- (CGFloat)footViewOrginY{
-    if (!_footViewOrginY) {
-        _footViewOrginY = CGRectGetMaxY(self.downSc.frame) - self.currentFootView.frame.size.height;
-    }
-    return _footViewOrginY;
-}
-
-- (CGSize)headSize{
-    return _headSize.width && _headSize.height ?_headSize:({_headSize = self.headView.frame.size;});
-}
-    
-- (CGFloat)headHeight{
-    _headHeight = self.headView.frame.size.height;
-    return _headHeight;
-}
-
-- (void)setCurrentScroll:(UIScrollView *)currentScroll{
-    _currentScroll = currentScroll;
-    self.downSc.currentScroll = currentScroll;
-}
-
-- (void)setParam:(WMZPageParam *)param{
-    _param = param;
-    if (self.param.wMenuPosition == PageMenuPositionNavi||
-        self.param.wMenuPosition == PageMenuPositionBottom) {
-        [self showData];
-    }else{
-        if (self.param.wLazyLoading) {
-            [self performSelector:@selector(showData) withObject:nil afterDelay:CGFLOAT_MIN];
-        }else{
-            [self showData];
-        }
-    }
-}
-
-- (void)didReceiveMemoryWarning{
-    [super didReceiveMemoryWarning];
-    [self.cache removeAllObjects];
-    [self.sonChildScrollerViewDic removeAllObjects];
-}
-
-- (void)removeKVO{
-    [self.sonChildScrollerViewDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        @try {
-            [obj paegRemoveObserver:self forKeyPath:@"contentOffset" context:nil];
-        }@catch (NSException *exception) {
-
-        }
-    }];
 }
 
 - (BOOL)addMenuTitleWithObjectArr:(NSArray<WMZPageTitleDataModel*>*)insertArr{
@@ -942,8 +838,107 @@
     return YES;
 }
 
+- (BOOL)canTopSuspension{
+    if (!self.param.wTopSuspension
+       ||self.param.wMenuPosition == PageMenuPositionBottom
+        ||self.param.wMenuPosition == PageMenuPositionNavi) return NO;
+    if (!self.param.wTitleArr.count) return NO;
+    return YES;
+}
+
+/// 某个子控制不悬浮
+- (BOOL)currentNotSuspennsion{
+    if (self.param.wTitleArr.count > self.upSc.currentTitleIndex) {
+        id data = self.param.wTitleArr[self.upSc.currentTitleIndex];
+        if ([data isKindOfClass:[NSDictionary class]] &&
+            data[WMZPageKeyCanTopSuspension] &&
+            ![data[WMZPageKeyCanTopSuspension] boolValue]) return NO;
+    }
+    return YES;
+}
+
+- (NSMutableDictionary *)sonChildScrollerViewDic{
+    if (!_sonChildScrollerViewDic) {
+        _sonChildScrollerViewDic =  [NSMutableDictionary new];
+    }
+    return _sonChildScrollerViewDic;
+}
+
+- (NSMutableDictionary *)sonChildFooterViewDic{
+    if (!_sonChildFooterViewDic) {
+        _sonChildFooterViewDic = [NSMutableDictionary new];
+    }
+    return _sonChildFooterViewDic;
+}
+
+- (WMZPageScroller *)downSc{
+    if (!_downSc) {
+        _downSc = [[WMZPageScroller alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+        _downSc.sectionHeaderHeight = 0.01;
+        _downSc.estimatedRowHeight = 100;
+        _downSc.sectionFooterHeight = 0.01;
+        if (@available(iOS 11.0, *)) {
+            _downSc.estimatedSectionFooterHeight = 0.01;
+            _downSc.estimatedSectionHeaderHeight = 0.01;
+            _downSc.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        }else{
+            self.automaticallyAdjustsScrollViewInsets = NO;
+        }
+    }
+    return _downSc;
+}
+
+- (CGFloat)footViewOrginY{
+    if (!_footViewOrginY) {
+        _footViewOrginY = CGRectGetMaxY(self.downSc.frame) - self.currentFootView.frame.size.height;
+    }
+    return _footViewOrginY;
+}
+
+- (CGSize)headSize{
+    return _headSize.width && _headSize.height ?_headSize:({_headSize = self.headView.frame.size;});
+}
+    
+- (CGFloat)headHeight{
+    _headHeight = self.headView.frame.size.height;
+    return _headHeight;
+}
+
+- (void)setCurrentScroll:(UIScrollView *)currentScroll{
+    _currentScroll = currentScroll;
+    self.downSc.currentScroll = currentScroll;
+}
+
+- (void)setParam:(WMZPageParam *)param{
+    _param = param;
+    if (self.param.wMenuPosition == PageMenuPositionNavi||
+        self.param.wMenuPosition == PageMenuPositionBottom) {
+        [self showData];
+    }else{
+        if (self.param.wLazyLoading) {
+            [self performSelector:@selector(showData) withObject:nil afterDelay:CGFLOAT_MIN];
+        }else{
+            [self showData];
+        }
+    }
+}
+
+- (void)didReceiveMemoryWarning{
+    [super didReceiveMemoryWarning];
+    [self removeKVO];
+    [self.cache removeAllObjects];
+    [self.sonChildScrollerViewDic removeAllObjects];
+}
+
+- (void)removeKVO{
+    [self.sonChildScrollerViewDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        [obj paegRemoveObserver:self forKeyPath:@"contentOffset" context:nil];
+    }];
+}
+
 - (void)dealloc{
     [self removeKVO];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

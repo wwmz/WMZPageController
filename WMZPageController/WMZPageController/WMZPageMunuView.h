@@ -23,7 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 配置
 @property (nonatomic, strong) WMZPageParam *param;
 /// 下划线
-@property (nonatomic, strong) UIButton *lineView;
+@property (nonatomic, strong) WMZPageNaviBtn *lineView;
+/// 下划线
+@property (nonatomic, strong) UIView *containView;
 /// 标题按钮
 @property (nonatomic, strong) NSMutableArray <WMZPageNaviBtn*>*btnArr;
 /// 固定按钮
@@ -31,9 +33,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 代理
 @property (nonatomic, weak) id <WMZPageMunuDelegate> menuDelegate;
 /// 上次选中左侧标题
-@property (nonatomic, strong) WMZPageNaviBtn *lastBTN;
+@property (nonatomic, strong, nullable) WMZPageNaviBtn *lastBTN;
 ////  上次选中右侧固定标题
-@property (nonatomic, strong) WMZPageNaviBtn *fixLastBtn;
+@property (nonatomic, strong, nullable) WMZPageNaviBtn *fixLastBtn;
 /// 最底部下划线
 @property (nonatomic, strong) UIView *bottomView;
 /// 滚动到index
@@ -47,7 +49,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setPropertiesWithBtn:(WMZPageNaviBtn*)btn withIndex:(NSInteger)i  withTemp:(WMZPageNaviBtn*)temp;
 /// 重置contensize
 - (void)resetMainViewContenSize:(WMZPageNaviBtn*)btn;
-
+/// updateUI
+- (void)updateUI;
+/// 动画管理
+- (void)animalAction:(UIScrollView*)scrollView lastContrnOffset:(CGFloat)lastContentOffset;
 @end
 
 NS_ASSUME_NONNULL_END

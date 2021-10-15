@@ -20,6 +20,7 @@
         self.alwaysBounceHorizontal = YES;
         self.alwaysBounceVertical = NO;
         self.scrollsToTop = NO;
+        self.popGuestureOffset = -1;
         if (@available(iOS 11.0, *)) {
             self.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }
@@ -41,6 +42,27 @@
             }else if(firstView.contentOffset.x >= PageVCWidth * (firstView.totalCount - 1)){
                 if (firstView.left && firstView.currentIndex == 0 && secondView.currentIndex > 0) return YES;
                 if (!firstView.left && secondView.currentIndex < (secondView.totalCount - 1)) return YES;
+            }
+        }
+    }
+
+    if ([NSStringFromClass([gestureRecognizer class]) isEqualToString:@"UIScrollViewPanGestureRecognizer"] && self.respondGuestureType != PagePopNone){
+        CGPoint point = [self.panGestureRecognizer translationInView:self.superview];
+        if (point.x >= 0 &&
+            (self.panGestureRecognizer.state == UIGestureRecognizerStateBegan || self.panGestureRecognizer.state == UIGestureRecognizerStateChanged)) {
+            if (self.respondGuestureType  == PagePopFirst ) {
+                if (self.contentOffset.x <= 0) {
+                    self.popGuestureOffset = self.contentOffset.x;
+                    return YES;
+                }
+            }else if (self.respondGuestureType  == PagePopAll){
+                int ges = [gestureRecognizer locationInView:self].x;
+                int kw =[UIScreen mainScreen].bounds.size.width;
+                NSInteger off = ges % kw;
+                if (off < self.globalTriggerOffset) {
+                    self.popGuestureOffset = self.contentOffset.x;
+                    return YES;
+                }
             }
         }
     }
