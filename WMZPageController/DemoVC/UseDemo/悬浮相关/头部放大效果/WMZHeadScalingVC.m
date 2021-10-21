@@ -39,9 +39,18 @@
         [image sd_setImageWithURL:[NSURL URLWithString:@"https://upload-images.jianshu.io/upload_images/9163368-02e26751674a3bc6.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"]];
         image.frame = CGRectMake(0, 0, PageVCWidth, 300);
         /// 必须返回一个UIImageView
-        /// 若有其他子视图 则在image上添加
         return image;
     };
+    
+    ///如有需要 自定义固定视图加在 tableHeaderView上
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1* NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        UIView *headView = self.downSc.tableHeaderView;
+//        ///要加的固定view
+//        UIView *view = UIView.new;
+//        view.backgroundColor = UIColor.redColor;
+//        view.frame = CGRectMake(0, 0, PageVCWidth, 100);
+//        [headView addSubview:view];
+//    });
     self.param = param;
 }
 

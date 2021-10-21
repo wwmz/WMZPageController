@@ -20,10 +20,6 @@
 @property (nonatomic, strong) NSArray *currentScrollArr;
 /// 当前子控制器中需要固定的底部视图
 @property (nonatomic, strong) UIView *currentFootView;
-/// 头部视图
-@property (nonatomic, strong) UIView *headView;
-/// 头部视图block外部传入的视图
-@property (nonatomic, strong) UIView *headViewSonView;
 /// 头部视图菜单栏底部的占位视图(如有需要)
 @property (nonatomic, strong) UIView *head_MenuView;
 /// 视图消失时候的导航栏透明度 有透明度变化的时候
@@ -42,9 +38,13 @@
 @property (nonatomic, assign) CGSize headSize;
 ///headHeight
 @property (nonatomic, assign) CGFloat headHeight;
+/// 子控制器固定底部y值 default 最底部-height
+@property (nonatomic, assign) CGFloat footViewOrginY;
+
 @end
 
 @implementation WMZPageController
+
 - (void)viewDidLoad{
     [super viewDidLoad];
     self.view.backgroundColor = UIColor.whiteColor;
@@ -215,7 +215,6 @@
     [self setUpHead];
     self.canScroll = YES;
     self.scrolToBottom = YES;
-
     [self.downSc reloadData];
     [self.downSc layoutIfNeeded];
     [self selectMenuWithIndex:self.param.wMenuDefaultIndex];
@@ -325,6 +324,7 @@
     if (![self canTopSuspension]) return;
     float yOffset  = scrollView.contentOffset.y;
     int topOffset = scrollView.contentSize.height - scrollView.frame.size.height;
+    NSLog(@"%@ %f yOffset",self,yOffset);
     if (yOffset <= 0) {
         self.scrolToBottom = YES;
     }else{
@@ -376,7 +376,7 @@
     }else{
         if (self.param.wEventMenuChangeHeight) self.param.wEventMenuChangeHeight(self.upSc.btnArr,self.currentScroll.contentOffset.y);
     }
-     if (self.param.wMenuAnimal == PageTitleMenuAiQY||self.param.wMenuAnimal == PageTitleMenuPDD){
+    if (self.param.wMenuAnimal == PageTitleMenuAiQY||self.param.wMenuAnimal == PageTitleMenuPDD){
         CGRect rect = self.upSc.lineView.frame;
         if (rect.origin.y != ([self.upSc.mainView getMainHeight]-self.param.wMenuIndicatorY-rect.size.height/2)) {
             rect.origin.y = [self.upSc.mainView getMainHeight]-self.param.wMenuIndicatorY-rect.size.height/2;
@@ -387,6 +387,7 @@
 
 /// 设置悬浮
 - (void)setUpSuspension:(UIViewController*)newVC index:(NSInteger)index end:(BOOL)end{
+    
     if (![self canTopSuspension]) return;
     if ([newVC conformsToProtocol:@protocol(WMZPageProtocol)]) {
         UIScrollView *view = nil;
@@ -432,6 +433,7 @@
     if (view &&
         [view isKindOfClass:[UIScrollView class]]) {
         self.currentScroll = view;
+        self.currentScroll.showsVerticalScrollIndicator = NO;
         NSString *key = [NSString stringWithFormat:@"%ld",(long)index];
         if (!self.sonChildScrollerViewDic[key]) {
             [view pageAddObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
@@ -455,30 +457,21 @@
     NSInteger index = floor(scrollView.contentOffset.x/self.upSc.frame.size.width);
     if (self.currentFootView) {
         int x = 0;
-        if (left) {
-            if (scrollView.contentOffset.x > (self.upSc.frame.size.width * footerViewIndex)) {
-                x -= offset;
-            }else{
-                x = (int)self.upSc.frame.size.width - offset;
-            }
+        if (scrollView.contentOffset.x > (self.upSc.frame.size.width * footerViewIndex)) {
+           x -= offset;
         }else{
-            if (scrollView.contentOffset.x > (self.upSc.frame.size.width * footerViewIndex)) {
-               x -= offset;
-            }else{
-               x = (int)self.upSc.frame.size.width - offset;
-            }
+           x = (int)self.upSc.frame.size.width - offset;
         }
         if (offset == 0 && [self.sonChildFooterViewDic objectForKey:@(index)])
-            x = self.footViewOrginX;
-        if (!self.param.wFixFirst)
-            [self.currentFootView page_x: x];
+            x = 0;
+        if (!self.param.wFixFirst) [self.currentFootView page_x: x];
     }
 }
 
 /// 选中按钮
 - (void)selectBtnWithIndex:(NSInteger)index{
     if (!self.currentFootView) return;
-    if (!self.param.wFixFirst) [self.currentFootView page_x:self.footViewOrginX];
+    if (!self.param.wFixFirst) [self.currentFootView page_x:0];
 }
 
 /// 监听子控制器中的滚动视图
@@ -492,20 +485,26 @@
         CGPoint newOld = [[change objectForKey:@"old"] CGPointValue];
         if (newH.y == newOld.y)  return;
         if (self.param.wBounces) self.scrolToBottom = NO;
-        if (!self.sonCanScroll && !self.scrolToBottom) {
-            self.currentScroll.contentOffset = CGPointZero;
-            self.downSc.showsVerticalScrollIndicator = NO;
-            self.currentScroll.showsVerticalScrollIndicator = NO;
-        }else{
-            self.downSc.showsVerticalScrollIndicator = NO;
-            self.currentScroll.showsVerticalScrollIndicator = NO;
+        WMZPageController *pageVC = self;
+        if ([self.parentViewController isKindOfClass:WMZPageController.class]) {
+            while ((pageVC = (WMZPageController*)[pageVC parentViewController])){
+                if ([pageVC isKindOfClass:[WMZPageController class]]) {
+                    if (pageVC.param.wTopSuspension &&
+                        [pageVC.headViewSonView isKindOfClass:UIView.class] &&
+                        pageVC.headViewSonView.frame.size.height){
+                        NSLog(@"进入");
+                        break;
+                    }
+                }
+            }
         }
+        if (!pageVC) pageVC = self;
+        NSLog(@"%@ %f %d %d",pageVC,self.currentScroll.contentOffset.y,pageVC.sonCanScroll,pageVC.scrolToBottom);
+        if (!pageVC.sonCanScroll && !pageVC.scrolToBottom) self.currentScroll.contentOffset = CGPointZero;
         [self changeMenuFrame];
         if ((int)newH.y <= 0) {
-            self.canScroll = YES;
-            if (self.param.wBounces) {
-                self.currentScroll.contentOffset = CGPointZero;
-            }
+            pageVC.canScroll = YES;
+            if (self.param.wBounces) self.currentScroll.contentOffset = CGPointZero;
         }
     }
 }
@@ -802,7 +801,7 @@
         if (replaceVC) {
             [self.cache removeObjectForKey:@(replaceIndex)];
             [self.cache setObject:replaceVC forKey:@(index)];
-            [indexVC.view page_x:index * PageVCWidth];
+            [replaceVC.view page_x:index * PageVCWidth];
         }
         if (indexVC) {
             [self.cache removeObjectForKey:@(index)];
@@ -884,6 +883,7 @@
         }else{
             self.automaticallyAdjustsScrollViewInsets = NO;
         }
+        _downSc.showsVerticalScrollIndicator = NO;
     }
     return _downSc;
 }

@@ -11,6 +11,7 @@
 @interface WMZPageMunuView(){
     WMZPageNaviBtn *_btnLeft;
     WMZPageNaviBtn *_btnRight;
+    CGFloat fixAllWidth;
 }
 @end
 
@@ -46,15 +47,13 @@
         WMZPageNaviBtn *btn = [WMZPageNaviBtn buttonWithType:UIButtonTypeCustom];
         [self setPropertiesWithBtn:btn withIndex:i withTemp:temp];
         temp = btn;
-        if (i == self.param.wTitleArr.count - 1) {
-            [self resetMainViewContenSize:btn];
-        }
     }
     if (self.param.wCustomMenuView) self.param.wCustomMenuView(self);
     /// 指示器
     [self setUpIndicator];
     /// 右边固定标题
     [self setUpFixRightBtn:temp];
+    if (temp) [self resetMainViewContenSize:temp];
     /// 最底部固定线
     if (self.param.wInsertMenuLine) {
         self.bottomView = [UIView new];
@@ -113,7 +112,12 @@
         self.frame = rect;
     }
     if (self.btnArr.count) {
+        [self sendSubviewToBack:self.containView];
         self.containView.frame = CGRectMake(self.btnArr.firstObject.frame.origin.x, btn.frame.origin.y, CGRectGetMaxX(btn.frame), btn.frame.size.height);
+    }
+    if (self.fixBtnArr) {
+        self.contentSize = CGSizeMake(self.contentSize.width + fixAllWidth, 0);
+        self.scrollEnabled = (CGRectGetMaxX(btn.frame) > (self.frame.size.width - fixAllWidth));
     }
 }
 
@@ -208,9 +212,8 @@
             [fixBtn addTarget:self action:@selector(fixTap:) forControlEvents:UIControlEventTouchUpInside];
             [self.fixBtnArr addObject:fixBtn];
         }
+        fixAllWidth = allWidth;
         if (self.param.wCustomMenufixTitle) self.param.wCustomMenufixTitle(self.fixBtnArr);
-        self.contentSize = CGSizeMake(self.contentSize.width + allWidth, 0);
-        self.scrollEnabled = !(CGRectGetMaxX(temp.frame) <= (self.frame.size.width - allWidth));
     }
 }
 
@@ -318,6 +321,7 @@
 
 /// 点击
 - (void)tap:(WMZPageNaviBtn*)btn{
+    if (self.lastBTN == btn) return;
     NSInteger index = [self.btnArr indexOfObject:btn];
     if (index == NSNotFound || index > self.btnArr.count) return;
     [self scrollToIndex:index animal:YES];
@@ -495,8 +499,6 @@
             center.x = _btnRight.center.x;
         }
         self.lineView.center = center;
-    }else if (self.param.wMenuAnimal == PageTitleMenuJD) {
-
     }
     /// 渐变
     if (self.param.wMenuAnimalTitleGradient) {

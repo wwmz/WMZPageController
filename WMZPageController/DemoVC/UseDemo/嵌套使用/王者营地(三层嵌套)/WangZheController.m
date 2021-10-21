@@ -40,7 +40,7 @@
         }
         return [TestVC new];
      })
-    .wTopSuspensionSet(YES)
+    .wTopSuspensionSet(YES)   ///如果第一层嵌套开启悬浮  二三层也要开启  举一反三 只有第二层开启的话 第三层也要开启
     .wMenuHeadViewSet(^UIView *{
         UIView *back = [UIView new];
         back.frame = CGRectMake(0, 0, PageVCWidth, 200);

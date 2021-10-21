@@ -29,6 +29,7 @@
     }
     WMZPageParam *param = PageParam()
     .wTitleArrSet(data)
+    .wMenuFixRightDataSet(@"+")
     .wMenuAnimalSet(PageTitleMenuPDD)
     .wMenuDefaultIndexSet(3)
     .wControllersSet(controllerArr);  //必须使用此属性

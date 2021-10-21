@@ -12,6 +12,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface WMZPageController : UIViewController<UIScrollViewDelegate,WMZPageLoopDelegate,UITableViewDelegate>
+/// 头部视图
+@property (nonatomic, strong) UIView *headView;
+/// 头部视图block外部传入的视图
+@property (nonatomic, strong) UIView *headViewSonView;
 /// 参数
 @property (nonatomic, strong) WMZPageParam *param;
 /// 头部标题滚动视图
@@ -24,10 +28,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableDictionary *sonChildScrollerViewDic;
 /// 子控制器中固定底部的视图
 @property (nonatomic, strong) NSMutableDictionary *sonChildFooterViewDic;
-/// 子控制器固定底部如果不是位于最左边  可设置此属性 默认为0
-@property (nonatomic, assign) CGFloat footViewOrginX;
-/// 子控制器固定底部y值 default 最底部-height
-@property (nonatomic, assign) CGFloat footViewOrginY;
 /// 透明视图
 @property (nonatomic, strong) UIView *naviBarBackGround;
 

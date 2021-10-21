@@ -9,8 +9,6 @@
 #import "WMZPageConfig.h"
 #import "WMZPageParam.h"
 
-
-
 NS_ASSUME_NONNULL_BEGIN
 @interface WMZPageLabel:UILabel
 /// 内边距
@@ -108,6 +106,5 @@ NS_ASSUME_NONNULL_BEGIN
 ///  安全删除观察者
 - (void)paegRemoveObserver:(nonnull NSObject *)observer forKeyPath:(nonnull NSString *)keyPath context:(nullable void *)context;
 @end
-
 
 NS_ASSUME_NONNULL_END
