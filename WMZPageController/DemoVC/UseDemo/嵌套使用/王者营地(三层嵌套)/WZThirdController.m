@@ -24,19 +24,12 @@
     .wViewControllerSet(^UIViewController *(NSInteger index) {
         return [TopSuspensionVC new];
     })
+    ///如果第一层嵌套开启悬浮  二三层也要开启
+    ///举一反三 只有第二层开启的话 第三层也要开启
+    ///如果是最后一层开启则上级不需要开启
     .wTopSuspensionSet(YES)
     .wMenuIndicatorColorSet([UIColor orangeColor])
     .wMenuTitleSelectColorSet([UIColor orangeColor])
-    //头部
-//    .wMenuHeadViewSet(^UIView *{
-//        UIView *back = [UIView new];
-//        back.frame = CGRectMake(0, 0, PageVCWidth, 200);
-//        UIImageView *image = [UIImageView new];
-//        [image sd_setImageWithURL:[NSURL URLWithString:@"https://upload-images.jianshu.io/upload_images/9163368-02e26751674a3bc6.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"]];
-//        image.frame = back.bounds;
-//        [back addSubview:image];
-//        return back;
-//    })
     .wMenuAnimalSet(PageTitleMenuPDD);
     self.param = param;
 }

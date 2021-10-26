@@ -24,21 +24,17 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     if (self.wCustomSimultaneouslyGesture) return self.wCustomSimultaneouslyGesture(gestureRecognizer, otherGestureRecognizer);
-    if (self.contentOffset.y < 0) return NO;
-    if (!self.canScroll) return NO;
+    if ([NSStringFromClass(otherGestureRecognizer.view.class) isEqualToString:@"WMZPageDataView"] &&
+        [NSStringFromClass([otherGestureRecognizer class]) isEqualToString:@"UIScrollViewPanGestureRecognizer"]) return NO;
+    if (self.sonCanScroll || !self.canScroll || self.contentOffset.y < 0) return NO;
     return YES;
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     if (self.wCustomFailGesture)  return  self.wCustomFailGesture(gestureRecognizer, otherGestureRecognizer);
-    if (!self.currentScroll)  return NO;
+    if (!self.currentScroll) return NO;
     if ([NSStringFromClass(otherGestureRecognizer.view.class) isEqualToString:@"UITableViewWrapperView"] &&
         [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) return YES;
-    if ([NSStringFromClass(otherGestureRecognizer.view.class) isEqualToString:@"WMZPageDataView"]){
-        if (![self.superview.superview isKindOfClass:WMZPageDataView.class]) {
-            return YES;;
-        }
-    }
     return NO;
 }
 

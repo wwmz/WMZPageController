@@ -153,6 +153,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
                @{@"name":@"自定义导航栏",@"vc":@"WMZPageCustomNaviVC"},
                @{@"name":@"头部下拉缩放效果",@"vc":@"WMZHeadScalingVC"},
                @{@"name":@"实现tableviewDataSource协议写复杂UI",@"vc":@"WMZUsePageVC"},
+               @{@"name":@"悬浮不带滚动视图",@"vc":@"WMZCustomNormalVC"},
             ]},
             @{@"title":@"复杂使用",@"data":@[
                 @{@"name":@"淘宝滑动动态改变菜单栏",@"vc":@"WMZTaoBaoDemo",@"showTabbar":@(YES)},
@@ -184,6 +185,9 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
             ]},
             @{@"title":@"响应侧滑/全屏手势",@"data":@[
                @{@"name":@"响应侧滑/全屏手势",@"vc":@"GuestureViewController"},
+            ]},
+            @{@"title":@"菜单栏带自定义视图（筛选等）",@"data":@[
+               @{@"name":@"菜单栏带自定义视图（筛选等）",@"vc":@"WMZCustomAddMenuVC"},
             ]},
         ];
     }

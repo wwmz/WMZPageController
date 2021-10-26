@@ -114,11 +114,9 @@ static NSInteger const pointWidth = 7; //小红点的宽高
     self.jdLayer.layer.mask = pathLayer;
 }
 
-- (void)setHighlighted:(BOOL)highlighted{
-    
-}
+- (void)setHighlighted:(BOOL)highlighted{}
 
--(void)setRadii:(CGSize)size RoundingCorners:(UIRectCorner)rectCorner{
+- (void)setRadii:(CGSize)size RoundingCorners:(UIRectCorner)rectCorner{
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds byRoundingCorners:rectCorner cornerRadii:size];
     CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
     maskLayer.frame = self.bounds;
@@ -126,7 +124,7 @@ static NSInteger const pointWidth = 7; //小红点的宽高
     self.layer.mask = maskLayer;
 }
 
--(CGSize)boundingRectWithSize:(NSString*)txt Font:(UIFont*) font Size:(CGSize)size{
+- (CGSize)boundingRectWithSize:(NSString*)txt Font:(UIFont*) font Size:(CGSize)size{
     return [txt boundingRectWithSize:size options:
             NSStringDrawingTruncatesLastVisibleLine |
             NSStringDrawingUsesLineFragmentOrigin |
@@ -397,6 +395,7 @@ static NSInteger const pointWidth = 7; //小红点的宽高
     rect.size.height = height;
     self.frame = rect;
 }
+
 @end
 
 @implementation NSObject (SafeKVO)

@@ -25,6 +25,7 @@
         .wTitleArrSet(data)
         //控制器数组
         .wViewControllerSet(^UIViewController *(NSInteger index) {
+            /// 带滚动视图需实现协议
           return [TopSuspensionVC new];
         })
         //悬浮开启

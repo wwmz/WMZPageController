@@ -25,8 +25,8 @@ WMZPageBTNKey const WMZPageKeyTitleMarginY = @"y";
 WMZPageBTNKey const WMZPageKeyCanTopSuspension = @"canTopSuspension";
 WMZPageBTNKey const WMZPageKeyTitleBackground = @"titleBackground";      
 WMZPageBTNKey const WMZPageKeyImageOffset = @"margin";
-@implementation WMZPageParam
 
+@implementation WMZPageParam
 WMZPageParam * PageParam(void){
     return  [WMZPageParam new];
 }
@@ -46,6 +46,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wFixFirst
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wLazyLoading)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wHeadScaling)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wHideRedCircle)
+WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wAvoidQuickScroll)
 WMZPagePropSetFuncImplementation(WMZPageParam, PagePopType,            wRespondGuestureType)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wMenuFollowSliding)
 WMZPagePropSetFuncImplementation(WMZPageParam, int,                    wGlobalTriggerOffset)
@@ -76,6 +77,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuBott
 WMZPagePropSetFuncImplementation(WMZPageParam, PageHeadViewBlock,      wMenuHeadView)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageCustomMenuTitle,    wCustomMenufixTitle)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuTitleWeight)
+WMZPagePropSetFuncImplementation(WMZPageParam, PageHeadViewBlock,      wMenuAddSubView)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageHeadAndMenuBgView,  wCustomMenuView)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageCustomRedText,      wCustomRedView)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageHeadAndMenuBgView,  wInsertHeadAndMenuBg)

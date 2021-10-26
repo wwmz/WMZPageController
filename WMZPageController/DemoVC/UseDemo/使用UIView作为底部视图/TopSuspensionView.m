@@ -37,7 +37,7 @@
 }
 
 //实现协议 悬浮 必须实现
-- (UITableView *)getMyTableView{
+- (UIScrollView *)getMyScrollView{
     return self.ta;
 }
 

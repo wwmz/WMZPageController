@@ -51,13 +51,12 @@ FOUNDATION_EXPORT WMZPageBTNKey const WMZPageKeyTitleMarginY;
 /// 当前子控制器不悬浮固定在顶部  @(NO)  NO表示不悬浮
 FOUNDATION_EXPORT WMZPageBTNKey const WMZPageKeyCanTopSuspension;
 
-
-WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, NSArray*,              wTitleArr)
+WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam,NSArray*,              wTitleArr)
 /// 1.4.0之后 新增支持UIView 一样用法都是用这个属性 直接传入UIView即可 有警告的话用强转UIViewController
 /// VC数据 必传(二选一) 1.1.6新增
-WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam,  PageViewControllerIndex,  wViewController)
+WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageViewControllerIndex,  wViewController)
 /// VC数组 必传(二选一) (如果要做标题内容动态增删操作的必须使用此属性 )
-WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, NSArray*,              wControllers)
+WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, NSArray*,    wControllers)
 
 /* =========================================required==============================================*/
 
@@ -108,6 +107,9 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,         
 /// 菜单栏跟随滑动 default YES  为NO则视图手势滑动结束菜单栏再滑动  v1.4.1
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wMenuFollowSliding)
 
+/// 悬浮状态下 防止快速滑动的时候直接从底部直接滚动到顶部 default NO v1.4.3
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wAvoidQuickScroll)
+
 
 /// 响应侧滑或者全屏返回手势 default PagePopFirst 首个子视图/子控制器响应  v1.4.1
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, PagePopType,           wRespondGuestureType)
@@ -134,6 +136,10 @@ WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageCustomMenu
 WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageCustomMenuSelectTitle,wCustomMenuSelectTitle)
 /// 自定义固定标题
 WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageCustomMenuTitle,      wCustomMenufixTitle)
+/// 头部视图 default nil
+WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageHeadViewBlock,     wMenuHeadView)
+/// 菜单栏底部携带自定义视图 default nil  v1.4.3
+WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageHeadViewBlock,     wMenuAddSubView)
 /// 默认选中 default 0
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, NSInteger,             wMenuDefaultIndex)
 /// 菜单最右边固定内容 default nil (可传字符串/字典/数组)
@@ -142,8 +148,6 @@ WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, id,           
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuFixWidth)
 /// 菜单标题动画效果 default  PageTitleMenuMove
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, PageTitleMenu,         wMenuAnimal)
-/// 头部视图 default nil
-WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageHeadViewBlock,     wMenuHeadView)
 /// 菜单宽度 default 屏幕宽度
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuWidth)
 /// 菜单背景颜色 default ffffff

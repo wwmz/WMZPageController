@@ -23,6 +23,7 @@
        //控制器数组
        .wViewControllerSet(^UIViewController *(NSInteger index) {
            if (index == 1) return [FixSonVC new] ;
+           /// 带滚动视图需实现协议
            return [CollectionViewPopDemo new];
        })
 

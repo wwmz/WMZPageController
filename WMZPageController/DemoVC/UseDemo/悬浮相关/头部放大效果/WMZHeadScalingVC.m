@@ -23,6 +23,7 @@
     WMZPageParam *param = WMZPageParam.new;
     param.wTitleArr = data;
     param.wViewController = ^UIViewController * _Nullable(NSInteger index) {
+        /// 带滚动视图需实现协议
         TopSuspensionVC *vc = [TopSuspensionVC new];
         vc.page = index;
         return vc;

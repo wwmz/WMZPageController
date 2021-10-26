@@ -6,7 +6,8 @@
 //  Copyright © 2020 wmz. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "WMZPageParam.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface WMZPageTitleDataModel : NSObject
@@ -17,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 对应的数据 字符串
 @property (nonatomic, strong) NSString *title;
 /// 对应的数据 字典 优先级高
-@property (nonatomic, strong) NSDictionary *titleInfo;
+@property (nonatomic, strong) NSDictionary <WMZPageBTNKey,id>*titleInfo;
 
 /// 初始化方法
 + (instancetype)initWithIndex:(NSInteger)index

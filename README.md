@@ -1,8 +1,8 @@
-# WMZPageController - 分页控制器,替换UIPageController方案,具备完整的生命周期（可传入子控制器/子视图）,多种指示器样式,多种标题样式,可悬浮,功能齐全,支持底部多级联动,支持嵌套多个菜单多页面（cocopod更新至1.4.2）
+# WMZPageController - 分页控制器,替换UIPageController方案,具备完整的生命周期（可传入子控制器/子视图）,多种指示器样式,多种标题样式,可悬浮,功能齐全,支持底部多级联动,支持嵌套多个菜单多页面（v1.4.3）
 
 [GitHub地址](https://github.com/wwmz/WMZPageController)
 
-# ⚠️⚠️  使用悬浮样式需要实现协议 WMZPageProtocol 
+# ⚠️⚠️  使用悬浮样式如果子视图有滚动视图需要实现协议 WMZPageProtocol  如果没有则不需要实现
 # ⚠️⚠️   
      //自定义整体距离顶部的位置(如果默认算的不准确 或者需要修改) block内会传回当前的值 可对比自行返回最终需要的
       WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY,        wCustomNaviBarY)
@@ -221,10 +221,11 @@ WMZPageControlller 使用 MIT 许可证，详情见 [LICENSE](LICENSE) 文件。
 
 下一步计划
 ==============
-- [x]抽取WMZPageController 让不需要继承也能使用
+[x] 抽取WMZPageController 让不需要继承也能使用
 
 更新日记
 ==============
+- 20211026 v1.4.3 修复多重嵌套手势问题 新增wMenuAddSubView 可在菜单栏增加自定义视图 
 - 20211021 v1.4.2 修复多重嵌套下纵向手势滚动问题以及动态增加方法里和固定视图冲突问题
 - 20211015 v1.4.1 支持侧滑/全屏/全部页面返回 新增两种动画JDAnimal NewAQY 修复KVO崩溃问题
 - 20210814 v1.4.0 新增支持UIView传入/修复嵌套手势问题/新增下拉头视图缩放 

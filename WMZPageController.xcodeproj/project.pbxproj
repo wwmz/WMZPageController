@@ -78,6 +78,8 @@
 		F35F12042717CAD70030D3CD /* WMZDemoOne.m in Sources */ = {isa = PBXBuildFile; fileRef = F35F11FF2717CAD70030D3CD /* WMZDemoOne.m */; };
 		F35F12052717CAD70030D3CD /* WMZDemoTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = F35F12012717CAD70030D3CD /* WMZDemoTwo.m */; };
 		F35F12092717CB360030D3CD /* GuestureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F35F12082717CB360030D3CD /* GuestureViewController.m */; };
+		F36244A52727D5F5005BAE8A /* WMZCustomAddMenuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F36244A42727D5F5005BAE8A /* WMZCustomAddMenuVC.m */; };
+		F36244A92727E3E0005BAE8A /* WMZCustomNormalVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F36244A82727E3E0005BAE8A /* WMZCustomNormalVC.m */; };
 		F39EAA992687106A00B56C9D /* WMZPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = F39EAA822687106900B56C9D /* WMZPageController.m */; };
 		F39EAA9C2687106A00B56C9D /* WMZPageDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = F39EAA882687106900B56C9D /* WMZPageDataView.m */; };
 		F39EAA9D2687106A00B56C9D /* WMZPageMunuView.m in Sources */ = {isa = PBXBuildFile; fileRef = F39EAA8A2687106900B56C9D /* WMZPageMunuView.m */; };
@@ -151,6 +153,7 @@
 		F3AA60C526C4C124000E885D /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AA60BA26C4C124000E885D /* MASConstraint.m */; };
 		F3AA60C626C4C124000E885D /* MASViewConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AA60BC26C4C124000E885D /* MASViewConstraint.m */; };
 		F3AA60C726C4C124000E885D /* MASViewAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AA60BD26C4C124000E885D /* MASViewAttribute.m */; };
+		F3AC87EF2726792300C97054 /* WKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F3AC87EE2726792300C97054 /* WKViewController.m */; };
 		F3C96BB4271815E600686ED0 /* WMZPageScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = F3C96BB3271815E600686ED0 /* WMZPageScroller.m */; };
 /* End PBXBuildFile section */
 
@@ -314,6 +317,10 @@
 		F35F12022717CAD70030D3CD /* WMZDemoTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMZDemoTwo.h; sourceTree = "<group>"; };
 		F35F12072717CB360030D3CD /* GuestureViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GuestureViewController.h; sourceTree = "<group>"; };
 		F35F12082717CB360030D3CD /* GuestureViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GuestureViewController.m; sourceTree = "<group>"; };
+		F36244A32727D5F5005BAE8A /* WMZCustomAddMenuVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMZCustomAddMenuVC.h; sourceTree = "<group>"; };
+		F36244A42727D5F5005BAE8A /* WMZCustomAddMenuVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMZCustomAddMenuVC.m; sourceTree = "<group>"; };
+		F36244A72727E3E0005BAE8A /* WMZCustomNormalVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMZCustomNormalVC.h; sourceTree = "<group>"; };
+		F36244A82727E3E0005BAE8A /* WMZCustomNormalVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMZCustomNormalVC.m; sourceTree = "<group>"; };
 		F39EAA822687106900B56C9D /* WMZPageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMZPageController.m; sourceTree = "<group>"; };
 		F39EAA852687106900B56C9D /* WMZPageConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMZPageConfig.h; sourceTree = "<group>"; };
 		F39EAA872687106900B56C9D /* WMZPageDataView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMZPageDataView.h; sourceTree = "<group>"; };
@@ -472,6 +479,8 @@
 		F3AA60BB26C4C124000E885D /* ViewController+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ViewController+MASAdditions.h"; sourceTree = "<group>"; };
 		F3AA60BC26C4C124000E885D /* MASViewConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASViewConstraint.m; sourceTree = "<group>"; };
 		F3AA60BD26C4C124000E885D /* MASViewAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASViewAttribute.m; sourceTree = "<group>"; };
+		F3AC87ED2726792300C97054 /* WKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WKViewController.h; sourceTree = "<group>"; };
+		F3AC87EE2726792300C97054 /* WKViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WKViewController.m; sourceTree = "<group>"; };
 		F3C96BB2271815E600686ED0 /* WMZPageScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMZPageScroller.h; sourceTree = "<group>"; };
 		F3C96BB3271815E600686ED0 /* WMZPageScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMZPageScroller.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -689,14 +698,16 @@
 		F35F113F2717C9D00030D3CD /* 子控制器 */ = {
 			isa = PBXGroup;
 			children = (
-				F35F11402717C9D00030D3CD /* TestVC.h */,
-				F35F11412717C9D00030D3CD /* CollectionViewPopDemo.m */,
-				F35F11422717C9D00030D3CD /* FixSonVC.m */,
-				F35F11432717C9D00030D3CD /* TopSuspensionVC.m */,
-				F35F11442717C9D00030D3CD /* TestVC.m */,
 				F35F11452717C9D00030D3CD /* CollectionViewPopDemo.h */,
-				F35F11462717C9D00030D3CD /* TopSuspensionVC.h */,
+				F35F11412717C9D00030D3CD /* CollectionViewPopDemo.m */,
 				F35F11472717C9D00030D3CD /* FixSonVC.h */,
+				F35F11422717C9D00030D3CD /* FixSonVC.m */,
+				F35F11402717C9D00030D3CD /* TestVC.h */,
+				F35F11442717C9D00030D3CD /* TestVC.m */,
+				F35F11462717C9D00030D3CD /* TopSuspensionVC.h */,
+				F35F11432717C9D00030D3CD /* TopSuspensionVC.m */,
+				F3AC87ED2726792300C97054 /* WKViewController.h */,
+				F3AC87EE2726792300C97054 /* WKViewController.m */,
 			);
 			path = "子控制器";
 			sourceTree = "<group>";
@@ -704,6 +715,7 @@
 		F35F11712717CA9B0030D3CD /* UseDemo */ = {
 			isa = PBXGroup;
 			children = (
+				F36244A22727D5E4005BAE8A /* 菜单栏带自定义视图 */,
 				F35F12062717CB170030D3CD /* 响应侧滑:全屏手势 */,
 				F35F11722717CA9B0030D3CD /* 动态增删菜单标题 */,
 				F35F11752717CA9B0030D3CD /* app使用 */,
@@ -789,11 +801,12 @@
 		F35F118F2717CA9B0030D3CD /* 悬浮相关 */ = {
 			isa = PBXGroup;
 			children = (
+				F36244A62727E3CA005BAE8A /* 悬浮不带滚动视图 */,
 				F35F11902717CA9B0030D3CD /* 固定全局底部视图 */,
 				F35F11932717CA9B0030D3CD /* 导航栏透明度变化+头部刷新 */,
 				F35F11962717CA9B0030D3CD /* 实现tableviewDataSource协议写复杂UI */,
 				F35F11992717CA9B0030D3CD /* 某个子控制器固定底部 */,
-				F35F119C2717CA9B0030D3CD /* 显示导航栏+中间刷新 */,
+				F35F119C2717CA9B0030D3CD /* 显示导航栏+中间刷新(带WKWebView滚动) */,
 				F35F119F2717CA9B0030D3CD /* 全局背景色 */,
 				F35F11A22717CA9B0030D3CD /* 头部放大效果 */,
 				F35F11A52717CA9B0030D3CD /* 自定义导航栏 */,
@@ -837,13 +850,13 @@
 			path = "某个子控制器固定底部";
 			sourceTree = "<group>";
 		};
-		F35F119C2717CA9B0030D3CD /* 显示导航栏+中间刷新 */ = {
+		F35F119C2717CA9B0030D3CD /* 显示导航栏+中间刷新(带WKWebView滚动) */ = {
 			isa = PBXGroup;
 			children = (
 				F35F119D2717CA9B0030D3CD /* WMZCustomOnePage.h */,
 				F35F119E2717CA9B0030D3CD /* WMZCustomOnePage.m */,
 			);
-			path = "显示导航栏+中间刷新";
+			path = "显示导航栏+中间刷新(带WKWebView滚动)";
 			sourceTree = "<group>";
 		};
 		F35F119F2717CA9B0030D3CD /* 全局背景色 */ = {
@@ -1042,6 +1055,24 @@
 				F35F12082717CB360030D3CD /* GuestureViewController.m */,
 			);
 			path = "响应侧滑:全屏手势";
+			sourceTree = "<group>";
+		};
+		F36244A22727D5E4005BAE8A /* 菜单栏带自定义视图 */ = {
+			isa = PBXGroup;
+			children = (
+				F36244A32727D5F5005BAE8A /* WMZCustomAddMenuVC.h */,
+				F36244A42727D5F5005BAE8A /* WMZCustomAddMenuVC.m */,
+			);
+			path = "菜单栏带自定义视图";
+			sourceTree = "<group>";
+		};
+		F36244A62727E3CA005BAE8A /* 悬浮不带滚动视图 */ = {
+			isa = PBXGroup;
+			children = (
+				F36244A72727E3E0005BAE8A /* WMZCustomNormalVC.h */,
+				F36244A82727E3E0005BAE8A /* WMZCustomNormalVC.m */,
+			);
+			path = "悬浮不带滚动视图";
 			sourceTree = "<group>";
 		};
 		F38F14602539E237009C36A8 /* WMZPageController */ = {
@@ -1421,6 +1452,7 @@
 				F3AA60C026C4C124000E885D /* MASCompositeConstraint.m in Sources */,
 				F39EAAA02687106A00B56C9D /* WMZPageTitleDataModel.m in Sources */,
 				F35F12092717CB360030D3CD /* GuestureViewController.m in Sources */,
+				F36244A52727D5F5005BAE8A /* WMZCustomAddMenuVC.m in Sources */,
 				F3A1FF8D2334D6AF004B12F6 /* SDImageGIFCoder.m in Sources */,
 				F3A1FF7C2334D6AF004B12F6 /* SDWebImageCacheSerializer.m in Sources */,
 				F3A1FF7A2334D6AF004B12F6 /* SDWebImageDownloader.m in Sources */,
@@ -1479,6 +1511,7 @@
 				F3A1FF762334D6AF004B12F6 /* SDAnimatedImage.m in Sources */,
 				F3A1FF7D2334D6AF004B12F6 /* SDWebImageIndicator.m in Sources */,
 				F3A1FF862334D6AF004B12F6 /* SDImageCoderHelper.m in Sources */,
+				F3AC87EF2726792300C97054 /* WKViewController.m in Sources */,
 				F3A1FF9F2334D6AF004B12F6 /* UIImage+Metadata.m in Sources */,
 				F3A1FF9D2334D6AF004B12F6 /* UIView+WebCacheOperation.m in Sources */,
 				F35F11F52717CA9B0030D3CD /* WMZTaoBaoDemo.m in Sources */,
@@ -1500,6 +1533,7 @@
 				F3A1FF7E2334D6AF004B12F6 /* UIImage+GIF.m in Sources */,
 				F35F11F92717CA9B0030D3CD /* WMZNaviPageController.swift in Sources */,
 				F35F11F62717CA9B0030D3CD /* WMZPageTitleRightVC.m in Sources */,
+				F36244A92727E3E0005BAE8A /* WMZCustomNormalVC.m in Sources */,
 				F3A1FF7B2334D6AF004B12F6 /* SDImageLoader.m in Sources */,
 				F39EAA9C2687106A00B56C9D /* WMZPageDataView.m in Sources */,
 				F31983062355AE02002D305B /* UIView+MJExtension.m in Sources */,

@@ -36,6 +36,7 @@
     PageParam()
     //控制器数组
     .wViewControllerSet(^UIViewController *(NSInteger index) {
+        /// 带滚动视图需实现协议
         TopSuspensionVC *vc = [TopSuspensionVC new];
         vc.page = index;
         return vc;

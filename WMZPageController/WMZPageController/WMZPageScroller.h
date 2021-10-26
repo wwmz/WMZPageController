@@ -15,13 +15,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL canScroll;
 /// 当前滚动子视图
 @property (nonatomic, strong) UIScrollView* currentScroll;
-/// 是否从导航栏开始
-@property (nonatomic, assign) CGFloat containHeight;
+/// 子视图能否滚动
+@property (nonatomic, assign) BOOL sonCanScroll;
 /// 自定义手势
 @property (nonatomic,   copy) PageFailureGestureRecognizer wCustomFailGesture;
 /// 自定义手势
 @property (nonatomic,   copy) PageSimultaneouslyGestureRecognizer wCustomSimultaneouslyGesture;
-
+/// wTopSuspension
+@property (nonatomic, assign) BOOL wTopSuspension;
 @end
 
 NS_ASSUME_NONNULL_END

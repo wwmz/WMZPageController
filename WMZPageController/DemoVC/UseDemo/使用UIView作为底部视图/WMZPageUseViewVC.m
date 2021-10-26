@@ -23,6 +23,7 @@
     param.wTitleArr = @[@"TestOne",@"TestTwo",@"TestThree",@"TestFour",@"TestFive",@"TestSix"];
     param.wViewController = ^UIViewController * _Nullable(NSInteger index) {
         /// WMZPageProtocol协议里有完整的生命周期 实现pageViewWillAppear等方法即可 默认UIView的frame和使用控制器的一样
+        /// 带滚动视图需实现协议
         TopSuspensionView *view = TopSuspensionView.new;
         view.page = index;
         /// 这里为了方便使用 使用同一个属性 所以这里为了去除警告强转一下类型 但是实际类型还是UIView

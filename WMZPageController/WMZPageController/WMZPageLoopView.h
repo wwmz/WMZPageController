@@ -41,6 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) WMZPageMunuView *mainView;
 /// 底部视图
 @property (nonatomic, strong) WMZPageDataView *dataView;
+/// 添加的视图 和mainView 同级
+@property (nonatomic, strong) UIView *insertView;
 /// 当前index
 @property (nonatomic, assign) NSInteger currentTitleIndex;
 /// 可能的下一个视图

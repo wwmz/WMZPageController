@@ -26,9 +26,25 @@
             filePath = "WMZPageController/WMZPageController/WMZPageNaviBtn.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "421"
-            endingLineNumber = "421"
+            startingLineNumber = "420"
+            endingLineNumber = "420"
             landmarkName = "-hasKey:withObserver:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7F4BE92A-90E9-4EB4-AE7E-33FA429D2916"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WMZPageController/WMZPageController/WMZPageLoopView.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "-setUp"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

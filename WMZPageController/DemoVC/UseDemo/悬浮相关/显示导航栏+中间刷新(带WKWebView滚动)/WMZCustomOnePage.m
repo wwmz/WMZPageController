@@ -10,7 +10,8 @@
 #import "WMZCustomOnePage.h"
 #import "TopSuspensionVC.h"
 #import "UIImageView+WebCache.h"
-#import "UseVC.h"
+#import "WKViewController.h"
+
 @interface WMZCustomOnePage ()
 @end
 
@@ -24,6 +25,8 @@
     PageParam()
     //控制器数组
     .wViewControllerSet(^UIViewController *(NSInteger index) {
+        /// 带滚动视图需实现协议 wkwebView需返回内容视图scrollview
+        if (index == 2)  return WKViewController.new;
         TopSuspensionVC *vc = [TopSuspensionVC new];
         vc.page = index;
         return vc;
@@ -44,9 +47,8 @@
         image.frame = back.bounds;
         [back addSubview:image];
         return back;
-    })
-    ;
-
+    });
+    
     self.param = param;
     
     //   模拟更新头部

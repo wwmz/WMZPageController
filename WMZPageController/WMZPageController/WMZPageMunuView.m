@@ -474,8 +474,10 @@
             rect.origin.x = _btnLeft.center.x +  2 * (scale - 0.5) * (_btnRight.center.x - _btnLeft.center.x) - self.param.wMenuIndicatorWidth / 2;
             rect.size.width =  self.param.wMenuIndicatorWidth + (_btnRight.center.x-_btnLeft.center.x) * (1-scale)*2;
         }
-        if (rect.size.height!= (self.param.wMenuIndicatorHeight?:PageK1px)) rect.size.height = self.param.wMenuIndicatorHeight?:PageK1px;
-        if (rect.origin.y != ([self getMainHeight]-self.param.wMenuIndicatorY-rect.size.height/2)) rect.origin.y = [self getMainHeight]-self.param.wMenuIndicatorY-rect.size.height/2;
+        if (rect.size.height!= (self.param.wMenuIndicatorHeight?:PageK1px))
+            rect.size.height = self.param.wMenuIndicatorHeight?:PageK1px;
+        if (rect.origin.y != ([self getMainHeight]-self.param.wMenuIndicatorY-rect.size.height/2))
+            rect.origin.y = [self getMainHeight]-self.param.wMenuIndicatorY-rect.size.height/2;
         self.lineView.frame = rect;
     }else if (self.param.wMenuAnimal == PageTitleMenuPDD) {
         CGRect rect = self.lineView.frame;
@@ -520,6 +522,9 @@
 - (CGFloat)getMainHeight{
     if ((PageIsIphoneX && self.param.wMenuPosition == PageMenuPositionBottom)) return (self.frame.size.height - 15);
     else if (self.param.wMenuPosition == PageMenuPositionNavi) return 44;
+    else if (self.param.wMenuAddSubView){
+        return self.frame.size.height - self.param.wMenuInsets.bottom;
+    }
     return self.frame.size.height;
 }
 

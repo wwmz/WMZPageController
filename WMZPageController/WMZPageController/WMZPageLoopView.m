@@ -34,6 +34,17 @@
 
 - (void)setUp{
     self.currentTitleIndex = NSNotFound;
+    CGFloat addh = 0;
+    if (self.param.wMenuAddSubView) {
+        UIView *insertView = self.param.wMenuAddSubView();
+        if ([insertView isKindOfClass:UIView.class]) {
+            [self.insertView layoutIfNeeded];
+            self.insertView = insertView;
+            addh = self.insertView.frame.size.height + self.param.wMenuInsets.bottom ;
+            self.param.wMenuInsets = UIEdgeInsetsMake(self.param.wMenuInsets.top, self.param.wMenuInsets.left, self.param.wMenuInsets.bottom + CGRectGetMaxY(self.insertView.frame), self.param.wMenuInsets.right);
+        }
+    }
+    
     /// 菜单栏
     [self addSubview:self.mainView];
     self.mainView.frame = [self.frameInfo[@(self.param.wMenuPosition)] CGRectValue];
@@ -66,6 +77,10 @@
     }
     if (!self.param.wMenuIndicatorY) self.param.wMenuIndicatorY = 5;
     self.mainView.contentInset = UIEdgeInsetsMake(0, self.param.wMenuInsets.left, 0, self.param.wMenuInsets.right);
+    if (self.insertView) {
+        [self addSubview:self.insertView];
+        [self.insertView page_y:CGRectGetMaxY(self.mainView.frame) - addh];
+    }
 }
 
 #pragma -mark menuDelegate

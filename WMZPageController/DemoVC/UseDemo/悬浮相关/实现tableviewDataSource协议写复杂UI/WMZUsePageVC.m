@@ -27,6 +27,7 @@
     WMZPageParam *param = PageParam()
     .wTitleArrSet(@[@"热门",@"分类"])
     .wViewControllerSet(^UIViewController *(NSInteger index) {
+        /// 带滚动视图需实现协议
         if (index == 0) return [CollectionViewPopDemo new];
         return [TopSuspensionVC new];
     })

@@ -13,7 +13,9 @@
 #import "UIImageView+WebCache.h"
 #import "MJRefresh.h"
 #import "TopSuspensionVC.h"
-
+#import "TestVC.h"
+#define random(r, g, b, a) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:(a)/255.0]
+#define randomColor random(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256))
 @interface WMZCustomThreePage ()
 
 @end
@@ -33,9 +35,10 @@
     .wTitleArrSet(data)
     //控制器数组
     .wViewControllerSet(^UIViewController *(NSInteger index) {
+        /// 带滚动视图需实现协议
         TopSuspensionVC *vc = TopSuspensionVC.new;
         vc.page = index;
-        return (UIViewController*)vc;  ///单纯消除警告
+        return vc;  
     })
     //悬浮开启
     .wTopSuspensionSet(YES)
@@ -45,6 +48,7 @@
     .wFromNaviSet(NO)
     //导航栏透明度变化
     .wNaviAlphaSet(YES)
+    .wMenuAnimalSet(PageTitleMenuAiQY)
     //头部
     .wMenuHeadViewSet(^UIView *{
         UIImageView *image = [UIImageView new];

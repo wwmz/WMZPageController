@@ -44,10 +44,9 @@
 
 
 //实现协议 悬浮 必须实现
-- (UITableView *)getMyTableView{
+- (UIScrollView *)getMyScrollView{
     return self.ta;
 }
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -115,7 +114,7 @@
     return 0.01;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 15;
+    return 30;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];

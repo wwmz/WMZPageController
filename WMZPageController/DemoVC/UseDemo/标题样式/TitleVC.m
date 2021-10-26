@@ -90,6 +90,11 @@
         self.param = param;
 }
 
+
+- (void)action{
+    
+}
+
 //普通标题
 - (NSArray*)textData{
     return @[@"推荐",@"LOOK直播",@"画",@"现场",@"翻唱",@"MV",@"广场",@"游戏"];
