@@ -234,7 +234,7 @@
     [self setUpHead];
     self.downSc.wTopSuspension = self.param.wTopSuspension;
     self.canScroll = YES;
-    self.scrolToBottom = NO;
+    self.scrolToBottom = YES;
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.downSc reloadData];
