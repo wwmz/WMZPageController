@@ -405,32 +405,32 @@
         point = CGPointMake(CGRectGetMaxX(indexFrame) -  centerX - indexFrame.size.width/2, 0);
     }
     if ([self isScrollEnabled]) [self setContentOffset:point animated:animal];
-    if (![self.lineView isHidden]) {
-        CGFloat dataWidth = btn.titleLabel.frame.size.width?:btn.maxSize.width;
-        /// 改变指示器frame
-        CGRect lineRect = indexFrame;
-        if (self.param.wMenuAnimal == PageTitleMenuCircle) {
-            lineRect = indexFrame;
-            lineRect.origin.x =  indexFrame.origin.x ;
-            lineRect.size.width =  indexFrame.size.width ;
-            lineRect.size.height =  self.param.wMenuIndicatorHeight?:(btn.maxSize.height + 8);
-            lineRect.origin.y =  (indexFrame.size.height -  lineRect.size.height)/2;
-            self.lineView.layer.masksToBounds = YES;
-            self.lineView.layer.cornerRadius =  self.param.wMenuCircilRadio?:(lineRect.size.height/2);
-        }else{
-            lineRect.size.height = self.param.wMenuIndicatorHeight?:PageK1px;
-            lineRect.origin.y = [self getMainHeight] - lineRect.size.height/2 - self.param.wMenuIndicatorY;
-            lineRect.size.width =  self.param.wMenuIndicatorWidth?: (dataWidth + 6);
-            lineRect.origin.x =  (indexFrame.size.width - lineRect.size.width)/2 + indexFrame.origin.x;
-        }
-        if (!animal) {
-            self.lineView.frame = lineRect;
-        }else{
-            [UIView animateWithDuration:0.2f animations:^{
-                self.lineView.frame = lineRect;
-            }];
-        }
+    
+    CGFloat dataWidth = btn.titleLabel.frame.size.width?:btn.maxSize.width;
+    /// 改变指示器frame
+    CGRect lineRect = indexFrame;
+    if (self.param.wMenuAnimal == PageTitleMenuCircle) {
+        lineRect = indexFrame;
+        lineRect.origin.x =  indexFrame.origin.x ;
+        lineRect.size.width =  indexFrame.size.width ;
+        lineRect.size.height =  self.param.wMenuIndicatorHeight?:(btn.maxSize.height + 8);
+        lineRect.origin.y =  (indexFrame.size.height -  lineRect.size.height)/2;
+        self.lineView.layer.masksToBounds = YES;
+        self.lineView.layer.cornerRadius =  self.param.wMenuCircilRadio?:(lineRect.size.height/2);
+    }else{
+        lineRect.size.height = self.param.wMenuIndicatorHeight?:PageK1px;
+        lineRect.origin.y = [self getMainHeight] - lineRect.size.height/2 - self.param.wMenuIndicatorY;
+        lineRect.size.width =  self.param.wMenuIndicatorWidth?: (dataWidth + 6);
+        lineRect.origin.x =  (indexFrame.size.width - lineRect.size.width)/2 + indexFrame.origin.x;
     }
+    if (!animal) {
+        self.lineView.frame = lineRect;
+    }else{
+        [UIView animateWithDuration:0.2f animations:^{
+            self.lineView.frame = lineRect;
+        }];
+    }
+    
     self.currentTitleIndex = newIndex;
     if (self.param.wInsertHeadAndMenuBg) self.backgroundColor = [UIColor clearColor];
     if (self.param.wCustomMenuSelectTitle) self.param.wCustomMenuSelectTitle(self.btnArr);
