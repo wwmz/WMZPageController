@@ -261,7 +261,8 @@
     sonChildVCHeight :(sonChildVCHeight-self.headHeight);
     if ([self canTopSuspension]) {
         if (!self.parentViewController) {
-            height -= PageVCStatusBarHeight;
+            if (!self.downSc.frame.origin.y)
+                height -= self.param.wCustomDataViewTopOffset;
         }else{
             if (![self.parentViewController isKindOfClass:[WMZPageController class]]) {
                 if (self.navigationController &&
@@ -269,7 +270,8 @@
                     if (!self.param.wFromNavi)
                         height -= (self.navigationController.navigationBar.translucent? PageVCNavBarHeight:0);
                 }else{
-                    height -= PageVCStatusBarHeight;
+                    if (!self.downSc.frame.origin.y)
+                        height -= self.param.wCustomDataViewTopOffset;
                 }
             }
         }

@@ -94,6 +94,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, PageMenuNormalHeight,   wEventMen
 WMZPagePropSetFuncImplementation(WMZPageParam, PageViewControllerIndex,wViewController)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageCustomFrameY,       wCustomNaviBarY)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageCustomFrameY,       wCustomTabbarY)
+WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wCustomDataViewTopOffset)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuIndicatorY)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuCircilRadio)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuHeight)
@@ -130,6 +131,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, UIEdgeInsets,           wMenuInse
         _wMenuInsets = UIEdgeInsetsZero;
         _wHideRedCircle = YES;
         _wMenuFollowSliding = YES;
+        _wCustomDataViewTopOffset = PageVCStatusBarHeight;
         _wRespondGuestureType = PagePopFirst;
         _wGlobalTriggerOffset = UIScreen.mainScreen.bounds.size.width * 0.15;
     }

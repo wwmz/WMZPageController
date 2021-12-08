@@ -68,6 +68,8 @@ WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY
 WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY,        wCustomTabbarY)
 /// 自定义底部滚动视图的高度(如果默认算的不准确 或者需要修改) block内会传回当前的值 可对比自行返回最终需要的
 WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY,        wCustomDataViewHeight)
+///悬浮开启且没有导航栏的时候 默认悬浮至状态栏下 wCustomDataViewTopOffset = statusBar
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wCustomDataViewTopOffset)
 
 /// 自定义Fail手势
 WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageFailureGestureRecognizer,wCustomFailGesture)
