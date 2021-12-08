@@ -1,6 +1,8 @@
-# WMZPageController - 分页控制器,替换UIPageController方案,具备完整的生命周期（可传入子控制器/子视图）,多种指示器样式,多种标题样式,可悬浮,功能齐全,支持底部多级联动,支持嵌套多个菜单多页面（v1.4.4）
+# WMZPageController - 分页控制器,替换UIPageController方案,具备完整的生命周期（可传入子控制器/子视图）,多种指示器样式,多种标题样式,可悬浮,功能齐全,支持底部多级联动,支持嵌套多个菜单多页面
 
-[GitHub地址](https://github.com/wwmz/WMZPageController)
+ [![Platform](https://img.shields.io/badge/platform-iOS-red.svg)](https://developer.apple.com/iphone/index.action) 
+ [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/WMZDialog.svg)](https://img.shields.io/cocoapods/v/WMZPageController.svg)
+ [![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://mit-license.org) 
 
 # ⚠️⚠️  使用悬浮样式如果子视图有滚动视图需要实现协议 WMZPageProtocol  如果没有则不需要实现
 # ⚠️⚠️   
@@ -198,60 +200,4 @@
 WMZPageControlller 使用 MIT 许可证，详情见 [LICENSE](LICENSE) 文件。
 
 
-个人主页
-==============
-使用过程中如果有什么bug欢迎给我提issue 我看到就会解决
-[我的简书](https://www.jianshu.com/p/32e997b74d74)
-
-### 常见问题（开始收录）
-     1 问：设置了wTopSuspension为什么没有底部没有滑动？
-       答：先看看子控制器有没有实现WMZPageProtocol协议返回可滚动的视图,再看看子控制器是否自己实现了didscroll等的滑动代理方法把库内的方法覆盖掉了
-     2 问:怎么设置标题的风格,红点等怎么展示
-       答:在传值wTitleArr的时候 把标题字符串换成字典
-     3 问:距离顶部或者距离底部 没有达到需求,有留白或者空出等情况
-       答:可以使用这三个属性进行调整,属性内会返回当前的值,调整的时候只需要根据情况返回适当增加或者减少的值 即可
-        //自定义整体距离顶部的位置 适用于整体距离顶部的距离
-        WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY,        wCustomNaviBarY)
-        //自定义整体距离底部的位置 适用于整体距离底部的距离
-        WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY,        wCustomTabbarY)
-        //自定义底部滚动视图的高度 适用于没有悬浮到需要的位置的时候
-        WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY,        wCustomDataViewHeight)
-     4 在父控制住self.view addSubview 了自定义的View 看不见 需要延迟0.1秒加载
-     5 更新标题数据用updateTitle  更新标题和视图层用updateMenuData 都需要设置param的相关数据后调用
-
-下一步计划
-==============
-*[x] 抽取WMZPageController 让不需要继承也能使用
-
-更新日记
-==============
-- 20211208 v1.4.5 修复自定义导航栏下的偏移问题
-- 20211026 v1.4.4 修复多重嵌套手势问题 新增wMenuAddSubView 可在菜单栏增加自定义视图 
-- 20211021 v1.4.2 修复多重嵌套下纵向手势滚动问题以及动态增加方法里和固定视图冲突问题
-- 20211015 v1.4.1 支持侧滑/全屏/全部页面返回 新增两种动画JDAnimal NewAQY 修复KVO崩溃问题
-- 20210814 v1.4.0 新增支持UIView传入/修复嵌套手势问题/新增下拉头视图缩放 
-- 20210526 v1.3.8 修复嵌套里头视图无法滑动的问题 新增自定义手势冲突属性
-- 20210426 v1.3.7 修复没有滚动视图无法滚动的问题以及其他问题
-- 20210422 v1.3.6 主要是消除一系列的警告
-- 20210128 v1.3.5 优化
-- 20210127 v1.3.4 新增动态更新 修复右边按钮只能点击一次的问题 优化
-- 20201218 v1.3.3 新增动态增删方法 优化
-- 20201022 v1.3.2 iPhone12适配 修复bug 优化结构 
-- 20201009 v1.2.7 修复bug
-- 20200920 v1.2.6 淘宝demo优化 新增自定义顶部距离 自定义整体高度 自定义底部距离
-- 20200904 v1.2.5 淘宝demo增加圆角示范,优化加入的控制器,传入字体增加UIFont对象
-- 20200820 v1.2.4 修复bug/新增swift使用示范 
-- 20200801 v1.2.1 修复bug 
-- 20200726 v1.2.0 新增淘宝分页效果/美团商家分页效果 
-- 20200605 v1.1.9 新增自定义红点和特殊样式1
-- 20200511 v1.1.8 修复bug
-- 20200424 v1.1.7 修复细节问题 
-- 20200409 v1.1.6 修复偏移问题 
-- 20200328 v1.1.5 修复设置导航栏translant和tabbar设置translant的布局问题; 新增wFixFirst属性 固定在所有控制器的底部的尾视图
-- 20200202 v1.1.4 修复bug 
-- 20200107 v1.1.3 修复bug 新增可固定底部
-- 20191213 v1.1.0 建议更新 新增可添加tableviewCell功能
-- 20191213 v1.0.5 增加demo说明 新增自定义菜单接口
-- 20191209 v1.0.4 修复bug
-- 20191207 v1.0.3 修复悬浮问题
-- 20191104 v1.0.1 修复一些问题
+个
