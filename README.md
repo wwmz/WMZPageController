@@ -1,7 +1,7 @@
 # WMZPageController - 分页控制器,替换UIPageController方案,具备完整的生命周期（可传入子控制器/子视图）,多种指示器样式,多种标题样式,可悬浮,功能齐全,支持底部多级联动,支持嵌套多个菜单多页面
 
  [![Platform](https://img.shields.io/badge/platform-iOS-red.svg)](https://developer.apple.com/iphone/index.action) 
- [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/WMZDialog.svg)](https://img.shields.io/cocoapods/v/WMZPageController.svg)
+ [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/WMZPageController.svg)](https://img.shields.io/cocoapods/v/WMZPageController.svg)
  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://mit-license.org) 
 
 # ⚠️⚠️  使用悬浮样式如果子视图有滚动视图需要实现协议 WMZPageProtocol  如果没有则不需要实现
