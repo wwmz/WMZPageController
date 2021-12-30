@@ -23,6 +23,10 @@
 
 @property (nonatomic, assign ,readwrite) CGFloat unSelectedColorB;
 
+@property (nonatomic, assign ,readwrite) CGFloat selectAlpah;
+
+@property (nonatomic, assign ,readwrite) CGFloat unSelectAlpah;
+
 @end
 
 static NSInteger const pointWidth = 7; //小红点的宽高
@@ -202,10 +206,12 @@ static NSInteger const pointWidth = 7; //小红点的宽高
         self.unSelectedColorR = red;
         self.unSelectedColorB = blue;
         self.unSelectedColorG = green;
+        self.unSelectAlpah = alpha;
     }else{
         self.selectedColorR = red;
         self.selectedColorB = blue;
         self.selectedColorG = green;
+        self.selectAlpah = alpha;
     }
 }
 

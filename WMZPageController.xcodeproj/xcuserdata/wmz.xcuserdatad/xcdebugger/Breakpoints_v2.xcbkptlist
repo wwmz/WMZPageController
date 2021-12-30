@@ -26,9 +26,9 @@
             filePath = "WMZPageController/WMZPageController/WMZPageNaviBtn.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "420"
-            endingLineNumber = "420"
-            landmarkName = "-hasKey:withObserver:"
+            startingLineNumber = "415"
+            endingLineNumber = "415"
+            landmarkName = "-paegRemoveObserver:forKeyPath:context:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

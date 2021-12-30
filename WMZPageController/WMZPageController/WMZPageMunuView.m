@@ -314,6 +314,7 @@
 
 /// 解析字典
 - (NSString*)getTitleData:(id)model key:(NSString*)key{
+    
     if ([model isKindOfClass:[NSString class]] || [model isKindOfClass:[NSAttributedString class]])  return [key isEqualToString:WMZPageKeyName] ? model : nil;
     else if ([model isKindOfClass:[NSDictionary class]]) return [model objectForKey:key] ? : nil;
     return nil;
@@ -505,11 +506,18 @@
     /// 渐变
     if (self.param.wMenuAnimalTitleGradient) {
         WMZPageNaviBtn *tempBtn = _btnLeft?:_btnRight;
-        CGFloat difR = tempBtn.selectedColorR - tempBtn.unSelectedColorR;
+        CGFloat difR =  tempBtn.selectedColorR - tempBtn.unSelectedColorR;
         CGFloat difG = tempBtn.selectedColorG - tempBtn.unSelectedColorG;
         CGFloat difB = tempBtn.selectedColorB - tempBtn.unSelectedColorB;
-        UIColor *leftItemColor  = [UIColor colorWithRed:tempBtn.unSelectedColorR+scale*difR green:tempBtn.unSelectedColorG+scale*difG blue:tempBtn.unSelectedColorB+scale*difB alpha:1];
-        UIColor *rightItemColor = [UIColor colorWithRed:tempBtn.unSelectedColorR+(1-scale)*difR green:tempBtn.unSelectedColorG+(1-scale)*difG blue:tempBtn.unSelectedColorB+(1-scale)*difB alpha:1];
+        CGFloat difA = tempBtn.selectAlpah - tempBtn.unSelectAlpah;
+        CGFloat leftA = 1;
+        CGFloat rightA = 1;
+        if (tempBtn.selectAlpah != tempBtn.unSelectAlpah) {
+            leftA = tempBtn.unSelectAlpah + scale * difA;
+            rightA = tempBtn.unSelectAlpah + (1 - scale) * difA;
+        }
+        UIColor *leftItemColor  = [UIColor colorWithRed:tempBtn.unSelectedColorR+scale*difR green:tempBtn.unSelectedColorG+scale*difG blue:tempBtn.unSelectedColorB+scale*difB alpha:leftA ];
+        UIColor *rightItemColor = [UIColor colorWithRed:tempBtn.unSelectedColorR+(1-scale)*difR green:tempBtn.unSelectedColorG+(1-scale)*difG blue:tempBtn.unSelectedColorB+(1-scale)*difB alpha:rightA];
         _btnLeft.titleLabel.textColor = rightItemColor;
         _btnRight.titleLabel.textColor = leftItemColor;
     }

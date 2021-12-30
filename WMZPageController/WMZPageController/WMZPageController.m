@@ -918,9 +918,11 @@
         }else{
             self.automaticallyAdjustsScrollViewInsets = NO;
         }
+        #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 150000
         if (@available(iOS 15.0, *)) {
             _downSc.sectionHeaderTopPadding = 0;
         }
+        #endif
         _downSc.showsVerticalScrollIndicator = NO;
     }
     return _downSc;
@@ -959,13 +961,6 @@
             [self showData];
         }
     }
-}
-
-- (void)didReceiveMemoryWarning{
-    [super didReceiveMemoryWarning];
-    [self removeKVO];
-    [self.cache removeAllObjects];
-    [self.sonChildScrollerViewDic removeAllObjects];
 }
 
 - (void)removeKVO{

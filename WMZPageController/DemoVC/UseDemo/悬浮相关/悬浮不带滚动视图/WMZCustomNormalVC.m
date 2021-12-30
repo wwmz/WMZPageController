@@ -26,6 +26,10 @@
     NSArray *data = @[@"热门",@"男装",@"美妆",@"手机",@"食品",@"电器",@"鞋包",@"百货",@"女装",@"汽车",@"电脑"];
     WMZPageParam *param = PageParam()
     .wTitleArrSet(data)
+    .wMenuBgColorSet([UIColor blackColor])
+    .wMenuTitleColorSet([[UIColor whiteColor] colorWithAlphaComponent:0.3])
+    .wMenuTitleSelectColorSet([UIColor whiteColor])
+    .wMenuAnimalTitleGradientSet(YES)
     //控制器数组
     .wViewControllerSet(^UIViewController *(NSInteger index) {
         /// 有滚动视图的实现协议 区分

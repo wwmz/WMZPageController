@@ -47,6 +47,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readonly) CGFloat unSelectedColorG;
 
 @property (nonatomic, assign, readonly) CGFloat unSelectedColorB;
+
+@property (nonatomic, assign ,readonly) CGFloat selectAlpah;
+
+@property (nonatomic, assign ,readonly) CGFloat unSelectAlpah;
 /// 富文本图片
 @property (nonatomic, strong)NSAttributedString* attributedImage;
 /// 富文本选中图片
