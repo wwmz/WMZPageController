@@ -17,7 +17,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithRed:10/255.0 green:10/255.0 blue:20/255.0 alpha:0]}];
     NSArray *data = @[@"热门",@"男装",@"美妆",@"手机",@"食品",@"电器",@"鞋包",@"百货",@"女装",@"汽车",@"电脑"];
     WMZPageParam *param = WMZPageParam.new;
@@ -43,15 +42,17 @@
         return image;
     };
     
-    ///如有需要 自定义固定视图加在 tableHeaderView上
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1* NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        UIView *headView = self.downSc.tableHeaderView;
-//        ///要加的固定view
-//        UIView *view = UIView.new;
-//        view.backgroundColor = UIColor.redColor;
-//        view.frame = CGRectMake(0, 0, PageVCWidth, 100);
-//        [headView addSubview:view];
-//    });
+    /// 自定义固定视图加在 headView上
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1* NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        UIView *view = UIView.new;
+        view.backgroundColor = UIColor.redColor;
+        view.frame = CGRectMake(0, 0, PageVCWidth, 150);
+        UILabel *la = UILabel.new;
+        la.text = @"测试";
+        [view addSubview:la];
+        la.frame = CGRectMake(30, 30, 100, 100);
+        [self.headView addSubview:view];
+    });
     self.param = param;
 }
 

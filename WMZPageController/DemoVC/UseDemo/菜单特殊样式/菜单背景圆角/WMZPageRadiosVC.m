@@ -43,16 +43,16 @@
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         UIView *contailView = self.upSc.mainView.containView;
-        
+
         /// 不贴着标题
         CGRect rect = contailView.frame;
         rect.origin.x -= 2;
         rect.origin.y -= 2;
-        rect.size.width += 4;
+        rect.size.width -= 2;
         rect.size.height += 4;
         contailView.frame = rect;
-        
-        contailView.layer.masksToBounds = YES;
+
+        contailView.layer.backgroundColor = UIColor.whiteColor.CGColor;
         contailView.layer.cornerRadius = 20;
         contailView.layer.borderWidth = PageK1px;
         contailView.layer.borderColor = [UIColor orangeColor].CGColor;

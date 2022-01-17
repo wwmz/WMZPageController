@@ -28,19 +28,15 @@
         return NSClassFromString(@"TestVC").new;
     };
     self.param = param;
-    
-    [self.view addSubview:self.bottomView];
-}
 
-- (void)viewWillLayoutSubviews{
-    [super viewWillLayoutSubviews];
-    /// 如果使用自动布局则不需要在这里重设frame
-    self.bottomView.frame = CGRectMake(0, self.view.bounds.size.height - 50, self.view.bounds.size.width, 50);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.view addSubview:self.bottomView];
+        });
 }
 
 - (UIView *)bottomView{
     if (!_bottomView) {
-        _bottomView = [UIView new];
+        _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 50, self.view.bounds.size.width, 50)];
         _bottomView.backgroundColor = [UIColor redColor];
     }
     return _bottomView;

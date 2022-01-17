@@ -78,17 +78,14 @@
         WMZPageNaviBtn *btn = [WMZPageNaviBtn buttonWithType:UIButtonTypeCustom];
         [self setPropertiesWithBtn:btn withIndex:i withTemp:temp];
         temp = btn;
-        if (i == self.param.wTitleArr.count - 1) {
+        
+        if (i == self.param.wTitleArr.count - 1)
             [self resetMainViewContenSize:btn];
-        }
+        
         if (self.lastBTN) {
-            if (i == self.lastBTN.tag) {
-                self.lastBTN = btn;
-            }
+            if (i == self.lastBTN.tag) self.lastBTN = btn;
         }else{
-            if (i == self.currentTitleIndex) {
-                self.lastBTN = btn;
-            }
+            if (i == self.currentTitleIndex) self.lastBTN = btn;
         }
     }
     [self scrollToIndex:self.lastBTN.tag animal:NO];
@@ -107,7 +104,7 @@
     if (self.contentSize.width < self.frame.size.width &&
         self.param.wMenuPosition == PageMenuPositionCenter &&
         self.param.wMenuWidth == PageVCWidth) {
-        rect.size.width = self.contentSize.width + self.param.wMenuInsets.left + self.param.wMenuInsets.right;
+        rect.size.width = self.contentSize.width;
         rect.origin.x = (PageVCWidth - rect.size.width)/2;
         self.frame = rect;
     }
@@ -448,7 +445,7 @@
 /// 动画管理
 - (void)animalAction:(UIScrollView*)scrollView lastContrnOffset:(CGFloat)lastContentOffset {
     CGFloat contentOffsetX = scrollView.contentOffset.x;
-    CGFloat sWidth =  PageVCWidth;
+    CGFloat sWidth =  self.pageWidth;
     CGFloat content_X = (contentOffsetX / sWidth);
     NSArray *arr = [[NSString stringWithFormat:@"%f",content_X] componentsSeparatedByString:@"."];
     int num = [arr[0] intValue];

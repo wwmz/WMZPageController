@@ -20,7 +20,7 @@
     
     WMZPageParam *param = PageParam()
     .wTitleArrSet(@[
-        @{WMZPageKeyName:@"首页",WMZPageKeyImage:@"B",WMZPageKeyBadge:@(YES)} ,
+        @{WMZPageKeyName:@"首页",WMZPageKeyImage:@"B",WMZPageKeyBadge:@(-1)} ,
         @{WMZPageKeyName:@"收藏",WMZPageKeyBadge:@"99+",WMZPageKeyImage:@"C"},
         @{WMZPageKeyName:@"消息",WMZPageKeyBadge:@(99),WMZPageKeyImage:@"D"},
         @{WMZPageKeyName:@"我的",WMZPageKeyImage:@"B"}

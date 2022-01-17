@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WMZPageTitleDataModel : NSObject
 /// 对应的控制器
-@property (nonatomic, strong, nonnull) UIViewController *controller;
+@property (nonatomic, strong, nonnull) UIResponder *controller;
 /// 对应的下标
 @property (nonatomic, assign) NSInteger index;
 /// 对应的数据 字符串
@@ -22,19 +22,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 初始化方法
 + (instancetype)initWithIndex:(NSInteger)index
-                   controller:(UIViewController*)controller
+                   controller:(UIResponder*)controller
                         title:(NSString*)title;
 /// 初始化方法
 + (instancetype)initWithIndex:(NSInteger)index
-                   controller:(UIViewController*)controller
+                   controller:(UIResponder*)controller
                     titleInfo:(NSDictionary*)titleInfo;
 /// 初始化方法
 - (instancetype)initWithIndex:(NSInteger)index
-                   controller:(UIViewController*)controller
+                   controller:(UIResponder*)controller
                         title:(NSString*)title;
 /// 初始化方法
 - (instancetype)initWithIndex:(NSInteger)index
-                   controller:(UIViewController*)controller
+                   controller:(UIResponder*)controller
                     titleInfo:(NSDictionary*)titleInfo;
 @end
 

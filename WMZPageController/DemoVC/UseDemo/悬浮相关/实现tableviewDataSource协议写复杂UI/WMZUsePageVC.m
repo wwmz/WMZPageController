@@ -57,10 +57,11 @@
          [strongSelf.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithRed:10/255.0 green:10/255.0 blue:20/255.0 alpha:newPonit.y/(500+300-2*PageVCNavBarHeight)]}];
      });
     
+    self.param = param;
+    
     //实现tableview的协议
     self.downSc.dataSource = self;
     self.downSc.scrollEnabled = YES;
-    self.param = param;
     self.downSc.mj_header= [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [weakSelf.downSc.mj_header endRefreshing];

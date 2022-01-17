@@ -136,12 +136,11 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
                @{@"name":@"京东",@"vc":@"UseVC",@"index":@(3)},
                @{@"name":@"简书",@"vc":@"UseVC",@"index":@(4)},
                @{@"name":@"背景框",@"vc":@"UseVC",@"index":@(5)},
-               @{@"name":@"适配暗黑模式",@"vc":@"UseVC",@"index":@(6)},
                @{@"name":@"新爱奇艺",@"vc":@"UseVC",@"index":@(7)},
                @{@"name":@"新京东",@"vc":@"UseVC",@"index":@(8)},
             ]},
             @{@"title":@"自定义标题",@"data":@[
-                @{@"name":@"富文本",@"vc":@"WMZAttVC"},
+                @{@"name":@"富文本(更新标题)",@"vc":@"WMZAttVC"},
                 @{@"name":@"改变样式",@"vc":@"WMZCustomTitleVC"},
             ]},
             @{@"title":@"悬浮使用(+继承使用示范)",@"data":@[
@@ -187,7 +186,9 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
                @{@"name":@"响应侧滑/全屏手势",@"vc":@"GuestureViewController"},
             ]},
             @{@"title":@"菜单栏带自定义视图（筛选等）",@"data":@[
-               @{@"name":@"菜单栏带自定义视图（筛选等）",@"vc":@"WMZCustomAddMenuVC"},
+                @{@"name":@"菜单栏带自定义视图（筛选等）",@"vc":@"WMZCustomAddMenuVC"}]},
+            @{@"title":@"使用WMZPageView（无须继承），加在任意地方",@"data":@[
+               @{@"name":@"使用WMZPageView（无须继承）",@"vc":@"UsePageViewController"},
             ]},
         ];
     }

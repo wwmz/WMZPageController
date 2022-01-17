@@ -108,7 +108,7 @@
         @{WMZPageKeyName:@"翻唱",WMZPageKeyBadge:@"99+"},
         @"MV",
         @"广场",
-        @{WMZPageKeyName:@"游戏",WMZPageKeyBadge:@(YES)},
+        @{WMZPageKeyName:@"游戏",WMZPageKeyBadge:@(-1)},
     ];
 }
 
@@ -121,7 +121,7 @@
         @{WMZPageKeyName:@"现场",WMZPageKeyImage:@"C",WMZPageKeySelectImage:@"D"},
         @{WMZPageKeyName:@"翻唱",WMZPageKeyBadge:@(9),WMZPageKeyImage:@"B",WMZPageKeySelectImage:@"D"},
         @{WMZPageKeyName:@"MV",WMZPageKeyImage:@"C",WMZPageKeySelectImage:@"D"},
-        @{WMZPageKeyName:@"游戏",WMZPageKeyBadge:@(YES),WMZPageKeyImage:@"B",WMZPageKeySelectImage:@"D"},
+        @{WMZPageKeyName:@"游戏",WMZPageKeyBadge:@(-1),WMZPageKeyImage:@"B",WMZPageKeySelectImage:@"D"},
         @{WMZPageKeyName:@"广场",WMZPageKeyImage:@"C",WMZPageKeySelectImage:@"D"},
     ];
 }

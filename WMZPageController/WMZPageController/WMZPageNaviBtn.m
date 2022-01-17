@@ -41,7 +41,7 @@ static NSInteger const pointWidth = 7; //小红点的宽高
         [self hidenBadge];
         return;;
     }
-    if ([value isEqual:@(YES)]) {
+    if ([value isEqual:@(-1)]) {
         self.badge.text = @"";
         self.badge.pageEdgeInsets = UIEdgeInsetsZero;
         self.badge.frame = CGRectMake(self.bounds.size.width - pointWidth * 1.5, pointWidth, pointWidth, pointWidth);
@@ -49,8 +49,9 @@ static NSInteger const pointWidth = 7; //小红点的宽高
         self.badge.backgroundColor = UIColor.redColor;
         self.badge.textColor = UIColor.whiteColor;
         self.badge.text = [NSString stringWithFormat:@"%@",info[WMZPageKeyBadge]];
-        self.badge.pageEdgeInsets = UIEdgeInsetsMake(4, 7, 4, 7);
+        self.badge.pageEdgeInsets = UIEdgeInsetsMake(4, 7.5, 4, 7.5);
         CGSize size =  [self boundingRectWithSize:self.badge.text Font:self.badge.font Size:CGSizeMake(self.bounds.size.width/2, 10)];
+        
         CGRect rect = CGRectZero;
         rect.origin.x = self.bounds.size.width - size.width - self.badge.pageEdgeInsets.left - self.badge.pageEdgeInsets.right;
         rect.origin.y = 0;
@@ -59,11 +60,12 @@ static NSInteger const pointWidth = 7; //小红点的宽高
         self.badge.frame = rect;
         self.badge.layer.cornerRadius = self.badge.frame.size.height / 2;
     }
-    [UIView animateWithDuration:0.15 animations:^{
-        self.badge.alpha = 1;
-        [self addSubview:self.badge];
-        [self bringSubviewToFront:self.badge];
-    }];
+    self.badge.alpha = 1;
+    [self addSubview:self.badge];
+    [self bringSubviewToFront:self.badge];
+    if (!self.badge.text.intValue) {
+        [self hidenBadge];
+    }
     if (self.param.wCustomRedView) self.param.wCustomRedView(self.badge,info);
 }
 

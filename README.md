@@ -223,10 +223,11 @@ WMZPageControlller 使用 MIT 许可证，详情见 [LICENSE](LICENSE) 文件。
 
 下一步计划
 ==============
-*[x] 抽取WMZPageController 让不需要继承也能使用
+适配横竖屏旋转
 
 更新日记
 ==============
+- 20220117 v1.5.0 改版不需要继承WMZPageController也能使用（使用WMZPageView）,同时适配旧版本
 - 20211230 v1.4.6 修复退出后台挂起后可能导致拉不下来的问题 fix#68
 - 20211208 v1.4.5 修复自定义导航栏下的偏移问题
 - 20211026 v1.4.4 修复多重嵌套手势问题 新增wMenuAddSubView 可在菜单栏增加自定义视图 

@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 标题数组 必传
 /// 可传带字典的数组  key值为WMZPageBTNKey 
 typedef NSString *WMZPageBTNKey NS_STRING_ENUM;
-// 红点提示  @(YES) 或者 带数字 @(99) @"99+"  wCustomRedView使用这个属性可以调整角标的位置和样式
+// 红点提示  @(-1)(显示红点) 或者 带数字 @(99)，@(1) @"99+"  wCustomRedView使用这个属性可以调整角标的位置和样式
 FOUNDATION_EXPORT WMZPageBTNKey const WMZPageKeyBadge;
 /// 标题  NSString/NSAttributedString  支持传入富文本
 /// 如果此处传入富文本则WMZPageKeySelectName 也需要传入 此时设置的选中标题title font uicolor会失效
@@ -111,7 +111,8 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,         
 
 /// 悬浮状态下 防止快速滑动的时候直接从底部直接滚动到顶部 default NO v1.4.3
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wAvoidQuickScroll)
-
+/// 悬浮和开启透明度变化下  置顶头部是否透明度置为0  default YES v1.5.0
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wHeaderScrollHide)
 
 /// 响应侧滑或者全屏返回手势 default PagePopFirst 首个子视图/子控制器响应  v1.4.1
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, PagePopType,           wRespondGuestureType)
@@ -241,7 +242,7 @@ WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, PageMenuNormal
 
 /* =========================================changeMenu===============================================*/
 
-
+- (void)defaultProperties;
 
 @end
 

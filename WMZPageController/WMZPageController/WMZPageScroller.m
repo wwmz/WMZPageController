@@ -18,6 +18,19 @@
         self.showsHorizontalScrollIndicator = NO;
         self.showsVerticalScrollIndicator = NO;
         self.scrollsToTop = NO;
+        self.sectionHeaderHeight = 0.01;
+        self.estimatedRowHeight = 100;
+        self.sectionFooterHeight = 0.01;
+        if (@available(iOS 11.0, *)) {
+            self.estimatedSectionFooterHeight = 0.01;
+            self.estimatedSectionHeaderHeight = 0.01;
+            self.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        }
+       #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 150000
+        if (@available(iOS 15.0, *)) {
+            self.sectionHeaderTopPadding = 0;
+        }
+       #endif
     }
     return self;
 }

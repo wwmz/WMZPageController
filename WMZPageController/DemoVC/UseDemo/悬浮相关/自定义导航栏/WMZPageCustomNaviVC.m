@@ -52,10 +52,6 @@
      .wCustomTabbarYSet(^CGFloat(CGFloat nowY) {
          return nowY;
      })
-    // 正常的话是会悬浮到状态栏那里，改变这里减掉一部分就会自动悬浮到自定义导航栏那里)
-    .wCustomDataViewHeightSet(^CGFloat(CGFloat nowY) {
-        return nowY + PageVCStatusBarHeight;
-    })
     //悬浮开启
     .wTopSuspensionSet(YES)
     .wBouncesSet(YES)
@@ -64,10 +60,9 @@
     self.param = param;
     
     //如果没有出现视图 就延时0.1秒加载
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        [self.view addSubview:self.customView];
-//    });
-    [self.view addSubview:self.customView];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.view addSubview:self.customView];
+    });
     self.downSc.dataSource = self;
     [self.downSc reloadData];
     

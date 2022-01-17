@@ -104,6 +104,7 @@ self->_##propertyName = propertyName;                                           
 return self;                                                                                                            \
 };                                                                                                                      \
 }
+
 /// 按钮图文位置
 typedef enum :NSInteger{
     ///图片在左，文字在右，默认

@@ -48,6 +48,11 @@
         _leftTa.estimatedSectionHeaderHeight = 0.01;
         _rightTa.estimatedSectionFooterHeight = 0.01;
         _rightTa.estimatedSectionHeaderHeight = 0.01;
+        #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 150000
+         if (@available(iOS 15.0, *)) {
+             _rightTa.sectionHeaderTopPadding = 0;
+         }
+        #endif
     }else{
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
@@ -129,12 +134,8 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     //右边联动左边
     if (scrollView == self.rightTa&&!leftScroll) {
-        CGFloat newOffsetY = scrollView.contentOffset.y;
-        if (newOffsetY > self.oldOffset && self.oldOffset > self.contentOffset){//上滑
-            self.dircetionUp = YES;
-        }else if(newOffsetY < self.oldOffset && self.oldOffset < self.contentOffset){//下滑
-            self.dircetionUp = NO;
-        }
+        self.dircetionUp = ([scrollView.panGestureRecognizer translationInView:scrollView.superview].y > 0);
+        
         NSIndexPath *firstIndexPath = self.dircetionUp?[self.rightTa indexPathsForVisibleRows].lastObject:[self.rightTa indexPathsForVisibleRows].firstObject;
         NSIndexPath *selectIndexPath = [NSIndexPath indexPathForRow:firstIndexPath.section inSection:0];
         [self.leftTa scrollToRowAtIndexPath:selectIndexPath atScrollPosition:UITableViewScrollPositionNone animated:NO];
@@ -162,6 +163,11 @@
         _leftTa.dataSource = self;
         _leftTa.delegate = self;
         _leftTa.estimatedRowHeight = 100;
+        #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 150000
+         if (@available(iOS 15.0, *)) {
+             _leftTa.sectionHeaderTopPadding = 0;
+         }
+        #endif
     }
     return _leftTa;
 }

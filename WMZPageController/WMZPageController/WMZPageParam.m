@@ -47,6 +47,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wLazyLoad
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wHeadScaling)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wHideRedCircle)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wAvoidQuickScroll)
+WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wHeaderScrollHide)
 WMZPagePropSetFuncImplementation(WMZPageParam, PagePopType,            wRespondGuestureType)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wMenuFollowSliding)
 WMZPagePropSetFuncImplementation(WMZPageParam, int,                    wGlobalTriggerOffset)
@@ -132,10 +133,38 @@ WMZPagePropSetFuncImplementation(WMZPageParam, UIEdgeInsets,           wMenuInse
         _wHideRedCircle = YES;
         _wMenuFollowSliding = YES;
         _wCustomDataViewTopOffset = PageVCStatusBarHeight;
+        _wHeaderScrollHide = YES;
         _wRespondGuestureType = PagePopFirst;
         _wGlobalTriggerOffset = UIScreen.mainScreen.bounds.size.width * 0.15;
     }
     return self;
+}
+
+- (void)defaultProperties{
+    if (self.wMenuAnimal == PageTitleMenuAiQY && !self.wMenuIndicatorWidth) self.wMenuIndicatorWidth = 20;
+    if (self.wMenuAnimal == PageTitleMenuNone||
+        self.wMenuAnimal == PageTitleMenuCircleBg||
+        self.wMenuAnimal == PageTitleMenuCircle||
+        self.wMenuAnimal == PageTitleMenuPDD) self.wMenuAnimalTitleGradient = NO;
+    if (self.wMenuAnimal == PageTitleMenuPDD && !self.wMenuIndicatorWidth) self.wMenuIndicatorWidth = 25;
+    if (self.wMenuAnimal == PageTitleMenuCircle) {
+        if (CGColorEqualToColor(self.wMenuIndicatorColor.CGColor, PageColor(0xE5193E).CGColor))  self.wMenuIndicatorColor = PageColor(0xe1f9fe);
+        if (CGColorEqualToColor(self.wMenuTitleSelectColor.CGColor, PageColor(0xE5193E).CGColor)) self.wMenuTitleSelectColor = PageColor(0x00baf9);
+        if (self.wMenuIndicatorHeight <= 15.0f)  self.wMenuIndicatorHeight = 0;
+    }else if (self.wMenuAnimal == PageTitleMenuCircleBg) {
+        if (CGColorEqualToColor(self.wMenuSelectTitleBackground.CGColor, [UIColor clearColor].CGColor) || !self.wMenuSelectTitleBackground)
+            self.wMenuSelectTitleBackground = [UIColor orangeColor];
+        if (CGColorEqualToColor(self.wMenuTitleSelectColor.CGColor, PageColor(0xE5193E).CGColor))  self.wMenuTitleSelectColor = [UIColor whiteColor];
+        if (!self.wMenuCellMarginY)  self.wMenuCellMarginY = 10.f;
+        if (!self.wMenuBottomMarginY)  self.wMenuBottomMarginY = 10.f;
+        if (UIEdgeInsetsEqualToEdgeInsets(self.wMenuInsets, UIEdgeInsetsZero)) {
+            self.wMenuInsets = UIEdgeInsetsMake(self.wMenuCellMarginY, 0, self.wMenuBottomMarginY, 0);
+        }
+    }
+    if (self.wMenuPosition == PageMenuPositionNavi) {
+        if (CGColorEqualToColor(self.wMenuBgColor.CGColor, PageColor(0xffffff).CGColor)) self.wMenuBgColor = [UIColor clearColor];
+        if (self.wMenuHeight >= 55.0f) self.wMenuHeight = 40.0f;
+    }
 }
 
 @end

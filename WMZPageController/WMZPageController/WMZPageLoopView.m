@@ -22,8 +22,10 @@
 
 @implementation WMZPageLoopView
 
-- (instancetype)initWithFrame:(CGRect)frame param:(WMZPageParam*)param{
+- (instancetype)initWithFrame:(CGRect)frame param:(WMZPageParam *)param parentReponder:(UIResponder *)parentReponder{
     if (self = [super initWithFrame:frame]) {
+        self.pageWidth = frame.size.width;
+        self.parentResponder = parentReponder;
         self.param = param;
         self.currentTitleIndex = -1;
         self.backgroundColor = param.wBgColor;
@@ -44,7 +46,6 @@
             self.param.wMenuInsets = UIEdgeInsetsMake(self.param.wMenuInsets.top, self.param.wMenuInsets.left, self.param.wMenuInsets.bottom + CGRectGetMaxY(self.insertView.frame), self.param.wMenuInsets.right);
         }
     }
-    
     /// 菜单栏
     [self addSubview:self.mainView];
     self.mainView.frame = [self.frameInfo[@(self.param.wMenuPosition)] CGRectValue];
@@ -60,7 +61,7 @@
     /// 视图层
     [self addSubview:self.dataView];
     self.dataView.scrollEnabled = self.param.wScrollCanTransfer;
-    self.dataView.contentSize = CGSizeMake(self.param.wTitleArr.count*PageVCWidth,0);
+    self.dataView.contentSize = CGSizeMake(self.param.wTitleArr.count * self.pageWidth,0);
     self.dataView.delegate = self;
     self.dataView.totalCount = self.param.wTitleArr.count;
     self.dataView.respondGuestureType = self.param.wRespondGuestureType;
@@ -100,13 +101,13 @@
             self.lastPageIndex = self.currentTitleIndex;
             self.nextPageIndex = index;
             self.currentTitleIndex = index;
-            UIViewController *newVC = [self getVCWithIndex:index];
-            self.currentVC = newVC;
+            UIResponder *newVC = [self getVCWithIndex:index];
+            self.currentVC = (id)newVC;
             [self viewProtocolAction:@"wa" view:newVC];
             [self addChildVC:index VC:newVC];
             [self viewProtocolAction:@"da" view:newVC];
-            [self.dataView setContentOffset:CGPointMake(index*PageVCWidth, 0) animated:NO];
-            if (self.param.wEventEndTransferController)self.param.wEventEndTransferController(nil, newVC, 0, index);
+            [self.dataView setContentOffset:CGPointMake(index * self.pageWidth, 0) animated:NO];
+            if (self.param.wEventEndTransferController)self.param.wEventEndTransferController(nil, (id)newVC, 0, index);
             if (self.loopDelegate &&
                 [self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:end:)]) [self.loopDelegate setUpSuspension:newVC index:index end:YES];
         }else{
@@ -115,7 +116,7 @@
             self.nextPageIndex = index;
             self.currentTitleIndex = index;
             [self endAppearanceTransitionWithIndex:self.nextPageIndex withOldIndex:self.lastPageIndex isFlag:NO];
-            [self.dataView setContentOffset:CGPointMake(index*PageVCWidth, 0) animated:self.param.wTapScrollAnimal];
+            [self.dataView setContentOffset:CGPointMake(index * self.pageWidth, 0) animated:self.param.wTapScrollAnimal];
         }
     }
 }
@@ -135,15 +136,15 @@
     if (scrollView.contentOffset.x < 0)
         [scrollView setContentOffset:CGPointMake(0, 0) animated:NO];
 
-    if (scrollView.contentOffset.x > PageVCWidth * (self.param.wTitleArr.count - 1))
-        [scrollView setContentOffset:CGPointMake(PageVCWidth * (self.param.wTitleArr.count - 1), 0) animated:NO];
+    if (scrollView.contentOffset.x > self.pageWidth * (self.param.wTitleArr.count - 1))
+        [scrollView setContentOffset:CGPointMake(self.pageWidth * (self.param.wTitleArr.count - 1), 0) animated:NO];
     
     if (scrollView.popGuestureOffset >= 0 && self.param.wRespondGuestureType != PagePopNone){
         [scrollView setContentOffset:CGPointMake(scrollView.popGuestureOffset, 0) animated:NO]; return;
     }
     
     if (![scrollView isDecelerating]&&![scrollView isDragging]) return;
-    if (scrollView.contentOffset.x>0 &&scrollView.contentOffset.x<=self.param.wTitleArr.count*PageVCWidth ) {
+    if (scrollView.contentOffset.x>0 &&scrollView.contentOffset.x<=self.param.wTitleArr.count * self.pageWidth ) {
          [self lifeCycleManage:scrollView];
          [self.mainView animalAction:scrollView lastContrnOffset:lastContentOffset];
     }
@@ -157,7 +158,7 @@
     if (scrollView != self.dataView) return;
     if (self.dataView.popGuestureOffset != -1) self.dataView.popGuestureOffset = -1;
     if (!decelerate) {
-        NSInteger newIndex = scrollView.contentOffset.x/PageVCWidth;
+        NSInteger newIndex = scrollView.contentOffset.x / self.pageWidth;
         self.currentTitleIndex = newIndex;
         if (self.loopDelegate && [self.loopDelegate respondsToSelector:@selector(pageScrollEndWithScrollView:)]) [self.loopDelegate pageScrollEndWithScrollView:scrollView];
     }
@@ -166,7 +167,7 @@
 - (void)scrollViewDidEndDecelerating:(WMZPageDataView *)scrollView{
     if (scrollView != self.dataView) return;
     if (self.dataView.popGuestureOffset != -1) self.dataView.popGuestureOffset = -1;
-    NSInteger newIndex = scrollView.contentOffset.x/PageVCWidth;
+    NSInteger newIndex = scrollView.contentOffset.x / self.pageWidth ;
     self.currentTitleIndex = newIndex;
     if (!self.hasEndAppearance) [self endAppearanceTransitionWithIndex:self.nextPageIndex withOldIndex:self.lastPageIndex isFlag:NO];
     self.hasEndAppearance = NO;
@@ -181,7 +182,7 @@
 /// 管理生命周期
 - (void)lifeCycleManage:(UIScrollView*)scrollView{
     CGFloat diffX = scrollView.contentOffset.x - lastContentOffset;
-    NSInteger currentIndex = diffX < 0 ? ceil(scrollView.contentOffset.x/PageVCWidth) : (scrollView.contentOffset.x/PageVCWidth);
+    NSInteger currentIndex = diffX < 0 ? ceil(scrollView.contentOffset.x / self.pageWidth) : (scrollView.contentOffset.x / self.pageWidth);
     if (self.currentTitleIndex != currentIndex &&
         self.param.wMenuFollowSliding) {
         [self.mainView scrollToIndex:currentIndex animal:YES];
@@ -224,10 +225,10 @@
     }
 }
 
-- (UIViewController*)getVCWithIndex:(NSInteger)index{
-    UIViewController *controller = nil;
+- (UIResponder*)getVCWithIndex:(NSInteger)index{
+    UIResponder *controller = nil;
     if (index < 0 || index >= self.param.wTitleArr.count)  return controller;
-    controller = [[self findBelongViewControllerForView:self].cache objectForKey:@(index)];
+    controller = [self.cache objectForKey:@(index)];
     if (controller) return controller;
     if (self.param.wControllers) {
         controller = self.param.wControllers[index];
@@ -242,97 +243,109 @@
 }
 
 - (void)beginAppearanceTransitionWithIndex:(NSInteger)index withOldIndex:(NSInteger)old{
-    UIViewController *newVC = [self getVCWithIndex:index];
-    UIViewController *oldVC = [self getVCWithIndex:old];
+    UIResponder *newVC = [self getVCWithIndex:index];
+    UIResponder *oldVC = [self getVCWithIndex:old];
     if (!newVC || !oldVC || (index==old) || (oldVC==newVC)) return;
     [self appearanceTransition:YES end:NO controller:newVC];
     [self addChildVC:index VC:newVC];
     [self appearanceTransition:NO end:NO controller:oldVC];
-    self.currentVC = newVC;
+    self.currentVC = (id)newVC;
     if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:end:)]) [self.loopDelegate setUpSuspension:newVC index:index end:NO];
-    if (self.param.wEventBeganTransferController) self.param.wEventBeganTransferController(oldVC, newVC, old, index);
+    if (self.param.wEventBeganTransferController) self.param.wEventBeganTransferController((id)oldVC, (id)newVC, old, index);
 }
 
-- (void)addChildVC:(NSInteger)index VC:(UIViewController*)newVC{
-    if (!newVC) return;
-    WMZPageController *parentVC = [self findBelongViewControllerForView:self];
+- (void)addChildVC:(NSInteger)index VC:(UIResponder*)newReponder{
+    if (!newReponder) return;
     CGRect frame = CGRectMake(index * self.dataView.frame.size.width,0,self.dataView.frame.size.width,
                               self.dataView.frame.size.height);
-    if ([parentVC.parentViewController isKindOfClass:[WMZPageController class]]) {
-        WMZPageController *parentViewController = (WMZPageController*)parentVC.parentViewController;
-        self.dataView.level = parentViewController.upSc.dataView.level - 1;
-    }
-    if ([newVC isKindOfClass:UIViewController.class]) {
-        if (![parentVC.childViewControllers containsObject:newVC]) {
-            [parentVC addChildViewController:newVC];
-            newVC.view.frame = frame;
-            [self.dataView addSubview:newVC.view];
-            [newVC didMoveToParentViewController:parentVC];
-            [parentVC.cache setObject:newVC forKey:@(index)];
+    if ([self.parentResponder isKindOfClass:UIViewController.class]) {
+        UIViewController *parentVC = (UIViewController*)self.parentResponder;
+        if ([parentVC.parentViewController isKindOfClass:[WMZPageController class]]) {
+            WMZPageController *parentViewController = (WMZPageController*)parentVC.parentViewController;
+            self.dataView.level = parentViewController.upSc.dataView.level - 1;
         }
-    }else if ([newVC isKindOfClass:UIView.class]){
-        UIView *tempView = (UIView*)newVC;
-        tempView.frame = frame;
-        [self.dataView addSubview:tempView];
-        [parentVC.cache setObject:newVC forKey:@(index)];
+        if ([newReponder isKindOfClass:UIViewController.class]) {
+            UIViewController *newVC = (UIViewController*)newReponder;
+            if (![parentVC.childViewControllers containsObject:newVC]) {
+                [parentVC addChildViewController:newVC];
+                newVC.view.frame = frame;
+                [self.dataView addSubview:newVC.view];
+                [newVC didMoveToParentViewController:parentVC];
+            }
+        }else if ([newReponder isKindOfClass:UIView.class]){
+            UIView *tempView = (UIView*)newReponder;
+            tempView.frame = frame;
+            [self.dataView addSubview:tempView];
+        }
+        [self.cache setObject:newReponder forKey:@(index)];
+    }else if (([self.parentResponder isKindOfClass:UIView.class])){
+        
     }
 }
 
 - (void)endAppearanceTransitionWithIndex:(NSInteger)index withOldIndex:(NSInteger)old  isFlag:(BOOL)flag{
-    UIViewController *newVC = [self getVCWithIndex:index];
-    UIViewController *oldVC = [self getVCWithIndex:old];
-    if (!newVC || !oldVC || (index == old)) return;
+    UIResponder *newResponer = [self getVCWithIndex:index];
+    UIResponder *oldResponer = [self getVCWithIndex:old];
+    if (!newResponer || !oldResponer || (index == old)) return;
     if (self.currentTitleIndex == self.nextPageIndex) {
-        if ([oldVC isKindOfClass:UIViewController.class]) {
+        if ([oldResponer isKindOfClass:UIViewController.class]) {
+            UIViewController *oldVC = (UIViewController*)oldResponer;
             [oldVC willMoveToParentViewController:nil];
             [oldVC.view removeFromSuperview];
             [oldVC removeFromParentViewController];
-        }else if ([oldVC isKindOfClass:UIView.class]) {
-            UIView *tempView = (UIView*)oldVC;
+        }else if ([oldResponer isKindOfClass:UIView.class]) {
+            UIView *tempView = (UIView*)oldResponer;
             [tempView removeFromSuperview];
         }
-        [self appearanceTransition:YES end:YES controller:newVC];
-        [self appearanceTransition:NO end:YES controller:oldVC];
+        [self appearanceTransition:YES end:YES controller:newResponer];
+        [self appearanceTransition:NO end:YES controller:oldResponer];
         if (flag && self.hasDifferenrDirection) {
-            [self appearanceTransition:YES  end:YES controller:newVC];
-            [self appearanceTransition:NO  end:YES controller:oldVC];
+            [self appearanceTransition:YES  end:YES controller:newResponer];
+            [self appearanceTransition:NO  end:YES controller:oldResponer];
             self.hasDifferenrDirection = NO;
         }
-        if (self.param.wEventEndTransferController) self.param.wEventEndTransferController(oldVC, newVC, old, index);
-        self.currentVC = newVC;
+        if (self.param.wEventEndTransferController) self.param.wEventEndTransferController((id)oldResponer, (id)newResponer, old, index);
+        self.currentVC = (id)newResponer;
         self.currentTitleIndex = index;
-        if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:end:)]) [self.loopDelegate setUpSuspension:newVC index:index end:YES];
+        if (self.loopDelegate &&
+            [self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:end:)])
+            [self.loopDelegate setUpSuspension:newResponer index:index end:YES];
     }else{
-        if ([newVC isKindOfClass:UIViewController.class]) {
+        if ([newResponer isKindOfClass:UIViewController.class]) {
+            UIViewController *newVC = (UIViewController*)newResponer;
             [newVC willMoveToParentViewController:nil];
             [newVC.view removeFromSuperview];
             [newVC removeFromParentViewController];
-        }else if ([newVC isKindOfClass:UIView.class]) {
-            UIView *tempView = (UIView*)newVC;
+        }else if ([newResponer isKindOfClass:UIView.class]) {
+            UIView *tempView = (UIView*)newResponer;
             [tempView removeFromSuperview];
         }
-        [self appearanceTransition:YES end:NO controller:oldVC];
-        [self appearanceTransition:YES end:YES controller:oldVC];
-        [self appearanceTransition:NO end:NO controller:newVC];
-        [self appearanceTransition:NO end:YES controller:newVC];
-        if (self.param.wEventEndTransferController) self.param.wEventEndTransferController(newVC, oldVC, index, old);
-        self.currentVC = oldVC;
+        [self appearanceTransition:YES end:NO controller:oldResponer];
+        [self appearanceTransition:YES end:YES controller:oldResponer];
+        [self appearanceTransition:NO end:NO controller:newResponer];
+        [self appearanceTransition:NO end:YES controller:newResponer];
+        if (self.param.wEventEndTransferController) self.param.wEventEndTransferController((id)newResponer, (id)oldResponer, index, old);
+        self.currentVC = (id)oldResponer;
         self.currentTitleIndex = old;
-        if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:end:)]) [self.loopDelegate setUpSuspension:oldVC index:old end:YES];
+        if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:end:)]) [self.loopDelegate setUpSuspension:oldResponer index:old end:YES];
     }
     self.hasDealAppearance = NO;
     self.nextPageIndex = -999;
 }
 
 /// 控制器生命周期
-- (void)appearanceTransition:(BOOL)isAppearing end:(BOOL)end controller:(UIViewController*)VC{
-    if (!VC) return;;
+- (void)appearanceTransition:(BOOL)isAppearing end:(BOOL)end controller:(UIResponder*)responer{
+    if (!responer) return;;
     if (end) {
-        if ([VC isKindOfClass:UIViewController.class]) [VC endAppearanceTransition];
-        [self viewProtocolAction: isAppearing?@"da":@"dd" view:VC];
+        if ([responer isKindOfClass:UIViewController.class])
+            [(UIViewController*)responer endAppearanceTransition];
+            
+        [self viewProtocolAction: isAppearing?@"da":@"dd" view:responer];
     }else{
-        if ([VC isKindOfClass:UIViewController.class]) [VC beginAppearanceTransition:isAppearing animated:NO];
-        [self viewProtocolAction: isAppearing?@"wa":@"wd" view:VC];
+        if ([responer isKindOfClass:UIViewController.class])
+            [(UIViewController*)responer beginAppearanceTransition:isAppearing animated:NO];
+        
+        [self viewProtocolAction: isAppearing?@"wa":@"wd" view:responer];
     }
 }
 
@@ -346,14 +359,6 @@
     if ([tag isEqualToString:@"dd"] && [view respondsToSelector:@selector(pageViewDidDisappear)]) [view pageViewDidDisappear];
 }
 
-- (BOOL)canTopSuspension{
-    if (!self.param.wTopSuspension
-       ||self.param.wMenuPosition == PageMenuPositionBottom
-        ||self.param.wMenuPosition == PageMenuPositionNavi) return NO;
-    if (!self.param.wTitleArr.count) return NO;
-    return YES;
-}
-
 - (nullable WMZPageController *)findBelongViewControllerForView:(UIView *)view {
     UIResponder *responder = view;
     while ((responder = [responder nextResponder]))
@@ -363,19 +368,21 @@
     return nil;
 }
 
+
+- (BOOL)canTopSuspension{
+    if (!self.param.wTopSuspension
+       ||self.param.wMenuPosition == PageMenuPositionBottom
+        ||self.param.wMenuPosition == PageMenuPositionNavi) return NO;
+    if (!self.param.wTitleArr.count) return NO;
+    return YES;
+}
+
 - (WMZPageMunuView *)mainView{
-    if (!_mainView) {
-        _mainView = [WMZPageMunuView new];
-    }
-    return _mainView;
+    return _mainView ?: ({ _mainView = WMZPageMunuView.new;});
 }
 
 - (WMZPageDataView *)dataView{
-    if (!_dataView) {
-        _dataView = [WMZPageDataView new];
-        _dataView.frame = CGRectMake(0, CGRectGetMaxY(self.mainView.frame),self.bounds.size.width, 0) ;
-    }
-    return _dataView;
+    return _dataView ?: ({ _dataView = [[WMZPageDataView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.mainView.frame),self.bounds.size.width, 0)];});
 }
 
 - (NSDictionary *)frameInfo{
@@ -384,13 +391,18 @@
         if (!UIEdgeInsetsEqualToEdgeInsets(self.param.wMenuInsets, UIEdgeInsetsZero)) menuCellMarginY = self.param.wMenuInsets.top;
         _frameInfo = @{
             @(PageMenuPositionLeft):[NSValue valueWithCGRect:CGRectMake(0, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight + self.param.wMenuInsets.bottom)],
-            @(PageMenuPositionRight):[NSValue valueWithCGRect:CGRectMake(PageVCWidth-self.param.wMenuWidth, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight + self.param.wMenuInsets.bottom )],
-            @(PageMenuPositionCenter):[NSValue valueWithCGRect:CGRectMake((PageVCWidth-self.param.wMenuWidth)/2, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight + self.param.wMenuInsets.bottom )],
-            @(PageMenuPositionNavi):[NSValue valueWithCGRect:CGRectMake((PageVCWidth-self.param.wMenuWidth)/2, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight + self.param.wMenuInsets.bottom )],
-            @(PageMenuPositionBottom):[NSValue valueWithCGRect:CGRectMake(menuCellMarginY, PageVCHeight, self.param.wMenuWidth,(PageIsIphoneX?(self.param.wMenuHeight + 34):self.param.wMenuHeight) + self.param.wMenuInsets.bottom )],
+            @(PageMenuPositionRight):[NSValue valueWithCGRect:CGRectMake(self.pageWidth-self.param.wMenuWidth, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight + self.param.wMenuInsets.bottom )],
+            @(PageMenuPositionCenter):[NSValue valueWithCGRect:CGRectMake((self.pageWidth - self.param.wMenuWidth)/2, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight + self.param.wMenuInsets.bottom )],
+            @(PageMenuPositionNavi):[NSValue valueWithCGRect:CGRectMake((self.pageWidth - self.param.wMenuWidth)/2, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight + self.param.wMenuInsets.bottom )],
+            @(PageMenuPositionBottom):[NSValue valueWithCGRect:CGRectMake(menuCellMarginY, self.pageWidth , self.param.wMenuWidth,(PageIsIphoneX?(self.param.wMenuHeight + 34):self.param.wMenuHeight) + self.param.wMenuInsets.bottom )],
         };
     }
     return _frameInfo;
+}
+
+- (void)setPageWidth:(CGFloat)pageWidth{
+    _pageWidth = pageWidth;
+    self.mainView.pageWidth = self.dataView.pageWidth = pageWidth;
 }
 
 - (void)setCurrentTitleIndex:(NSInteger)currentTitleIndex{

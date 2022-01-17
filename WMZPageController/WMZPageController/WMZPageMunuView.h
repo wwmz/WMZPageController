@@ -38,6 +38,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) WMZPageNaviBtn *fixLastBtn;
 /// 最底部下划线
 @property (nonatomic, strong) UIView *bottomView;
+
+@property (nonatomic, assign) CGFloat pageWidth;
 /// 滚动到index
 /// @param animal 带动画
 - (void)scrollToIndex:(NSInteger)newIndex animal:(BOOL)animal;

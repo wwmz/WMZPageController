@@ -50,7 +50,9 @@
         [menuAddCustomView addSubview:nameLB];
         return menuAddCustomView;
     });
-    
+    param.wCustomMenufixTitleSet(^(NSArray<WMZPageNaviBtn *> * _Nullable titleArr) {
+        
+    });
     self.param = param;
 }
 

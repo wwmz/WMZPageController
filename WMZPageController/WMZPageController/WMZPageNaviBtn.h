@@ -102,6 +102,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)page_x:(CGFloat)y;
 - (void)page_width:(CGFloat)width;
 - (void)page_height:(CGFloat)height;
+
 @end
 
 @interface NSObject (SafeKVO)
@@ -109,6 +110,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)pageAddObserver:(nonnull NSObject *)observer forKeyPath:(nonnull NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(nullable void *)context;
 ///  安全删除观察者
 - (void)paegRemoveObserver:(nonnull NSObject *)observer forKeyPath:(nonnull NSString *)keyPath context:(nullable void *)context;
+
 @end
 
 NS_ASSUME_NONNULL_END

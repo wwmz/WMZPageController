@@ -260,10 +260,10 @@
 - (NSArray*)ToutiaoData{
     return
     @[
-        @{WMZPageKeyName:@"关注",WMZPageKeyBadge:@(YES)},
-        @{WMZPageKeyName:@"推荐",WMZPageKeyBadge:@(YES)},@"广州",
-        @{WMZPageKeyName:@"热点",WMZPageKeyBadge:@(YES)},
-        @"视频",@{WMZPageKeyName:@"图片",WMZPageKeyBadge:@(YES)},@"问答",@"科技",
+        @{WMZPageKeyName:@"关注",WMZPageKeyBadge:@(-1)},
+        @{WMZPageKeyName:@"推荐",WMZPageKeyBadge:@(-1)},@"广州",
+        @{WMZPageKeyName:@"热点",WMZPageKeyBadge:@(-1)},
+        @"视频",@{WMZPageKeyName:@"图片",WMZPageKeyBadge:@(-1)},@"问答",@"科技",
     ];
 }
 

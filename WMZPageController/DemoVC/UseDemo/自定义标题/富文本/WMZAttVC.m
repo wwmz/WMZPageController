@@ -65,7 +65,7 @@
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.titleLabel.font = [UIFont systemFontOfSize:12];
     [btn setTitleColor:UIColor.orangeColor forState:UIControlStateNormal];
-    [btn setTitle:@"更新" forState:UIControlStateNormal];
+    [btn setTitle:@"更新标题" forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(onBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [btn sizeToFit];
     UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:btn];

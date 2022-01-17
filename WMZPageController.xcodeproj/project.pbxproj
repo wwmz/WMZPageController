@@ -36,6 +36,8 @@
 		F32E00A223308C2C004920BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F32E00A123308C2C004920BD /* main.m */; };
 		F32E00AC23308C2C004920BD /* WMZPageControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F32E00AB23308C2C004920BD /* WMZPageControllerTests.m */; };
 		F32E00B723308C2C004920BD /* WMZPageControllerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F32E00B623308C2C004920BD /* WMZPageControllerUITests.m */; };
+		F3553F35272017B8000C24CA /* WMZPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F3553F34272017B8000C24CA /* WMZPageView.m */; };
+		F3553F3927201EAF000C24CA /* UsePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F3553F3827201EAF000C24CA /* UsePageViewController.m */; };
 		F35F116B2717C9D00030D3CD /* Base.m in Sources */ = {isa = PBXBuildFile; fileRef = F35F113B2717C9D00030D3CD /* Base.m */; };
 		F35F116C2717C9D00030D3CD /* HomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F35F113C2717C9D00030D3CD /* HomeVC.m */; };
 		F35F116D2717C9D00030D3CD /* CollectionViewPopDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = F35F11412717C9D00030D3CD /* CollectionViewPopDemo.m */; };
@@ -233,6 +235,11 @@
 		F32E00B223308C2C004920BD /* WMZPageControllerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WMZPageControllerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F32E00B623308C2C004920BD /* WMZPageControllerUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMZPageControllerUITests.m; sourceTree = "<group>"; };
 		F32E00B823308C2C004920BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F3553F33272017B8000C24CA /* WMZPageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMZPageView.h; sourceTree = "<group>"; };
+		F3553F34272017B8000C24CA /* WMZPageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMZPageView.m; sourceTree = "<group>"; };
+		F3553F3727201EAF000C24CA /* UsePageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UsePageViewController.h; sourceTree = "<group>"; };
+		F3553F3827201EAF000C24CA /* UsePageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UsePageViewController.m; sourceTree = "<group>"; };
+		F3553F3A27202291000C24CA /* WMZPageScrollProcotol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMZPageScrollProcotol.h; sourceTree = "<group>"; };
 		F35F113B2717C9D00030D3CD /* Base.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base.m; sourceTree = "<group>"; };
 		F35F113C2717C9D00030D3CD /* HomeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeVC.m; sourceTree = "<group>"; };
 		F35F113D2717C9D00030D3CD /* HomeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeVC.h; sourceTree = "<group>"; };
@@ -666,6 +673,15 @@
 			path = WMZPageControllerUITests;
 			sourceTree = "<group>";
 		};
+		F3553F3627201E9C000C24CA /* 使用WMZPageView无需继承 */ = {
+			isa = PBXGroup;
+			children = (
+				F3553F3727201EAF000C24CA /* UsePageViewController.h */,
+				F3553F3827201EAF000C24CA /* UsePageViewController.m */,
+			);
+			path = "使用WMZPageView无需继承";
+			sourceTree = "<group>";
+		};
 		F35F10CF2717C9D00030D3CD /* DemoVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -716,6 +732,7 @@
 			isa = PBXGroup;
 			children = (
 				F36244A22727D5E4005BAE8A /* 菜单栏带自定义视图 */,
+				F3553F3627201E9C000C24CA /* 使用WMZPageView无需继承 */,
 				F35F12062717CB170030D3CD /* 响应侧滑:全屏手势 */,
 				F35F11722717CA9B0030D3CD /* 动态增删菜单标题 */,
 				F35F11752717CA9B0030D3CD /* app使用 */,
@@ -984,7 +1001,7 @@
 		F35F11CB2717CA9B0030D3CD /* 菜单特殊样式 */ = {
 			isa = PBXGroup;
 			children = (
-				F35F12002717CAD70030D3CD /* 动态富文本 */,
+				F35F12002717CAD70030D3CD /* 动态富文本(更新标题) */,
 				F35F11FB2717CAD70030D3CD /* 作为tabbar */,
 				F35F11CC2717CA9B0030D3CD /* 菜单背景圆角 */,
 				F35F11CF2717CA9B0030D3CD /* 菜单栏带背景图 */,
@@ -1039,13 +1056,13 @@
 			path = "作为tabbar";
 			sourceTree = "<group>";
 		};
-		F35F12002717CAD70030D3CD /* 动态富文本 */ = {
+		F35F12002717CAD70030D3CD /* 动态富文本(更新标题) */ = {
 			isa = PBXGroup;
 			children = (
 				F35F12022717CAD70030D3CD /* WMZDemoTwo.h */,
 				F35F12012717CAD70030D3CD /* WMZDemoTwo.m */,
 			);
-			path = "动态富文本";
+			path = "动态富文本(更新标题)";
 			sourceTree = "<group>";
 		};
 		F35F12062717CB170030D3CD /* 响应侧滑:全屏手势 */ = {
@@ -1081,6 +1098,8 @@
 				F39EAA852687106900B56C9D /* WMZPageConfig.h */,
 				F39EAA972687106900B56C9D /* WMZPageController.h */,
 				F39EAA822687106900B56C9D /* WMZPageController.m */,
+				F3553F33272017B8000C24CA /* WMZPageView.h */,
+				F3553F34272017B8000C24CA /* WMZPageView.m */,
 				F39EAA872687106900B56C9D /* WMZPageDataView.h */,
 				F39EAA882687106900B56C9D /* WMZPageDataView.m */,
 				F3C96BB2271815E600686ED0 /* WMZPageScroller.h */,
@@ -1094,6 +1113,7 @@
 				F39EAA902687106900B56C9D /* WMZPageParam.h */,
 				F39EAA932687106900B56C9D /* WMZPageParam.m */,
 				F39EAA912687106900B56C9D /* WMZPageProtocol.h */,
+				F3553F3A27202291000C24CA /* WMZPageScrollProcotol.h */,
 				F39EAA942687106900B56C9D /* WMZPageTitleDataModel.h */,
 				F39EAA922687106900B56C9D /* WMZPageTitleDataModel.m */,
 			);
@@ -1488,6 +1508,7 @@
 				F319830C2355AE02002D305B /* MJRefreshAutoNormalFooter.m in Sources */,
 				F3A1FFA72334D6AF004B12F6 /* NSBezierPath+RoundedCorners.m in Sources */,
 				F35F116F2717C9D00030D3CD /* TopSuspensionVC.m in Sources */,
+				F3553F3927201EAF000C24CA /* UsePageViewController.m in Sources */,
 				F35F11F72717CA9B0030D3CD /* WMZPageRadiosVC.m in Sources */,
 				F31983022355AE02002D305B /* MJRefreshConfig.m in Sources */,
 				F35F11EA2717CA9B0030D3CD /* WeiBoController.m in Sources */,
@@ -1503,6 +1524,7 @@
 				F3A1FF8F2334D6AF004B12F6 /* SDWebImageDownloaderOperation.m in Sources */,
 				F3A1FF892334D6AF004B12F6 /* SDDiskCache.m in Sources */,
 				F35F11702717C9D00030D3CD /* TestVC.m in Sources */,
+				F3553F35272017B8000C24CA /* WMZPageView.m in Sources */,
 				F3A1FF842334D6AF004B12F6 /* SDWebImageError.m in Sources */,
 				F3A1FFA62334D6AF004B12F6 /* SDAsyncBlockOperation.m in Sources */,
 				F35F11D82717CA9B0030D3CD /* WMZDynamicOperatVC.m in Sources */,

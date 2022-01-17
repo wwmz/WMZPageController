@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger level;
 
 @property (nonatomic, assign) BOOL left;
+
+@property (nonatomic, assign) CGFloat pageWidth;
 /// 触发侧滑手势
 @property (nonatomic, assign) CGFloat popGuestureOffset;
 /// respondGuestureType为All时候的响应位置

@@ -71,7 +71,6 @@
     self.ta.mj_header.automaticallyChangeAlpha = YES;
 }
 
-
 - (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     return nil;
 }

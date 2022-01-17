@@ -17,9 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    self.view.backgroundColor = PageColor(0x4895ef);
-    
+
     WMZPageParam *param = PageParam()
     .wMenuTitleSelectColorSet([UIColor redColor])
     .wTitleArrSet([self attributesData])
@@ -65,11 +63,11 @@
     return @[
         @{WMZPageKeyName:[self getNormalStr:@"推荐1\n10"],WMZPageKeySelectName:[self getSelectStr:@"推荐1\n10"]},
         @"LOOK直播\n10",
-        @{WMZPageKeyName:[self getNormalStr:@"画\n10"],WMZPageKeyBadge:@(YES)},
+        @{WMZPageKeyName:[self getNormalStr:@"画\n10"],WMZPageKeyBadge:@(-1)},
         @"现场\n10",
         @{WMZPageKeyName:@"翻唱\n10"},
         [self getNormalStr:@"推荐\n10"],
-        @{WMZPageKeyName:[self getNormalStr:@"推荐\n10"],WMZPageKeySelectName:[self getSelectStr:@"推荐\n10"],WMZPageKeyBadge:@(YES)},
+        @{WMZPageKeyName:[self getNormalStr:@"推荐\n10"],WMZPageKeySelectName:[self getSelectStr:@"推荐\n10"],WMZPageKeyBadge:@(-1)},
     ];
 }
 

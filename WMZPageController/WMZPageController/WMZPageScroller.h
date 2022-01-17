@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,   copy) PageSimultaneouslyGestureRecognizer wCustomSimultaneouslyGesture;
 /// wTopSuspension
 @property (nonatomic, assign) BOOL wTopSuspension;
+
 @end
 
 NS_ASSUME_NONNULL_END

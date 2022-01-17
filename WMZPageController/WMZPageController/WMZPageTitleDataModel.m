@@ -18,7 +18,7 @@
 }
 
 - (instancetype)initWithIndex:(NSInteger)index
-                   controller:(UIViewController*)controller
+                   controller:(UIResponder*)controller
                     titleInfo:(NSDictionary*)titleInfo{
     if (self = [super init]) {
         self.index = index;
@@ -29,13 +29,13 @@
 }
 
 + (instancetype)initWithIndex:(NSInteger)index
-                   controller:(UIViewController*)controller
+                   controller:(UIResponder*)controller
                         title:(NSString*)title{
     return [[WMZPageTitleDataModel alloc]initWithIndex:index controller:controller title:title];
 }
 
 + (instancetype)initWithIndex:(NSInteger)index
-                   controller:(UIViewController*)controller
+                   controller:(UIResponder*)controller
                     titleInfo:(NSDictionary*)titleInfo{
     return [[WMZPageTitleDataModel alloc]initWithIndex:index controller:controller titleInfo:titleInfo];
 }

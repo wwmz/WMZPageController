@@ -36,7 +36,7 @@
         return nowY;
     };
     param.wCustomDataViewHeight = ^CGFloat(CGFloat nowY) {
-        /// 再减掉父类的菜单高度 
+        /// 再减掉父类的菜单高度
         return nowY - PageVCTabBarHeight - 55;
     };
     self.param = param;

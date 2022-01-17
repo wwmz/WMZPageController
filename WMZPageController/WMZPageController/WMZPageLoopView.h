@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 底部左滑结束的代理
 - (void)pageScrollEndWithScrollView:(UIScrollView*)scrollView;
 /// 获取子tableview
-- (void)setUpSuspension:(UIViewController*)newVC index:(NSInteger)index end:(BOOL)end;
+- (void)setUpSuspension:(UIResponder*)newVC index:(NSInteger)index end:(BOOL)end;
 
 @end
 
@@ -59,9 +59,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) UIViewController *currentVC;
 /// 代理
 @property (nonatomic, weak) id <WMZPageLoopDelegate> loopDelegate;
-/// 初始化
-- (instancetype)initWithFrame:(CGRect)frame param:(WMZPageParam*)param;
+/// 父类 实现协议WMZPageScrollProcotol
+@property (nonatomic, weak) UIResponder *parentResponder;
+/// 缓存
+@property (nonatomic, strong) NSMutableDictionary<NSNumber*, UIResponder*> *cache;
 
+@property (nonatomic, assign) CGFloat pageWidth;
+/// 初始化
+- (instancetype)initWithFrame:(CGRect)frame
+                        param:(WMZPageParam*)param
+               parentReponder:(UIResponder*)parentReponder;
 @end
 
 NS_ASSUME_NONNULL_END
