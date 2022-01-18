@@ -30,7 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
      //标题数组
-    NSArray *data = @[@"热门",@{WMZPageKeyName:@"男装",WMZPageKeyOnlyClick:@(YES)},
+    NSArray *data = @[@"热门",@{WMZPageKeyName:@"男装",WMZPageKeyOnlyClickWithAnimal:@(YES)},
                       @"美妆",@"手机",@"食品",@"电器",@"鞋包",@"百货",@"女装",@"汽车",@"电脑"];
     WMZPageParam *param =
     PageParam()
@@ -60,9 +60,8 @@
     self.param = param;
     
     //如果没有出现视图 就延时0.1秒加载
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.view addSubview:self.customView];
-    });
+    [self.view addSubview:self.customView];
+    
     self.downSc.dataSource = self;
     [self.downSc reloadData];
     

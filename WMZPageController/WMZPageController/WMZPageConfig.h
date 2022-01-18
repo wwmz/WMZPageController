@@ -191,6 +191,16 @@ typedef enum :NSInteger{
     PageGradientChangeDirectionDownDiagonalLine,
 }PageGradientChangeDirection;
 
+///点击
+typedef enum :NSInteger{
+    ///常态
+    PageBTNTapNormal = 0,
+    ///仅点击
+    PageBTNTapNone,
+    ///仅点击且带动画
+    PageBTNTapAnimalNone,
+}PageBTNTapType;
+
 ///标题点击
 typedef void (^PageClickBlock)(id _Nullable anyID,NSInteger index);
 

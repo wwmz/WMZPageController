@@ -1,5 +1,5 @@
 //
-//  WMZPageMunuView.h
+//  WMZPageMenuView.h
 //  WMZPageController
 //
 //  Created by wmz on 2020/10/16.
@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface WMZPageMunuView : UIScrollView
+@interface WMZPageMenuView : UIScrollView
 /// 当前index
 @property (nonatomic, assign) NSInteger currentTitleIndex;
 /// 配置
@@ -55,6 +55,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateUI;
 /// 动画管理
 - (void)animalAction:(UIScrollView*)scrollView lastContrnOffset:(CGFloat)lastContentOffset;
+/// 设置右边固定标题
+- (void)setUpFixRightBtn:(WMZPageNaviBtn*)temp;
 @end
 
 NS_ASSUME_NONNULL_END

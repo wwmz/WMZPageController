@@ -84,7 +84,7 @@
 		F36244A92727E3E0005BAE8A /* WMZCustomNormalVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F36244A82727E3E0005BAE8A /* WMZCustomNormalVC.m */; };
 		F39EAA992687106A00B56C9D /* WMZPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = F39EAA822687106900B56C9D /* WMZPageController.m */; };
 		F39EAA9C2687106A00B56C9D /* WMZPageDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = F39EAA882687106900B56C9D /* WMZPageDataView.m */; };
-		F39EAA9D2687106A00B56C9D /* WMZPageMunuView.m in Sources */ = {isa = PBXBuildFile; fileRef = F39EAA8A2687106900B56C9D /* WMZPageMunuView.m */; };
+		F39EAA9D2687106A00B56C9D /* WMZPageMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = F39EAA8A2687106900B56C9D /* WMZPageMenuView.m */; };
 		F39EAA9E2687106A00B56C9D /* WMZPageLoopView.m in Sources */ = {isa = PBXBuildFile; fileRef = F39EAA8C2687106900B56C9D /* WMZPageLoopView.m */; };
 		F39EAA9F2687106A00B56C9D /* WMZPageNaviBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = F39EAA8F2687106900B56C9D /* WMZPageNaviBtn.m */; };
 		F39EAAA02687106A00B56C9D /* WMZPageTitleDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F39EAA922687106900B56C9D /* WMZPageTitleDataModel.m */; };
@@ -333,8 +333,8 @@
 		F39EAA872687106900B56C9D /* WMZPageDataView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMZPageDataView.h; sourceTree = "<group>"; };
 		F39EAA882687106900B56C9D /* WMZPageDataView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMZPageDataView.m; sourceTree = "<group>"; };
 		F39EAA892687106900B56C9D /* WMZPageLoopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMZPageLoopView.h; sourceTree = "<group>"; };
-		F39EAA8A2687106900B56C9D /* WMZPageMunuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMZPageMunuView.m; sourceTree = "<group>"; };
-		F39EAA8B2687106900B56C9D /* WMZPageMunuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMZPageMunuView.h; sourceTree = "<group>"; };
+		F39EAA8A2687106900B56C9D /* WMZPageMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMZPageMenuView.m; sourceTree = "<group>"; };
+		F39EAA8B2687106900B56C9D /* WMZPageMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMZPageMenuView.h; sourceTree = "<group>"; };
 		F39EAA8C2687106900B56C9D /* WMZPageLoopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMZPageLoopView.m; sourceTree = "<group>"; };
 		F39EAA8E2687106900B56C9D /* WMZPageNaviBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMZPageNaviBtn.h; sourceTree = "<group>"; };
 		F39EAA8F2687106900B56C9D /* WMZPageNaviBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMZPageNaviBtn.m; sourceTree = "<group>"; };
@@ -1106,8 +1106,8 @@
 				F3C96BB3271815E600686ED0 /* WMZPageScroller.m */,
 				F39EAA892687106900B56C9D /* WMZPageLoopView.h */,
 				F39EAA8C2687106900B56C9D /* WMZPageLoopView.m */,
-				F39EAA8B2687106900B56C9D /* WMZPageMunuView.h */,
-				F39EAA8A2687106900B56C9D /* WMZPageMunuView.m */,
+				F39EAA8B2687106900B56C9D /* WMZPageMenuView.h */,
+				F39EAA8A2687106900B56C9D /* WMZPageMenuView.m */,
 				F39EAA8E2687106900B56C9D /* WMZPageNaviBtn.h */,
 				F39EAA8F2687106900B56C9D /* WMZPageNaviBtn.m */,
 				F39EAA902687106900B56C9D /* WMZPageParam.h */,
@@ -1541,7 +1541,7 @@
 				F3A1FF712334D6AF004B12F6 /* NSImage+Compatibility.m in Sources */,
 				F3A1FF9B2334D6AF004B12F6 /* SDWebImageDefine.m in Sources */,
 				F3AA60C526C4C124000E885D /* MASConstraint.m in Sources */,
-				F39EAA9D2687106A00B56C9D /* WMZPageMunuView.m in Sources */,
+				F39EAA9D2687106A00B56C9D /* WMZPageMenuView.m in Sources */,
 				F3AA60C226C4C124000E885D /* MASLayoutConstraint.m in Sources */,
 				F3A1FF922334D6AF004B12F6 /* SDWebImageTransition.m in Sources */,
 				F3A1FF732334D6AF004B12F6 /* SDImageCoder.m in Sources */,

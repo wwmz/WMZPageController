@@ -63,16 +63,13 @@ static NSInteger const pointWidth = 7; //小红点的宽高
     self.badge.alpha = 1;
     [self addSubview:self.badge];
     [self bringSubviewToFront:self.badge];
-    if (!self.badge.text.intValue) {
-        [self hidenBadge];
-    }
     if (self.param.wCustomRedView) self.param.wCustomRedView(self.badge,info);
 }
 
 - (void)hidenBadge{
     if (!self.param.wHideRedCircle) return;;
     if (self.badge){
-        [UIView animateWithDuration:0.15 animations:^{
+        [UIView animateWithDuration:0.1 animations:^{
             self.badge.alpha = 0;
             [self.badge removeFromSuperview];
             self.badge.text = @"";

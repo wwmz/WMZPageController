@@ -14,7 +14,7 @@
     NSInteger _currentTitleIndex;
 }
 /// frame配置
-@property (nonatomic, strong) NSDictionary *frameInfo;
+@property (nonatomic, strong, nullable) NSDictionary *frameInfo;
 /// 参数
 @property (nonatomic, strong) WMZPageParam  *param;
 
@@ -24,18 +24,35 @@
 
 - (instancetype)initWithFrame:(CGRect)frame param:(WMZPageParam *)param parentReponder:(UIResponder *)parentReponder{
     if (self = [super initWithFrame:frame]) {
-        self.pageWidth = frame.size.width;
         self.parentResponder = parentReponder;
         self.param = param;
-        self.currentTitleIndex = -1;
+        self.currentTitleIndex = NSNotFound;
         self.backgroundColor = param.wBgColor;
-        [self setUp];
+        [self loadUI:frame.size.width clear:YES];
     }
     return self;
 }
 
-- (void)setUp{
-    self.currentTitleIndex = NSNotFound;
+- (void)loadUI:(CGFloat)width clear:(BOOL)clear{
+    CGFloat lastPageWidth = self.pageWidth;
+    self.pageWidth = width?:self.frame.size.width;
+    [self setUp:clear];
+    ///适配横竖屏
+    if (self.param.wDeviceChange &&
+        self.dataView.subviews.count &&
+        lastPageWidth) {
+        for (int i = 0; i < self.dataView.subviews.count; i++) {
+            UIView *temp = self.dataView.subviews[i];
+            int num = temp.frame.origin.x / lastPageWidth;
+            [temp page_x:num * self.pageWidth];
+        }
+        NSInteger current = self.currentTitleIndex != NSNotFound ? self.currentTitleIndex : self.param.wMenuDefaultIndex;
+        [self.dataView setContentOffset:CGPointMake(current * self.pageWidth, 0) animated:NO];
+        [self.mainView scrollToIndex:current animal:NO];
+    }
+}
+
+- (void)setUp:(BOOL)clear{
     CGFloat addh = 0;
     if (self.param.wMenuAddSubView) {
         UIView *insertView = self.param.wMenuAddSubView();
@@ -50,7 +67,14 @@
     [self addSubview:self.mainView];
     self.mainView.frame = [self.frameInfo[@(self.param.wMenuPosition)] CGRectValue];
     self.mainView.menuDelegate = self;
-    self.mainView.param = self.param;
+    if (clear) {
+        self.mainView.param = self.param;
+    }else{
+        if (self.mainView.btnArr.count)
+            [self.mainView resetMainViewContenSize:self.mainView.btnArr.lastObject];
+        
+        [self.mainView setUpFixRightBtn:self.mainView.btnArr.lastObject];
+    }
     self.lineView = self.mainView.lineView;
     self.btnArr = self.mainView.btnArr;
     self.fixBtnArr = self.mainView.fixBtnArr;
@@ -60,6 +84,7 @@
     }];
     /// 视图层
     [self addSubview:self.dataView];
+    [self.dataView page_width:self.pageWidth];
     self.dataView.scrollEnabled = self.param.wScrollCanTransfer;
     self.dataView.contentSize = CGSizeMake(self.param.wTitleArr.count * self.pageWidth,0);
     self.dataView.delegate = self;
@@ -89,14 +114,19 @@
     if (!fixBtn) [self tap:btn];
 }
 
-//标题点击
 - (void)tap:(WMZPageNaviBtn*)btn{
     NSInteger index = [self.btnArr indexOfObject:btn];
     if (index == NSNotFound  || index > self.btnArr.count) return;
-    if (self.param.wEventClick) self.param.wEventClick(btn, btn.tag);
+    if (!self.changeDevice) {
+        if (self.param.wEventClick) self.param.wEventClick(btn, btn.tag);
+    }else{
+        self.changeDevice = NO;
+    }
     if (self.currentTitleIndex == index) return;
-    if (!btn.isOnlyClick) {
-        if (self.loopDelegate&&[self.loopDelegate respondsToSelector:@selector(selectBtnWithIndex:)]) [self.loopDelegate selectBtnWithIndex:index];
+    if (!btn.tapType) {
+        if (self.loopDelegate&&
+            [self.loopDelegate respondsToSelector:@selector(selectBtnWithIndex:)])
+            [self.loopDelegate selectBtnWithIndex:index];
         if (self.currentTitleIndex == NSNotFound) {
             self.lastPageIndex = self.currentTitleIndex;
             self.nextPageIndex = index;
@@ -109,7 +139,8 @@
             [self.dataView setContentOffset:CGPointMake(index * self.pageWidth, 0) animated:NO];
             if (self.param.wEventEndTransferController)self.param.wEventEndTransferController(nil, (id)newVC, 0, index);
             if (self.loopDelegate &&
-                [self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:end:)]) [self.loopDelegate setUpSuspension:newVC index:index end:YES];
+                [self.loopDelegate respondsToSelector:@selector(setUpSuspension:index:end:)])
+                [self.loopDelegate setUpSuspension:newVC index:index end:YES];
         }else{
             [self beginAppearanceTransitionWithIndex:index withOldIndex:self.currentTitleIndex];
             self.lastPageIndex = self.currentTitleIndex;
@@ -256,14 +287,16 @@
 
 - (void)addChildVC:(NSInteger)index VC:(UIResponder*)newReponder{
     if (!newReponder) return;
-    CGRect frame = CGRectMake(index * self.dataView.frame.size.width,0,self.dataView.frame.size.width,
+    CGRect frame = CGRectMake(index * self.pageWidth,0,self.pageWidth,
                               self.dataView.frame.size.height);
     if ([self.parentResponder isKindOfClass:UIViewController.class]) {
         UIViewController *parentVC = (UIViewController*)self.parentResponder;
+        
         if ([parentVC.parentViewController isKindOfClass:[WMZPageController class]]) {
             WMZPageController *parentViewController = (WMZPageController*)parentVC.parentViewController;
             self.dataView.level = parentViewController.upSc.dataView.level - 1;
         }
+        
         if ([newReponder isKindOfClass:UIViewController.class]) {
             UIViewController *newVC = (UIViewController*)newReponder;
             if (![parentVC.childViewControllers containsObject:newVC]) {
@@ -271,11 +304,15 @@
                 newVC.view.frame = frame;
                 [self.dataView addSubview:newVC.view];
                 [newVC didMoveToParentViewController:parentVC];
+            }else{
+                newVC.view.frame = frame;
             }
         }else if ([newReponder isKindOfClass:UIView.class]){
             UIView *tempView = (UIView*)newReponder;
+            if ([self.dataView.subviews indexOfObject:tempView] == NSNotFound) {
+                [self.dataView addSubview:tempView];
+            }
             tempView.frame = frame;
-            [self.dataView addSubview:tempView];
         }
         [self.cache setObject:newReponder forKey:@(index)];
     }else if (([self.parentResponder isKindOfClass:UIView.class])){
@@ -377,8 +414,8 @@
     return YES;
 }
 
-- (WMZPageMunuView *)mainView{
-    return _mainView ?: ({ _mainView = WMZPageMunuView.new;});
+- (WMZPageMenuView *)mainView{
+    return _mainView ?: ({ _mainView = WMZPageMenuView.new;});
 }
 
 - (WMZPageDataView *)dataView{
@@ -386,17 +423,15 @@
 }
 
 - (NSDictionary *)frameInfo{
-    if (!_frameInfo) {
-        CGFloat menuCellMarginY = self.param.wMenuCellMarginY;
-        if (!UIEdgeInsetsEqualToEdgeInsets(self.param.wMenuInsets, UIEdgeInsetsZero)) menuCellMarginY = self.param.wMenuInsets.top;
-        _frameInfo = @{
-            @(PageMenuPositionLeft):[NSValue valueWithCGRect:CGRectMake(0, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight + self.param.wMenuInsets.bottom)],
-            @(PageMenuPositionRight):[NSValue valueWithCGRect:CGRectMake(self.pageWidth-self.param.wMenuWidth, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight + self.param.wMenuInsets.bottom )],
-            @(PageMenuPositionCenter):[NSValue valueWithCGRect:CGRectMake((self.pageWidth - self.param.wMenuWidth)/2, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight + self.param.wMenuInsets.bottom )],
-            @(PageMenuPositionNavi):[NSValue valueWithCGRect:CGRectMake((self.pageWidth - self.param.wMenuWidth)/2, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight + self.param.wMenuInsets.bottom )],
-            @(PageMenuPositionBottom):[NSValue valueWithCGRect:CGRectMake(menuCellMarginY, self.pageWidth , self.param.wMenuWidth,(PageIsIphoneX?(self.param.wMenuHeight + 34):self.param.wMenuHeight) + self.param.wMenuInsets.bottom )],
-        };
-    }
+    CGFloat menuCellMarginY = self.param.wMenuCellMarginY;
+    if (!UIEdgeInsetsEqualToEdgeInsets(self.param.wMenuInsets, UIEdgeInsetsZero)) menuCellMarginY = self.param.wMenuInsets.top;
+    _frameInfo = @{
+        @(PageMenuPositionLeft):[NSValue valueWithCGRect:CGRectMake(0, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight + self.param.wMenuInsets.bottom)],
+        @(PageMenuPositionRight):[NSValue valueWithCGRect:CGRectMake(self.pageWidth-self.param.wMenuWidth, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight + self.param.wMenuInsets.bottom )],
+        @(PageMenuPositionCenter):[NSValue valueWithCGRect:CGRectMake((self.pageWidth - self.param.wMenuWidth)/2, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight + self.param.wMenuInsets.bottom )],
+        @(PageMenuPositionNavi):[NSValue valueWithCGRect:CGRectMake((self.pageWidth - self.param.wMenuWidth)/2, menuCellMarginY , self.param.wMenuWidth,self.param.wMenuHeight + self.param.wMenuInsets.bottom )],
+        @(PageMenuPositionBottom):[NSValue valueWithCGRect:CGRectMake(menuCellMarginY, self.pageWidth , self.param.wMenuWidth,(PageIsIphoneX?(self.param.wMenuHeight + 34):self.param.wMenuHeight) + self.param.wMenuInsets.bottom )],
+    };
     return _frameInfo;
 }
 

@@ -17,10 +17,10 @@
         self.showsHorizontalScrollIndicator = NO;
         self.pagingEnabled = YES;
         self.level = 100000;
-        self.pageWidth = PageVCWidth;
         self.alwaysBounceHorizontal = YES;
         self.alwaysBounceVertical = NO;
         self.scrollsToTop = NO;
+        self.pageWidth = PageVCWidth;
         self.popGuestureOffset = -1;
         if (@available(iOS 11.0, *)) {
             self.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
@@ -30,7 +30,6 @@
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    
     if ([NSStringFromClass([gestureRecognizer.view class]) isEqualToString:@"WMZPageDataView"]&&
         [NSStringFromClass([otherGestureRecognizer.view class]) isEqualToString:@"WMZPageDataView"]
         && [NSStringFromClass([gestureRecognizer class]) isEqualToString:@"UIScrollViewPanGestureRecognizer"]) {

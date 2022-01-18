@@ -1,21 +1,21 @@
 //
-//  WMZPageMunuView.m
+//  WMZPageMenuView.m
 //  WMZPageController
 //
 //  Created by wmz on 2020/10/16.
 //  Copyright © 2020 wmz. All rights reserved.
 //
 
-#import "WMZPageMunuView.h"
+#import "WMZPageMenuView.h"
 
-@interface WMZPageMunuView(){
+@interface WMZPageMenuView(){
     WMZPageNaviBtn *_btnLeft;
     WMZPageNaviBtn *_btnRight;
     CGFloat fixAllWidth;
 }
 @end
 
-@implementation WMZPageMunuView
+@implementation WMZPageMenuView
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
@@ -76,6 +76,7 @@
     WMZPageNaviBtn *temp = nil;
     for (int i = 0; i< self.param.wTitleArr.count; i++) {
         WMZPageNaviBtn *btn = [WMZPageNaviBtn buttonWithType:UIButtonTypeCustom];
+        if (!btn) continue;
         [self setPropertiesWithBtn:btn withIndex:i withTemp:temp];
         temp = btn;
         
@@ -141,7 +142,6 @@
     }
 }
 
-/// 设置右边固定标题
 - (void)setUpFixRightBtn:(WMZPageNaviBtn*)temp{
     if (self.param.wMenuFixRightData) {
         self.fixBtnArr = [NSMutableArray new];
@@ -244,6 +244,7 @@
     id image = [self getTitleData:titleInfo key:WMZPageKeyImage];
     id selectImage = [self getTitleData:titleInfo key:WMZPageKeySelectImage];
     id onlyClick = [self getTitleData:titleInfo key:WMZPageKeyOnlyClick];
+    id onlyAnClick = [self getTitleData:titleInfo key:WMZPageKeyOnlyClickWithAnimal];
     id titleBackground = [self getTitleData:titleInfo key:WMZPageKeyTitleBackground];
     if (!titleBackground) titleBackground = self.param.wMenuTitleBackground ?: UIColor.clearColor;
     if (titleBackground) btn.backgroundColor = titleBackground;
@@ -255,7 +256,8 @@
         }
         btn.imageView.contentMode = UIViewContentModeScaleAspectFill;
     }
-    if (onlyClick) btn.onlyClick = [onlyClick boolValue];
+    if (onlyClick) btn.tapType = PageBTNTapNone;
+    if (onlyAnClick) btn.tapType = PageBTNTapAnimalNone;
     if (image && selectImage){
         if ([selectImage isKindOfClass:NSString.class]) {
             [btn setImage:[UIImage imageNamed:selectImage] forState:UIControlStateSelected];
@@ -300,12 +302,20 @@
     if (self.param.wMenuTitleRadios) btn.layer.cornerRadius = self.param.wMenuTitleRadios;
     CGFloat imageMargin = [self getTitleData:titleInfo key:WMZPageKeyImageOffset]?[[self getTitleData:titleInfo key:WMZPageKeyImageOffset] floatValue]:self.param.wMenuImageMargin;
     if (image) [btn tagSetImagePosition:self.param.wMenuImagePosition spacing:imageMargin];
+
     if (self.btnArr.count>i) {
-        [self.btnArr insertObject:btn atIndex:i];
-        [self insertSubview:btn atIndex:i];
+        if ([self.btnArr indexOfObject:btn] == NSNotFound)
+            [self.btnArr insertObject:btn atIndex:i];
+        
+        if ([self.subviews indexOfObject:btn] == NSNotFound)
+            [self insertSubview:btn atIndex:i];
+        
     }else{
-        [self.btnArr addObject:btn];
-        [self addSubview:btn];
+        if ([self.btnArr indexOfObject:btn] == NSNotFound)
+            [self.btnArr addObject:btn];
+        
+        if ([self.subviews indexOfObject:btn] == NSNotFound)
+            [self addSubview:btn];
     }
 }
 
@@ -319,12 +329,14 @@
 
 /// 点击
 - (void)tap:(WMZPageNaviBtn*)btn{
-    if (self.lastBTN == btn) return;
+    if (self.lastBTN == btn && !btn.tapType) return;
     NSInteger index = [self.btnArr indexOfObject:btn];
     if (index == NSNotFound || index > self.btnArr.count) return;
-    [self scrollToIndex:index animal:YES];
-    if (self.menuDelegate&&[self.menuDelegate respondsToSelector:@selector(titleClick:fix:)])[self.menuDelegate titleClick:btn fix:NO];
     
+    if (!btn.tapType || btn.tapType == PageBTNTapAnimalNone) {
+        [self scrollToIndex:index animal:YES];
+    }
+    if (self.menuDelegate&&[self.menuDelegate respondsToSelector:@selector(titleClick:fix:)])[self.menuDelegate titleClick:btn fix:NO];
 }
 
 /// 固定标题点击

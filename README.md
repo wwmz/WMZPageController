@@ -73,6 +73,8 @@
 - 替换系统UIPageController的方案,减少内存,避免UIPageController的bug
 - 支持传入UIView/UIViewController作为子视图/子控制器
 - 菜单栏可以单独使用（详情见Demo）
+- 可独立使用WMZPageView,无需继承WMZPageController
+- 适配横竖屏
 
 替换UIPageController是用UIScrollView替换,手势滑动从而实现完整生命周期
 
@@ -227,6 +229,7 @@ WMZPageControlller 使用 MIT 许可证，详情见 [LICENSE](LICENSE) 文件。
 
 更新日记
 ==============
+- 20220118 v1.5.1 支持适配横竖屏 wDeviceChange(default NO) 1.5.0版本后改动比较大,如需稳定请指定1.5.0之前的版本
 - 20220117 v1.5.0 改版不需要继承WMZPageController也能使用（使用WMZPageView）,同时适配旧版本
 - 20211230 v1.4.6 修复退出后台挂起后可能导致拉不下来的问题 fix#68
 - 20211208 v1.4.5 修复自定义导航栏下的偏移问题

@@ -8,7 +8,7 @@
 
 #import "WMZPageConfig.h"
 #import "WMZPageDataView.h"
-#import "WMZPageMunuView.h"
+#import "WMZPageMenuView.h"
 #import "WMZPageTitleDataModel.h"
 #import "WMZPageScroller.h"
 
@@ -38,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 固定按钮
 @property (nonatomic, strong) NSMutableArray <WMZPageNaviBtn*>*fixBtnArr;
 /// 菜单视图
-@property (nonatomic, strong) WMZPageMunuView *mainView;
+@property (nonatomic, strong) WMZPageMenuView *mainView;
 /// 底部视图
 @property (nonatomic, strong) WMZPageDataView *dataView;
 /// 添加的视图 和mainView 同级
@@ -50,11 +50,13 @@ NS_ASSUME_NONNULL_BEGIN
 /// 上一个视图
 @property (nonatomic, assign) NSInteger lastPageIndex;
 /// 是否已经处理了生命周期
-@property (nonatomic, assign) BOOL hasDealAppearance;
+@property (nonatomic, assign, getter=isHasDealAppearance) BOOL hasDealAppearance;
 /// 是否已经运行了完整的生命周期
-@property (nonatomic, assign) BOOL hasEndAppearance;
+@property (nonatomic, assign, getter=isHasEndAppearance) BOOL hasEndAppearance;
 /// 是否往相反方向滑动
-@property (nonatomic, assign) BOOL hasDifferenrDirection;
+@property (nonatomic, assign, getter=isHasDifferenrDirection) BOOL hasDifferenrDirection;
+/// 屏幕旋转
+@property (nonatomic, assign, getter=isChangeDevice) BOOL changeDevice;
 /// 当前显示VC
 @property (nonatomic, strong, nullable) UIViewController *currentVC;
 /// 代理
@@ -69,6 +71,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithFrame:(CGRect)frame
                         param:(WMZPageParam*)param
                parentReponder:(UIResponder*)parentReponder;
+///loadUI
+- (void)loadUI:(CGFloat)width clear:(BOOL)clear;
 @end
 
 NS_ASSUME_NONNULL_END

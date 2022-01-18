@@ -36,16 +36,6 @@
     param.wGlobalTriggerOffset = PageVCWidth * 0.15;
     self.param = param;
     
-    
-//    param.wMenuBgColorSet(UIColor.redColor);
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        UIView *contailView = self.upSc.mainView;
-//        UIBezierPath * path = [UIBezierPath bezierPathWithRoundedRect:contailView.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(20,20)];
-//        CAShapeLayer *markLayer = [[CAShapeLayer alloc]init];
-//        markLayer.frame = contailView.bounds;
-//        markLayer.path = path.CGPath;
-//        contailView.layer.mask = markLayer;
-//    });
 }
 
 - (void)customNavi:(NSArray*)arr{

@@ -82,7 +82,8 @@
         [self showData];
 }
 
-- (void)UI{
+///布局
+- (void)setUpUI:(BOOL)clear{
     self.backgroundColor = UIColor.whiteColor;
     footerViewIndex = -1;
     CGFloat headY = 0;
@@ -162,7 +163,16 @@
     self.downSc.canScroll = self.downSc.scrollEnabled = scroll;
     [self addSubview:self.downSc];
     /// 滚动和菜单视图
-    self.upSc = [[WMZPageLoopView alloc]initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height) param:self.param parentReponder:self.parentResponder];
+    if (self.param.wDeviceChange) {
+        if (clear) {
+            self.upSc = [[WMZPageLoopView alloc]initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height) param:self.param parentReponder:self.parentResponder];
+        }else{
+            self.upSc.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height);
+            [self.upSc loadUI:self.upSc.frame.size.width clear:NO];
+        }
+    }else{
+        self.upSc = [[WMZPageLoopView alloc]initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height) param:self.param parentReponder:self.parentResponder];
+    }
     self.upSc.cache = self.cache;
     self.upSc.loopDelegate = self;
     self.downSc.tableFooterView = self.upSc;
@@ -174,11 +184,13 @@
     self.canScroll = YES;
     self.scrolToBottom = YES;
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.downSc reloadData];
-        [self.downSc layoutIfNeeded];
-        [self selectMenuWithIndex:self.param.wMenuDefaultIndex];
-    });
+    if (clear) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.downSc reloadData];
+            [self.downSc layoutIfNeeded];
+            [self selectMenuWithIndex:self.param.wMenuDefaultIndex];
+        });
+    }
 }
 
 - (void)setUpMenuAndDataViewFrame{
@@ -507,7 +519,7 @@
     }
     [self.sonChildScrollerViewDic removeAllObjects];
     [self.sonChildFooterViewDic removeAllObjects];
-    [self UI];
+    [self setUpUI:YES];
 }
 
 - (void)selectMenuWithIndex:(NSInteger)index{
@@ -537,7 +549,7 @@
         }
     }
     [self.param defaultProperties];
-    [self UI];
+    [self setUpUI:YES];
 }
 
 - (void)updateHeadView{
@@ -563,7 +575,7 @@
 
 - (void)showData{
     [self.param defaultProperties];
-    [self UI];
+    [self setUpUI:YES];
 }
 
 - (BOOL)addMenuTitleWithObjectArr:(NSArray<WMZPageTitleDataModel*>*)insertArr{
@@ -900,7 +912,6 @@
 }
 
 - (void)dealloc{
-    NSLog(@"dealloc %@",NSStringFromClass([self class]));
     [self removeKVO];
 }
 

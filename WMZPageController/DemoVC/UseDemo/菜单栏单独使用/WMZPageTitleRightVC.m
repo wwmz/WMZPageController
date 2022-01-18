@@ -7,12 +7,12 @@
 //
 
 #import "WMZPageTitleRightVC.h"
-#import "WMZPageMunuView.h"
+#import "WMZPageMenuView.h"
 
 @interface WMZPageTitleRightVC ()<WMZPageMunuDelegate,UITableViewDelegate,UITableViewDataSource>{
     BOOL click;
 }
-@property (nonatomic, strong) WMZPageMunuView *menuView;
+@property (nonatomic, strong) WMZPageMenuView *menuView;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSArray *dataSource;
 @end
@@ -29,7 +29,7 @@
     
     self.dataSource = @[@"TestOne",@"TestTwo",@"TestThree",@"TestFour",@"TestFive",@"TestSix"];
     
-    self.menuView = [[WMZPageMunuView alloc]initWithFrame:CGRectMake(0, PageVCNavBarHeight, PageVCWidth, 55)];
+    self.menuView = [[WMZPageMenuView alloc]initWithFrame:CGRectMake(0, PageVCNavBarHeight, PageVCWidth, 55)];
     [self.view addSubview:self.menuView];
     self.menuView.menuDelegate = self;
     WMZPageParam *param = WMZPageParam.new;

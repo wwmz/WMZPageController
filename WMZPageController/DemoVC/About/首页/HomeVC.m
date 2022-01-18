@@ -13,6 +13,7 @@
 #import "Base.h"
 #import "WMZPageConfig.h"
 #import "WMZPageController-Swift.h"
+#import "Masonry.h"
 
 @interface HomeVC ()<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate>
 
@@ -27,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    UITableView *ta = [[UITableView alloc]initWithFrame:CGRectMake(0, PageVCNavBarHeight, self.view.frame.size.width,PageVCHeight -PageVCNavBarHeight -PageVCTabBarHeight) style:UITableViewStyleGrouped];
+    UITableView *ta = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
     [self.view addSubview:ta];
     ta.estimatedRowHeight = 100;
     if (@available(iOS 11.0, *)) {
@@ -35,9 +36,19 @@
     }else{
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 150000
+ if (@available(iOS 15.0, *)) {
+     ta.sectionHeaderTopPadding = 0;
+ }
+#endif
     ta.dataSource = self;
     ta.delegate = self;
     self.ta = ta;
+    [self.ta mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(PageVCNavBarHeight);
+        make.left.right.mas_equalTo(0);
+        make.bottom.mas_equalTo(-PageVCTabBarHeight);
+    }];
 }
 
 -(void)viewWillAppear:(BOOL)animated{

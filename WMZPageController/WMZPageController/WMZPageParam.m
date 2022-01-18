@@ -16,6 +16,7 @@ WMZPageBTNKey const WMZPageKeyTitleColor = @"titleColor";
 WMZPageBTNKey const WMZPageKeyTitleSelectColor = @"titleSelectColor";
 WMZPageBTNKey const WMZPageKeyBackgroundColor = @"backgroundColor";
 WMZPageBTNKey const WMZPageKeyOnlyClick = @"onlyClick";
+WMZPageBTNKey const WMZPageKeyOnlyClickWithAnimal = @"onlyAnClick";
 WMZPageBTNKey const WMZPageKeyImage = @"image";
 WMZPageBTNKey const WMZPageKeySelectImage = @"selectImage";
 WMZPageBTNKey const WMZPageKeyTitleWidth = @"width";
@@ -48,6 +49,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wHeadScal
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wHideRedCircle)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wAvoidQuickScroll)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wHeaderScrollHide)
+WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wDeviceChange)
 WMZPagePropSetFuncImplementation(WMZPageParam, PagePopType,            wRespondGuestureType)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wMenuFollowSliding)
 WMZPagePropSetFuncImplementation(WMZPageParam, int,                    wGlobalTriggerOffset)
@@ -136,6 +138,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, UIEdgeInsets,           wMenuInse
         _wHeaderScrollHide = YES;
         _wRespondGuestureType = PagePopFirst;
         _wGlobalTriggerOffset = UIScreen.mainScreen.bounds.size.width * 0.15;
+        _wDeviceChange = YES;
     }
     return self;
 }

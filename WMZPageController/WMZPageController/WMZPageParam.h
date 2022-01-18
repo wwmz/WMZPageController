@@ -38,8 +38,10 @@ FOUNDATION_EXPORT WMZPageBTNKey const WMZPageKeyBackgroundColor;
 FOUNDATION_EXPORT WMZPageBTNKey const WMZPageKeyTitleBackground;
 /// 图文距离 @(5)
 FOUNDATION_EXPORT WMZPageBTNKey const WMZPageKeyImageOffset;
-/// 仅点击页面不加载 @(YES)
+/// 仅点击页面不加载 @(YES) 需要关闭滑动手势
 FOUNDATION_EXPORT WMZPageBTNKey const WMZPageKeyOnlyClick;
+/// 仅点击页面不加载附带指示器改变 @(YES)
+FOUNDATION_EXPORT WMZPageBTNKey const WMZPageKeyOnlyClickWithAnimal;
 /// 自定义标题宽度(优先级最高)   @(100)
 FOUNDATION_EXPORT WMZPageBTNKey const WMZPageKeyTitleWidth;
 /// 自定义标题高度(优先级最高)   @(100)
@@ -108,6 +110,9 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,         
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wHideRedCircle)
 /// 菜单栏跟随滑动 default YES  为NO则视图手势滑动结束菜单栏再滑动  v1.4.1
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wMenuFollowSliding)
+/// 自动适配横竖屏  default NO v1.5.1 仅继承WMZPageViewController有效 独立使用WMZPageView需要自己适配
+/// 子控制器需要使用自动布局 或者适配好布局
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wDeviceChange)
 
 /// 悬浮状态下 防止快速滑动的时候直接从底部直接滚动到顶部 default NO v1.4.3
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wAvoidQuickScroll)

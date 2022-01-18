@@ -27,10 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) id config;
 /// 最大size
 @property (nonatomic, assign) CGSize maxSize;
-/// 仅点击不加载页面 保持原页面
-@property (nonatomic, assign, getter=isOnlyClick) BOOL onlyClick;
-/// 有红点提示
-@property (nonatomic, assign) NSInteger hasBadge;
+/// 仅点击不加载页面 保持原页面 
+@property (nonatomic, assign) PageBTNTapType tapType;
 /// 初始文本内容
 @property (nonatomic,   copy) NSString *normalText;
 /// 选中文本

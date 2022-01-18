@@ -7,15 +7,14 @@
 //
 #import "WMZPageScrollProcotol.h"
 
-@protocol WMZPageViewProtocol <NSObject>
-- (UIResponder*_Nonnull)parentResponderType;
-@end
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface WMZPageView : UIView<WMZPageScrollProcotol>
 /// 响应父类
 @property (nonatomic, weak, readonly) UIResponder *parentResponder;
+/// 私有方法 不可调用
+- (void)setUpUI:(BOOL)clear;
+
 /// 初始化
 - (instancetype)initWithFrame:(CGRect)frame
                         param:(WMZPageParam*)param

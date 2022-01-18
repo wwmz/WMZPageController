@@ -15,6 +15,8 @@
     NSNumber *enterAlpah;
     /// 视图出现时候的导航栏透明度
     NSMutableArray <NSString*>*procotolMethodArr;
+    /// 菜单为屏幕宽度
+    BOOL menuScreen;
 }
 @end
 @implementation WMZPageController
@@ -104,6 +106,7 @@
 - (void)showData{
     self.pageView.frame = self.view.bounds;
     [self.view addSubview:self.pageView];
+    [self.view sendSubviewToBack:self.pageView];
     /// 获取协议内属性 兼容旧版本
     unsigned int propertiesCount = 0;
     objc_property_t *properties = protocol_copyPropertyList(@protocol(WMZPageScrollProcotol),&propertiesCount);
@@ -134,7 +137,9 @@
 
 - (void)setParam:(WMZPageParam *)param{
     _param = param;
-
+    if (self.param.wDeviceChange)
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(change:) name:UIApplicationDidChangeStatusBarFrameNotification object:nil];
+    menuScreen = (self.param.wMenuWidth == PageVCWidth);
     self.pageView = [[WMZPageView alloc]initWithFrame:self.view.bounds param:self.param parentReponder:self];
     self.downSc = self.pageView.downSc;
     self.downSc.delegate = self;
@@ -147,8 +152,30 @@
     }
 }
 
+/// 横竖屏通知
+- (void)change:(NSNotification*)notification{
+    if (!self.param.wDeviceChange) return;
+    ([UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeLeft ||
+     [UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeRight)?
+    [self changeLeft:YES]:[self changeLeft:NO];
+}
+
+/// 横竖屏改变frame
+- (void)changeLeft:(BOOL)left{
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (self->menuScreen) {
+            self.param.wMenuWidth = PageVCWidth;
+        }
+        self.pageView.frame = self.view.bounds;
+        [self.pageView setUpUI:NO];
+    });
+}
+
 - (void)dealloc{
-    NSLog(@"dealloc %@",NSStringFromClass([self class]));
+    if (self.param.wDeviceChange)
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidChangeStatusBarFrameNotification object:nil];
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
