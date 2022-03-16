@@ -25,6 +25,13 @@ NS_ASSUME_NONNULL_BEGIN
                       autoFix:(BOOL)autoFix
                         param:(WMZPageParam*)param
                parentReponder:(UIResponder*)parentReponder;
+
+/// 初始化 仅供兼容WMZPageController类调用
+- (instancetype)initWithFrame:(CGRect)frame
+                      autoFix:(BOOL)autoFix
+                       source:(BOOL)pageController
+                        param:(WMZPageParam*)param
+               parentReponder:(UIResponder*)parentReponder;
 @end
 
 NS_ASSUME_NONNULL_END

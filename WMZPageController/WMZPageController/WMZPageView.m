@@ -66,20 +66,24 @@
                       autoFix:(BOOL)autoFix
                         param:(WMZPageParam*)param
                parentReponder:(UIResponder*)parentReponder{
+    return [self initWithFrame:frame autoFix:autoFix source:NO param:param parentReponder:parentReponder];
+}
+
+- (instancetype)initWithFrame:(CGRect)frame
+                      autoFix:(BOOL)autoFix
+                       source:(BOOL)pageController
+                        param:(WMZPageParam*)param
+               parentReponder:(UIResponder*)parentReponder{
     self = [super initWithFrame:frame];
     if (self) {
         self.autoFit = autoFix;
         self.parentResponder = parentReponder;
         self.param = param;
+        if (!pageController) {
+            [self showData];
+        }
     }
     return self;
-}
-
-- (void)willMoveToSuperview:(UIView *)newSuperview{
-    [super willMoveToSuperview:newSuperview];
-    
-    if (newSuperview)
-        [self showData];
 }
 
 ///布局

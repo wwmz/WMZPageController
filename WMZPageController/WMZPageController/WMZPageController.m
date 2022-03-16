@@ -107,6 +107,9 @@
     self.pageView.frame = self.view.bounds;
     [self.view addSubview:self.pageView];
     [self.view sendSubviewToBack:self.pageView];
+    if ([self.pageView respondsToSelector:@selector(showData)])
+        [self.pageView performSelector:@selector(showData) withObject:nil];
+    
     /// 获取协议内属性 兼容旧版本
     unsigned int propertiesCount = 0;
     objc_property_t *properties = protocol_copyPropertyList(@protocol(WMZPageScrollProcotol),&propertiesCount);
@@ -140,7 +143,7 @@
     if (self.param.wDeviceChange)
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(change:) name:UIApplicationDidChangeStatusBarFrameNotification object:nil];
     menuScreen = (self.param.wMenuWidth == PageVCWidth);
-    self.pageView = [[WMZPageView alloc]initWithFrame:self.view.bounds param:self.param parentReponder:self];
+    self.pageView = [[WMZPageView alloc]initWithFrame:self.view.bounds autoFix:YES source:YES param:param parentReponder:self];
     self.downSc = self.pageView.downSc;
     self.downSc.delegate = self;
     if (self.param.wMenuPosition == PageMenuPositionNavi||

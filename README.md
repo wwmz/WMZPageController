@@ -5,6 +5,7 @@
  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://mit-license.org) 
 
 # ⚠️⚠️  使用悬浮样式如果子视图有滚动视图需要实现协议 WMZPageProtocol  如果没有则不需要实现
+# ⚠️⚠️  1.5.0版本后改动比较大,如需稳定请指定1.4.6
 # ⚠️⚠️   
      //自定义整体距离顶部的位置(如果默认算的不准确 或者需要修改) block内会传回当前的值 可对比自行返回最终需要的
       WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY,        wCustomNaviBarY)
@@ -231,7 +232,8 @@ WMZPageControlller 使用 MIT 许可证，详情见 [LICENSE](LICENSE) 文件。
 
 更新日记
 ==============
-- 20220118 v1.5.1 支持适配横竖屏 wDeviceChange(default NO) 1.5.0版本后改动比较大,如需稳定请指定1.5.0之前的版本
+- 20220118 v1.5.2 修复 issues77 issues78
+- 20220118 v1.5.1 支持适配横竖屏 wDeviceChange(default NO) 
 - 20220117 v1.5.0 改版不需要继承WMZPageController也能使用（使用WMZPageView）,同时适配旧版本
 - 20211230 v1.4.6 修复退出后台挂起后可能导致拉不下来的问题 fix#68
 - 20211208 v1.4.5 修复自定义导航栏下的偏移问题
