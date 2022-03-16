@@ -228,7 +228,8 @@ WMZPageControlller 使用 MIT 许可证，详情见 [LICENSE](LICENSE) 文件。
 ==============
 - 从WMZPageController抽出,无需继承也可使用 （已完成，可使用WMZPageView）
 - 适配横竖屏旋转（已完成）
-- 暂无计划,有想法的可以提供我,我去完善
+- 优化下拉缩放
+- swift版本开发
 
 更新日记
 ==============
