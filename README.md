@@ -11,7 +11,7 @@
       WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY,        wCustomNaviBarY)
      //自定义整体距离底部的位置(如果默认算的不准确 或者需要修改) block内会传回当前的值 可对比自行返回最终需要的
      WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY,        wCustomTabbarY)
-     //自定义底部滚动视图的高度(如果默认算的不准确 或者需要修改) block内会传回当前的值 可对比自行返回最终需要的
+     //自定义底部滚动视图的高度(如果默认算的不准确 或者需要修改)可作为改变悬浮菜单栏的位置 block内会传回当前的值 可对比自行返回最终需要的
      WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY,        wCustomDataViewHeight)
 
 演示
@@ -223,6 +223,10 @@ WMZPageControlller 使用 MIT 许可证，详情见 [LICENSE](LICENSE) 文件。
         WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomFrameY,        wCustomDataViewHeight)
      4 在父控制住self.view addSubview 了自定义的View 看不见 需要延迟0.1秒加载
      5 更新标题数据用updateTitle  更新标题和视图层用updateMenuData 都需要设置param的相关数据后调用
+     6 菜单栏不想悬浮要一起滑动 
+        .wCustomDataViewHeightSet(^CGFloat(CGFloat nowY) {
+            return nowY + (menu的高度 默认55);
+        })
 
 下一步计划
 ==============
