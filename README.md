@@ -175,6 +175,14 @@
        FOUNDATION_EXPORT WMZPageBTNKey const WMZPageKeyCanTopSuspension;
    
 ###  param的配置属性见Demo的WMZPageParam类
+
+###  titleArr传入自定义model数组 
+     Model *model = Moded.new
+     model.name = @"标题";
+     self.param.wTitleArr = @[model,model,model]
+     self.param.wCustomTitleContentSet(^NSString * _Nullable(id  _Nullable model, NSInteger index) {
+        return model.name;
+     })
  
 ### 依赖
 无任何依赖 
@@ -232,6 +240,7 @@ WMZPageControlller 使用 MIT 许可证，详情见 [LICENSE](LICENSE) 文件。
 
 更新日记
 ==============
+- 20220531 v1.5.3 修复 issues84 新增自定义标题文本wCustomTitleContent 可传入自定义model自行赋值
 - 20220118 v1.5.2 修复 issues77 issues78
 - 20220118 v1.5.1 支持适配横竖屏 wDeviceChange(default NO) 
 - 20220117 v1.5.0 改版不需要继承WMZPageController也能使用（使用WMZPageView）,同时适配旧版本

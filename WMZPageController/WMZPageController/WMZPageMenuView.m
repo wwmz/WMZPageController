@@ -160,6 +160,9 @@
             CGFloat originY = [self getTitleData:info key:WMZPageKeyTitleMarginY]?[[self getTitleData:info key:WMZPageKeyTitleMarginY] floatValue]:(temp.frame.origin.y + self.param.wMenuInsets.top);
             CGFloat menuFixHeight = [self getTitleData:info key:WMZPageKeyTitleHeight]?[[self getTitleData:info key:WMZPageKeyTitleHeight] floatValue]:temp.frame.size.height;
             id text = [self getTitleData:info key:WMZPageKeyName];
+            if (!text && self.param.wCustomTitleContent) {
+                text =  self.param.wCustomTitleContent(info,i);
+            }
             id selectText = [self getTitleData:info key:WMZPageKeySelectName];
             id image = [self getTitleData:info key:WMZPageKeyImage];
             id selectImage = [self getTitleData:info key:WMZPageKeySelectImage];
@@ -228,6 +231,9 @@
     [btn setTitleColor:selectColor?:self.param.wMenuTitleSelectColor forState:UIControlStateSelected];
     [btn setTitleColor:color forState:UIControlStateNormal];
     id name = [self getTitleData:titleInfo key:WMZPageKeyName];
+    if (!name && self.param.wCustomTitleContent) {
+        name =  self.param.wCustomTitleContent(titleInfo,i);
+    }
     if (name) {
         if ([name isKindOfClass:NSString.class]) [btn setTitle:name forState:UIControlStateNormal];
         else if ([name isKindOfClass:NSAttributedString.class]) [btn setAttributedTitle:name forState:UIControlStateNormal];

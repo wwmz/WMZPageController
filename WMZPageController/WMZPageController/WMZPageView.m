@@ -42,6 +42,8 @@
 @property (nonatomic, weak, readwrite) UIResponder *parentResponder;
 /// 自动适配
 @property (nonatomic, assign) BOOL autoFit;
+/// 初始menuInsets
+@property (nonatomic, assign) UIEdgeInsets originMenuInsets;
 @end
 
 @implementation WMZPageView
@@ -79,6 +81,7 @@
         self.autoFit = autoFix;
         self.parentResponder = parentReponder;
         self.param = param;
+        self.originMenuInsets = UIEdgeInsetsMake(-1, -1, -1, -1);
         if (!pageController) {
             [self showData];
         }
@@ -88,6 +91,13 @@
 
 ///布局
 - (void)setUpUI:(BOOL)clear{
+    if (!UIEdgeInsetsEqualToEdgeInsets(self.originMenuInsets, self.param.wMenuInsets) &&
+        !UIEdgeInsetsEqualToEdgeInsets(self.originMenuInsets, UIEdgeInsetsMake(-1, -1, -1, -1))) {
+        self.param.wMenuInsets = self.originMenuInsets;
+    }
+    if (UIEdgeInsetsEqualToEdgeInsets(self.originMenuInsets, UIEdgeInsetsMake(-1, -1, -1, -1))) {
+        self.originMenuInsets = self.param.wMenuInsets;
+    }
     self.backgroundColor = UIColor.whiteColor;
     footerViewIndex = -1;
     CGFloat headY = 0;
@@ -521,6 +531,7 @@
             [VC removeFromParentViewController];
         }
     }
+    [self.cache removeAllObjects];
     [self.sonChildScrollerViewDic removeAllObjects];
     [self.sonChildFooterViewDic removeAllObjects];
     [self setUpUI:YES];
@@ -541,6 +552,7 @@
     [self.upSc removeFromSuperview];
     [self.downSc removeFromSuperview];
     self.downSc = nil;
+    [self.cache removeAllObjects];
     [self.sonChildScrollerViewDic removeAllObjects];
     [self.sonChildFooterViewDic removeAllObjects];
     footerViewIndex = -1;

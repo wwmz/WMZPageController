@@ -33,6 +33,7 @@ WMZPageParam * PageParam(void){
 }
 WMZPagePropSetFuncImplementation(WMZPageParam, NSArray*,               wTitleArr)
 WMZPagePropSetFuncImplementation(WMZPageParam, NSArray*,               wControllers)
+WMZPagePropSetFuncImplementation(WMZPageParam, PageCustomTitle,        wCustomTitleContent)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageTitleMenu,          wMenuAnimal)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wMenuAnimalTitleGradient)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wTapScrollAnimal)
@@ -50,6 +51,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wHideRedC
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wAvoidQuickScroll)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wHeaderScrollHide)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wDeviceChange)
+//WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wMenuAnimalTitleScale)
 WMZPagePropSetFuncImplementation(WMZPageParam, PagePopType,            wRespondGuestureType)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wMenuFollowSliding)
 WMZPagePropSetFuncImplementation(WMZPageParam, int,                    wGlobalTriggerOffset)
@@ -119,8 +121,8 @@ WMZPagePropSetFuncImplementation(WMZPageParam, UIEdgeInsets,           wMenuInse
         _wMenuIndicatorHeight = 3.1;
         _wMenuWidth = PageVCWidth;
         _wMenuAnimalTitleGradient = YES;
-        _wMenuTitleUIFont = [UIFont systemFontOfSize:17.0f];
-        _wMenuTitleSelectUIFont = [UIFont systemFontOfSize:18.5f];
+        _wMenuTitleUIFont = [UIFont systemFontOfSize:15.0f];
+        _wMenuTitleSelectUIFont = [UIFont systemFontOfSize:20.0f];
         _wMenuImagePosition = PageBtnPositionTop;
         _wMenuImageMargin = 5.0f;
         _wMenuCellMargin = 30.0f;

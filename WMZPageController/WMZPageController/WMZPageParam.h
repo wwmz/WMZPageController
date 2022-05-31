@@ -59,7 +59,8 @@ WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam,NSArray*,      
 WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageViewControllerIndex,  wViewController)
 /// VC数组 必传(二选一) (如果要做标题内容动态增删操作的必须使用此属性 )
 WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, NSArray*,    wControllers)
-
+/// 自定义标题内容  v1.5.3
+WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, PageCustomTitle,  wCustomTitleContent)
 /* =========================================required==============================================*/
 
 /* =========================================customFrame===============================================*/
@@ -93,6 +94,8 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,         
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wMenuFixShadow)
 /// 开启渐变色 default yes
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wMenuAnimalTitleGradient)
+/// 开启标题滑动根据字体大小自动缩放 default NO
+//WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wMenuAnimalTitleScale)
 /// 顶部可下拉 default NO
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wBounces)
 /// 导航栏整个透明 default NO

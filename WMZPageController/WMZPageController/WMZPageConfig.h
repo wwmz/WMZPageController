@@ -249,4 +249,7 @@ typedef BOOL (^PageSimultaneouslyGestureRecognizer)(UIGestureRecognizer *_Nullab
 /// 自定义京东动画视图frame
 typedef void (^PageJDAnimalBlock)(WMZPageNaviBtn *_Nullable sender,UIView *_Nullable jdLayer);
 
+/// 自定义标题内容
+typedef NSString* _Nullable(^PageCustomTitle)(id _Nullable model,NSInteger index);
+
 #endif /* WMZPageConfig_h */

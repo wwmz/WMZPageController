@@ -32,6 +32,10 @@
     //标题数组
     NSArray *data = @[@"热门",@"男装",@"美妆",@"手机",@"食品",@"电器",@"鞋包",@"百货",@"女装",@"汽车",@"电脑"];
     WMZPageParam *param = PageParam()
+//    param.wCustomTitleContentSet(^NSString * _Nullable(id  _Nullable model, NSInteger index) {
+//        ///model为自定义model
+//        return @"自定义文本";
+//    })
     .wTitleArrSet(data)
     //控制器数组
     .wViewControllerSet(^UIViewController *(NSInteger index) {
