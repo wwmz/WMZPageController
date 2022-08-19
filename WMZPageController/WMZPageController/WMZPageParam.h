@@ -94,6 +94,7 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,         
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wMenuFixShadow)
 /// 开启渐变色 default yes
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wMenuAnimalTitleGradient)
+
 /// 开启标题滑动根据字体大小自动缩放 default NO
 //WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wMenuAnimalTitleScale)
 /// 顶部可下拉 default NO
@@ -167,7 +168,8 @@ WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, UIColor*,     
 WMZPagePropStatementAndPropSetFuncStatement(strong, WMZPageParam, UIColor*,              wBgColor)
 /// 菜单标题左右内边距 default 20
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuCellMargin)
-
+/// 滑动的时候是否菜单背景颜色自动改变 default YES 1.5.4
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wDidScrollMenuColorChange)
 /// 菜单按钮距离顶部的y值 default 0
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuCellMarginY)
 /// 菜单按钮距离底部部的y值 default 0
@@ -216,7 +218,8 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,      
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuIndicatorRadio)
 /// 指示器距离按钮的y值(AQY) default 5
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuIndicatorY)
-
+/// 指示器的相对菜单标题的宽度差值 default 6
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,               wMenuIndicatorTitleRelativeWidth)
 
 /* =========================================Menu===============================================*/
 

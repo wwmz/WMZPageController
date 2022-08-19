@@ -411,7 +411,7 @@ static NSInteger const pointWidth = 7; //小红点的宽高
     }
 }
 
-- (void)paegRemoveObserver:(nonnull NSObject *)observer forKeyPath:(nonnull NSString *)keyPath context:(nullable void *)context {
+- (void)pageRemoveObserver:(nonnull NSObject *)observer forKeyPath:(nonnull NSString *)keyPath context:(nullable void *)context {
     if ([self hasKey:keyPath withObserver:observer]){
         [self removeObserver:observer forKeyPath:keyPath context:context];
     }

@@ -107,7 +107,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 安全增加观察者
 - (void)pageAddObserver:(nonnull NSObject *)observer forKeyPath:(nonnull NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(nullable void *)context;
 ///  安全删除观察者
-- (void)paegRemoveObserver:(nonnull NSObject *)observer forKeyPath:(nonnull NSString *)keyPath context:(nullable void *)context;
+- (void)pageRemoveObserver:(nonnull NSObject *)observer forKeyPath:(nonnull NSString *)keyPath context:(nullable void *)context;
 
 @end
 

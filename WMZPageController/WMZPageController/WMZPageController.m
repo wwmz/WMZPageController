@@ -143,6 +143,9 @@
     if (self.param.wDeviceChange)
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(change:) name:UIApplicationDidChangeStatusBarFrameNotification object:nil];
     menuScreen = (self.param.wMenuWidth == PageVCWidth);
+    if (self.pageView) {
+        [self.pageView removeFromSuperview];
+    }
     self.pageView = [[WMZPageView alloc]initWithFrame:self.view.bounds autoFix:YES source:YES param:param parentReponder:self];
     self.downSc = self.pageView.downSc;
     self.downSc.delegate = self;
@@ -158,14 +161,13 @@
 /// 横竖屏通知
 - (void)change:(NSNotification*)notification{
     if (!self.param.wDeviceChange) return;
-    ([UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeLeft ||
-     [UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeRight)?
-    [self changeLeft:YES]:[self changeLeft:NO];
+    BOOL change = ([UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeLeft ||
+                   [UIDevice currentDevice].orientation == UIDeviceOrientationLandscapeRight);
+    [self changeLeft:change];
 }
 
 /// 横竖屏改变frame
 - (void)changeLeft:(BOOL)left{
-    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if (self->menuScreen) {
             self.param.wMenuWidth = PageVCWidth;

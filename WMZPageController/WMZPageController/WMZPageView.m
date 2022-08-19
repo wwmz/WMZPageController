@@ -448,8 +448,8 @@
         }else{
             if (self.sonChildScrollerViewDic[key] != view) {
                 UIView *tempView = self.sonChildScrollerViewDic[key];
-                [tempView paegRemoveObserver:self forKeyPath:@"contentOffset" context:nil];
-                [view paegRemoveObserver:self forKeyPath:@"contentOffset" context:nil];
+                [tempView pageRemoveObserver:self forKeyPath:@"contentOffset" context:nil];
+                [view pageRemoveObserver:self forKeyPath:@"contentOffset" context:nil];
                 [view pageAddObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
             }
         }
@@ -733,7 +733,7 @@
         indexVC = nil;
         [self.cache removeObjectForKey:@(index)];
         UIView *obj = [self.sonChildScrollerViewDic objectForKey:@(index)];
-        [obj paegRemoveObserver:self forKeyPath:@"contentOffset" context:nil];
+        [obj pageRemoveObserver:self forKeyPath:@"contentOffset" context:nil];
         [self.sonChildScrollerViewDic removeObjectForKey:@(index)];
     }
     
@@ -923,7 +923,7 @@
 
 - (void)removeKVO{
     [self.sonChildScrollerViewDic enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, __kindof UIScrollView * _Nonnull obj, BOOL * _Nonnull stop) {
-        [obj paegRemoveObserver:self forKeyPath:@"contentOffset" context:nil];
+        [obj pageRemoveObserver:self forKeyPath:@"contentOffset" context:nil];
     }];
 }
 

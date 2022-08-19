@@ -36,6 +36,11 @@
     [self.view addSubview:pageView];
 
     
+    param.wEventClickSet(^(id  _Nullable anyID, NSInteger index) {
+        NSLog(@"%@ %ld",pageView.upSc.currentVC,pageView.upSc.currentTitleIndex);
+    });
+    
+    
     /// autoFix为NO 自己调整frame
 //    WMZPageView *pageView = [[WMZPageView alloc]initWithFrame:CGRectMake(0, 0, PageVCWidth, PageVCHeight - PageVCNavBarHeight) autoFix:NO param:param parentReponder:self];
 //    [self.view addSubview:pageView];

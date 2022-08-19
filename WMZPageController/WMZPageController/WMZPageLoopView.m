@@ -117,11 +117,6 @@
 - (void)tap:(WMZPageNaviBtn*)btn{
     NSInteger index = [self.btnArr indexOfObject:btn];
     if (index == NSNotFound  || index > self.btnArr.count) return;
-    if (!self.changeDevice) {
-        if (self.param.wEventClick) self.param.wEventClick(btn, btn.tag);
-    }else{
-        self.changeDevice = NO;
-    }
     if (self.currentTitleIndex == index) return;
     if (!btn.tapType) {
         if (self.loopDelegate&&
@@ -149,6 +144,12 @@
             [self endAppearanceTransitionWithIndex:self.nextPageIndex withOldIndex:self.lastPageIndex isFlag:NO];
             [self.dataView setContentOffset:CGPointMake(index * self.pageWidth, 0) animated:self.param.wTapScrollAnimal];
         }
+    }
+    
+    if (!self.changeDevice) {
+        if (self.param.wEventClick) self.param.wEventClick(btn, btn.tag);
+    }else{
+        self.changeDevice = NO;
     }
 }
 

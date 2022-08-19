@@ -51,6 +51,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wHideRedC
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wAvoidQuickScroll)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wHeaderScrollHide)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wDeviceChange)
+WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wDidScrollMenuColorChange)
 //WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wMenuAnimalTitleScale)
 WMZPagePropSetFuncImplementation(WMZPageParam, PagePopType,            wRespondGuestureType)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wMenuFollowSliding)
@@ -99,6 +100,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, PageMenuNormalHeight,   wEventMen
 WMZPagePropSetFuncImplementation(WMZPageParam, PageViewControllerIndex,wViewController)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageCustomFrameY,       wCustomNaviBarY)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageCustomFrameY,       wCustomTabbarY)
+WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuIndicatorTitleRelativeWidth)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wCustomDataViewTopOffset)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuIndicatorY)
 WMZPagePropSetFuncImplementation(WMZPageParam, CGFloat,                wMenuCircilRadio)
@@ -140,7 +142,9 @@ WMZPagePropSetFuncImplementation(WMZPageParam, UIEdgeInsets,           wMenuInse
         _wHeaderScrollHide = YES;
         _wRespondGuestureType = PagePopFirst;
         _wGlobalTriggerOffset = UIScreen.mainScreen.bounds.size.width * 0.15;
-        _wDeviceChange = YES;
+        _wAvoidQuickScroll = YES;
+        _wMenuIndicatorTitleRelativeWidth = 6;
+        _wDidScrollMenuColorChange = YES;
     }
     return self;
 }

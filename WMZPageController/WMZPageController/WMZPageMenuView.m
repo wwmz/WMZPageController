@@ -327,7 +327,6 @@
 
 /// 解析字典
 - (NSString*)getTitleData:(id)model key:(NSString*)key{
-    
     if ([model isKindOfClass:[NSString class]] || [model isKindOfClass:[NSAttributedString class]])  return [key isEqualToString:WMZPageKeyName] ? model : nil;
     else if ([model isKindOfClass:[NSDictionary class]]) return [model objectForKey:key] ? : nil;
     return nil;
@@ -394,10 +393,13 @@
                  fixBackgroundColor = tempBackgroundColor;
         }
     }
-    if (!self.param.wInsertHeadAndMenuBg) self.backgroundColor = tempBackgroundColor;
+    if (!self.param.wInsertHeadAndMenuBg && self.param.wDidScrollMenuColorChange)
+        self.backgroundColor = tempBackgroundColor;
     if (!self.param.wMenuIndicatorImage) self.lineView.backgroundColor = indicatorColor?:self.param.wMenuIndicatorColor;
     [self.fixBtnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        obj.backgroundColor = fixBackgroundColor;
+        if (self.param.wDidScrollMenuColorChange) {
+            obj.backgroundColor = fixBackgroundColor;
+        }
         if (!CGColorEqualToColor(self.param.wMenuBgColor.CGColor, fixBackgroundColor.CGColor)) {
             [obj setTitleColor:[btn titleColorForState:UIControlStateSelected] forState:UIControlStateNormal];
         }
@@ -436,7 +438,7 @@
     }else{
         lineRect.size.height = self.param.wMenuIndicatorHeight?:PageK1px;
         lineRect.origin.y = [self getMainHeight] - lineRect.size.height/2 - self.param.wMenuIndicatorY;
-        lineRect.size.width =  self.param.wMenuIndicatorWidth?: (dataWidth + 6);
+        lineRect.size.width =  self.param.wMenuIndicatorWidth?: (dataWidth + self.param.wMenuIndicatorTitleRelativeWidth);
         lineRect.origin.x =  (indexFrame.size.width - lineRect.size.width)/2 + indexFrame.origin.x;
     }
     if (!animal) {
