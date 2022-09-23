@@ -80,6 +80,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)jdAddLayer;
 /// jdRemoveLayer
 - (void)jdRemoveLayer;
+
 @end
 
 @interface UIColor (GradientColor)

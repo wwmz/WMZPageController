@@ -177,6 +177,14 @@
     });
 }
 
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key{
+    
+}
+
+- (id)valueForUndefinedKey:(NSString *)key{
+    return nil;
+}
+
 - (void)dealloc{
     if (self.param.wDeviceChange)
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidChangeStatusBarFrameNotification object:nil];

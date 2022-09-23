@@ -18,13 +18,16 @@
         self.showsHorizontalScrollIndicator = NO;
         self.showsVerticalScrollIndicator = NO;
         self.scrollsToTop = NO;
-        self.sectionHeaderHeight = 0.01;
+        self.sectionHeaderHeight = 0;
         self.estimatedRowHeight = 100;
-        self.sectionFooterHeight = 0.01;
+        self.sectionFooterHeight = 0;
         if (@available(iOS 11.0, *)) {
-            self.estimatedSectionFooterHeight = 0.01;
-            self.estimatedSectionHeaderHeight = 0.01;
+            self.estimatedSectionFooterHeight = 0;
+            self.estimatedSectionHeaderHeight = 0;
             self.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        }
+        if (@available(iOS 13.0, *)) {
+            self.automaticallyAdjustsScrollIndicatorInsets = false;
         }
        #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 150000
         if (@available(iOS 15.0, *)) {
@@ -36,7 +39,7 @@
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    if (self.wCustomSimultaneouslyGesture) return self.wCustomSimultaneouslyGesture(gestureRecognizer, otherGestureRecognizer);
+    if (self.param.wCustomSimultaneouslyGesture) return self.param.wCustomSimultaneouslyGesture(gestureRecognizer, otherGestureRecognizer);
     if (([NSStringFromClass(otherGestureRecognizer.view.class) isEqualToString:@"WMZPageDataView"] ||
          [NSStringFromClass(otherGestureRecognizer.view.class) isEqualToString:@"UIScrollView"]) &&
         [NSStringFromClass([otherGestureRecognizer class]) isEqualToString:@"UIScrollViewPanGestureRecognizer"]){
@@ -46,12 +49,17 @@
         [NSStringFromClass([otherGestureRecognizer class]) isEqualToString:@"_UIParallaxTransitionPanGestureRecognizer"]) {
         return NO;
     }
+    if([self.param.wStopSimultaneouslyClassNameArray isKindOfClass:NSArray.class] &&
+       self.param.wStopSimultaneouslyClassNameArray.count &&
+       [self.param.wStopSimultaneouslyClassNameArray indexOfObject:NSStringFromClass(otherGestureRecognizer.view.class)] != NSNotFound){
+        return NO;
+    }
     if (self.sonCanScroll || !self.canScroll || self.contentOffset.y < 0) return NO;
     return YES;
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    if (self.wCustomFailGesture)  return  self.wCustomFailGesture(gestureRecognizer, otherGestureRecognizer);
+    if (self.param.wCustomFailGesture)  return  self.param.wCustomFailGesture(gestureRecognizer, otherGestureRecognizer);
     if (!self.currentScroll) return NO;
     if ([NSStringFromClass(otherGestureRecognizer.view.class) isEqualToString:@"UITableViewWrapperView"] &&
         [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) return YES;

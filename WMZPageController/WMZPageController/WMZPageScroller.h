@@ -7,6 +7,7 @@
 //
 
 #import "WMZPageConfig.h"
+#import "WMZPageParam.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,12 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIScrollView* currentScroll;
 /// 子视图能否滚动
 @property (nonatomic, assign) BOOL sonCanScroll;
-/// 自定义手势
-@property (nonatomic,   copy) PageFailureGestureRecognizer wCustomFailGesture;
-/// 自定义手势
-@property (nonatomic,   copy) PageSimultaneouslyGestureRecognizer wCustomSimultaneouslyGesture;
-/// wTopSuspension
-@property (nonatomic, assign) BOOL wTopSuspension;
+/// param
+@property (nonatomic, strong) WMZPageParam *param;
 
 @end
 

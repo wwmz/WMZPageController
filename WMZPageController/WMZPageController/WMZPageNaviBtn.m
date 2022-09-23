@@ -32,6 +32,10 @@
 static NSInteger const pointWidth = 7; //小红点的宽高
 @implementation WMZPageNaviBtn
 
+- (NSString *)description{
+    return [self titleForState:UIControlStateNormal];
+}
+
 - (void)showBadgeWithTopMagin:(NSDictionary*)info{
     if (![info isKindOfClass:NSDictionary.class]) return;
     id value = info[WMZPageKeyBadge];

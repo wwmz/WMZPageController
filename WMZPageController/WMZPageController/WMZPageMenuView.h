@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id <WMZPageMunuDelegate> menuDelegate;
 /// 上次选中左侧标题
 @property (nonatomic, strong, nullable) WMZPageNaviBtn *lastBTN;
-////  上次选中右侧固定标题
+/// 上次选中右侧固定标题
 @property (nonatomic, strong, nullable) WMZPageNaviBtn *fixLastBtn;
 /// 最底部下划线
 @property (nonatomic, strong) UIView *bottomView;

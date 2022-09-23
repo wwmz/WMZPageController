@@ -334,7 +334,10 @@
 
 /// 点击
 - (void)tap:(WMZPageNaviBtn*)btn{
-    if (self.lastBTN == btn && !btn.tapType) return;
+    if (self.lastBTN == btn && !btn.tapType) {
+        if (self.param.wEventClick) self.param.wEventClick(btn, btn.tag);
+        return;
+    }
     NSInteger index = [self.btnArr indexOfObject:btn];
     if (index == NSNotFound || index > self.btnArr.count) return;
     
@@ -460,6 +463,11 @@
         }
     }
     self.lastBTN = btn;
+    if(self.param.wMenuAnimalTitleScale){
+        [self.btnArr enumerateObjectsUsingBlock:^(WMZPageNaviBtn * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            obj.transform = CGAffineTransformIdentity;
+        }];
+    }
 }
 
 /// 动画管理
@@ -537,6 +545,35 @@
         UIColor *rightItemColor = [UIColor colorWithRed:tempBtn.unSelectedColorR+(1-scale)*difR green:tempBtn.unSelectedColorG+(1-scale)*difG blue:tempBtn.unSelectedColorB+(1-scale)*difB alpha:rightA];
         _btnLeft.titleLabel.textColor = rightItemColor;
         _btnRight.titleLabel.textColor = leftItemColor;
+    }
+    ///标题字体缩放过渡
+    if (self.param.wMenuAnimalTitleScale &&
+        self.param.wMenuTitleSelectUIFont.pointSize > self.param.wMenuTitleUIFont.pointSize &&
+        _btnLeft && _btnRight) {
+        CGFloat difference =  (self.param.wMenuTitleSelectUIFont.pointSize - self.param.wMenuTitleUIFont.pointSize) / self.param.wMenuTitleSelectUIFont.pointSize;
+        CGFloat samllValue = 0;
+        CGFloat bigValue = 0;
+        if(!left){
+            samllValue = 1 - difference * scale;
+            bigValue = 1 + difference * scale;
+            if(samllValue == self.param.wMenuTitleUIFont.pointSize/ self.param.wMenuTitleSelectUIFont.pointSize ){
+                _btnLeft.transform = CGAffineTransformIdentity;
+                _btnRight.transform = CGAffineTransformIdentity;
+            }else{
+                _btnLeft.transform = CGAffineTransformMakeScale(samllValue, samllValue);
+                _btnRight.transform = CGAffineTransformMakeScale(bigValue, bigValue);
+            }
+        }else{
+            samllValue = 1 - difference * (1 - scale);
+            bigValue = 1 + difference * (1 - scale);
+            if(samllValue == self.param.wMenuTitleUIFont.pointSize / self.param.wMenuTitleSelectUIFont.pointSize ){
+                _btnLeft.transform = CGAffineTransformIdentity;
+                _btnRight.transform = CGAffineTransformIdentity;
+            }else{
+                _btnLeft.transform = CGAffineTransformMakeScale(bigValue, bigValue);
+                _btnRight.transform = CGAffineTransformMakeScale(samllValue, samllValue);
+            }
+        }
     }
 }
 

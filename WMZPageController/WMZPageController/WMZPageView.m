@@ -194,7 +194,7 @@
     /// 底部
     [self setUpMenuAndDataViewFrame];
     [self setUpHead];
-    self.downSc.wTopSuspension = self.param.wTopSuspension;
+    self.downSc.param = self.param;
     self.canScroll = YES;
     self.scrolToBottom = YES;
     
@@ -317,13 +317,13 @@
     }
     if (![self canTopSuspension]) return;
     float yOffset  = scrollView.contentOffset.y;
-    int topOffset = scrollView.contentSize.height - scrollView.frame.size.height;
+    int topOffset = MAX(0, scrollView.contentSize.height - scrollView.frame.size.height);
     /// 防止从底部快速滑动瞬间到顶部 突兀的感觉 v1.4.3
     if (self.param.wAvoidQuickScroll &&
         [self.currentScroll isKindOfClass:UIScrollView.class] &&
         self.currentScroll.contentOffset.y &&
         yOffset <= 0 &&
-        self.mainLastOffset == topOffset ) {
+        self.mainLastOffset == topOffset) {
         scrollView.contentOffset = CGPointMake(self.downSc.contentOffset.x, topOffset);
         self.scrolTotop = YES;
         self.scrolToBottom = NO;
@@ -369,7 +369,7 @@
 /// 改变菜单栏高度
 - (void)changeMenuFrame{
     if (!self.param.wTopChangeHeight) return;
-    if (self.upSc.mainView.frame.size.height == self.param.wMenuHeight&&!self.sonCanScroll)return;
+    if (self.upSc.mainView.frame.size.height == self.param.wMenuHeight && !self.sonCanScroll)return;
     CGFloat offsetHeight = self.param.wTopChangeHeight > 0?
     MIN(self.currentScroll.contentOffset.y, self.param.wTopChangeHeight):
     MAX (-self.currentScroll.contentOffset.y, self.param.wTopChangeHeight);
@@ -502,19 +502,22 @@
         if (![pageVC canTopSuspension]) return;
         if (![pageVC currentNotSuspennsion]) return;
         if (hadWillDisappeal) return;
-        if (pageVC.currentScroll!=object) pageVC.currentScroll = object;
+        if (pageVC.currentScroll != object) pageVC.currentScroll = object;
         CGPoint newH = [[change objectForKey:@"new"] CGPointValue];
         CGPoint oldH = [[change objectForKey:@"old"] CGPointValue];
         if (newH.y == oldH.y) return;
         if (pageVC.param.wBounces) pageVC.scrolToBottom = NO;
-        if (!pageVC.sonCanScroll && !pageVC.scrolToBottom){
+        if (!pageVC.sonCanScroll &&
+            !pageVC.scrolToBottom &&
+            [pageVC.currentScroll isKindOfClass:UIScrollView.class]){
             pageVC.currentScroll.contentOffset = CGPointZero;
         }
         pageVC.mainLastOffset = pageVC.downSc.contentOffset.y;
         [self changeMenuFrame];
         if ((int)newH.y <= 0) {
             pageVC.canScroll = YES;
-            if (pageVC.param.wBounces) pageVC.currentScroll.contentOffset = CGPointZero;
+            if (pageVC.param.wBounces &&
+                [pageVC.currentScroll isKindOfClass:UIScrollView.class]) pageVC.currentScroll.contentOffset = CGPointZero;
         }
     }
 }
@@ -919,6 +922,14 @@
 - (void)setCurrentScroll:(UIScrollView *)currentScroll{
     _currentScroll = currentScroll;
     self.downSc.currentScroll = currentScroll;
+}
+
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key{
+    
+}
+
+- (id)valueForUndefinedKey:(NSString *)key{
+    return nil;
 }
 
 - (void)removeKVO{

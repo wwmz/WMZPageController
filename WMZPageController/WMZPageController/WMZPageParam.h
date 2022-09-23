@@ -96,7 +96,7 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,         
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wMenuAnimalTitleGradient)
 
 /// 开启标题滑动根据字体大小自动缩放 default NO
-//WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wMenuAnimalTitleScale)
+WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wMenuAnimalTitleScale)
 /// 顶部可下拉 default NO
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,                  wBounces)
 /// 导航栏整个透明 default NO
@@ -127,11 +127,14 @@ WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, BOOL,         
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, PagePopType,           wRespondGuestureType)
 /// 全部返回响应手势的位置 wRespondGuestureType为PagePopAll有效 default pageWidth * 0.15  v1.4.1
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, int,                   wGlobalTriggerOffset)
-
+/// 不与下滑手势一起滑动的UIView视图className数组 比如cell上的collectionView 则传入 @[@"UICollectionView"]
+WMZPagePropStatementAndPropSetFuncStatement(copy, WMZPageParam, NSArray<NSString*>*,                  wStopSimultaneouslyClassNameArray)
 /* =========================================special==============================================*/
 
 
 /* =========================================Menu==================================================*/
+/// 主题色 default 0xFC2040
+WMZPagePropStatementAndPropSetFuncStatement(copy,   WMZPageParam, UIColor*,                 wThemeColor)
 /// 菜单栏高度 default 60
 WMZPagePropStatementAndPropSetFuncStatement(assign, WMZPageParam, CGFloat,                  wMenuHeight)
 /// 给菜单栏和headView加个背景层 default -

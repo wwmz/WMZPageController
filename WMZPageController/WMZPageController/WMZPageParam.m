@@ -52,7 +52,7 @@ WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wAvoidQui
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wHeaderScrollHide)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wDeviceChange)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wDidScrollMenuColorChange)
-//WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wMenuAnimalTitleScale)
+WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wMenuAnimalTitleScale)
 WMZPagePropSetFuncImplementation(WMZPageParam, PagePopType,            wRespondGuestureType)
 WMZPagePropSetFuncImplementation(WMZPageParam, BOOL,                   wMenuFollowSliding)
 WMZPagePropSetFuncImplementation(WMZPageParam, int,                    wGlobalTriggerOffset)
@@ -113,18 +113,21 @@ WMZPagePropSetFuncImplementation(WMZPageParam, PageFailureGestureRecognizer,wCus
 WMZPagePropSetFuncImplementation(WMZPageParam, PageSimultaneouslyGestureRecognizer,wCustomSimultaneouslyGesture)
 WMZPagePropSetFuncImplementation(WMZPageParam, PageJDAnimalBlock,      wEventCustomJDAnimal)
 WMZPagePropSetFuncImplementation(WMZPageParam, UIEdgeInsets,           wMenuInsets)
+WMZPagePropSetFuncImplementation(WMZPageParam, NSArray<NSString*>*,                  wStopSimultaneouslyClassNameArray)
+WMZPagePropSetFuncImplementation(WMZPageParam, UIColor*,               wThemeColor)
 - (instancetype)init{
     if (self = [super init]) {
+        _wThemeColor = PageColor(0xFC2040);
         _wMenuAnimal = PageTitleMenuNone;
         _wMenuTitleColor = PageColor(0x333333);
-        _wMenuTitleSelectColor = PageColor(0xE5193E);
-        _wMenuIndicatorColor = PageColor(0xE5193E);
+        _wMenuTitleSelectColor = _wThemeColor;
+        _wMenuIndicatorColor = _wThemeColor;
         _wMenuBgColor = PageColor(0xffffff);
         _wMenuIndicatorHeight = 3.1;
         _wMenuWidth = PageVCWidth;
         _wMenuAnimalTitleGradient = YES;
-        _wMenuTitleUIFont = [UIFont systemFontOfSize:15.0f];
-        _wMenuTitleSelectUIFont = [UIFont systemFontOfSize:20.0f];
+        _wMenuTitleUIFont = [UIFont systemFontOfSize:15.0f weight:UIFontWeightRegular];
+        _wMenuTitleSelectUIFont = [UIFont systemFontOfSize:20.0f weight:UIFontWeightMedium];
         _wMenuImagePosition = PageBtnPositionTop;
         _wMenuImageMargin = 5.0f;
         _wMenuCellMargin = 30.0f;
@@ -157,13 +160,13 @@ WMZPagePropSetFuncImplementation(WMZPageParam, UIEdgeInsets,           wMenuInse
         self.wMenuAnimal == PageTitleMenuPDD) self.wMenuAnimalTitleGradient = NO;
     if (self.wMenuAnimal == PageTitleMenuPDD && !self.wMenuIndicatorWidth) self.wMenuIndicatorWidth = 25;
     if (self.wMenuAnimal == PageTitleMenuCircle) {
-        if (CGColorEqualToColor(self.wMenuIndicatorColor.CGColor, PageColor(0xE5193E).CGColor))  self.wMenuIndicatorColor = PageColor(0xe1f9fe);
-        if (CGColorEqualToColor(self.wMenuTitleSelectColor.CGColor, PageColor(0xE5193E).CGColor)) self.wMenuTitleSelectColor = PageColor(0x00baf9);
+        if (CGColorEqualToColor(self.wMenuIndicatorColor.CGColor, self.wThemeColor.CGColor))  self.wMenuIndicatorColor = PageColor(0xe1f9fe);
+        if (CGColorEqualToColor(self.wMenuTitleSelectColor.CGColor, self.wThemeColor.CGColor)) self.wMenuTitleSelectColor = PageColor(0x00baf9);
         if (self.wMenuIndicatorHeight <= 15.0f)  self.wMenuIndicatorHeight = 0;
     }else if (self.wMenuAnimal == PageTitleMenuCircleBg) {
         if (CGColorEqualToColor(self.wMenuSelectTitleBackground.CGColor, [UIColor clearColor].CGColor) || !self.wMenuSelectTitleBackground)
             self.wMenuSelectTitleBackground = [UIColor orangeColor];
-        if (CGColorEqualToColor(self.wMenuTitleSelectColor.CGColor, PageColor(0xE5193E).CGColor))  self.wMenuTitleSelectColor = [UIColor whiteColor];
+        if (CGColorEqualToColor(self.wMenuTitleSelectColor.CGColor,self.wThemeColor.CGColor))  self.wMenuTitleSelectColor = [UIColor whiteColor];
         if (!self.wMenuCellMarginY)  self.wMenuCellMarginY = 10.f;
         if (!self.wMenuBottomMarginY)  self.wMenuBottomMarginY = 10.f;
         if (UIEdgeInsetsEqualToEdgeInsets(self.wMenuInsets, UIEdgeInsetsZero)) {
